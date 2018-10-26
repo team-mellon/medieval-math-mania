@@ -3,8 +3,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
     <title>Hit Target Math Game</title>
-    <!--- Link to the last version of BabylonJS --->
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://preview.babylonjs.com/gui/babylon.gui.js"></script>  
     <style>
         html, body {
             overflow: hidden;
@@ -24,6 +24,7 @@
 <body>
     <canvas id="renderCanvas"></canvas>
     <script>
+      
         window.addEventListener('DOMContentLoaded', function(){
             // get the canvas DOM element
             var canvas = document.getElementById('renderCanvas');
@@ -32,41 +33,103 @@
             var engine = new BABYLON.Engine(canvas, true);
 
             // createScene function that creates and return the scene
-            var createScene = function(){
-                // create a basic BJS Scene object
-                var scene = new BABYLON.Scene(engine);
+  var createScene = function () {
 
-                // create a FreeCamera, and set its position to (x:0, y:5, z:-10)
-                var camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5,-10), scene);
+        // This creates a basic Babylon Scene object (non-mesh)
+        var scene = new BABYLON.Scene(engine);
 
-                // target the camera to scene origin
-                camera.setTarget(BABYLON.Vector3.Zero());
+	scene.clearColor = BABYLON.Color3.White();
 
-                // attach the camera to the canvas
-                camera.attachControl(canvas, false);
 
-                // create a basic light, aiming 0,1,0 - meaning, to the sky
-                var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0,1,0), scene);
+        // This creates and positions a free camera (non-mesh)
+        var camera = new BABYLON.UniversalCamera("camera1", new BABYLON.Vector3(0, 0, -10), scene);
 
-                // create a built-in "sphere" shape; its constructor takes 6 params: name, segment, diameter, scene, updatable, sideOrientation
-                var sphere = BABYLON.Mesh.CreateSphere('sphere1', 16, 2, scene);
+        // This targets the camera to scene origin
+        camera.setTarget(BABYLON.Vector3.Zero());
 
-                // move the sphere upward 1/2 of its height
-                sphere.position.y = 1;
+        // This attaches the camera to the canvas
+        camera.attachControl(canvas, true);
 
-                // create a built-in "ground" shape;
-                var ground = BABYLON.Mesh.CreateGround('ground1', 6, 6, 2, scene);
 
-                // return the created scene
-                return scene;
-            }
+        // GUI
+        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+
+        var input = new BABYLON.GUI.InputText();
+        input.width = "180px";
+        input.maxWidth = 0.15;
+        input.height = "35px";
+        input.color = "black";
+        input.background = "white";
+        input.focusedBackground = "white";
+        advancedTexture.addControl(input);
+
+        input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+        input.top = "-70px";
+
+        var input2 = new BABYLON.GUI.InputPassword();
+        input2.width = "180px";
+        input2.maxwidth = 0.15;
+        input2.height = "35px";
+        input2.color = "black";
+        input2.background = "white";
+        input2.focusedBackground = "white";
+        advancedTexture.addControl(input2);
+
+        input2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+        input2.top = "-10px";
+
+        var text1 = new BABYLON.GUI.TextBlock();
+        text1.text = "Password";
+        text1.color = "black";
+        text1.height = "43px";
+        text1.fontFamily = "Cursive";
+        text1.fontStyle = "italic";
+        advancedTexture.addControl(text1);
+
+        text1.top = "-40px";
+        text1.left = "-45px";
+
+        var text2 = new BABYLON.GUI.TextBlock();
+        text2.text = "Username";
+        text2.color = "black";
+        text2.height = "43px";
+        text2.fontFamily = "Cursive";
+        text2.fontStyle = "italic";
+        advancedTexture.addControl(text2);
+
+        text2.top = "-100px";
+        text2.left = "-43px";
+
+        var button = BABYLON.GUI.Button.CreateSimpleButton("login_button", "Login");
+        button.height = "35px";
+        button.width = "50px";
+        button.fontFamily = "Cursive";
+        button.fontStyle = "italic";
+        button.background = "gray";
+        advancedTexture.addControl(button);
+
+        button.top = "-10px";
+        button.left = "115px";
+
+
+        button.onPointerClickObservable.add(function() {
+            button.background = "green";
+        });
+
+        // var background = new BABYLON.Layer("back", "./hit-target-login-concept.png", scene);
+        //background.isBackground = true;
+
+
+        return scene;
+
+ };
 
             // call the createScene function
-            var scene = createScene();
+            var login_scene = createScene(engine);
 
             // run the render loop
             engine.runRenderLoop(function(){
-                scene.render();
+                login_scene.render();
             });
 
             // the canvas/window resize event handler
