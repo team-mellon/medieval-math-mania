@@ -113,7 +113,9 @@
 
 
 				button.onPointerClickObservable.add(function() {
-					button.background = "green";
+					engine.runRenderLoop(function(){
+						menu_scene.render();
+					});
 				});
 
 				// var background = new BABYLON.Layer("back", "./hit-target-login-concept.png", scene);
@@ -222,7 +224,9 @@
 			button5.color = "black";
 			button5.background = "lightblue";
 			button5.onPointerUpObservable.add(function() {
-			   button5.background = "blue";
+					engine.runRenderLoop(function(){
+					login_scene.render();
+				});
 			});
 			panel5.addControl(button5);
 
