@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
     <title>Hit Target Math Game</title>
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
-    <script src="https://preview.babylonjs.com/gui/babylon.gui.js"></script>  
+    <script src="https://preview.babylonjs.com/gui/babylon.gui.js"></script>
     <style>
         html, body {
             overflow: hidden;
@@ -24,7 +24,7 @@
 <body>
     <canvas id="renderCanvas"></canvas>
     <script>
-      
+
         window.addEventListener('DOMContentLoaded', function(){
             // get the canvas DOM element
             var canvas = document.getElementById('renderCanvas');
@@ -36,7 +36,7 @@
 
 	var createLogin = function () {
 
-	
+
         // This creates a basic Babylon Scene object (non-mesh)
         var scene = new BABYLON.Scene(engine);
 
@@ -57,7 +57,7 @@
 				// GUI
 				var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
-          
+
 
         var input = new BABYLON.GUI.InputText();
         input.width = "180px";
@@ -139,7 +139,7 @@
 
 
 
-          
+
 		var createMenu = function () {
 
 			// This creates a basic Babylon Scene object (non-mesh)
@@ -159,7 +159,7 @@
 			// GUI
 			var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui1");
 
-			var panel1 = new BABYLON.GUI.StackPanel();  
+			var panel1 = new BABYLON.GUI.StackPanel();
 			panel1.width = .5;
 			panel1.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
 			panel1.top = -50;
@@ -176,7 +176,7 @@
 
 
 
-			var panel2 = new BABYLON.GUI.StackPanel();  
+			var panel2 = new BABYLON.GUI.StackPanel();
 			panel2.width = .5;
 			panel2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
 			panel2.top = 0;
@@ -189,12 +189,12 @@
 			button2.onPointerUpObservable.add(function() {
 				button2.background = "blue";
 
-			   
+
 			});
 			panel2.addControl(button2);
 
 
-			var panel3 = new BABYLON.GUI.StackPanel();  
+			var panel3 = new BABYLON.GUI.StackPanel();
 			panel3.width = .5;
 			panel3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
 			panel3.top = 100;
@@ -210,7 +210,7 @@
 			panel3.addControl(button3);
 
 
-			var panel4 = new BABYLON.GUI.StackPanel();  
+			var panel4 = new BABYLON.GUI.StackPanel();
 			panel4.width = .5;
 			panel4.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
 			panel4.top = 50;
@@ -227,7 +227,7 @@
 
 
 
-			var panel5 = new BABYLON.GUI.StackPanel();  
+			var panel5 = new BABYLON.GUI.StackPanel();
 			panel5.width = .2;
 			panel5.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
 			panel5.top = -250;
@@ -245,7 +245,7 @@
 			panel5.addControl(button5);
 
 
-			var panel6 = new BABYLON.GUI.StackPanel();  
+			var panel6 = new BABYLON.GUI.StackPanel();
 			panel6.width = .2;
 			panel6.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
 			panel6.top = -250;
@@ -263,7 +263,7 @@
 
 		  var background = new BABYLON.Layer("back", "https://i.imgur.com/RRfSOHB.png", scene);
 		  background.isBackground = true;
-			
+
 
 
 
@@ -275,7 +275,7 @@
 
             // call the createLogin function
             var login_scene = createLogin(engine);
-			
+
             // call the createMenu function
             var menu_scene = createMenu(engine);
 
