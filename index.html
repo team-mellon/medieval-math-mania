@@ -123,9 +123,10 @@
         //button.left = "125px";
 
         button.onPointerClickObservable.add(function() {
-        engine.runRenderLoop(function(){
-        menu_scene.render();
-        });
+			engine.runRenderLoop(function()
+			{
+				menu_scene.render();
+			});
         });
 
         var background = new BABYLON.Layer("back", "login_scroll.png", scene);
@@ -170,7 +171,9 @@
 			button1.color = "black";
 			button1.background = "lightblue";
 			button1.onPointerUpObservable.add(function() {
-			   button1.background = "blue";
+			   engine.runRenderLoop(function(){
+					game_scene.render();
+				});
 			});
 			panel1.addControl(button1);
 
@@ -271,6 +274,85 @@
 			return scene;
 
 		};
+		var createGame = function () 
+		{
+
+	
+			// This creates a basic Babylon Scene object (non-mesh)
+			var scene = new BABYLON.Scene(engine);
+
+			//scene.clearColor = BABYLON.Color3.White();
+
+
+
+			// This creates and positions a free camera (non-mesh)
+			var camera = new BABYLON.UniversalCamera("camera1", new BABYLON.Vector3(0, 0, -10), scene);
+
+				// This targets the camera to scene origin
+			camera.setTarget(BABYLON.Vector3.Zero());
+
+			// This attaches the camera to the canvas
+			camera.attachControl(canvas, true);
+
+
+			// GUI
+			var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui2");
+
+          
+
+			var input = new BABYLON.GUI.InputText();
+			input.width = "180px";
+			input.maxWidth = 0.15;
+			input.height = "35px";
+			input.color = "black";
+			input.background = "lightyellow";
+			input.thickness = 0.15;
+			input.focusedBackground = "white";
+			advancedTexture.addControl(input);
+
+			input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+			input.top = "200px";
+
+			var text2 = new BABYLON.GUI.TextBlock();
+			text2.text = "Type your number";
+			text2.color = "saddlebrown";
+			text2.height = "43px";
+			text2.fontFamily = "Blackadder ITC";
+			text2.fontStyle = "italic";
+			text2.fontSize = 35;
+			advancedTexture.addControl(text2);
+
+			text2.top = "150px";
+			text2.left = "5px";
+
+			var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "login_button.png");
+			button.height = "90px";
+			button.width = "290px";
+			button.fontFamily = "Blackadder ITC";
+			button.fontStyle = "italic";
+			button.fontSize = 36;
+			button.color = "gold";
+			button.thickness = 0;
+			advancedTexture.addControl(button);
+	
+			button.top = "425px";
+            button.left = "-775px";
+
+			button.onPointerClickObservable.add(function() 
+			{
+				engine.runRenderLoop(function(){
+				menu_scene.render();
+			});
+        });
+
+        var background = new BABYLON.Layer("back", "https://i.imgur.com/RRfSOHB.png", scene);
+		background.isBackground = true;
+
+
+
+			return scene;
+
+	};
 
 
             // call the createLogin function
@@ -278,6 +360,9 @@
 			
             // call the createMenu function
             var menu_scene = createMenu(engine);
+			
+			// call the createGame function
+            var game_scene = createGame(engine);
 
             // run the render loop
             engine.runRenderLoop(function(){
