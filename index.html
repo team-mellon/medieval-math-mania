@@ -109,7 +109,7 @@
         text2.top = "-140px";
         text2.left = "-43px";
 
-        var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Login", "login_button.png");
+        var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Login", "https://i.imgur.com/bhA9zYm.png");
         button.height = "90px";
         button.width = "290px";
         button.fontFamily = "Blackadder ITC";
@@ -129,7 +129,7 @@
 			});
         });
 
-        var background = new BABYLON.Layer("back", "login_scroll.png", scene);
+        var background = new BABYLON.Layer("back", "https://i.imgur.com/GMKNx5T.png", scene);
         background.isBackground = true;
 
 
@@ -309,6 +309,7 @@
 			input.thickness = 0.15;
 			input.focusedBackground = "white";
 			advancedTexture.addControl(input);
+			
 
 			input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
 			input.top = "200px";
@@ -325,7 +326,7 @@
 			text2.top = "150px";
 			text2.left = "5px";
 
-			var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "login_button.png");
+			var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "https://i.imgur.com/bhA9zYm.png");
 			button.height = "90px";
 			button.width = "290px";
 			button.fontFamily = "Blackadder ITC";
@@ -335,8 +336,10 @@
 			button.thickness = 0;
 			advancedTexture.addControl(button);
 	
-			button.top = "425px";
-            button.left = "-775px";
+			button.top = "350px";
+            button.left = "-650px";
+			
+			var userinput;
 
 			button.onPointerClickObservable.add(function() 
 			{
