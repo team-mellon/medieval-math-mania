@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
     <title>Hit Target Math Game</title>
     <script src="https://cdn.babylonjs.com/babylon.js"></script>
-    <script src="https://preview.babylonjs.com/gui/babylon.gui.js"></script>  
+    <script src="https://preview.babylonjs.com/gui/babylon.gui.js"></script>
     <style>
         html, body {
             overflow: hidden;
@@ -241,14 +241,14 @@
 			button5.color = "black";
 			button5.background = "lightblue";
 			button5.onPointerUpObservable.add(function() {
-					engine.runRenderLoop(function(){
+				engine.runRenderLoop(function()
+				{
 					login_scene.render();
 				});
 			});
 			panel5.addControl(button5);
 
-
-			var panel6 = new BABYLON.GUI.StackPanel();  
+			var panel6 = new BABYLON.GUI.StackPanel();
 			panel6.width = .2;
 			panel6.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
 			panel6.top = -250;
@@ -266,10 +266,6 @@
 
 		  var background = new BABYLON.Layer("back", "https://i.imgur.com/RRfSOHB.png", scene);
 		  background.isBackground = true;
-			
-
-
-
 
 			return scene;
 
@@ -280,10 +276,7 @@
 	
 			// This creates a basic Babylon Scene object (non-mesh)
 			var scene = new BABYLON.Scene(engine);
-
 			//scene.clearColor = BABYLON.Color3.White();
-
-
 
 			// This creates and positions a free camera (non-mesh)
 			var camera = new BABYLON.UniversalCamera("camera1", new BABYLON.Vector3(0, 0, -10), scene);
@@ -298,34 +291,90 @@
 			// GUI
 			var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui2");
 
-          
+			var text1 = new BABYLON.GUI.TextBlock();
+			text1.color = "white";
+			text1.height = "43px";
+			text1.fontFamily = "Blackadder ITC";
+			text1.fontStyle = "italic";
+			text1.fontSize = 35;
+			advancedTexture.addControl(text1);
 
-			var input = new BABYLON.GUI.InputText();
-			input.width = "180px";
-			input.maxWidth = 0.15;
-			input.height = "35px";
-			input.color = "black";
-			input.background = "lightyellow";
-			input.thickness = 0.15;
-			input.focusedBackground = "white";
-			advancedTexture.addControl(input);
+			text1.top = "50px";
+			text1.left = "0px";
+
+			var output = new BABYLON.GUI.TextBlock();
+			output.width = "180px";
+			output.maxWidth = 0.15;
+			output.height = "43px";
+			output.color = "white";
+			output.fontFamily = "Blackadder ITC";
+			output.background = "lightyellow";
+			output.thickness = 0.15;
+			output.fontSize = 35;
+			output.fontStyle = "italic";
+			output.focusedBackground = "white";
+			advancedTexture.addControl(output);
+
+			output.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+			output.top = "150px";
 			
-
-			input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-			input.top = "200px";
+			var param = "";
+			var tmp;
+			
+			scene.actionManager = new BABYLON.ActionManager(scene);
+			action = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger,function(event) 
+			{
+				var key = event.sourceEvent.key;      
+				console.log(key) ;
+				if (key == "Enter")
+				{
+					tmp *= tmp;
+					output.text = tmp.toString();
+				}
+				else if (key == "Backspace") 
+				{
+					param = param.substring(0, param.length - 1);
+					text1.text = param;
+					tmp = parseInt(param);
+				}
+				else if
+				(key == "0" || key == "1" || key == "2" || key == "3" || key == "4" || key == "5" || key == "6" || key == "7" || key == "8" || key == "9" || ".")
+				{
+					param += key;
+					text1.text = param;
+					tmp = parseInt(param);
+				}
+				
+				console.log(text1.text);
+				console.log(typeof param);
+				console.log(typeof tmp);
+			});
+			scene.actionManager.registerAction(action);
 
 			var text2 = new BABYLON.GUI.TextBlock();
 			text2.text = "Type your number";
-			text2.color = "saddlebrown";
+			text2.color = "white";
 			text2.height = "43px";
 			text2.fontFamily = "Blackadder ITC";
 			text2.fontStyle = "italic";
 			text2.fontSize = 35;
 			advancedTexture.addControl(text2);
 
-			text2.top = "150px";
+			text2.top = "25px";
 			text2.left = "5px";
 
+			var text3 = new BABYLON.GUI.TextBlock();
+			text3.text = "Your Number Squared";
+			text3.color = "white";
+			text3.height = "43px";
+			text3.fontFamily = "Blackadder ITC";
+			text3.fontStyle = "italic";
+			text3.fontSize = 35;
+			advancedTexture.addControl(text3);
+
+			text3.top = "125px";
+			text3.left = "5px";
+			
 			var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "https://i.imgur.com/bhA9zYm.png");
 			button.height = "90px";
 			button.width = "290px";
@@ -336,17 +385,17 @@
 			button.thickness = 0;
 			advancedTexture.addControl(button);
 	
-			button.top = "290px";
-            button.left = "-540px";
+			button.top = "250px";
+            button.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
 			
-			var userinput;
-
+			
 			button.onPointerClickObservable.add(function() 
 			{
-				engine.runRenderLoop(function(){
-				menu_scene.render();
+				engine.runRenderLoop(function()
+				{
+					menu_scene.render();
+				});
 			});
-        });
 
         var background = new BABYLON.Layer("back", "https://i.imgur.com/RRfSOHB.png", scene);
 		background.isBackground = true;
