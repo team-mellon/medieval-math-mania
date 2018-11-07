@@ -320,6 +320,7 @@
 			
 			var param = "";
 			var tmp;
+			var tmp2;
 			
 			scene.actionManager = new BABYLON.ActionManager(scene);
 			action = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger,function(event) 
@@ -328,8 +329,8 @@
 				console.log(key) ;
 				if (key == "Enter")
 				{
-					tmp *= tmp;
-					output.text = tmp.toString();
+					tmp2 = tmp * tmp;
+					output.text = tmp2.toString();
 				}
 				else if (key == "Backspace") 
 				{
