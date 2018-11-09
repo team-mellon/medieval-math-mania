@@ -297,10 +297,10 @@ var createGame = function () {
 	text1.fontFamily = "Arial";
 	text1.fontStyle = "bold";
 	text1.fontSize = 35;
-	advancedTexture.addControl(text1);
 	text1.top = "100px";
-	text1.left = "-66px";
-
+	text1.left = "-64px";
+	advancedTexture.addControl(text1);
+	
 	var output = new BABYLON.GUI.TextBlock();
 	output.width = "180px";
 	output.maxWidth = 0.15;
@@ -312,12 +312,11 @@ var createGame = function () {
 	output.fontSize = 35;
 	output.fontStyle = "bold";
 	
-	advancedTexture.addControl(output);
-
 	output.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
 	output.top = "100px";
-	output.left = "76px";
-
+	output.left = "59px";
+	advancedTexture.addControl(output);
+	
 		var text2 = new BABYLON.GUI.TextBlock();
 		text2.text = " x  ";
 		text2.color = "black";
@@ -330,19 +329,47 @@ var createGame = function () {
 		text2.top = "100px";
 		text2.left = "-130px";
 
-		var text3 = new BABYLON.GUI.TextBlock();
-		text3.text = " = ";
-		text3.color = "black";
-		text3.height = "43px";
-		text3.fontFamily = "Arial";
-		text3.fontStyle = "bold";
-		text3.fontSize = 35;
-		advancedTexture.addControl(text3);
-		text3.top = "105px";
-		text3.left = "-5px";
+	var text3 = new BABYLON.GUI.TextBlock();
+	text3.text = " = ";
+	text3.color = "black";
+	text3.height = "43px";
+	text3.fontFamily = "Arial";
+	text3.fontStyle = "bold";
+	text3.fontSize = 35;
+	advancedTexture.addControl(text3);
+	text3.top = "105px";
+	text3.left = "-8px";
+
+	var text4 = new BABYLON.GUI.TextBlock();
+	text4.text = "Range";
+	text4.color = "black";
+	text4.height = "70px";
+	text4.width = "150px";
+	text4.fontFamily = "Arial";
+	text4.fontStyle = "bold";
+	text4.fontSize = 45;
+	text4.top = "76px";
+	text4.left = "-360px";
+	advancedTexture.addControl(text4);
+
+	var range = new BABYLON.GUI.TextBlock();
+	range.text = "[]";
+	range.color = "black";
+	range.height = "70px";
+	range.width = "190px";
+	range.fontFamily = "Arial";
+	range.fontStyle = "bold";
+	range.fontSize = 35;
+	range.top = "130px";
+	range.left = "-360px";
+	advancedTexture.addControl(range);
+	
 			
 	var param = "";
-	var rand_num;
+	var rand_num1;
+	var rand_num2;
+	var temp1;
+	var temp2;
 	var input;
 	var result;
 			
@@ -353,16 +380,21 @@ var createGame = function () {
 			console.log(key) ;
 			if (key == "Enter")
 			{
-				result = rand_num * input;
+				result = rand_num1 * input;
 				output.text = result.toString();
 	                }
 	                else if (key == "a")
 	                {
-	                        rand_num = Math.floor((Math.random() * 10) + 1);
-	                        text2.text = (rand_num.toString()) + "  x  ";
-	                        output.text = " ";
-	                        tex1.text = " ";
-	                        param = " ";
+	                        rand_num1 = Math.floor((Math.random() * 10) + 1);
+	                        rand_num2 = Math.floor((Math.random() * 100) + 1);
+	                        temp1 = rand_num1 * rand_num2;
+	                        temp2 = rand_num1 * (rand_num2 + 3);
+	
+	                        text2.text = (rand_num1.toString()) + "  x  ";
+	                        range.text = "[" + (temp1.toString()) + " , " + (temp2.toString()) + "]";
+	                        output.text = "";
+	                        text1.text = "";
+	                        param = "";
 	                        input = parseInt(param);
 	                }
 			else if (key == "Backspace") 
@@ -373,10 +405,13 @@ var createGame = function () {
 			}
 			else if
 			(key == "0" || key == "1" || key == "2" || key == "3" || key == "4" || key == "5" || key == "6" || key == "7" || key == "8" || key == "9" || key == ".")
-			{
-				param += key;
-				text1.text = param;
-				input = parseInt(param);
+	                {
+	                     if(param.length < 3)
+			      {
+				 param += key;
+				 text1.text = param;
+			         input = parseInt(param);
+			      }
 			}
 			
 			console.log(text1.text);
