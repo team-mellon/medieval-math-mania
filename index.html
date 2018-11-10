@@ -109,7 +109,7 @@
         text2.top = "-140px";
         text2.left = "-43px";
 
-        var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Login", "https://i.imgur.com/bhA9zYm.png");
+        var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Login", "login_button.png");
         button.height = "90px";
         button.width = "290px";
         button.fontFamily = "Blackadder ITC";
@@ -129,7 +129,7 @@
 			});
         });
 
-        var background = new BABYLON.Layer("back", "https://i.imgur.com/GMKNx5T.png", scene);
+        var background = new BABYLON.Layer("back", "hit-target-login-concept-high-res.png", scene);
         background.isBackground = true;
 
 
@@ -264,7 +264,7 @@
 			panel6.addControl(button6);
 
 
-		  var background = new BABYLON.Layer("back", "https://i.imgur.com/RRfSOHB.png", scene);
+		  var background = new BABYLON.Layer("back", "hit-target-castle-concept-high-res.png", scene);
 		  background.isBackground = true;
 
 			return scene;
@@ -291,6 +291,49 @@ var createGame = function () {
 			// GUI
 	var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui2");
 
+	//><><><><><><><><><>< START OF NUMBER LINE CODE ><><><><><><><><><><
+	
+	var line = new BABYLON.GUI.Line();
+	line.x1 = 100;
+	line.y1 = 50;
+	line.x2 = 1700;
+	line.y2 = 50;
+	line.lineWidth = 60;
+	line.dash = [4,100];
+	line.color = "black";
+	advancedTexture.addControl(line);
+
+	var line2 = new BABYLON.GUI.Line();
+	line2.x1 = 100;
+	line2.y1 = 50;
+	line2.x2 = 1660;
+	line2.y2 = 50;
+	line2.lineWidth = 30;
+	line2.dash = [2,50];
+	line2.color = "black";
+	advancedTexture.addControl(line2);
+
+	var line3 = new BABYLON.GUI.Line();
+	line3.x1 = 100;
+	line3.y1 = 50;
+	line3.x2 = 1660;
+	line3.y2 = 50;
+	line3.lineWidth = 3;
+	//line3.dash = [2,50];
+	line3.color = "black";
+	advancedTexture.addControl(line3);
+
+	var line4 = new BABYLON.GUI.Line();
+	line4.x1 = 100;
+	line4.y1 = 50;
+	line4.x2 = 1660;
+	line4.y2 = 50;
+	line4.lineWidth = 10;
+	line4.dash = [1,12];
+	line4.color = "black";
+	advancedTexture.addControl(line4);
+        // ><><><><><><><><><>< END OF NUMBER LINE CODE ><><><><><><><><><><    
+
 	var text1 = new BABYLON.GUI.TextBlock();
 	text1.color = "black";
 	text1.height = "43px";
@@ -298,7 +341,7 @@ var createGame = function () {
 	text1.fontStyle = "bold";
 	text1.fontSize = 35;
 	text1.top = "100px";
-	text1.left = "-64px";
+	text1.left = "-49px";
 	advancedTexture.addControl(text1);
 	
 	var output = new BABYLON.GUI.TextBlock();
@@ -314,7 +357,7 @@ var createGame = function () {
 	
 	output.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
 	output.top = "100px";
-	output.left = "59px";
+	output.left = "74px";
 	advancedTexture.addControl(output);
 	
 		var text2 = new BABYLON.GUI.TextBlock();
@@ -327,7 +370,7 @@ var createGame = function () {
 		advancedTexture.addControl(text2);
 
 		text2.top = "100px";
-		text2.left = "-130px";
+		text2.left = "-115px";
 
 	var text3 = new BABYLON.GUI.TextBlock();
 	text3.text = " = ";
@@ -338,7 +381,7 @@ var createGame = function () {
 	text3.fontSize = 35;
 	advancedTexture.addControl(text3);
 	text3.top = "105px";
-	text3.left = "-8px";
+	text3.left = "7px";
 
 	var text4 = new BABYLON.GUI.TextBlock();
 	text4.text = "Range";
@@ -443,7 +486,7 @@ var createGame = function () {
 				});
 			});
 */
-        var background = new BABYLON.Layer("back", "https://i.imgur.com/RRfSOHB.png", scene);
+        var background = new BABYLON.Layer("back", "hit-target-castle-concept-high-res.png", scene);
 		background.isBackground = true;
 
 
