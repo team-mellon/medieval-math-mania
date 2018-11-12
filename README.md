@@ -16,16 +16,20 @@ Evan Bradford - Document Manager
 
 Dakota O'Brien - Quality Assurance
 
-Instructions:
+Requirements:
 
-sudo apt-get install git
+    sudo apt-get install git
+    sudo apt-get install docker-ce
+    git clone git@github.com:cs4560-18-19/belloq.git
 
-sudo apt-get install docker-ce
+Build & Run:
 
-git clone git@github.com:cs4560-18-19/belloq.git
+    sudo docker build -t hit-target:v1 .
+    sudo docker run -d -p 80:80 hit-target:v1
 
-sudo docker build -t hit-target:v1
+Then visit 'localhost' or '0.0.0.0' in a browser URL bar to see the game build
 
-sudo docker run -d -p 80:80 hit-target:v1
+Rerun:
 
-The visit 'localhost' or '0.0.0.0' in a browser URL bar to see the game build
+  sudo docker container ls
+  sudo docker stop <CONTAINER ID>
