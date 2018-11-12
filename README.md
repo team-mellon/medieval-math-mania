@@ -4,15 +4,15 @@
 
 
 #### Client:
-### Amanda Katharine Serenevy, Ph.D.
-### Executive Director, Riverbend Community Math Center
+##### Amanda Katharine Serenevy, Ph.D.
+##### Executive Director, Riverbend Community Math Center
 
 
-### Team Name: Belloq
-#### Nathan Estep - Team Leader
-#### Eric Bitikofer - Release Manager
-#### Evan Bradford - Document Manager
-#### Dakota O'Brien - Quality Assurance
+#### Team Name: Belloq
+##### Nathan Estep - Team Leader
+##### Eric Bitikofer - Release Manager
+##### Evan Bradford - Document Manager
+##### Dakota O'Brien - Quality Assurance
 
 ![logo](https://github.com/cs4560-18-19/belloq/blob/master/Belloq%20door.jpg)
 
