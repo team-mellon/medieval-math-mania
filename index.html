@@ -95,7 +95,7 @@
         text2.top = "-140px";
         text2.left = "-43px";
 
-        var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Login", "login_button.png");
+        var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Login", "login-button.png");
         button.height = "90px";
         button.width = "290px";
         button.fontFamily = "Blackadder ITC";
@@ -112,7 +112,7 @@
           render = 1;
         });
 
-        var background = new BABYLON.Layer("back", "hit-target-login-concept-high-res.png", scene);
+        var background = new BABYLON.Layer("back", "login.png", scene);
         background.isBackground = true;
 
 			  return scene;
@@ -223,7 +223,7 @@
   			});
   			panel6.addControl(button6);
 
-  		  var background = new BABYLON.Layer("back", "hit-target-menu-concept-high-res.png", scene);
+  		  var background = new BABYLON.Layer("back", "menu.png", scene);
   		  background.isBackground = true;
 
   			return scene;
@@ -348,7 +348,7 @@
       	text4.fontStyle = "bold";
       	text4.fontSize = 45;
       	text4.top = "76px";
-      	text4.left = "-340px";
+      	text4.left = "-295px";
         text4.zIndex = 1;
       	advancedTexture.addControl(text4);
 
@@ -362,39 +362,9 @@
       	range.fontStyle = "bold";
       	range.fontSize = 35;
       	range.top = "130px";
-      	range.left = "-330px";
+      	range.left = "-290px";
         range.zIndex = 1;
       	advancedTexture.addControl(range);
-
-	var hitmarker_l = new BABYLON.GUI.TextBlock("lo", "Low");
-	hitmarker_l.width = "200px";
-	hitmarker_l.height = "100px";
-	hitmarker_l.left = "-500px";
-	hitmarker_l.top = "-345px";
-	hitmarker_l.color = "red";
-	hitmarker_l.fontSize = 60;
-	hitmarker_l.alpha = 0;
-	advancedTexture.addControl(hitmarker_l);
-
-	var hitmarker_h = new BABYLON.GUI.TextBlock("hi", "High");
-	hitmarker_h.width = "200px";
-	hitmarker_h.height = "100px";
-	hitmarker_h.left = "500px";
-	hitmarker_h.top = "-345px";
-	hitmarker_h.color = "red";
-	hitmarker_h.fontSize = 60;
-	hitmarker_h.alpha = 0;
-	advancedTexture.addControl(hitmarker_h);
-
-	var hitmarker_t = new BABYLON.GUI.TextBlock("tar", "Hit");
-	hitmarker_t.width = "200px";
-	hitmarker_t.height = "100px";
-	hitmarker_t.left = "0px";
-	hitmarker_t.top = "-345px";
-	hitmarker_t.color = "green";
-	hitmarker_t.fontSize = 60;
-	hitmarker_t.alpha = 0;
-	advancedTexture.addControl(hitmarker_t);
 
       	var param = "";
       	var rand_num1;
@@ -404,9 +374,9 @@
       	var input;
       	var result;
 
-        var spriteManagerBadKnight = new BABYLON.SpriteManager("spriteManagerBadKnight","hit-target-bad-knight-concept-high-res.png", 1, {width: 320, height: 320}, scene);
-        var spriteManagerBadArcher = new BABYLON.SpriteManager("spriteManagerBadArcher","hit-target-bad-archer-concept-high-res.png", 4, {width: 320, height: 320}, scene);
-        var spriteManagerFire = new BABYLON.SpriteManager("spriteManagerFire","hit-target-catapult-ammo-concept-high-res.png", 20, {width: 320, height: 320}, scene);
+        var spriteManagerBadKnight = new BABYLON.SpriteManager("spriteManagerBadKnight","bad-knight.png", 1, {width: 320, height: 320}, scene);
+        var spriteManagerBadArcher = new BABYLON.SpriteManager("spriteManagerBadArcher","bad-archer.png", 4, {width: 320, height: 320}, scene);
+        var spriteManagerFire = new BABYLON.SpriteManager("spriteManagerFire","catapult-ammo.png", 20, {width: 320, height: 320}, scene);
 
         var badKnight1 = new BABYLON.Sprite("badKnight1", spriteManagerBadKnight);
         var badArcher1 = new BABYLON.Sprite("badArcher1", spriteManagerBadArcher);
@@ -468,18 +438,6 @@
     			if (key == "Enter") {
 
     				result = rand_num1 * input;
-				if (result < temp1) {
-					hitmarker_l.alpha = 1;
-					setTimeout(function(){hitmarker_l.alpha = 0}, 2000);
-				}
-				else if ( result > temp2) {
-					hitmarker_h.alpha = 1;
-					setTimeout(function(){hitmarker_h.alpha = 0}, 2000);
-				}
-				else {
-					hitmarker_t.alpha = 1;
-					setTimeout(function(){hitmarker_t.alpha = 0}, 2000);
-				}
     				output.text = result.toString();
 
           } else if (key == "a") {
@@ -521,7 +479,7 @@
     		});
     		scene.actionManager.registerAction(action);
 
-    		var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "login_button.png");
+    		var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "login-button.png");
     		button.height = "90px";
     		button.width = "290px";
     		button.fontFamily = "Blackadder ITC";
@@ -539,7 +497,7 @@
   				render = 1;
   			});
 
-        var background = new BABYLON.Layer("back", "hit-target-castle-concept-high-res.png", scene);
+        var background = new BABYLON.Layer("back", "castle.png", scene);
     		background.isBackground = true;
 
     		return scene;

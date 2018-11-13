@@ -30,4 +30,4 @@ Then visit 'localhost' or '0.0.0.0' in a browser URL bar to see the game build
 ##### Evan Bradford - Document Manager  
 ##### Dakota O'Brien - Quality Assurance  
 
-![logo](https://github.com/cs4560-18-19/belloq/blob/master/Belloq%20door.jpg)
+![logo](https://github.com/cs4560-18-19/belloq/blob/master/belloq-door.jpg)
