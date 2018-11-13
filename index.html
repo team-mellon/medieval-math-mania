@@ -27,6 +27,8 @@
 
     window.addEventListener('DOMContentLoaded', function(){   // Start game when DOM loads
 
+      var render = 0;
+
       var canvas = document.getElementById('renderCanvas');   // get the canvas DOM element
       var engine = new BABYLON.Engine(canvas, true);          // load the 3D engine
 
@@ -107,9 +109,7 @@
         //button.left = "125px";
 
         button.onPointerClickObservable.add(function() {
-          engine.runRenderLoop(function() {
-            menu_scene.render();
-          });
+          render = 1;
         });
 
         var background = new BABYLON.Layer("back", "hit-target-login-concept-high-res.png", scene);
@@ -144,9 +144,7 @@
   			button1.color = "black";
   			button1.background = "lightblue";
   			button1.onPointerUpObservable.add(function() {
-  			   engine.runRenderLoop(function(){
-  					game_scene.render();
-  				});
+  			   render = 2;
   			});
   			panel1.addControl(button1);
 
@@ -206,9 +204,7 @@
   			button5.color = "black";
   			button5.background = "lightblue";
   			button5.onPointerUpObservable.add(function() {
-  				engine.runRenderLoop(function() {
-  					login_scene.render();
-  				});
+  				render = 0;
   			});
   			panel5.addControl(button5);
 
@@ -482,7 +478,7 @@
     		});
     		scene.actionManager.registerAction(action);
 
-      /*
+          /*
       		var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "https://i.imgur.com/bhA9zYm.png");
       		button.height = "90px";
       		button.width = "290px";
@@ -494,17 +490,12 @@
       		advancedTexture.addControl(button);
 
       		button.top = "250px";
-                  button.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+          button.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
 
-
-      			button.onPointerClickObservable.add(function()
-      			{
-      				engine.runRenderLoop(function()
-      				{
-      					menu_scene.render();
-      				});
-      			});
-      */
+    			button.onPointerClickObservable.add(function() {
+    				render = 1;
+    			});
+          */
 
         var background = new BABYLON.Layer("back", "hit-target-castle-concept-high-res.png", scene);
     		background.isBackground = true;
@@ -524,7 +515,22 @@
 
       // run the render loop
       engine.runRenderLoop(function(){
-          login_scene.render();
+
+        switch(render) {
+          case 0:
+            login_scene.render();
+            break;
+          case 1:
+            menu_scene.render();
+            break;
+          case 2:
+            game_scene.render();
+            break;
+          default:
+            login_scene.render()
+            break;
+        }
+
       });
 
       // the canvas/window resize event handler
