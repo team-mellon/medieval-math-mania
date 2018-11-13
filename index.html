@@ -365,6 +365,36 @@
         range.zIndex = 1;
       	advancedTexture.addControl(range);
 
+	var hitmarker_l = new BABYLON.GUI.TextBlock("lo", "Low");
+	hitmarker_l.width = "200px";
+	hitmarker_l.height = "100px";
+	hitmarker_l.left = "-500px";
+	hitmarker_l.top = "-345px";
+	hitmarker_l.color = "red";
+	hitmarker_l.fontSize = 60;
+	hitmarker_l.alpha = 0;
+	advancedTexture.addControl(hitmarker_l);
+
+	var hitmarker_h = new BABYLON.GUI.TextBlock("hi", "High");
+	hitmarker_h.width = "200px";
+	hitmarker_h.height = "100px";
+	hitmarker_h.left = "500px";
+	hitmarker_h.top = "-345px";
+	hitmarker_h.color = "red";
+	hitmarker_h.fontSize = 60;
+	hitmarker_h.alpha = 0;
+	advancedTexture.addControl(hitmarker_h);
+
+	var hitmarker_t = new BABYLON.GUI.TextBlock("tar", "Hit");
+	hitmarker_t.width = "200px";
+	hitmarker_t.height = "100px";
+	hitmarker_t.left = "0px";
+	hitmarker_t.top = "-345px";
+	hitmarker_t.color = "green";
+	hitmarker_t.fontSize = 60;
+	hitmarker_t.alpha = 0;
+	advancedTexture.addControl(hitmarker_t);
+
       	var param = "";
       	var rand_num1;
       	var rand_num2;
@@ -437,6 +467,18 @@
     			if (key == "Enter") {
 
     				result = rand_num1 * input;
+				if (result < temp1) {
+					hitmarker_l.alpha = 1;
+					setTimeout(function(){hitmarker_l.alpha = 0}, 2000);
+				}
+				else if ( result > temp2) {
+					hitmarker_h.alpha = 1;
+					setTimeout(function(){hitmarker_h.alpha = 0}, 2000);
+				}
+				else {
+					hitmarker_t.alpha = 1;
+					setTimeout(function(){hitmarker_t.alpha = 0}, 2000);
+				}
     				output.text = result.toString();
 
           } else if (key == "a") {
