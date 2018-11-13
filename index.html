@@ -244,8 +244,8 @@
       	// GUI fullscreen
       	var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui2");
 
-        var foreground = new BABYLON.Layer("fore", "hit-target-castle-facade-concept-high-res.png", scene);
-        foreground.isBackground = false;
+        // var foreground = new BABYLON.Layer("fore", "hit-target-castle-facade-concept-high-res.png", scene);
+        // foreground.isBackground = false;
 
       	//><><><><><><><><><>< START OF NUMBER LINE CODE ><><><><><><><><><><
 
@@ -298,6 +298,7 @@
       	text1.fontSize = 35;
       	text1.top = "100px";
       	text1.left = "-49px";
+        text1.zIndex = 1;
       	advancedTexture.addControl(text1);
 
       	var output = new BABYLON.GUI.TextBlock();
@@ -314,6 +315,7 @@
       	output.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
       	output.top = "100px";
       	output.left = "74px";
+        output.zIndex = 1;
       	advancedTexture.addControl(output);
 
       	var text2 = new BABYLON.GUI.TextBlock();
@@ -323,6 +325,7 @@
       	text2.fontFamily = "Arial";
       	text2.fontStyle = "bold";
       	text2.fontSize = 35;
+        text2.zIndex = 1;
       	advancedTexture.addControl(text2);
 
       	text2.top = "100px";
@@ -335,6 +338,7 @@
       	text3.fontFamily = "Arial";
       	text3.fontStyle = "bold";
       	text3.fontSize = 35;
+        text1.zIndex = 1;
       	advancedTexture.addControl(text3);
       	text3.top = "105px";
       	text3.left = "7px";
@@ -349,6 +353,7 @@
       	text4.fontSize = 45;
       	text4.top = "76px";
       	text4.left = "-360px";
+        text4.zIndex = 1;
       	advancedTexture.addControl(text4);
 
       	var range = new BABYLON.GUI.TextBlock();
@@ -361,6 +366,7 @@
       	range.fontSize = 35;
       	range.top = "130px";
       	range.left = "-360px";
+        range.zIndex = 1;
       	advancedTexture.addControl(range);
 
       	var param = "";
