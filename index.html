@@ -136,7 +136,7 @@
   			var panel1 = new BABYLON.GUI.StackPanel();
   			panel1.width = .5;
   			panel1.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-  			panel1.top = -50;
+  			panel1.top = 0;
   			advancedTexture.addControl(panel1);
   			var button1 = BABYLON.GUI.Button.CreateSimpleButton("PLAYbut", "PLAY");
   			button1.width = 100;
@@ -151,7 +151,7 @@
   			var panel2 = new BABYLON.GUI.StackPanel();
   			panel2.width = .5;
   			panel2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-  			panel2.top = 0;
+  			panel2.top = 50;
   			advancedTexture.addControl(panel2);
   			var button2 = BABYLON.GUI.Button.CreateSimpleButton("STATSbut", "STATS");
   			button2.width = 100;
@@ -163,25 +163,10 @@
   			});
   			panel2.addControl(button2);
 
-  			var panel3 = new BABYLON.GUI.StackPanel();
-  			panel3.width = .5;
-  			panel3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-  			panel3.top = 100;
-  			advancedTexture.addControl(panel3);
-  			var button3 = BABYLON.GUI.Button.CreateSimpleButton("SETTINGSbut", "SETTINGS");
-  			button3.width = 100;
-  			button3.height = "40px";
-  			button3.color = "black";
-  			button3.background = "lightblue";
-  			button3.onPointerUpObservable.add(function() {
-  				button3.background = "blue";
-  			});
-  			panel3.addControl(button3);
-
-  			var panel4 = new BABYLON.GUI.StackPanel();
+        var panel4 = new BABYLON.GUI.StackPanel();
   			panel4.width = .5;
   			panel4.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-  			panel4.top = 50;
+  			panel4.top = 100;
   			advancedTexture.addControl(panel4);
   			var button4 = BABYLON.GUI.Button.CreateSimpleButton("HOW2but", "HOW TO PLAY");
   			button4.width = 100;
@@ -193,10 +178,25 @@
   			});
   			panel4.addControl(button4);
 
+  			var panel3 = new BABYLON.GUI.StackPanel();
+  			panel3.width = .5;
+  			panel3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+  			panel3.top = 150;
+  			advancedTexture.addControl(panel3);
+  			var button3 = BABYLON.GUI.Button.CreateSimpleButton("SETTINGSbut", "SETTINGS");
+  			button3.width = 100;
+  			button3.height = "40px";
+  			button3.color = "black";
+  			button3.background = "lightblue";
+  			button3.onPointerUpObservable.add(function() {
+  				button3.background = "blue";
+  			});
+  			panel3.addControl(button3);
+
   			var panel5 = new BABYLON.GUI.StackPanel();
   			panel5.width = .2;
   			panel5.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-  			panel5.top = -250;
+  			panel5.top = -300;
   			advancedTexture.addControl(panel5);
   			var button5 = BABYLON.GUI.Button.CreateSimpleButton("LOGOUTbut", "LOGOUT");
   			button5.width = 100;
@@ -211,7 +211,7 @@
   			var panel6 = new BABYLON.GUI.StackPanel();
   			panel6.width = .2;
   			panel6.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
-  			panel6.top = -250;
+  			panel6.top = -300;
   			advancedTexture.addControl(panel6);
   			var button6 = BABYLON.GUI.Button.CreateSimpleButton("NAMEbut", "USERNAME");
   			button6.width = 100;
@@ -223,7 +223,7 @@
   			});
   			panel6.addControl(button6);
 
-  		  var background = new BABYLON.Layer("back", "hit-target-castle-concept-high-res.png", scene);
+  		  var background = new BABYLON.Layer("back", "hit-target-menu-concept-high-res.png", scene);
   		  background.isBackground = true;
 
   			return scene;
@@ -478,24 +478,22 @@
     		});
     		scene.actionManager.registerAction(action);
 
-          /*
-      		var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "https://i.imgur.com/bhA9zYm.png");
-      		button.height = "90px";
-      		button.width = "290px";
-      		button.fontFamily = "Blackadder ITC";
-      		button.fontStyle = "italic";
-      		button.fontSize = 36;
-      		button.color = "gold";
-      		button.thickness = 0;
-      		advancedTexture.addControl(button);
+    		var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "https://i.imgur.com/bhA9zYm.png");
+    		button.height = "90px";
+    		button.width = "290px";
+    		button.fontFamily = "Blackadder ITC";
+    		button.fontStyle = "italic";
+    		button.fontSize = 36;
+    		button.color = "gold";
+    		button.thickness = 0;
+    		advancedTexture.addControl(button);
 
-      		button.top = "250px";
-          button.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+    		button.top = "250px";
+        button.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
 
-    			button.onPointerClickObservable.add(function() {
-    				render = 1;
-    			});
-          */
+  			button.onPointerClickObservable.add(function() {
+  				render = 1;
+  			});
 
         var background = new BABYLON.Layer("back", "hit-target-castle-concept-high-res.png", scene);
     		background.isBackground = true;
