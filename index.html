@@ -244,6 +244,9 @@
       	// GUI fullscreen
       	var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui2");
 
+        var foreground = new BABYLON.Layer("fore", "hit-target-castle-facade-concept-high-res.png", scene);
+        foreground.isBackground = false;
+
       	//><><><><><><><><><>< START OF NUMBER LINE CODE ><><><><><><><><><><
 
       	var line = new BABYLON.GUI.Line();
@@ -500,25 +503,22 @@
         var background = new BABYLON.Layer("back", "hit-target-castle-concept-high-res.png", scene);
     		background.isBackground = true;
 
-        var foreground = new BABYLON.Layer("fore", "hit-target-castle-facade-concept-high-res.png", scene);
-    		foreground.isBackground = false;
-
     		return scene;
 
     	};
 
       // call the createLogin function
-      var login_scene = createLogin(engine);
+      var login_scene = createLogin();
 
       // call the createMenu function
-      var menu_scene = createMenu(engine);
+      var menu_scene = createMenu();
 
       // call the createGame function
-      var game_scene = createGame(engine);
+      var game_scene = createGame();
 
       // run the render loop
       engine.runRenderLoop(function(){
-          game_scene.render();
+          login_scene.render();
       });
 
       // the canvas/window resize event handler
