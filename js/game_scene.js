@@ -1,0 +1,249 @@
+var createGame = function () {
+
+  // Creates basic babylon scene
+	var scene = new BABYLON.Scene(engine);
+  // Sets a camera facing the scene
+	var camera = new BABYLON.UniversalCamera("camera1", new BABYLON.Vector3(0, 0, -10), scene);
+	// GUI fullscreen
+	var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui2");
+
+	//><><><><><><><><><>< START OF NUMBER LINE CODE ><><><><><><><><><><
+
+	var line = new BABYLON.GUI.Line();
+	line.x1 = 100;
+	line.y1 = 50;
+	line.x2 = 1700;
+	line.y2 = 50;
+	line.lineWidth = 60;
+	line.dash = [4,100];
+	line.color = "black";
+	advancedTexture.addControl(line);
+
+	var line2 = new BABYLON.GUI.Line();
+	line2.x1 = 100;
+	line2.y1 = 50;
+	line2.x2 = 1660;
+	line2.y2 = 50;
+	line2.lineWidth = 30;
+	line2.dash = [2,50];
+	line2.color = "black";
+	advancedTexture.addControl(line2);
+
+	var line3 = new BABYLON.GUI.Line();
+	line3.x1 = 100;
+	line3.y1 = 50;
+	line3.x2 = 1660;
+	line3.y2 = 50;
+	line3.lineWidth = 3;
+	//line3.dash = [2,50];
+	line3.color = "black";
+	advancedTexture.addControl(line3);
+
+	var line4 = new BABYLON.GUI.Line();
+	line4.x1 = 100;
+	line4.y1 = 50;
+	line4.x2 = 1660;
+	line4.y2 = 50;
+	line4.lineWidth = 10;
+	line4.dash = [1,12];
+	line4.color = "black";
+	advancedTexture.addControl(line4);
+        // ><><><><><><><><><>< END OF NUMBER LINE CODE ><><><><><><><><><><
+
+	var text1 = new BABYLON.GUI.TextBlock();
+	text1.color = "black";
+	text1.height = "43px";
+	text1.fontFamily = "Arial";
+	text1.fontStyle = "bold";
+	text1.fontSize = 35;
+	text1.top = "100px";
+	text1.left = "-49px";
+	advancedTexture.addControl(text1);
+
+	var output = new BABYLON.GUI.TextBlock();
+	output.width = "180px";
+	output.maxWidth = 0.15;
+	output.height = "43px";
+	output.color = "black";
+	output.fontFamily = "Arial";
+
+	output.thickness = 0.15;
+	output.fontSize = 35;
+	output.fontStyle = "bold";
+
+	output.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+	output.top = "100px";
+	output.left = "74px";
+	advancedTexture.addControl(output);
+
+	var text2 = new BABYLON.GUI.TextBlock();
+	text2.text = " x  ";
+	text2.color = "black";
+	text2.height = "43px";
+	text2.fontFamily = "Arial";
+	text2.fontStyle = "bold";
+	text2.fontSize = 35;
+	advancedTexture.addControl(text2);
+
+	text2.top = "100px";
+	text2.left = "-115px";
+
+	var text3 = new BABYLON.GUI.TextBlock();
+	text3.text = " = ";
+	text3.color = "black";
+	text3.height = "43px";
+	text3.fontFamily = "Arial";
+	text3.fontStyle = "bold";
+	text3.fontSize = 35;
+	advancedTexture.addControl(text3);
+	text3.top = "105px";
+	text3.left = "7px";
+
+	var text4 = new BABYLON.GUI.TextBlock();
+	text4.text = "Range";
+	text4.color = "black";
+	text4.height = "70px";
+	text4.width = "150px";
+	text4.fontFamily = "Arial";
+	text4.fontStyle = "bold";
+	text4.fontSize = 45;
+	text4.top = "76px";
+	text4.left = "-360px";
+	advancedTexture.addControl(text4);
+
+	var range = new BABYLON.GUI.TextBlock();
+	range.text = "[]";
+	range.color = "black";
+	range.height = "70px";
+	range.width = "190px";
+	range.fontFamily = "Arial";
+	range.fontStyle = "bold";
+	range.fontSize = 35;
+	range.top = "130px";
+	range.left = "-360px";
+	advancedTexture.addControl(range);
+
+	var param = "";
+	var rand_num1;
+	var rand_num2;
+	var temp1;
+	var temp2;
+	var input;
+	var result;
+
+  var spriteManagerBadKnight = new BABYLON.SpriteManager("spriteManagerBadKnight","hit-target-bad-knight-concept-high-res.png", 1, {width: 320, height: 320}, scene);
+  var spriteManagerBadArcher = new BABYLON.SpriteManager("spriteManagerBadArcher","hit-target-bad-archer-concept-high-res.png", 4, {width: 320, height: 320}, scene);
+  var spriteManagerFire = new BABYLON.SpriteManager("spriteManagerFire","hit-target-catapult-ammo-concept-high-res.png", 1, {width: 320, height: 320}, scene);
+
+  var badKnight1 = new BABYLON.Sprite("badKnight1", spriteManagerBadKnight);
+  var badArcher1 = new BABYLON.Sprite("badArcher1", spriteManagerBadArcher);
+  var badArcher2 = new BABYLON.Sprite("badArcher2", spriteManagerBadArcher);
+  var badArcher3 = new BABYLON.Sprite("badArcher3", spriteManagerBadArcher);
+  var badArcher4 = new BABYLON.Sprite("badArcher4", spriteManagerBadArcher);
+  var fire1 = new BABYLON.Sprite("fire1", spriteManagerFire);
+
+  badKnight1.position.x =  0.02;
+  badKnight1.position.y =  0.175;
+  badArcher1.position.x = -4.25;
+  badArcher1.position.y =  0.02;
+  badArcher2.position.x =  4.25;
+  badArcher2.position.y =  0.02;
+  badArcher3.position.x = -8.0;
+  badArcher3.position.y = -0.1;
+  badArcher4.position.x =  8.0;
+  badArcher4.position.y = -0.1;
+  fire1.position.x =  0.0;
+  fire1.position.y = -4.0;
+
+
+  badKnight1.playAnimation(0, 11, true, 200);
+  badArcher1.playAnimation(0, 11, true, 200);
+  badArcher2.playAnimation(0, 11, true, 200);
+  badArcher3.playAnimation(0, 11, true, 200);
+  badArcher4.playAnimation(0, 11, true, 200);
+  fire1.playAnimation(0, 11, true, 200);
+
+
+	scene.actionManager = new BABYLON.ActionManager(scene);
+    action = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function(event) {
+
+			var key = event.sourceEvent.key;
+			console.log(key) ;
+
+			if (key == "Enter") {
+
+				result = rand_num1 * input;
+				output.text = result.toString();
+
+      } else if (key == "a") {
+
+        rand_num1 = Math.floor((Math.random() * 10) + 1);
+        rand_num2 = Math.floor((Math.random() * 100) + 1);
+        temp1 = rand_num1 * rand_num2;
+        temp2 = rand_num1 * (rand_num2 + 3);
+
+        text2.text = (rand_num1.toString()) + "  x  ";
+        range.text = "[" + (temp1.toString()) + " , " + (temp2.toString()) + "]";
+        output.text = "";
+        text1.text = "";
+        param = "";
+        input = parseInt(param);
+
+      } else if (key == "Backspace") {
+
+				param = param.substring(0, param.length - 1);
+				text1.text = param;
+				input = parseInt(param);
+
+			} else if (key == "0" || key == "1" || key == "2" || key == "3" || key == "4" ||
+                 key == "5" || key == "6" || key == "7" || key == "8" || key == "9" ||
+                 key == ".") {
+
+	      if(param.length < 3) {
+          param += key;
+  			  text1.text = param;
+  	      input = parseInt(param);
+        }
+
+			}
+
+			console.log(text1.text);
+			console.log(typeof param);
+			console.log(typeof input);
+
+		});
+		scene.actionManager.registerAction(action);
+
+/*
+		var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "https://i.imgur.com/bhA9zYm.png");
+		button.height = "90px";
+		button.width = "290px";
+		button.fontFamily = "Blackadder ITC";
+		button.fontStyle = "italic";
+		button.fontSize = 36;
+		button.color = "gold";
+		button.thickness = 0;
+		advancedTexture.addControl(button);
+
+		button.top = "250px";
+            button.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+
+
+			button.onPointerClickObservable.add(function()
+			{
+				engine.runRenderLoop(function()
+				{
+					menu_scene.render();
+				});
+			});
+*/
+
+    var background = new BABYLON.Layer("back", "hit-target-castle-concept-high-res.png", scene);
+		background.isBackground = true;
+
+    var foreground = new BABYLON.Layer("fore", "hit-target-castle-facade-concept-high-res.png", scene);
+		foreground.isBackground = false;
+
+		return scene;
+
+	};
