@@ -39,6 +39,7 @@ function createHow2Play(engine, canvas, message) {                         // fu
 
 	button.onPointerClickObservable.add(function() {
 		message.render = 1;
+    advancedTexture.dispose();
 	});
 
   var background = new BABYLON.Layer("back", "login.png", scene);

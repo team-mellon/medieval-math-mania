@@ -5,7 +5,7 @@ function createGame(engine, canvas, message) {
 	// Sets a camera facing the scene
 	var camera = new BABYLON.UniversalCamera("camera1", new BABYLON.Vector3(0, 0, -10), scene);
 	// GUI fullscreen
-	var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui2");
+	advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui2");
 
 	// var foreground = new BABYLON.Layer("fore", "hit-target-castle-facade-concept-high-res.png", scene);
 	// foreground.isBackground = false;
@@ -251,24 +251,20 @@ advancedTexture.addControl(hitmarker_t);
 		console.log(key) ;
 
 		if (key == "Enter") {
+			result = rand_num1 * input;
 
-					 result = rand_num1 * input;
-	if (result < temp1) {
-		hitmarker_l.alpha = 1;
-		setTimeout(function(){hitmarker_l.alpha = 0}, 2000);
-	}
-	else if (result > temp2) {
-		hitmarker_h.alpha = 1;
-		setTimeout(function(){hitmarker_h.alpha = 0}, 2000);
-	}
-	else {
-		hitmarker_t.alpha = 1;
-		setTimeout(function(){hitmarker_t.alpha = 0}, 2000);
-	}
+			if (result < temp1) {
+				hitmarker_l.alpha = 1;
+				setTimeout(function(){hitmarker_l.alpha = 0}, 2000);
+			}	else if (result > temp2) {
+				hitmarker_h.alpha = 1;
+				setTimeout(function(){hitmarker_h.alpha = 0}, 2000);
+			}	else {
+				hitmarker_t.alpha = 1;
+				setTimeout(function(){hitmarker_t.alpha = 0}, 2000);
+			}
+
 			output.text = result.toString();
-
-		} else if (key == "f") {
-
 			catapult1.playAnimation(0, 23, false, 200);
 
 		} else if (key == "a") {
@@ -326,6 +322,7 @@ advancedTexture.addControl(hitmarker_t);
 
 	button.onPointerClickObservable.add(function() {
 		message.render = 1;
+    advancedTexture.dispose();
 	});
 
 	var background = new BABYLON.Layer("back", "castle.png", scene);

@@ -1,5 +1,11 @@
 function createLogin(engine, canvas, message) {                         // function that returns the login scene
 
+  var onScene = false;
+
+  // if (message.render == 0) {
+    onScene = true;
+  // }
+
   var scene = new BABYLON.Scene(engine);                // create the scene
 
   var camera = new BABYLON.UniversalCamera("camera1", new BABYLON.Vector3(0, 0, -10), scene);
@@ -19,6 +25,7 @@ function createLogin(engine, canvas, message) {                         // funct
   input.background = "lightyellow";
   input.thickness = 0.15;
   input.focusedBackground = "white";
+  input.isEnabled = onScene;
   advancedTexture.addControl(input);
 
   input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
@@ -32,6 +39,7 @@ function createLogin(engine, canvas, message) {                         // funct
   input2.background = "lightyellow";
   input2.thickness = 0.15;
   input2.focusedBackground = "white";
+  input2.isEnabled = onScene;
   advancedTexture.addControl(input2);
 
   input2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
@@ -44,6 +52,7 @@ function createLogin(engine, canvas, message) {                         // funct
   text1.fontFamily = "Blackadder ITC";
   text1.fontStyle = "italic";
   text1.fontSize = 35;
+  text1.isEnabled = onScene;
   advancedTexture.addControl(text1);
 
   text1.top = "-65px";
@@ -56,6 +65,7 @@ function createLogin(engine, canvas, message) {                         // funct
   text2.fontFamily = "Blackadder ITC";
   text2.fontStyle = "italic";
   text2.fontSize = 35;
+  text2.isEnabled = onScene;
   advancedTexture.addControl(text2);
 
   text2.top = "-140px";
@@ -69,6 +79,7 @@ function createLogin(engine, canvas, message) {                         // funct
   button.fontSize = 36;
   button.color = "gold";
   button.thickness = 0;
+  button.isEnabled = onScene;
   advancedTexture.addControl(button);
 
   button.top = "40px";
@@ -76,6 +87,7 @@ function createLogin(engine, canvas, message) {                         // funct
 
   button.onPointerClickObservable.add(function() {
     message.render = 1;
+    advancedTexture.dispose();
   });
 
   var background = new BABYLON.Layer("back", "login.png", scene);

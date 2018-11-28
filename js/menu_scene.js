@@ -1,5 +1,11 @@
 function createMenu(engine, canvas, message) {
 
+  var onScene = false;
+
+  // if (message.render == 1) {
+    onScene = true;
+  // }
+
   // This creates a basic Babylon Scene object (non-mesh)
   var scene = new BABYLON.Scene(engine);
 
@@ -26,7 +32,9 @@ function createMenu(engine, canvas, message) {
   button1.thickness = 0;
   button1.onPointerUpObservable.add(function() {
      message.render = 2;
+     advancedTexture.dispose();
   });
+  button1.isEnabled = onScene;
   panel1.addControl(button1);
 
   var panel2 = new BABYLON.GUI.StackPanel();
@@ -43,7 +51,9 @@ function createMenu(engine, canvas, message) {
   button2.thickness = 0;
   button2.onPointerUpObservable.add(function() {
     message.render = 3;
+    advancedTexture.dispose();
   });
+  button2.isEnabled = onScene;
   panel2.addControl(button2);
 
   var panel3 = new BABYLON.GUI.StackPanel();
@@ -60,7 +70,9 @@ function createMenu(engine, canvas, message) {
   button3.thickness = 0;
   button3.onPointerUpObservable.add(function() {
     message.render = 4;
+    advancedTexture.dispose();
   });
+  button3.isEnabled = onScene;
   panel3.addControl(button3);
 
   var panel4 = new BABYLON.GUI.StackPanel();
@@ -77,7 +89,9 @@ function createMenu(engine, canvas, message) {
   button4.thickness = 0;
   button4.onPointerUpObservable.add(function() {
     message.render = 5;
+    advancedTexture.dispose();
   });
+  button4.isEnabled = onScene;
   panel4.addControl(button4);
 
   var panel5 = new BABYLON.GUI.StackPanel();
@@ -95,7 +109,9 @@ function createMenu(engine, canvas, message) {
   button5.thickness = 0;
   button5.onPointerUpObservable.add(function() {
     message.render = 0;
+    advancedTexture.dispose();
   });
+  button5.isEnabled = onScene;
   panel5.addControl(button5);
 
   var panel6 = new BABYLON.GUI.StackPanel();
@@ -113,7 +129,9 @@ function createMenu(engine, canvas, message) {
   button6.thickness = 0;
   button6.onPointerUpObservable.add(function() {
     message.render = 6;
+    advancedTexture.dispose();
   });
+  button6.isEnabled = onScene;
   panel6.addControl(button6);
 
   var background = new BABYLON.Layer("back", "menu.png", scene);
