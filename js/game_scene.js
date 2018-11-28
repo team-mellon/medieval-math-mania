@@ -173,20 +173,38 @@ advancedTexture.addControl(hitmarker_t);
 
 	var spriteManagerBadKnight = new BABYLON.SpriteManager("spriteManagerBadKnight","bad-knight.png", 1, {width: 320, height: 320}, scene);
 	var spriteManagerBadArcher = new BABYLON.SpriteManager("spriteManagerBadArcher","bad-archer.png", 4, {width: 320, height: 320}, scene);
-	var spriteManagerFire = new BABYLON.SpriteManager("spriteManagerFire","catapult-ammo.png", 20, {width: 320, height: 320}, scene);
+	var spriteManagerFire = new BABYLON.SpriteManager("spriteManagerFire","ammo-concept.png", 20, {width: 320, height: 320}, scene);
+	var spriteManagerCatapult = new BABYLON.SpriteManager("spriteManagerCatapult","res/hit-target-catapult-concept-high-res-full.png", 1, {width: 2560, height: 1280}, scene);
 
 	var badKnight1 = new BABYLON.Sprite("badKnight1", spriteManagerBadKnight);
 	var badArcher1 = new BABYLON.Sprite("badArcher1", spriteManagerBadArcher);
 	var badArcher2 = new BABYLON.Sprite("badArcher2", spriteManagerBadArcher);
 	var badArcher3 = new BABYLON.Sprite("badArcher3", spriteManagerBadArcher);
 	var badArcher4 = new BABYLON.Sprite("badArcher4", spriteManagerBadArcher);
-	// var fire1 = new BABYLON.Sprite("fire1", spriteManagerFire);
+	var fire1 = new BABYLON.Sprite("fire1", spriteManagerFire);
+	var catapult1 = new BABYLON.Sprite("catapult1", spriteManagerCatapult);
 	// var fire2 = new BABYLON.Sprite("fire2", spriteManagerFire);
 	// var fire3 = new BABYLON.Sprite("fire3", spriteManagerFire);
 	// var fire4 = new BABYLON.Sprite("fire4", spriteManagerFire);
 	// var fire5 = new BABYLON.Sprite("fire5", spriteManagerFire);
 
+	catapult1.position.x = 0.0;
+	catapult1.position.y = -2.275;
+	catapult1.width = 8.0;
+	catapult1.height =  4.0;
+
 	badKnight1.position.x =  0.02;
+	badKnight1.position.y =  0.175;
+	badArcher1.position.x = -4.25;
+	badArcher1.position.y =  0.02;
+	badArcher2.position.x =  4.25;
+	badArcher2.position.y =  0.02;
+	badArcher3.position.x = -8.0;
+	badArcher3.position.y = -0.1;
+	badArcher4.position.x =  8.0;
+	badArcher4.position.y = -0.1;
+	fire1.position.x = 0.0;
+	fire1.position.y = -3.6;
 	badKnight1.position.y =  0.175;
 	badArcher1.position.x = -4.25;
 	badArcher1.position.y =  0.02;
@@ -212,7 +230,8 @@ advancedTexture.addControl(hitmarker_t);
 	badArcher2.playAnimation(0, 11, true, 200);
 	badArcher3.playAnimation(0, 11, true, 200);
 	badArcher4.playAnimation(0, 11, true, 200);
-	// fire1.playAnimation(0, 11, true, 200);
+	fire1.playAnimation(0, 11, true, 200);
+	catapult1.playAnimation(0, 23, true, 200);
 	// fire2.playAnimation(0, 11, true, 200);
 	// fire3.playAnimation(0, 11, true, 200);
 	// fire4.playAnimation(0, 11, true, 200);
@@ -239,7 +258,7 @@ advancedTexture.addControl(hitmarker_t);
 		hitmarker_l.alpha = 1;
 		setTimeout(function(){hitmarker_l.alpha = 0}, 2000);
 	}
-	else if ( result > temp2) {
+	else if (result > temp2) {
 		hitmarker_h.alpha = 1;
 		setTimeout(function(){hitmarker_h.alpha = 0}, 2000);
 	}
