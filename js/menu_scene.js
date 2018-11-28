@@ -32,7 +32,7 @@ function createMenu(engine, canvas, message) {
   button1.thickness = 0;
   button1.onPointerUpObservable.add(function() {
      message.render = 2;
-     advancedTexture.dispose();
+     // advancedTexture.dispose();
   });
   button1.isEnabled = onScene;
   panel1.addControl(button1);
@@ -51,7 +51,7 @@ function createMenu(engine, canvas, message) {
   button2.thickness = 0;
   button2.onPointerUpObservable.add(function() {
     message.render = 3;
-    advancedTexture.dispose();
+    // advancedTexture.dispose();
   });
   button2.isEnabled = onScene;
   panel2.addControl(button2);
@@ -70,7 +70,7 @@ function createMenu(engine, canvas, message) {
   button3.thickness = 0;
   button3.onPointerUpObservable.add(function() {
     message.render = 4;
-    advancedTexture.dispose();
+    // advancedTexture.dispose();
   });
   button3.isEnabled = onScene;
   panel3.addControl(button3);
@@ -89,7 +89,7 @@ function createMenu(engine, canvas, message) {
   button4.thickness = 0;
   button4.onPointerUpObservable.add(function() {
     message.render = 5;
-    advancedTexture.dispose();
+    // advancedTexture.dispose();
   });
   button4.isEnabled = onScene;
   panel4.addControl(button4);
@@ -109,7 +109,7 @@ function createMenu(engine, canvas, message) {
   button5.thickness = 0;
   button5.onPointerUpObservable.add(function() {
     message.render = 0;
-    advancedTexture.dispose();
+    // advancedTexture.dispose();
   });
   button5.isEnabled = onScene;
   panel5.addControl(button5);
@@ -129,7 +129,7 @@ function createMenu(engine, canvas, message) {
   button6.thickness = 0;
   button6.onPointerUpObservable.add(function() {
     message.render = 6;
-    advancedTexture.dispose();
+    // advancedTexture.dispose();
   });
   button6.isEnabled = onScene;
   panel6.addControl(button6);
