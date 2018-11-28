@@ -231,7 +231,6 @@ advancedTexture.addControl(hitmarker_t);
 	badArcher3.playAnimation(0, 11, true, 200);
 	badArcher4.playAnimation(0, 11, true, 200);
 	fire1.playAnimation(0, 11, true, 200);
-	catapult1.playAnimation(0, 23, true, 200);
 	// fire2.playAnimation(0, 11, true, 200);
 	// fire3.playAnimation(0, 11, true, 200);
 	// fire4.playAnimation(0, 11, true, 200);
@@ -267,6 +266,10 @@ advancedTexture.addControl(hitmarker_t);
 		setTimeout(function(){hitmarker_t.alpha = 0}, 2000);
 	}
 			output.text = result.toString();
+
+		} else if (key == "f") {
+
+			catapult1.playAnimation(0, 23, false, 200);
 
 		} else if (key == "a") {
 
