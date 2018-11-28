@@ -58,7 +58,7 @@ function createSettings(engine, canvas, message) {                         // fu
   advancedTexture.addControl(text2);
 
   text2.top = "-140px";
-  text2.left = "-43px";	var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "login-button.png");
+  text2.left = "-43px";
 
 	var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "login-button.png");
 	button.height = "90px";

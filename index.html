@@ -7,6 +7,7 @@
     <script src="js/login_scene.js"></script>
     <script src="js/menu_scene.js"></script>
     <script src="js/game_scene.js"></script>
+    <script src="js/stats_scene.js"></script>
     <script src="js/h2p_scene.js"></script>
     <script src="js/settings_scene.js"></script>
   </head>
@@ -30,31 +31,20 @@
     <canvas id="renderCanvas"></canvas>
     <script type="text/javascript">
 
-      window.addEventListener('DOMContentLoaded', function(){   // Start game when DOM loads
-
-        var message = { render: 0 };
+      window.addEventListener('DOMContentLoaded', function() {   // Start game when DOM loads
 
         var canvas = document.getElementById('renderCanvas');   // get the canvas DOM element
         var engine = new BABYLON.Engine(canvas, true);          // load the 3D engine
+        var message = { render: 0 };
 
-        // call the createLogin function
-        var login_scene = createLogin(engine, canvas, message);
+        var login_scene = createLogin(engine, canvas, message); // call the createLogin function
+        var menu_scene = createMenu(engine, canvas, message); // call the createMenu function
+        var game_scene = createGame(engine, canvas, message); // call the createGame function
+        var h2p_scene = createHow2Play(engine, canvas, message); // call the createGame function
+        var stats_scene = createStats(engine, canvas, message); // call the createGame function
+        var settings_scene = createSettings(engine, canvas, message); // call the createGame function
 
-        // call the createMenu function
-        var menu_scene = createMenu(engine, canvas, message);
-
-        // call the createGame function
-        var game_scene = createGame(engine, canvas, message);
-
-        // call the createGame function
-        var settings_scene = createSettings(engine, canvas, message);
-
-        // call the createGame function
-        var h2p_scene = createHow2Play(engine, canvas, message);
-
-        // run the render loop
-        engine.runRenderLoop(function(){
-
+        engine.runRenderLoop(function() { // run the render loop
           switch(message.render) {
             case 0:
               login_scene.render();
@@ -66,20 +56,22 @@
               game_scene.render();
               break;
             case 3:
-              h2p_scene.render();
+              stats_scene.render();
               break;
             case 4:
+              h2p_scene.render();
+              break;
+            case 5:
               settings_scene.render();
               break;
             default:
               login_scene.render()
               break;
           }
-
         });
 
         // the canvas/window resize event handler
-        window.addEventListener('resize', function(){
+        window.addEventListener('resize', function() {
             engine.resize();
         });
 

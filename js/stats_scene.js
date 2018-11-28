@@ -1,4 +1,4 @@
-function createHow2Play(engine, canvas, message) {                         // function that returns the login scene
+function createStats(engine, canvas, message) {                         // function that returns the login scene
 
   var scene = new BABYLON.Scene(engine);                // create the scene
 
@@ -11,8 +11,20 @@ function createHow2Play(engine, canvas, message) {                         // fu
   // GUI
   var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
+  var text1 = new BABYLON.GUI.TextBlock();
+  text1.text = "Hits: 400";
+  text1.color = "saddlebrown";
+  text1.height = "43px";
+  text1.fontFamily = "Blackadder ITC";
+  text1.fontStyle = "italic";
+  text1.fontSize = 35;
+  advancedTexture.addControl(text1);
+
+  text1.top = "-65px";
+  text1.left = "-45px";
+
   var text2 = new BABYLON.GUI.TextBlock();
-  text2.text = "Its just math..";
+  text2.text = "Misses: 400";
   text2.color = "saddlebrown";
   text2.height = "43px";
   text2.fontFamily = "Blackadder ITC";
@@ -23,7 +35,7 @@ function createHow2Play(engine, canvas, message) {                         // fu
   text2.top = "-140px";
   text2.left = "-43px";
 
-	var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "login-button.png");
+  var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "login-button.png");
 	button.height = "90px";
 	button.width = "290px";
 	button.fontFamily = "Blackadder ITC";

@@ -42,7 +42,7 @@ function createMenu(engine, canvas, message) {
   button2.color = "gold";
   button2.thickness = 0;
   button2.onPointerUpObservable.add(function() {
-    button2.background = "blue";
+    message.render = 3;
   });
   panel2.addControl(button2);
 
@@ -59,7 +59,7 @@ function createMenu(engine, canvas, message) {
   button3.color = "gold";
   button3.thickness = 0;
   button3.onPointerUpObservable.add(function() {
-    message.render = 3;
+    message.render = 4;
   });
   panel3.addControl(button3);
 
@@ -76,7 +76,7 @@ function createMenu(engine, canvas, message) {
   button4.color = "gold";
   button4.thickness = 0;
   button4.onPointerUpObservable.add(function() {
-    message.render = 4;
+    message.render = 5;
   });
   panel4.addControl(button4);
 
