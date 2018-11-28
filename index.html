@@ -7,6 +7,7 @@
     <script src="js/login_scene.js"></script>
     <script src="js/menu_scene.js"></script>
     <script src="js/game_scene.js"></script>
+    <script src="js/settings_scene.js"></script>
   </head>
     <style>
       html, body {
@@ -44,6 +45,9 @@
         // call the createGame function
         var game_scene = createGame(engine, canvas, message);
 
+        // call the createGame function
+        var settings_scene = createSettings(engine, canvas, message);
+
         // run the render loop
         engine.runRenderLoop(function(){
 
@@ -56,6 +60,9 @@
               break;
             case 2:
               game_scene.render();
+              break;
+            case 3:
+              settings_scene.render();
               break;
             default:
               login_scene.render()

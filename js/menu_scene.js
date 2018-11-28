@@ -76,7 +76,7 @@ function createMenu(engine, canvas, message) {
   button4.color = "gold";
   button4.thickness = 0;
   button4.onPointerUpObservable.add(function() {
-    button4.background = "blue";
+    message.render = 3;
   });
   panel4.addControl(button4);
 
