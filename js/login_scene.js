@@ -1,16 +1,12 @@
-function createLogin(engine, canvas) {
+function createLogin(engine, canvas, message) {                         // function that returns the login scene
 
-  // This creates a basic Babylon Scene object (non-mesh)
-  var scene = new BABYLON.Scene(engine);
+  var scene = new BABYLON.Scene(engine);                // create the scene
 
-  // This creates and positions a free camera (non-mesh)
   var camera = new BABYLON.UniversalCamera("camera1", new BABYLON.Vector3(0, 0, -10), scene);
+                                                        // creates camera pointed at the scene
+  camera.setTarget(BABYLON.Vector3.Zero());             // targets the camera to scene origin
 
-  // This targets the camera to scene origin
-  camera.setTarget(BABYLON.Vector3.Zero());
-
-  // This attaches the camera to the canvas
-  camera.attachControl(canvas, true);
+  camera.attachControl(canvas, true);                   // attaches the camera to the canvas
 
   // GUI
   var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
@@ -65,7 +61,7 @@ function createLogin(engine, canvas) {
   text2.top = "-140px";
   text2.left = "-43px";
 
-  var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Login", "res/login_button.png");
+  var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Login", "login-button.png");
   button.height = "90px";
   button.width = "290px";
   button.fontFamily = "Blackadder ITC";
@@ -79,12 +75,10 @@ function createLogin(engine, canvas) {
   //button.left = "125px";
 
   button.onPointerClickObservable.add(function() {
-    engine.runRenderLoop(function(){
-      menu_scene.render();
-    });
+    message.render = 1;
   });
 
-  var background = new BABYLON.Layer("back", "res/hit-target-login-concept-high-res.png", scene);
+  var background = new BABYLON.Layer("back", "login.png", scene);
   background.isBackground = true;
 
   return scene;
