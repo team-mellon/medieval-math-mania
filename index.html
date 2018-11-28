@@ -10,6 +10,7 @@
     <script src="js/stats_scene.js"></script>
     <script src="js/h2p_scene.js"></script>
     <script src="js/settings_scene.js"></script>
+    <script src="js/account_scene.js"></script>
   </head>
     <style>
       html, body {
@@ -43,6 +44,7 @@
         var h2p_scene = createHow2Play(engine, canvas, message); // call the createGame function
         var stats_scene = createStats(engine, canvas, message); // call the createGame function
         var settings_scene = createSettings(engine, canvas, message); // call the createGame function
+        var account_scene = createAccount(engine, canvas, message); // call the createGame function
 
         engine.runRenderLoop(function() { // run the render loop
           switch(message.render) {
@@ -63,6 +65,9 @@
               break;
             case 5:
               settings_scene.render();
+              break;
+            case 6:
+              account_scene.render();
               break;
             default:
               login_scene.render()
