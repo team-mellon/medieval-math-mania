@@ -1,4 +1,4 @@
-var createLogin = function () {
+function createLogin(engine, canvas) {
 
   // This creates a basic Babylon Scene object (non-mesh)
   var scene = new BABYLON.Scene(engine);
@@ -65,7 +65,7 @@ var createLogin = function () {
   text2.top = "-140px";
   text2.left = "-43px";
 
-  var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Login", "login_button.png");
+  var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Login", "res/login_button.png");
   button.height = "90px";
   button.width = "290px";
   button.fontFamily = "Blackadder ITC";
@@ -84,7 +84,7 @@ var createLogin = function () {
     });
   });
 
-  var background = new BABYLON.Layer("back", "login_scroll.png", scene);
+  var background = new BABYLON.Layer("back", "res/hit-target-login-concept-high-res.png", scene);
   background.isBackground = true;
 
   return scene;

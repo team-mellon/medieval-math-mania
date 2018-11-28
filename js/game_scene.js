@@ -1,4 +1,4 @@
-var createGame = function () {
+function createGame(engine, canvas) {
 
   // Creates basic babylon scene
 	var scene = new BABYLON.Scene(engine);
@@ -131,9 +131,9 @@ var createGame = function () {
 	var input;
 	var result;
 
-  var spriteManagerBadKnight = new BABYLON.SpriteManager("spriteManagerBadKnight","hit-target-bad-knight-concept-high-res.png", 1, {width: 320, height: 320}, scene);
-  var spriteManagerBadArcher = new BABYLON.SpriteManager("spriteManagerBadArcher","hit-target-bad-archer-concept-high-res.png", 4, {width: 320, height: 320}, scene);
-  var spriteManagerFire = new BABYLON.SpriteManager("spriteManagerFire","hit-target-catapult-ammo-concept-high-res.png", 1, {width: 320, height: 320}, scene);
+  var spriteManagerBadKnight = new BABYLON.SpriteManager("spriteManagerBadKnight","res/hit-target-bad-knight-concept-high-res.png", 1, {width: 320, height: 320}, scene);
+  var spriteManagerBadArcher = new BABYLON.SpriteManager("spriteManagerBadArcher","res/hit-target-bad-archer-concept-high-res.png", 4, {width: 320, height: 320}, scene);
+  var spriteManagerFire = new BABYLON.SpriteManager("spriteManagerFire","res/hit-target-catapult-ammo-concept-high-res.png", 1, {width: 320, height: 320}, scene);
 
   var badKnight1 = new BABYLON.Sprite("badKnight1", spriteManagerBadKnight);
   var badArcher1 = new BABYLON.Sprite("badArcher1", spriteManagerBadArcher);
@@ -238,10 +238,10 @@ var createGame = function () {
 			});
 */
 
-    var background = new BABYLON.Layer("back", "hit-target-castle-concept-high-res.png", scene);
+    var background = new BABYLON.Layer("back", "res/hit-target-castle-concept-high-res.png", scene);
 		background.isBackground = true;
 
-    var foreground = new BABYLON.Layer("fore", "hit-target-castle-facade-concept-high-res.png", scene);
+    var foreground = new BABYLON.Layer("fore", "res/hit-target-castle-facade-concept-high-res.png", scene);
 		foreground.isBackground = false;
 
 		return scene;

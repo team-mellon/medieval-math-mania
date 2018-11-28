@@ -4,6 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
     <title>Hit Target Math Game</title>
     <script src="js/libs/babylon.custom.js"></script>
+    <script src="js/login_scene.js"></script>
+    <script src="js/menu_scene.js"></script>
+    <script src="js/game_scene.js"></script>
     <style>
         html, body {
             overflow: hidden;
@@ -23,28 +26,26 @@
   <body>
       <canvas id="renderCanvas"></canvas>
   </body>
-  <script src="js/login_scene.js"></script>
-  <script src="js/menu_scene.js"></script>
-  <script src="js/game_scene.js"></script>
-  <script type="module">
+  <script type="text/javascript">
     window.addEventListener('DOMContentLoaded', function(){
 
         // get the canvas DOM element
       var canvas = document.getElementById('renderCanvas');
         // load the 3D engine
       var engine = new BABYLON.Engine(canvas, true);
+
         // call the createLogin function
-      var login_scene = createLogin();
+      var login_scene = createLogin(engine, canvas);
 
         // call the createMenu function
-      var menu_scene = createMenu();
+      var menu_scene = createMenu(engine, canvas);
 
         // call the createGame function
-      var game_scene = createGame();
+      var game_scene = createGame(engine, canvas);
 
         // run the render loop
       engine.runRenderLoop(function(){
-          menu_scene.render();
+          login_scene.render();
       });
 
         // the canvas/window resize event handler

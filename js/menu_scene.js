@@ -1,4 +1,4 @@
-var createMenu = function () {
+function createMenu(engine, canvas) {
 
   // This creates a basic Babylon Scene object (non-mesh)
   var scene = new BABYLON.Scene(engine);
@@ -107,7 +107,7 @@ var createMenu = function () {
   });
   panel6.addControl(button6);
 
-  var background = new BABYLON.Layer("back", "hit-target-castle-concept-high-res.png", scene);
+  var background = new BABYLON.Layer("back", "res/hit-target-castle-concept-high-res.png", scene);
   background.isBackground = true;
 
   return scene;
