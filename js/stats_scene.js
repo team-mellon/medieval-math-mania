@@ -1,4 +1,4 @@
-function createStats(engine, canvas, message) {                         // function that returns the login scene
+function createStats(engine, canvas, message, database) {                         // function that returns the login scene
 
   var scene = new BABYLON.Scene(engine);                // create the scene
 
@@ -12,7 +12,7 @@ function createStats(engine, canvas, message) {                         // funct
   var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
   var text1 = new BABYLON.GUI.TextBlock();
-  text1.text = "Hits: 400";
+  text1.text = "Hits: " + database.stats.a12b3c4d.hits;
   text1.color = "saddlebrown";
   text1.height = "43px";
   text1.fontFamily = "Blackadder ITC";
@@ -24,7 +24,7 @@ function createStats(engine, canvas, message) {                         // funct
   text1.left = "-45px";
 
   var text2 = new BABYLON.GUI.TextBlock();
-  text2.text = "Misses: 400";
+  text2.text = "Misses: " + database.stats.a12b3c4d.misses;
   text2.color = "saddlebrown";
   text2.height = "43px";
   text2.fontFamily = "Blackadder ITC";

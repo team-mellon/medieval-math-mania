@@ -11,6 +11,7 @@
     <script src="js/h2p_scene.js"></script>
     <script src="js/settings_scene.js"></script>
     <script src="js/account_scene.js"></script>
+    <script src="db/db.js"></script>
   </head>
     <style>
       html, body {
@@ -39,13 +40,15 @@
           render: 0
         };
 
-        var login_scene = createLogin(engine, canvas, message); // call the createLogin function
-        var menu_scene = createMenu(engine, canvas, message); // call the createMenu function
-        var game_scene = createGame(engine, canvas, message); // call the createGame function
-        var h2p_scene = createHow2Play(engine, canvas, message); // call the createGame function
-        var stats_scene = createStats(engine, canvas, message); // call the createGame function
-        var settings_scene = createSettings(engine, canvas, message); // call the createGame function
-        var account_scene = createAccount(engine, canvas, message); // call the createGame function
+        var database = db;
+
+        var login_scene = createLogin(engine, canvas, message, database); // call the createLogin function
+        var menu_scene = createMenu(engine, canvas, message, database); // call the createMenu function
+        var game_scene = createGame(engine, canvas, message, database); // call the createGame function
+        var h2p_scene = createHow2Play(engine, canvas, message, database); // call the createGame function
+        var stats_scene = createStats(engine, canvas, message, database); // call the createGame function
+        var settings_scene = createSettings(engine, canvas, message, database); // call the createGame function
+        var account_scene = createAccount(engine, canvas, message, database); // call the createGame function
 
         engine.runRenderLoop(function() { // run the render loop
           switch(message.render) {

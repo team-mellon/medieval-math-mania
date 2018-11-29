@@ -1,4 +1,4 @@
-function createAccount(engine, canvas, message) {                         // function that returns the login scene
+function createAccount(engine, canvas, message, database) {                         // function that returns the login scene
 
   var scene = new BABYLON.Scene(engine);                // create the scene
 
@@ -12,7 +12,7 @@ function createAccount(engine, canvas, message) {                         // fun
   var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
   var text1 = new BABYLON.GUI.TextBlock();
-  text1.text = "Username";
+  text1.text = "Password: " + database.users.a12b3c4d.password;
   text1.color = "saddlebrown";
   text1.height = "43px";
   text1.fontFamily = "Blackadder ITC";
@@ -24,7 +24,7 @@ function createAccount(engine, canvas, message) {                         // fun
   text1.left = "-45px";
 
   var text2 = new BABYLON.GUI.TextBlock();
-  text2.text = "Password";
+  text2.text = "Username: " + database.users.a12b3c4d.username;
   text2.color = "saddlebrown";
   text2.height = "43px";
   text2.fontFamily = "Blackadder ITC";

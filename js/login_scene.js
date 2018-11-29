@@ -1,4 +1,4 @@
-function createLogin(engine, canvas, message) {                         // function that returns the login scene
+function createLogin(engine, canvas, message, database) {                         // function that returns the login scene
 
   var onScene = false;
 

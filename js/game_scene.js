@@ -1,4 +1,4 @@
-function createGame(engine, canvas, message) {
+function createGame(engine, canvas, message, database) {
 
 	// Creates basic babylon scene
 	var scene = new BABYLON.Scene(engine);

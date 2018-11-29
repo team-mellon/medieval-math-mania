@@ -1,4 +1,4 @@
-function createSettings(engine, canvas, message) {                         // function that returns the login scene
+function createSettings(engine, canvas, message, database) {                         // function that returns the login scene
 
   var scene = new BABYLON.Scene(engine);                // create the scene
 

@@ -1,4 +1,4 @@
-function createMenu(engine, canvas, message) {
+function createMenu(engine, canvas, message, database) {
 
   var onScene = false;
 
