@@ -1,17 +1,21 @@
-function createSettings(engine, canvas, message, database) {                         // function that returns the login scene
+function createSettings(engine, canvas, message, database) {                    // function that returns the settings scene
 
-  var scene = new BABYLON.Scene(engine);                // create the scene
+  var scene = new BABYLON.Scene(engine);                                        // create the scene
 
-  var camera = new BABYLON.UniversalCamera("camera1", new BABYLON.Vector3(0, 0, -10), scene);
-                                                        // creates camera pointed at the scene
-  camera.setTarget(BABYLON.Vector3.Zero());             // targets the camera to scene origin
+  var camera = new BABYLON.UniversalCamera(
+    "settings_cam",
+    new BABYLON.Vector3(0, 0, -10),
+    scene);                                                                     // creates camera pointed at the scene
+  camera.setTarget(BABYLON.Vector3.Zero());                                     // targets the camera to scene origin
+  camera.attachControl(canvas, true);                                           // attaches the camera to the canvas
 
-  camera.attachControl(canvas, true);                   // attaches the camera to the canvas
+  var background = new BABYLON.Layer("bg", "res/login.png", scene, true);       // background
 
   // GUI
-  var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-  advancedTexture.idealWidth = 1920;
-  advancedTexture.idealHeight = 1080;
+  var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
+  advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
+  advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
+  var enable = true;    
 
   var input = new BABYLON.GUI.Slider();
   input.minimum = 0;
@@ -21,7 +25,7 @@ function createSettings(engine, canvas, message, database) {                    
   input.width = "200px";
   input.onValueChangedObservable.add(function(value) {
   });
-  advancedTexture.addControl(input);
+  advTexture.addControl(input);
 
   input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
   input.top = "-110px";
@@ -33,7 +37,7 @@ function createSettings(engine, canvas, message, database) {                    
   input2.color = "green";
   input2.onIsCheckedChangedObservable.add(function(value) {
   });
-  advancedTexture.addControl(input2);
+  advTexture.addControl(input2);
 
   input2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
   input2.top = "-30px";
@@ -45,7 +49,7 @@ function createSettings(engine, canvas, message, database) {                    
   text1.fontFamily = "Blackadder ITC";
   text1.fontStyle = "italic";
   text1.fontSize = 35;
-  advancedTexture.addControl(text1);
+  advTexture.addControl(text1);
 
   text1.top = "-65px";
   text1.left = "-45px";
@@ -57,12 +61,12 @@ function createSettings(engine, canvas, message, database) {                    
   text2.fontFamily = "Blackadder ITC";
   text2.fontStyle = "italic";
   text2.fontSize = 35;
-  advancedTexture.addControl(text2);
+  advTexture.addControl(text2);
 
   text2.top = "-140px";
   text2.left = "-43px";
 
-	var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "login-button.png");
+	var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "res/login-button.png");
 	button.height = "90px";
 	button.width = "290px";
 	button.fontFamily = "Blackadder ITC";
@@ -70,19 +74,15 @@ function createSettings(engine, canvas, message, database) {                    
 	button.fontSize = 36;
 	button.color = "gold";
 	button.thickness = 0;
-	advancedTexture.addControl(button);
-
-	button.top = "300px";
-	button.left = "-600px"
+	button.top = "350px";
+	button.left = "-750px";
+	advTexture.addControl(button);
 	// button.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
 
 	button.onPointerClickObservable.add(function() {
 		message.render = 1;
-    // advancedTexture.dispose();
+    // advTexture.dispose();
 	});
-
-  var background = new BABYLON.Layer("back", "login.png", scene);
-  background.isBackground = true;
 
   return scene;
 

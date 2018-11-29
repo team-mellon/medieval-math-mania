@@ -1,99 +1,91 @@
-function createLogin(engine, canvas, message, database) {                         // function that returns the login scene
+function createLogin(engine, canvas, message, database) {                       // function that returns the login scene
 
-  var onScene = false;
+  var scene = new BABYLON.Scene(engine);                                        // create the scene
 
-  // if (message.render == 0) {
-    onScene = true;
-  // }
+  var camera = new BABYLON.UniversalCamera(
+    "login_cam",
+    new BABYLON.Vector3(0, 0, -10),
+    scene);                                                                     // creates camera pointed at the scene
+  camera.setTarget(BABYLON.Vector3.Zero());                                     // targets the camera to scene origin
+  camera.attachControl(canvas, true);                                           // attaches the camera to the canvas
 
-  var scene = new BABYLON.Scene(engine);                // create the scene
-
-  var camera = new BABYLON.UniversalCamera("camera1", new BABYLON.Vector3(0, 0, -10), scene);
-                                                        // creates camera pointed at the scene
-  camera.setTarget(BABYLON.Vector3.Zero());             // targets the camera to scene origin
-
-  camera.attachControl(canvas, true);                   // attaches the camera to the canvas
+  var background = new BABYLON.Layer("bg", "res/login.png", scene, true);       // background layer
 
   // GUI
-  var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-  advancedTexture.idealWidth = 1920;
-  advancedTexture.idealHeight = 1080;
+  var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
+  advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
+  advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
+  var enable = true;                                                            // render enable bit for the ADT controls
 
-  var input = new BABYLON.GUI.InputText();
-  input.width = "180px";
-  input.maxWidth = 0.15;
-  input.height = "35px";
-  input.color = "black";
-  input.background = "lightyellow";
-  input.thickness = 0.15;
-  input.focusedBackground = "white";
-  input.isEnabled = onScene;
-  advancedTexture.addControl(input);
+  var username_text = new BABYLON.GUI.TextBlock();                              // username textblock
+  username_text.top = "-140px";
+  username_text.left = "-43px";
+  username_text.height = "43px";
+  username_text.color = "saddlebrown";
+  username_text.fontFamily = "Blackadder ITC";
+  username_text.fontStyle = "italic";
+  username_text.fontSize = 35;
+  username_text.text = "Username";
+  username_text.isEnabled = enable;
 
-  input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-  input.top = "-110px";
+  var username_input = new BABYLON.GUI.InputText();                             // username input box
+  username_input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+  username_input.top = "-110px";
+  username_input.width = "180px";
+  username_input.height = "35px";
+  username_input.maxWidth = 0.15;
+  username_input.color = "black";
+  username_input.background = "lightyellow";
+  username_input.thickness = 0.15;
+  username_input.focusedBackground = "white";
+  username_input.isEnabled = enable;
+  var password_text = new BABYLON.GUI.TextBlock();                              // password textblock
+  password_text.top = "-65px";
+  password_text.left = "-45px";
+  password_text.height = "43px";
+  password_text.color = "saddlebrown";
+  password_text.fontFamily = "Blackadder ITC";
+  password_text.fontStyle = "italic";
+  password_text.fontSize = 35;
+  password_text.text = "Password";
+  password_text.isEnabled = enable;
 
-  var input2 = new BABYLON.GUI.InputPassword();
-  input2.width = "180px";
-  input2.maxwidth = 0.15;
-  input2.height = "35px";
-  input2.color = "black";
-  input2.background = "lightyellow";
-  input2.thickness = 0.15;
-  input2.focusedBackground = "white";
-  input2.isEnabled = onScene;
-  advancedTexture.addControl(input2);
+  var password_input = new BABYLON.GUI.InputPassword();                         // password input box
+  password_input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+  password_input.top = "-30px";
+  password_input.width = "180px";
+  password_input.height = "35px";
+  password_input.maxwidth = 0.15;
+  password_input.color = "black";
+  password_input.background = "lightyellow";
+  password_input.thickness = 0.15;
+  password_input.focusedBackground = "white";
+  password_input.isEnabled = enable;
 
-  input2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-  input2.top = "-30px";
-
-  var text1 = new BABYLON.GUI.TextBlock();
-  text1.text = "Password";
-  text1.color = "saddlebrown";
-  text1.height = "43px";
-  text1.fontFamily = "Blackadder ITC";
-  text1.fontStyle = "italic";
-  text1.fontSize = 35;
-  text1.isEnabled = onScene;
-  advancedTexture.addControl(text1);
-
-  text1.top = "-65px";
-  text1.left = "-45px";
-
-  var text2 = new BABYLON.GUI.TextBlock();
-  text2.text = "Username";
-  text2.color = "saddlebrown";
-  text2.height = "43px";
-  text2.fontFamily = "Blackadder ITC";
-  text2.fontStyle = "italic";
-  text2.fontSize = 35;
-  text2.isEnabled = onScene;
-  advancedTexture.addControl(text2);
-
-  text2.top = "-140px";
-  text2.left = "-43px";
-
-  var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Login", "login-button.png");
-  button.height = "90px";
-  button.width = "290px";
-  button.fontFamily = "Blackadder ITC";
-  button.fontStyle = "italic";
-  button.fontSize = 36;
-  button.color = "gold";
-  button.thickness = 0;
-  button.isEnabled = onScene;
-  advancedTexture.addControl(button);
-
-  button.top = "40px";
-  //button.left = "125px";
-
-  button.onPointerClickObservable.add(function() {
+  var login_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton(
+    "login_button",
+    "Login",
+    "res/login-button.png"
+  );                                                                            // login button
+  login_button.top = "260px";
+  login_button.height = "90px";
+  login_button.width = "290px";
+  login_button.color = "gold";
+  login_button.thickness = 0;
+  login_button.fontFamily = "Blackadder ITC";
+  login_button.fontStyle = "italic";
+  login_button.fontSize = 36;
+  login_button.isEnabled = enable;
+  login_button.onPointerClickObservable.add(function() {
     message.render = 1;
-    // advancedTexture.dispose();
+    // advTexture.dispose();
   });
 
-  var background = new BABYLON.Layer("back", "login.png", scene);
-  background.isBackground = true;
+  advTexture.addControl(username_text);                                         // add controls to texture
+  advTexture.addControl(username_input);
+  advTexture.addControl(password_text);
+  advTexture.addControl(password_input);
+  advTexture.addControl(login_button);
 
   return scene;
 
