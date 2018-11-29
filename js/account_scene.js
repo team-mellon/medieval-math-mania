@@ -5,7 +5,8 @@ function createAccount(engine, canvas, message, database) {                     
   var camera = new BABYLON.UniversalCamera(
     "account_cam",
     new BABYLON.Vector3(0, 0, -10),
-    scene);                                                                     // creates camera pointed at the scene
+    scene
+  );                                                                     // creates camera pointed at the scene
   camera.setTarget(BABYLON.Vector3.Zero());                                     // targets the camera to scene origin
   camera.attachControl(canvas, true);                                           // attaches the camera to the canvas
 
