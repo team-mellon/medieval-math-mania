@@ -10,7 +10,10 @@ function createMenu(engine, canvas, message, database) {                        
   camera.attachControl(canvas, true);                                           // attaches the camera to the canvas
 
   var background = new BABYLON.Layer("bg", "res/menu.png", scene, true);        // background layer
-
+  
+  //music
+  var music = new BABYLON.Sound("achaidh_cheide", "resources/music/achaidh_cheide.wav", scene, null, { loop: true, autoplay: true });
+  
   // GUI
   var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
   advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
