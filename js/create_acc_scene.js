@@ -122,7 +122,7 @@ function createCreateAcc(engine, canvas, message, database) {
     username_input.isEnabled = enable;
 
 
-    var password_input = new BABYLON.GUI.InputText();  // password input box
+    var password_input = new BABYLON.GUI.InputPassword();  // password input box
     password_input.top = "49px";
     password_input.left = "-154px"; 
     password_input.width = "300px";
@@ -135,7 +135,7 @@ function createCreateAcc(engine, canvas, message, database) {
     password_input.isEnabled = enable;
 
 
-    var re_password_input = new BABYLON.GUI.InputText();  // re_password input box
+    var re_password_input = new BABYLON.GUI.InputPassword();  // re_password input box
     re_password_input.top = "49px";
     re_password_input.left = "200px"; 
     re_password_input.width = "300px";
@@ -149,18 +149,40 @@ function createCreateAcc(engine, canvas, message, database) {
 
 
     var submit_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("submit_button", "SUBMIT", "res/sword-button-left.png");
-    submit_button.top = "200px";
+    submit_button.top = "150px";
+    submit_button.left= "-120px";
     submit_button.height = "70px";
     submit_button.width = "260px";
     submit_button.color = "red";
     submit_button.thickness = 0;
     submit_button.fontFamily = "Blackadder ITC";
     submit_button.fontStyle = "bold";
-    submit_button.fontSize = 20;
+    submit_button.fontSize = 25;
     submit_button.isEnabled = enable;
 
     
-        
+    var cancel_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("cancel_button", "CANCEL", "res/sword-button-right.png");
+    cancel_button.top = "150px";
+    cancel_button.left= "180px";
+    cancel_button.height = "70px";
+    cancel_button.width = "260px";
+    cancel_button.color = "red";
+    cancel_button.thickness = 0;
+    cancel_button.fontFamily = "Blackadder ITC";
+    cancel_button.fontStyle = "bold";
+    cancel_button.fontSize = 25;
+    cancel_button.isEnabled = enable;
+    cancel_button.onPointerClickObservable.add(function() {
+	firstname_input.text = "";
+	lastname_input.text = "";
+	username_input.text = "";
+	password_input.text = "";
+	re_password_input.text = "";
+	message.render = 0;
+    });
+	
+
+    
     
     advTexture.addControl(firstname_text);
     advTexture.addControl(lastname_text);
@@ -174,5 +196,6 @@ function createCreateAcc(engine, canvas, message, database) {
     advTexture.addControl(re_password_input);
 
     advTexture.addControl(submit_button);
+    advTexture.addControl(cancel_button);
     return scene;
 };
