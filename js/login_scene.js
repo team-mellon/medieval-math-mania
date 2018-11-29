@@ -39,6 +39,7 @@ function createLogin(engine, canvas, message, database) {                       
   username_input.thickness = 0.15;
   username_input.focusedBackground = "white";
   username_input.isEnabled = enable;
+
   var password_text = new BABYLON.GUI.TextBlock();                              // password textblock
   password_text.top = "-65px";
   password_text.left = "-45px";

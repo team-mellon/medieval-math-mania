@@ -259,22 +259,64 @@ advTexture.addControl(hitmarker_t);
 		var key = event.sourceEvent.key;
 		console.log(key) ;
 
+    var x = 0.0;
+    var hit_count = 0;
+
 		if (key == "Enter") {
 			result = rand_num1 * input;
 
 			if (result < temp1) {
 				hitmarker_l.alpha = 1;
 				setTimeout(function(){hitmarker_l.alpha = 0}, 2000);
+        x = -8.0;
 			}	else if (result > temp2) {
 				hitmarker_h.alpha = 1;
 				setTimeout(function(){hitmarker_h.alpha = 0}, 2000);
+        x = 8.0;
 			}	else {
 				hitmarker_t.alpha = 1;
 				setTimeout(function(){hitmarker_t.alpha = 0}, 2000);
+        switch (hit_count) {
+          case 0: x = 0.02; break;
+          case 1: x = 4.25; break;
+          case 2: x = -4.25; break;
+        }
+        hit_count++;
 			}
 
 			output.text = result.toString();
 			catapult1.playAnimation(0, 23, false, 200);
+
+      var frameRate = 10;
+
+      var xSlide = new BABYLON.Animation("xSlide", "position.x", frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+      var ySlide = new BABYLON.Animation("ySlide", "position.y", frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+
+      var xKeyFrames = [];
+      var yKeyFrames = [];
+
+      var frame_count = 5;
+
+      var xDist = (0 + x) / frame_count - 0.1;
+
+      for (var i = 0; i < frame_count; i += 0.1) {
+        xKeyFrames.push({
+            frame: frameRate * i,
+            value: xDist * i
+        });
+        yKeyFrames.push({
+            frame: frameRate * i,
+            value: -0.5 * (i**2) + (4.0 * i) + -3.6
+        });
+      }
+
+      xSlide.setKeys(xKeyFrames);
+      ySlide.setKeys(yKeyFrames);
+
+      scene.beginDirectAnimation(fire1, [xSlide], 0, 5 * frameRate, true);
+      scene.beginDirectAnimation(fire1, [ySlide], 0, 5 * frameRate, true);
+
+      // fire1.position.y += 0.01;
 
 		} else if (key == "a") {
 
@@ -297,9 +339,7 @@ advTexture.addControl(hitmarker_t);
 			input = parseInt(param);
 
 		} else if (key == "0" || key == "1" || key == "2" || key == "3" || key == "4" ||
-							 key == "5" || key == "6" || key == "7" || key == "8" || key == "9" ||
-							 key == ".") {
-
+							 key == "5" || key == "6" || key == "7" || key == "8" || key == "9" || key == ".") {
 			if(param.length < 3) {
 				param += key;
 				text1.text = param;
