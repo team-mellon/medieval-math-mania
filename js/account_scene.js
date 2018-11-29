@@ -17,46 +17,51 @@ function createAccount(engine, canvas, message, database) {                     
   advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
   var enable = true;
 
-  var text1 = new BABYLON.GUI.TextBlock();
-  text1.text = "Password: " + database.users.a12b3c4d.password;
-  text1.color = "saddlebrown";
-  text1.height = "43px";
-  text1.fontFamily = "Blackadder ITC";
-  text1.fontStyle = "italic";
-  text1.fontSize = 35;
-  advTexture.addControl(text1);
+  var username_text = new BABYLON.GUI.TextBlock();
+  username_text.top = "-140px";
+  username_text.left = "-43px";
+  username_text.height = "43px";
+  username_text.color = "saddlebrown";
+  username_text.fontFamily = "Blackadder ITC";
+  username_text.fontStyle = "italic";
+  username_text.fontSize = 35;
+  username_text.text = "Username: " + database.users.a12b3c4d.username;
+  username_text.isEnabled = enable;
 
-  text1.top = "-65px";
-  text1.left = "-45px";
+  var password_text = new BABYLON.GUI.TextBlock();
+  password_text.top = "-65px";
+  password_text.left = "-45px";
+  password_text.height = "43px";
+  password_text.color = "saddlebrown";
+  password_text.fontFamily = "Blackadder ITC";
+  password_text.fontStyle = "italic";
+  password_text.fontSize = 35;
+  password_text.text = "Password: " + database.users.a12b3c4d.password;
+  password_text.isEnabled = enable;
 
-  var text2 = new BABYLON.GUI.TextBlock();
-  text2.text = "Username: " + database.users.a12b3c4d.username;
-  text2.color = "saddlebrown";
-  text2.height = "43px";
-  text2.fontFamily = "Blackadder ITC";
-  text2.fontStyle = "italic";
-  text2.fontSize = 35;
-  advTexture.addControl(text2);
-
-  text2.top = "-140px";
-  text2.left = "-43px";
-
-  var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "res/login-button.png");
-	button.height = "90px";
-	button.width = "290px";
-	button.fontFamily = "Blackadder ITC";
-	button.fontStyle = "italic";
-	button.fontSize = 36;
-	button.color = "gold";
-	button.thickness = 0;
-	button.top = "350px";
-	button.left = "-750px";
-	advTexture.addControl(button);
-	// button.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-
-	button.onPointerClickObservable.add(function() {
+  var menu_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton(
+    "menu_button",
+    "Menu",
+    "res/login-button.png"
+  );
+	menu_button.top = "350px";
+	menu_button.left = "-750px";
+  menu_button.height = "90px";
+  menu_button.width = "290px";
+  menu_button.color = "gold";
+  menu_button.thickness = 0;
+  menu_button.fontFamily = "Blackadder ITC";
+  menu_button.fontStyle = "italic";
+  menu_button.fontSize = 36;
+  menu_button.isEnabled = enable;
+  menu_button.onPointerClickObservable.add(function() {
 		message.render = 1;
+    // advTexture.dispose();
 	});
+
+  advTexture.addControl(username_text);
+  advTexture.addControl(password_text);
+	advTexture.addControl(menu_button);
 
   return scene;
 

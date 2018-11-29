@@ -15,74 +15,76 @@ function createSettings(engine, canvas, message, database) {                    
   var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
   advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
   advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
-  var enable = true;    
+  var enable = true;
 
-  var input = new BABYLON.GUI.Slider();
-  input.minimum = 0;
-  input.maximum = 2 * Math.PI;
-  input.value = 0;
-  input.height = "20px";
-  input.width = "200px";
-  input.onValueChangedObservable.add(function(value) {
+  var volume_text = new BABYLON.GUI.TextBlock();
+  volume_text.top = "-140px";
+  volume_text.left = "-43px";
+  volume_text.height = "43px";
+  volume_text.color = "saddlebrown";
+  volume_text.fontFamily = "Blackadder ITC";
+  volume_text.fontStyle = "italic";
+  volume_text.fontSize = 35;
+  volume_text.text = "Volume";
+  volume_text.isEnabled = enable;
+
+  var volume_input = new BABYLON.GUI.Slider();
+  volume_input.top = "-110px";
+  volume_input.height = "20px";
+  volume_input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+  volume_input.width = "200px";
+  volume_input.minimum = 0;
+  volume_input.maximum = 2 * Math.PI;
+  volume_input.value = 0;
+  volume_input.onValueChangedObservable.add(function(value) {
   });
-  advTexture.addControl(input);
 
-  input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-  input.top = "-110px";
+  var time_text = new BABYLON.GUI.TextBlock();
+  time_text.top = "-65px";
+  time_text.left = "-45px";
+  time_text.height = "43px";
+  time_text.color = "saddlebrown";
+  time_text.fontFamily = "Blackadder ITC";
+  time_text.fontStyle = "italic";
+  time_text.fontSize = 35;
+  time_text.text = "Time?";
+  time_text.isEnabled = enable;
 
-  var input2 = new BABYLON.GUI.Checkbox();
-  input2.width = "20px";
-  input2.height = "20px";
-  input2.isChecked = true;
-  input2.color = "green";
-  input2.onIsCheckedChangedObservable.add(function(value) {
+  var time_input = new BABYLON.GUI.Checkbox();
+  time_input.top = "-30px";
+  time_input.width = "20px";
+  time_input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+  time_input.height = "20px";
+  time_input.color = "black";
+  time_input.isChecked = true;
+  time_input.onIsCheckedChangedObservable.add(function(value) {
   });
-  advTexture.addControl(input2);
 
-  input2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-  input2.top = "-30px";
-
-  var text1 = new BABYLON.GUI.TextBlock();
-  text1.text = "Time?";
-  text1.color = "saddlebrown";
-  text1.height = "43px";
-  text1.fontFamily = "Blackadder ITC";
-  text1.fontStyle = "italic";
-  text1.fontSize = 35;
-  advTexture.addControl(text1);
-
-  text1.top = "-65px";
-  text1.left = "-45px";
-
-  var text2 = new BABYLON.GUI.TextBlock();
-  text2.text = "Volume";
-  text2.color = "saddlebrown";
-  text2.height = "43px";
-  text2.fontFamily = "Blackadder ITC";
-  text2.fontStyle = "italic";
-  text2.fontSize = 35;
-  advTexture.addControl(text2);
-
-  text2.top = "-140px";
-  text2.left = "-43px";
-
-	var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "res/login-button.png");
-	button.height = "90px";
-	button.width = "290px";
-	button.fontFamily = "Blackadder ITC";
-	button.fontStyle = "italic";
-	button.fontSize = 36;
-	button.color = "gold";
-	button.thickness = 0;
-	button.top = "350px";
-	button.left = "-750px";
-	advTexture.addControl(button);
-	// button.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-
-	button.onPointerClickObservable.add(function() {
+  var menu_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton(
+    "menu_button",
+    "Menu",
+    "res/login-button.png"
+  );
+	menu_button.top = "350px";
+	menu_button.left = "-750px";
+  menu_button.height = "90px";
+  menu_button.width = "290px";
+  menu_button.color = "gold";
+  menu_button.thickness = 0;
+  menu_button.fontFamily = "Blackadder ITC";
+  menu_button.fontStyle = "italic";
+  menu_button.fontSize = 36;
+  menu_button.isEnabled = enable;
+  menu_button.onPointerClickObservable.add(function() {
 		message.render = 1;
     // advTexture.dispose();
 	});
+
+  advTexture.addControl(volume_text);
+  advTexture.addControl(volume_input);
+  advTexture.addControl(time_text);
+  advTexture.addControl(time_input);
+	advTexture.addControl(menu_button);
 
   return scene;
 

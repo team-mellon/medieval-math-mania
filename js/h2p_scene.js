@@ -17,35 +17,39 @@ function createHow2Play(engine, canvas, message, database) {                    
   advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
   var enable = true;
 
-  var text2 = new BABYLON.GUI.TextBlock();
-  text2.text = "Its just math..";
-  text2.color = "saddlebrown";
-  text2.height = "43px";
-  text2.fontFamily = "Blackadder ITC";
-  text2.fontStyle = "italic";
-  text2.fontSize = 35;
-  advTexture.addControl(text2);
+  var h2p_text = new BABYLON.GUI.TextBlock();
+  h2p_text.top = "-140px";
+  h2p_text.left = "-43px";
+  h2p_text.height = "43px";
+  h2p_text.color = "saddlebrown";
+  h2p_text.fontFamily = "Blackadder ITC";
+  h2p_text.fontStyle = "italic";
+  h2p_text.fontSize = 35;
+  h2p_text.text = "Its just math..";
+  h2p_text.isEnabled = enable;
 
-  text2.top = "-140px";
-  text2.left = "-43px";
-
-	var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "res/login-button.png");
-	button.height = "90px";
-	button.width = "290px";
-	button.fontFamily = "Blackadder ITC";
-	button.fontStyle = "italic";
-	button.fontSize = 36;
-	button.color = "gold";
-	button.thickness = 0;
-	button.top = "350px";
-	button.left = "-750px";
-	advTexture.addControl(button);
-	// button.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-
-	button.onPointerClickObservable.add(function() {
+  var menu_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton(
+    "menu_button",
+    "Menu",
+    "res/login-button.png"
+  );
+	menu_button.top = "350px";
+	menu_button.left = "-750px";
+  menu_button.height = "90px";
+  menu_button.width = "290px";
+  menu_button.color = "gold";
+  menu_button.thickness = 0;
+  menu_button.fontFamily = "Blackadder ITC";
+  menu_button.fontStyle = "italic";
+  menu_button.fontSize = 36;
+  menu_button.isEnabled = enable;
+  menu_button.onPointerClickObservable.add(function() {
 		message.render = 1;
     // advTexture.dispose();
 	});
+
+  advTexture.addControl(h2p_text);
+	advTexture.addControl(menu_button);
 
   return scene;
 
