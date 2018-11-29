@@ -6,6 +6,8 @@ function createGame(engine, canvas, message, database) {
 	var camera = new BABYLON.UniversalCamera("camera1", new BABYLON.Vector3(0, 0, -10), scene);
 	// GUI fullscreen
 	advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui2");
+  advancedTexture.idealWidth = 1920;
+  advancedTexture.idealHeight = 1080;
 
 	// var foreground = new BABYLON.Layer("fore", "hit-target-castle-facade-concept-high-res.png", scene);
 	// foreground.isBackground = false;

@@ -17,6 +17,8 @@ function createMenu(engine, canvas, message, database) {
 
   // GUI
   var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui1");
+  advancedTexture.idealWidth = 1920;
+  advancedTexture.idealHeight = 1080;
 
   var panel1 = new BABYLON.GUI.StackPanel();
   panel1.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;

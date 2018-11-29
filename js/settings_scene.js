@@ -10,6 +10,8 @@ function createSettings(engine, canvas, message, database) {                    
 
   // GUI
   var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+  advancedTexture.idealWidth = 1920;
+  advancedTexture.idealHeight = 1080;
 
   var input = new BABYLON.GUI.Slider();
   input.minimum = 0;
