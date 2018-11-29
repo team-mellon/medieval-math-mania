@@ -1,13 +1,20 @@
-function createGame(engine, canvas, message, database) {
+function createGame(engine, canvas, message, database) {                        // function that returns the game scene
 
-	// Creates basic babylon scene
-	var scene = new BABYLON.Scene(engine);
-	// Sets a camera facing the scene
-	var camera = new BABYLON.UniversalCamera("camera1", new BABYLON.Vector3(0, 0, -10), scene);
-	// GUI fullscreen
-	advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui2");
-  advancedTexture.idealWidth = 1920;
-  advancedTexture.idealHeight = 1080;
+  var scene = new BABYLON.Scene(engine);                                        // create the scene
+
+  var camera = new BABYLON.UniversalCamera(
+    "game_cam",
+    new BABYLON.Vector3(0, 0, -10),
+    scene);                                                                     // creates camera pointed at the scene
+  camera.setTarget(BABYLON.Vector3.Zero());                                     // targets the camera to scene origin
+
+  var background = new BABYLON.Layer("bg", "res/game.png", scene, true);        // background layer
+
+  // GUI
+  var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
+  advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
+  advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
+  var enable = true;                                                            // render enable bit for the ADT controls
 
 	// var foreground = new BABYLON.Layer("fore", "hit-target-castle-facade-concept-high-res.png", scene);
 	// foreground.isBackground = false;
@@ -22,7 +29,7 @@ function createGame(engine, canvas, message, database) {
 	line.lineWidth = 60;
 	line.dash = [4,100];
 	line.color = "black";
-	advancedTexture.addControl(line);
+	advTexture.addControl(line);
 
 	var line2 = new BABYLON.GUI.Line();
 	line2.x1 = 100;
@@ -32,7 +39,7 @@ function createGame(engine, canvas, message, database) {
 	line2.lineWidth = 30;
 	line2.dash = [2,50];
 	line2.color = "black";
-	advancedTexture.addControl(line2);
+	advTexture.addControl(line2);
 
 	var line3 = new BABYLON.GUI.Line();
 	line3.x1 = 100;
@@ -42,7 +49,7 @@ function createGame(engine, canvas, message, database) {
 	line3.lineWidth = 3;
 	//line3.dash = [2,50];
 	line3.color = "black";
-	advancedTexture.addControl(line3);
+	advTexture.addControl(line3);
 
 	var line4 = new BABYLON.GUI.Line();
 	line4.x1 = 100;
@@ -52,7 +59,7 @@ function createGame(engine, canvas, message, database) {
 	line4.lineWidth = 10;
 	line4.dash = [1,12];
 	line4.color = "black";
-	advancedTexture.addControl(line4);
+	advTexture.addControl(line4);
 				// ><><><><><><><><><>< END OF NUMBER LINE CODE ><><><><><><><><><><
 
 	var text1 = new BABYLON.GUI.TextBlock();
@@ -64,7 +71,7 @@ function createGame(engine, canvas, message, database) {
 	text1.top = "100px";
 	text1.left = "-40px";
 	text1.zIndex = 1;
-	advancedTexture.addControl(text1);
+	advTexture.addControl(text1);
 
 	var text2 = new BABYLON.GUI.TextBlock();
 	text2.text = " x  ";
@@ -76,7 +83,7 @@ function createGame(engine, canvas, message, database) {
 	text2.zIndex = 1;
 	text2.top = "100px";
 	text2.left = "-100px";
-	advancedTexture.addControl(text2);
+	advTexture.addControl(text2);
 
 	// Equals sign
 	var text3 = new BABYLON.GUI.TextBlock();
@@ -89,7 +96,7 @@ function createGame(engine, canvas, message, database) {
 	text1.zIndex = 1;
 	text3.top = "105px";
 	text3.left = "30px";
-	advancedTexture.addControl(text3);
+	advTexture.addControl(text3);
 
 	// Answer numbers
 	var output = new BABYLON.GUI.TextBlock();
@@ -105,7 +112,7 @@ function createGame(engine, canvas, message, database) {
 	output.top = "100px";
 	output.left = "90px";
 	output.zIndex = 1;
-	advancedTexture.addControl(output);
+	advTexture.addControl(output);
 
 	// Range text
 	var text4 = new BABYLON.GUI.TextBlock();
@@ -119,7 +126,7 @@ function createGame(engine, canvas, message, database) {
 	text4.top = "79px";
 	text4.left = "-340px";
 	text4.zIndex = 1;
-	advancedTexture.addControl(text4);
+	advTexture.addControl(text4);
 
 var hitmarker_l = new BABYLON.GUI.TextBlock("lo", "Low");
 hitmarker_l.width = "200px";
@@ -129,7 +136,7 @@ hitmarker_l.top = "-345px";
 hitmarker_l.color = "red";
 hitmarker_l.fontSize = 60;
 hitmarker_l.alpha = 0;
-advancedTexture.addControl(hitmarker_l);
+advTexture.addControl(hitmarker_l);
 
 var hitmarker_h = new BABYLON.GUI.TextBlock("hi", "High");
 hitmarker_h.width = "200px";
@@ -139,7 +146,7 @@ hitmarker_h.top = "-345px";
 hitmarker_h.color = "red";
 hitmarker_h.fontSize = 60;
 hitmarker_h.alpha = 0;
-advancedTexture.addControl(hitmarker_h);
+advTexture.addControl(hitmarker_h);
 
 var hitmarker_t = new BABYLON.GUI.TextBlock("tar", "Hit");
 hitmarker_t.width = "200px";
@@ -149,7 +156,7 @@ hitmarker_t.top = "-345px";
 hitmarker_t.color = "green";
 hitmarker_t.fontSize = 60;
 hitmarker_t.alpha = 0;
-advancedTexture.addControl(hitmarker_t);
+advTexture.addControl(hitmarker_t);
 
 	// Range numbers
 	var range = new BABYLON.GUI.TextBlock();
@@ -163,7 +170,7 @@ advancedTexture.addControl(hitmarker_t);
 	range.top = "130px";
 	range.left = "-345px";
 	range.zIndex = 1;
-	advancedTexture.addControl(range);
+	advTexture.addControl(range);
 
 	var param = "";
 	var rand_num1;
@@ -173,10 +180,10 @@ advancedTexture.addControl(hitmarker_t);
 	var input;
 	var result;
 
-	var spriteManagerBadKnight = new BABYLON.SpriteManager("spriteManagerBadKnight","bad-knight.png", 1, {width: 320, height: 320}, scene);
-	var spriteManagerBadArcher = new BABYLON.SpriteManager("spriteManagerBadArcher","bad-archer.png", 4, {width: 320, height: 320}, scene);
-	var spriteManagerFire = new BABYLON.SpriteManager("spriteManagerFire","ammo-concept.png", 20, {width: 320, height: 320}, scene);
-	var spriteManagerCatapult = new BABYLON.SpriteManager("spriteManagerCatapult","res/hit-target-catapult-concept-high-res-full.png", 1, {width: 2560, height: 1280}, scene);
+	var spriteManagerBadKnight = new BABYLON.SpriteManager("spriteManagerBadKnight", "res/bad-knight.png", 1, {width: 320, height: 320}, scene);
+	var spriteManagerBadArcher = new BABYLON.SpriteManager("spriteManagerBadArcher", "res/bad-archer.png", 4, {width: 320, height: 320}, scene);
+	var spriteManagerFire = new BABYLON.SpriteManager("spriteManagerFire", "res/ammo.png", 20, {width: 320, height: 320}, scene);
+	var spriteManagerCatapult = new BABYLON.SpriteManager("spriteManagerCatapult", "res/catapult.png", 1, {width: 2560, height: 1280}, scene);
 
 	var badKnight1 = new BABYLON.Sprite("badKnight1", spriteManagerBadKnight);
 	var badArcher1 = new BABYLON.Sprite("badArcher1", spriteManagerBadArcher);
@@ -308,7 +315,7 @@ advancedTexture.addControl(hitmarker_t);
 	});
 	scene.actionManager.registerAction(action);
 
-	var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "login-button.png");
+	var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "res/login-button.png");
 	button.height = "90px";
 	button.width = "290px";
 	button.fontFamily = "Blackadder ITC";
@@ -316,19 +323,15 @@ advancedTexture.addControl(hitmarker_t);
 	button.fontSize = 36;
 	button.color = "gold";
 	button.thickness = 0;
-	advancedTexture.addControl(button);
-
-	button.top = "300px";
-	button.left = "-600px"
+	button.top = "350px";
+	button.left = "-750px";
+	advTexture.addControl(button);
 	// button.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
 
 	button.onPointerClickObservable.add(function() {
 		message.render = 1;
-    // advancedTexture.dispose();
+    // advTexture.dispose();
 	});
-
-	var background = new BABYLON.Layer("back", "castle.png", scene);
-	background.isBackground = true;
 
 	return scene;
 

@@ -1,143 +1,138 @@
-function createMenu(engine, canvas, message, database) {
+function createMenu(engine, canvas, message, database) {                        // function that returns the menu scene
 
-  var onScene = false;
+  var scene = new BABYLON.Scene(engine);                                        // create the scene
 
-  // if (message.render == 1) {
-    onScene = true;
-  // }
+  var camera = new BABYLON.UniversalCamera(
+    "menu_cam",
+    new BABYLON.Vector3(0, 0, -10),
+    scene);                                                                     // creates camera pointed at the scene
+  camera.setTarget(BABYLON.Vector3.Zero());                                     // targets the camera to scene origin
+  camera.attachControl(canvas, true);                                           // attaches the camera to the canvas
 
-  // This creates a basic Babylon Scene object (non-mesh)
-  var scene = new BABYLON.Scene(engine);
-
-  // This creates and positions a free camera (non-mesh)
-  var camera = new BABYLON.Camera("menu cam",BABYLON.Vector3.Zero());
-
-  // This attaches the camera to the canvas
-  camera.attachControl(canvas, true);
+  var background = new BABYLON.Layer("bg", "res/menu.png", scene, true);        // background layer
 
   // GUI
-  var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui1");
-  advancedTexture.idealWidth = 1920;
-  advancedTexture.idealHeight = 1080;
+  var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
+  advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
+  advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
+  var enable = true;                                                            // render enable bit for the ADT controls
 
   var panel1 = new BABYLON.GUI.StackPanel();
   panel1.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
   panel1.top = -200;
-  advancedTexture.addControl(panel1);
-  var button1 = BABYLON.GUI.Button.CreateImageWithCenterTextButton("PLAYbut", "Play", "menu-button.png");
-  button1.height = "90px";
-  button1.width = "290px";
-  button1.fontFamily = "Blackadder ITC";
-  button1.fontStyle = "italic";
-  button1.fontSize = 36;
-  button1.color = "gold";
-  button1.thickness = 0;
-  button1.onPointerUpObservable.add(function() {
+  advTexture.addControl(panel1);
+  var game_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("game_button", "Play", "res/menu-button.png");
+  game_button.height = "90px";
+  game_button.width = "290px";
+  game_button.fontFamily = "Blackadder ITC";
+  game_button.fontStyle = "italic";
+  game_button.fontSize = 36;
+  game_button.color = "gold";
+  game_button.thickness = 0;
+  game_button.onPointerUpObservable.add(function() {
      message.render = 2;
-     // advancedTexture.dispose();
+     // advTexture.dispose();
   });
-  button1.isEnabled = onScene;
-  panel1.addControl(button1);
+  game_button.isEnabled = enable;
 
   var panel2 = new BABYLON.GUI.StackPanel();
   panel2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
   panel2.top = -100;
-  advancedTexture.addControl(panel2);
-  var button2 = BABYLON.GUI.Button.CreateImageWithCenterTextButton("STATSbut", "Stats", "menu-button.png");
-  button2.height = "90px";
-  button2.width = "290px";
-  button2.fontFamily = "Blackadder ITC";
-  button2.fontStyle = "italic";
-  button2.fontSize = 36;
-  button2.color = "gold";
-  button2.thickness = 0;
-  button2.onPointerUpObservable.add(function() {
+  advTexture.addControl(panel2);
+  var stats_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("stats_button", "Stats", "res/menu-button.png");
+  stats_button.height = "90px";
+  stats_button.width = "290px";
+  stats_button.fontFamily = "Blackadder ITC";
+  stats_button.fontStyle = "italic";
+  stats_button.fontSize = 36;
+  stats_button.color = "gold";
+  stats_button.thickness = 0;
+  stats_button.onPointerUpObservable.add(function() {
     message.render = 3;
-    // advancedTexture.dispose();
+    // advTexture.dispose();
   });
-  button2.isEnabled = onScene;
-  panel2.addControl(button2);
+  stats_button.isEnabled = enable;
 
   var panel3 = new BABYLON.GUI.StackPanel();
   panel3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
   panel3.top = 0;
-  advancedTexture.addControl(panel3);
-  var button3 = BABYLON.GUI.Button.CreateImageWithCenterTextButton("HOW2but", "How to Play", "menu-button.png");
-  button3.height = "90px";
-  button3.width = "290px";
-  button3.fontFamily = "Blackadder ITC";
-  button3.fontStyle = "italic";
-  button3.fontSize = 36;
-  button3.color = "gold";
-  button3.thickness = 0;
-  button3.onPointerUpObservable.add(function() {
+  advTexture.addControl(panel3);
+  var h2p_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("h2p_button", "How to Play", "res/menu-button.png");
+  h2p_button.height = "90px";
+  h2p_button.width = "290px";
+  h2p_button.fontFamily = "Blackadder ITC";
+  h2p_button.fontStyle = "italic";
+  h2p_button.fontSize = 36;
+  h2p_button.color = "gold";
+  h2p_button.thickness = 0;
+  h2p_button.onPointerUpObservable.add(function() {
     message.render = 4;
-    // advancedTexture.dispose();
+    // advTexture.dispose();
   });
-  button3.isEnabled = onScene;
-  panel3.addControl(button3);
+  h2p_button.isEnabled = enable;
 
   var panel4 = new BABYLON.GUI.StackPanel();
   panel4.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
   panel4.top = 100;
-  advancedTexture.addControl(panel4);
-  var button4 = BABYLON.GUI.Button.CreateImageWithCenterTextButton("SETTINGSbut", "Settings", "menu-button.png");
-  button4.height = "90px";
-  button4.width = "290px";
-  button4.fontFamily = "Blackadder ITC";
-  button4.fontStyle = "italic";
-  button4.fontSize = 36;
-  button4.color = "gold";
-  button4.thickness = 0;
-  button4.onPointerUpObservable.add(function() {
+  advTexture.addControl(panel4);
+  var settings_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("settings_button", "Settings", "res/menu-button.png");
+  settings_button.height = "90px";
+  settings_button.width = "290px";
+  settings_button.fontFamily = "Blackadder ITC";
+  settings_button.fontStyle = "italic";
+  settings_button.fontSize = 36;
+  settings_button.color = "gold";
+  settings_button.thickness = 0;
+  settings_button.onPointerUpObservable.add(function() {
     message.render = 5;
-    // advancedTexture.dispose();
+    // advTexture.dispose();
   });
-  button4.isEnabled = onScene;
-  panel4.addControl(button4);
+  settings_button.isEnabled = enable;
 
   var panel5 = new BABYLON.GUI.StackPanel();
   panel5.width = .2;
   panel5.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-  panel5.top = -300;
-  advancedTexture.addControl(panel5);
-  var button5 = BABYLON.GUI.Button.CreateImageWithCenterTextButton("LOGOUTbut", "Logout", "menu-button.png");
-  button5.height = "90px";
-  button5.width = "290px";
-  button5.fontFamily = "Blackadder ITC";
-  button5.fontStyle = "italic";
-  button5.fontSize = 36;
-  button5.color = "gold";
-  button5.thickness = 0;
-  button5.onPointerUpObservable.add(function() {
+  panel5.top = -350;
+  advTexture.addControl(panel5);
+  var logout_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("logout_button", "Logout", "res/menu-button.png");
+  logout_button.height = "90px";
+  logout_button.width = "290px";
+  logout_button.fontFamily = "Blackadder ITC";
+  logout_button.fontStyle = "italic";
+  logout_button.fontSize = 36;
+  logout_button.color = "gold";
+  logout_button.thickness = 0;
+  logout_button.onPointerUpObservable.add( function() {
     message.render = 0;
-    // advancedTexture.dispose();
+    // advTexture.dispose();
   });
-  button5.isEnabled = onScene;
-  panel5.addControl(button5);
+  logout_button.isEnabled = enable;
 
   var panel6 = new BABYLON.GUI.StackPanel();
   panel6.width = .2;
   panel6.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
-  panel6.top = -300;
-  advancedTexture.addControl(panel6);
-  var button6 = BABYLON.GUI.Button.CreateImageWithCenterTextButton("NAMEbut", "Account", "menu-button.png");
-  button6.height = "90px";
-  button6.width = "290px";
-  button6.fontFamily = "Blackadder ITC";
-  button6.fontStyle = "italic";
-  button6.fontSize = 36;
-  button6.color = "gold";
-  button6.thickness = 0;
-  button6.onPointerUpObservable.add(function() {
+  panel6.top = -350;
+  advTexture.addControl(panel6);
+  var account_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("account_button", "Account", "res/menu-button.png");
+  account_button.height = "90px";
+  account_button.width = "290px";
+  account_button.fontFamily = "Blackadder ITC";
+  account_button.fontStyle = "italic";
+  account_button.fontSize = 36;
+  account_button.color = "gold";
+  account_button.thickness = 0;
+  account_button.onPointerUpObservable.add( function() {
     message.render = 6;
-    // advancedTexture.dispose();
+    // advTexture.dispose();
   });
-  button6.isEnabled = onScene;
-  panel6.addControl(button6);
+  account_button.isEnabled = enable;
 
-  var background = new BABYLON.Layer("back", "menu.png", scene);
-  background.isBackground = true;
+  panel1.addControl(game_button);
+  panel2.addControl(stats_button);
+  panel3.addControl(h2p_button);
+  panel4.addControl(settings_button);
+  panel5.addControl(logout_button);
+  panel6.addControl(account_button);
 
   return scene;
 
