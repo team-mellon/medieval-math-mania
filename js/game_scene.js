@@ -306,7 +306,7 @@ advTexture.addControl(hitmarker_t);
         });
         yKeyFrames.push({
             frame: frameRate * i,
-            value: -0.5 * (i**2) + (4.0 * i) + -3.6
+            value: -0.5 * Math.pow(i,2) + (4.0 * i) + -3.6
         });
       }
 
