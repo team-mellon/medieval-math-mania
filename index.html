@@ -11,6 +11,7 @@
     <script src="js/h2p_scene.js"></script>
     <script src="js/settings_scene.js"></script>
     <script src="js/account_scene.js"></script>
+    <script src="js/create_acc_scene.js"></script>
     <script src="db/db.js"></script>                                            <!-- database  -->
     <style>
       html, body {
@@ -48,7 +49,8 @@
         var stats_scene = createStats(engine, canvas, message, database);       // create the stats scene
         var settings_scene = createSettings(engine, canvas, message, database); // create the settings scene
         var account_scene = createAccount(engine, canvas, message, database);   // create the account scene
-
+        var create_acc_scene = createCreateAcc(engine, canvas, message, database);
+      
         engine.runRenderLoop( function() {                                      // run the render loop function
 
           switch(message.render) {                                              // scene rendering switcher
@@ -59,6 +61,7 @@
             case 4: h2p_scene.render(); break;
             case 5: settings_scene.render(); break;
             case 6: account_scene.render(); break;
+            case 7: create_acc_scene.render(); break;
             default: login_scene.render(); break;
           }
 

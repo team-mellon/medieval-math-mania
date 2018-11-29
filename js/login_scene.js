@@ -81,12 +81,27 @@ function createLogin(engine, canvas, message, database) {                       
     // advTexture.dispose();
   });
 
+    var account_button = BABYLON.GUI.Button.CreateSimpleButton("account_button", "Create Account");
+    account_button.top = "-200px";
+    account_button.left = "260px";
+    account_button.width = "200px";
+    account_button.height = "45px";
+    account_button.color = "saddlebrown";
+    account_button.thickness = 0;
+    account_button.fontFamily = "Blackadder ITC";
+    account_button.fontStyle = "italic";
+    account_button.fontSize = 26;
+    account_button.isEnabled = enable;
+    account_button.onPointerClickObservable.add(function() {
+	message.render = 7;
+    });
+
   advTexture.addControl(username_text);                                         // add controls to texture
   advTexture.addControl(username_input);
   advTexture.addControl(password_text);
   advTexture.addControl(password_input);
   advTexture.addControl(login_button);
-
+    advTexture.addControl(account_button);
   return scene;
 
 };
