@@ -187,7 +187,7 @@ function createGame(engine, canvas, message, database) {                        
 
 	var spriteManagerBadKnight = new BABYLON.SpriteManager("spriteManagerBadKnight", "res/bad-knight.png", 1, {width: 320, height: 320}, scene);
 	var spriteManagerBadArcher = new BABYLON.SpriteManager("spriteManagerBadArcher", "res/bad-archer.png", 4, {width: 320, height: 320}, scene);
-	var spriteManagerFire = new BABYLON.SpriteManager("spriteManagerFire", "res/ammo.png", 20, {width: 320, height: 320}, scene);
+	var spriteManagerFire = new BABYLON.SpriteManager("spriteManagerFire", "res/ammo.png", 5, {width: 320, height: 320}, scene);
 	var spriteManagerCatapult = new BABYLON.SpriteManager("spriteManagerCatapult", "res/catapult.png", 1, {width: 2560, height: 1280}, scene);
 
 	var badKnight1 = new BABYLON.Sprite("badKnight1", spriteManagerBadKnight);
@@ -196,11 +196,11 @@ function createGame(engine, canvas, message, database) {                        
 	var badArcher3 = new BABYLON.Sprite("badArcher3", spriteManagerBadArcher);
 	var badArcher4 = new BABYLON.Sprite("badArcher4", spriteManagerBadArcher);
 	var fire1 = new BABYLON.Sprite("fire1", spriteManagerFire);
+	var fire2 = new BABYLON.Sprite("fire2", spriteManagerFire);
+	var fire3 = new BABYLON.Sprite("fire3", spriteManagerFire);
+	var fire4 = new BABYLON.Sprite("fire4", spriteManagerFire);
+	var fire5 = new BABYLON.Sprite("fire5", spriteManagerFire);
 	var catapult1 = new BABYLON.Sprite("catapult1", spriteManagerCatapult);
-	// var fire2 = new BABYLON.Sprite("fire2", spriteManagerFire);
-	// var fire3 = new BABYLON.Sprite("fire3", spriteManagerFire);
-	// var fire4 = new BABYLON.Sprite("fire4", spriteManagerFire);
-	// var fire5 = new BABYLON.Sprite("fire5", spriteManagerFire);
 
 	catapult1.position.x = 0.0;
 	catapult1.position.y = -2.275;
@@ -228,16 +228,16 @@ function createGame(engine, canvas, message, database) {                        
 	badArcher3.position.y = -0.1;
 	badArcher4.position.x =  8.0;
 	badArcher4.position.y = -0.1;
-	// fire1.position.x =  0.0;
-	// fire1.position.y = 1.0;
-	// fire2.position.x = -4.25;
-	// fire2.position.y = 0.8;
-	// fire3.position.x =  4.25;
-	// fire3.position.y = 0.8;
-	// fire4.position.x = -8.0;
-	// fire4.position.y = 0.6;
-	// fire5.position.x =  8.0;
-	// fire5.position.y = 0.6;
+	fire1.position.x = -20.0;
+	fire1.position.y = -20.0;
+	fire2.position.x = -20.0;
+	fire2.position.y = -20.0;
+	fire3.position.x = -20.0;
+	fire3.position.y = -20.0;
+	fire4.position.x = -20.0;
+	fire4.position.y = -20.0;
+	fire5.position.x = -20.0;
+	fire5.position.y = -20.0;
 
 	badKnight1.playAnimation(0, 11, true, 200);
 	badArcher1.playAnimation(0, 11, true, 200);
@@ -245,10 +245,10 @@ function createGame(engine, canvas, message, database) {                        
 	badArcher3.playAnimation(0, 11, true, 200);
 	badArcher4.playAnimation(0, 11, true, 200);
 	fire1.playAnimation(0, 11, true, 200);
-	// fire2.playAnimation(0, 11, true, 200);
-	// fire3.playAnimation(0, 11, true, 200);
-	// fire4.playAnimation(0, 11, true, 200);
-	// fire5.playAnimation(0, 11, true, 200);
+	fire2.playAnimation(0, 11, true, 200);
+	fire3.playAnimation(0, 11, true, 200);
+	fire4.playAnimation(0, 11, true, 200);
+	fire5.playAnimation(0, 11, true, 200);
 
 	// for (var i = 0; i < 20; i++) {
 	//   var fire = new BABYLON.Sprite("fire", spriteManagerFire);
@@ -257,13 +257,13 @@ function createGame(engine, canvas, message, database) {                        
 	//   fire.playAnimation(0, 11, true, 200);
 	//   // tree.isPickable = true;
 	// }
+  var hit_count = 0;
+  var fire_switch = 0;
 	scene.actionManager = new BABYLON.ActionManager(scene);
-	action = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function(event)
-	{
+	action = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function(event) {
 		var key = event.sourceEvent.key;
 		console.log(key) ;
 		var x = 0.0;
-		var hit_count = 0;
 		if (key == "Enter")
 		{
 			firing.play();
@@ -273,12 +273,14 @@ function createGame(engine, canvas, message, database) {                        
 				hitmarker_l.alpha = 1;
 				setTimeout(function(){hitmarker_l.alpha = 0}, 2000);
 				x = -8.0;
+        fire_switch = 0;
 				reload.play(2.5);
 			}
 			else if (result > temp2) {
 				hitmarker_h.alpha = 1;
 				setTimeout(function(){hitmarker_h.alpha = 0}, 2000);
 				x = 8.0;
+        fire_switch = 1;
 				reload.play(2.5);
 			}
 			else
@@ -287,10 +289,11 @@ function createGame(engine, canvas, message, database) {                        
 				setTimeout(function(){hitmarker_t.alpha = 0}, 2000);
 				switch (hit_count)
 				{
-					case 0: x = 0.02; break;
+					case 0: x = -4.25; break;
 					case 1: x = 4.25; break;
-					case 2: x = -4.25; break;
+					case 2: x = 0.02; break;
 				}
+        fire_switch = 2 + hit_count;
 				hit_count++;
 				reload.play(2.5);
 			}
@@ -301,7 +304,7 @@ function createGame(engine, canvas, message, database) {                        
 			var ySlide = new BABYLON.Animation("ySlide", "position.y", frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
 			var xKeyFrames = [];
 			var yKeyFrames = [];
-			var frame_count = 5;
+			var frame_count = 7;
 			var xDist = (0 + x) / frame_count - 0.1;
 			for (var i = 0; i < frame_count; i += 0.1)
 			{
@@ -318,8 +321,29 @@ function createGame(engine, canvas, message, database) {                        
 			}
 			xSlide.setKeys(xKeyFrames);
 			ySlide.setKeys(yKeyFrames);
-			scene.beginDirectAnimation(fire1, [xSlide], 0, 5 * frameRate, true);
-			scene.beginDirectAnimation(fire1, [ySlide], 0, 5 * frameRate, true);
+      switch (fire_switch) {
+        case 0:
+			     scene.beginDirectAnimation(fire1, [xSlide], 0, frame_count * frameRate, true);
+			     scene.beginDirectAnimation(fire1, [ySlide], 0, frame_count * frameRate, true);
+           break;
+        case 1:
+			     scene.beginDirectAnimation(fire2, [xSlide], 0, frame_count * frameRate, true);
+			     scene.beginDirectAnimation(fire2, [ySlide], 0, frame_count * frameRate, true);
+           break;
+        case 2:
+			     scene.beginDirectAnimation(fire3, [xSlide], 0, frame_count * frameRate, true);
+			     scene.beginDirectAnimation(fire3, [ySlide], 0, frame_count * frameRate, true);
+           break;
+        case 3:
+			     scene.beginDirectAnimation(fire4, [xSlide], 0, frame_count * frameRate, true);
+			     scene.beginDirectAnimation(fire4, [ySlide], 0, frame_count * frameRate, true);
+           break;
+        case 4:
+			     scene.beginDirectAnimation(fire5, [xSlide], 0, frame_count * frameRate, true);
+			     scene.beginDirectAnimation(fire5, [ySlide], 0, frame_count * frameRate, true);
+           break;
+      }
+
 			// fire1.position.y += 0.01;
 		}
 		else if (key == "a")
