@@ -77,7 +77,7 @@ function createSettings(engine, canvas, message, database) {                    
   menu_button.isEnabled = enable;
   menu_button.onPointerClickObservable.add(function() {
 		message.render = 1;
-    // advTexture.dispose();
+    advTexture.dispose();
 	});
 
   advTexture.addControl(volume_text);

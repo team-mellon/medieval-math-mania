@@ -79,7 +79,7 @@ function createLogin(engine, canvas, message, database) {                       
   login_button.isEnabled = enable;
   login_button.onPointerClickObservable.add(function() {
     message.render = 1;
-    // advTexture.dispose();
+    advTexture.dispose();
   });
 
     var account_button = BABYLON.GUI.Button.CreateSimpleButton("account_button", "Create Account");
@@ -94,7 +94,8 @@ function createLogin(engine, canvas, message, database) {                       
     account_button.fontSize = 26;
     account_button.isEnabled = enable;
     account_button.onPointerClickObservable.add(function() {
-	message.render = 7;
+	     message.render = 7;
+       advTexture.dispose();
     });
 
   advTexture.addControl(username_text);                                         // add controls to texture
@@ -102,7 +103,7 @@ function createLogin(engine, canvas, message, database) {                       
   advTexture.addControl(password_text);
   advTexture.addControl(password_input);
   advTexture.addControl(login_button);
-    advTexture.addControl(account_button);
+  advTexture.addControl(account_button);
   return scene;
 
 };

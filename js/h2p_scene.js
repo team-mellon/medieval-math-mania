@@ -45,7 +45,7 @@ function createHow2Play(engine, canvas, message, database) {                    
   menu_button.isEnabled = enable;
   menu_button.onPointerClickObservable.add(function() {
 		message.render = 1;
-    // advTexture.dispose();
+    advTexture.dispose();
 	});
 
   advTexture.addControl(h2p_text);

@@ -370,7 +370,7 @@ advTexture.addControl(hitmarker_t);
 
 	button.onPointerClickObservable.add(function() {
 		message.render = 1;
-    // advTexture.dispose();
+    advTexture.dispose();
 	});
 
 	return scene;

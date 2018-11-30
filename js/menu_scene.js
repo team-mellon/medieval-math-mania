@@ -10,10 +10,10 @@ function createMenu(engine, canvas, message, database) {                        
   camera.attachControl(canvas, true);                                           // attaches the camera to the canvas
 
   var background = new BABYLON.Layer("bg", "res/menu.png", scene, true);        // background layer
-  
+
   //music
   var music = new BABYLON.Sound("achaidh_cheide", "res/music/achaidh_cheide.wav", scene, null, { loop: true, autoplay: true });
-  
+
   // GUI
   var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
   advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
@@ -34,7 +34,7 @@ function createMenu(engine, canvas, message, database) {                        
   game_button.thickness = 0;
   game_button.onPointerUpObservable.add(function() {
      message.render = 2;
-     // advTexture.dispose();
+     advTexture.dispose();
   });
   game_button.isEnabled = enable;
 
@@ -52,7 +52,7 @@ function createMenu(engine, canvas, message, database) {                        
   stats_button.thickness = 0;
   stats_button.onPointerUpObservable.add(function() {
     message.render = 3;
-    // advTexture.dispose();
+    advTexture.dispose();
   });
   stats_button.isEnabled = enable;
 
@@ -70,7 +70,7 @@ function createMenu(engine, canvas, message, database) {                        
   h2p_button.thickness = 0;
   h2p_button.onPointerUpObservable.add(function() {
     message.render = 4;
-    // advTexture.dispose();
+    advTexture.dispose();
   });
   h2p_button.isEnabled = enable;
 
@@ -88,7 +88,7 @@ function createMenu(engine, canvas, message, database) {                        
   settings_button.thickness = 0;
   settings_button.onPointerUpObservable.add(function() {
     message.render = 5;
-    // advTexture.dispose();
+    advTexture.dispose();
   });
   settings_button.isEnabled = enable;
 
@@ -107,7 +107,7 @@ function createMenu(engine, canvas, message, database) {                        
   logout_button.thickness = 0;
   logout_button.onPointerUpObservable.add( function() {
     message.render = 0;
-    // advTexture.dispose();
+    advTexture.dispose();
   });
   logout_button.isEnabled = enable;
 
@@ -126,7 +126,7 @@ function createMenu(engine, canvas, message, database) {                        
   account_button.thickness = 0;
   account_button.onPointerUpObservable.add( function() {
     message.render = 6;
-    // advTexture.dispose();
+    advTexture.dispose();
   });
   account_button.isEnabled = enable;
 

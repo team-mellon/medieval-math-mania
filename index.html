@@ -38,32 +38,51 @@
         var engine = new BABYLON.Engine(canvas, true);                          // load the babylon.js engine
         var database = db;                                                      // database object
 
+        var current = null;
         var message = {
           render: 0
         };                                                                      // possible message passing system???
 
-        var login_scene = createLogin(engine, canvas, message, database);       // create the login scene
-        var menu_scene = createMenu(engine, canvas, message, database);         // create the menu scene
-        var game_scene = createGame(engine, canvas, message, database);         // create the game scene
-        var h2p_scene = createHow2Play(engine, canvas, message, database);      // create the h2p scene
-        var stats_scene = createStats(engine, canvas, message, database);       // create the stats scene
-        var settings_scene = createSettings(engine, canvas, message, database); // create the settings scene
-        var account_scene = createAccount(engine, canvas, message, database);   // create the account scene
-        var create_acc_scene = createCreateAcc(engine, canvas, message, database);
-      
-        engine.runRenderLoop( function() {                                      // run the render loop function
+        var current_scene = createLogin(engine, canvas, message, database);
 
-          switch(message.render) {                                              // scene rendering switcher
-            case 0: login_scene.render(); break;
-            case 1: menu_scene.render(); break;
-            case 2: game_scene.render(); break;
-            case 3: stats_scene.render(); break;
-            case 4: h2p_scene.render(); break;
-            case 5: settings_scene.render(); break;
-            case 6: account_scene.render(); break;
-            case 7: create_acc_scene.render(); break;
-            default: login_scene.render(); break;
+        engine.runRenderLoop( function() {                                      // run the render loop function
+          console.log("loop");
+          if (current != message.render) {
+            console.log(message.render + " : " + current)
+            current = message.render;
+            switch(current) {                                                   // scene rendering switcher
+              case 0:
+                current_scene = createLogin(engine, canvas, message, database);
+                break;
+              case 1:
+                current_scene = createMenu(engine, canvas, message, database);
+                break;
+              case 2:
+                current_scene = createGame(engine, canvas, message, database);
+                break;
+              case 3:
+                current_scene = createHow2Play(engine, canvas, message, database);
+                break;
+              case 4:
+                current_scene = createStats(engine, canvas, message, database);
+                break;
+              case 5:
+                current_scene = createSettings(engine, canvas, message, database);
+                break;
+              case 6:
+                current_scene = createAccount(engine, canvas, message, database);
+                break;
+              case 7:
+                current_scene = createCreateAcc(engine, canvas, message, database);
+                break;
+              default:
+                current_scene = createLogin(engine, canvas, message, database);
+                break;
+            }
+            console.log(message.render + " :: " + current)
           }
+
+          current_scene.render();
 
         });
 
