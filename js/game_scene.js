@@ -19,6 +19,11 @@ function createGame(engine, canvas, message, database) {                        
 	// var foreground = new BABYLON.Layer("fore", "hit-target-castle-facade-concept-high-res.png", scene);
 	// foreground.isBackground = false;
 
+	//sound effects initialized
+	var firing  = new BABYLON.Sound("firing", "res/sound_effects/catapult_firing.wav", scene, null, { loop: false, autoplay: false});
+	var reload  = new BABYLON.Sound("reloading", "res/sound_effects/catapult_cocking.wav", scene, null, { loop: false, autoplay: false});
+	var lighting  = new BABYLON.Sound("lighting", "res/sound_effects/fire_lighting.wav", scene, null, { loop: false, autoplay: false});
+
 	//><><><><><><><><><>< START OF NUMBER LINE CODE ><><><><><><><><><><
 
 	var line = new BABYLON.GUI.Line();
@@ -128,35 +133,35 @@ function createGame(engine, canvas, message, database) {                        
 	text4.zIndex = 1;
 	advTexture.addControl(text4);
 
-var hitmarker_l = new BABYLON.GUI.TextBlock("lo", "Low");
-hitmarker_l.width = "200px";
-hitmarker_l.height = "100px";
-hitmarker_l.left = "-500px";
-hitmarker_l.top = "-345px";
-hitmarker_l.color = "red";
-hitmarker_l.fontSize = 60;
-hitmarker_l.alpha = 0;
-advTexture.addControl(hitmarker_l);
+	var hitmarker_l = new BABYLON.GUI.TextBlock("lo", "Low");
+	hitmarker_l.width = "200px";
+	hitmarker_l.height = "100px";
+	hitmarker_l.left = "-500px";
+	hitmarker_l.top = "-345px";
+	hitmarker_l.color = "red";
+	hitmarker_l.fontSize = 60;
+	hitmarker_l.alpha = 0;
+	advTexture.addControl(hitmarker_l);
 
-var hitmarker_h = new BABYLON.GUI.TextBlock("hi", "High");
-hitmarker_h.width = "200px";
-hitmarker_h.height = "100px";
-hitmarker_h.left = "500px";
-hitmarker_h.top = "-345px";
-hitmarker_h.color = "red";
-hitmarker_h.fontSize = 60;
-hitmarker_h.alpha = 0;
-advTexture.addControl(hitmarker_h);
+	var hitmarker_h = new BABYLON.GUI.TextBlock("hi", "High");
+	hitmarker_h.width = "200px";
+	hitmarker_h.height = "100px";
+	hitmarker_h.left = "500px";
+	hitmarker_h.top = "-345px";
+	hitmarker_h.color = "red";
+	hitmarker_h.fontSize = 60;
+	hitmarker_h.alpha = 0;
+	advTexture.addControl(hitmarker_h);
 
-var hitmarker_t = new BABYLON.GUI.TextBlock("tar", "Hit");
-hitmarker_t.width = "200px";
-hitmarker_t.height = "100px";
-hitmarker_t.left = "0px";
-hitmarker_t.top = "-345px";
-hitmarker_t.color = "green";
-hitmarker_t.fontSize = 60;
-hitmarker_t.alpha = 0;
-advTexture.addControl(hitmarker_t);
+	var hitmarker_t = new BABYLON.GUI.TextBlock("tar", "Hit");
+	hitmarker_t.width = "200px";
+	hitmarker_t.height = "100px";
+	hitmarker_t.left = "0px";
+	hitmarker_t.top = "-345px";
+	hitmarker_t.color = "green";
+	hitmarker_t.fontSize = 60;
+	hitmarker_t.alpha = 0;
+	advTexture.addControl(hitmarker_t);
 
 	// Range numbers
 	var range = new BABYLON.GUI.TextBlock();
@@ -252,109 +257,107 @@ advTexture.addControl(hitmarker_t);
 	//   fire.playAnimation(0, 11, true, 200);
 	//   // tree.isPickable = true;
 	// }
-
 	scene.actionManager = new BABYLON.ActionManager(scene);
-	action = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function(event) {
-
+	action = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function(event)
+	{
 		var key = event.sourceEvent.key;
 		console.log(key) ;
-
-    var x = 0.0;
-    var hit_count = 0;
-
-		if (key == "Enter") {
+		var x = 0.0;
+		var hit_count = 0;
+		if (key == "Enter")
+		{
+			firing.play();
 			result = rand_num1 * input;
-
-			if (result < temp1) {
+			if (result < temp1)
+			{
 				hitmarker_l.alpha = 1;
 				setTimeout(function(){hitmarker_l.alpha = 0}, 2000);
-        x = -8.0;
-			}	else if (result > temp2) {
+				x = -8.0;
+				reload.play(2.5);
+			}
+			else if (result > temp2) {
 				hitmarker_h.alpha = 1;
 				setTimeout(function(){hitmarker_h.alpha = 0}, 2000);
-        x = 8.0;
-			}	else {
+				x = 8.0;
+				reload.play(2.5);
+			}
+			else
+			{
 				hitmarker_t.alpha = 1;
 				setTimeout(function(){hitmarker_t.alpha = 0}, 2000);
-        switch (hit_count) {
-          case 0: x = 0.02; break;
-          case 1: x = 4.25; break;
-          case 2: x = -4.25; break;
-        }
-        hit_count++;
+				switch (hit_count)
+				{
+					case 0: x = 0.02; break;
+					case 1: x = 4.25; break;
+					case 2: x = -4.25; break;
+				}
+				hit_count++;
+				reload.play(2.5);
 			}
-
 			output.text = result.toString();
 			catapult1.playAnimation(0, 23, false, 200);
-
-      var frameRate = 10;
-
-      var xSlide = new BABYLON.Animation("xSlide", "position.x", frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
-      var ySlide = new BABYLON.Animation("ySlide", "position.y", frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
-
-      var xKeyFrames = [];
-      var yKeyFrames = [];
-
-      var frame_count = 5;
-
-      var xDist = (0 + x) / frame_count - 0.1;
-
-      for (var i = 0; i < frame_count; i += 0.1) {
-        xKeyFrames.push({
-            frame: frameRate * i,
-            value: xDist * i
-        });
-        yKeyFrames.push({
-            frame: frameRate * i,
-            value: -0.5 * Math.pow(i,2) + (4.0 * i) + -3.6
-        });
-      }
-
-      xSlide.setKeys(xKeyFrames);
-      ySlide.setKeys(yKeyFrames);
-
-      scene.beginDirectAnimation(fire1, [xSlide], 0, 5 * frameRate, true);
-      scene.beginDirectAnimation(fire1, [ySlide], 0, 5 * frameRate, true);
-
-      // fire1.position.y += 0.01;
-
-		} else if (key == "a") {
-
+			var frameRate = 10;
+			var xSlide = new BABYLON.Animation("xSlide", "position.x", frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+			var ySlide = new BABYLON.Animation("ySlide", "position.y", frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+			var xKeyFrames = [];
+			var yKeyFrames = [];
+			var frame_count = 5;
+			var xDist = (0 + x) / frame_count - 0.1;
+			for (var i = 0; i < frame_count; i += 0.1)
+			{
+				xKeyFrames.push(
+				{
+					frame: frameRate * i,
+					value: xDist * i
+				});
+				yKeyFrames.push(
+				{
+					frame: frameRate * i,
+					value: -0.5 * Math.pow(i,2) + (4.0 * i) + -3.6
+				});
+			}
+			xSlide.setKeys(xKeyFrames);
+			ySlide.setKeys(yKeyFrames);
+			scene.beginDirectAnimation(fire1, [xSlide], 0, 5 * frameRate, true);
+			scene.beginDirectAnimation(fire1, [ySlide], 0, 5 * frameRate, true);
+			// fire1.position.y += 0.01;
+		}
+		else if (key == "a")
+		{
+			lighting.play();
 			rand_num1 = Math.floor((Math.random() * 10) + 1);
 			rand_num2 = Math.floor((Math.random() * 100) + 1);
 			temp1 = rand_num1 * rand_num2;
 			temp2 = rand_num1 * (rand_num2 + 3);
-
 			text2.text = (rand_num1.toString()) + "  x  ";
 			range.text = "[" + (temp1.toString()) + " , " + (temp2.toString()) + "]";
 			output.text = "";
 			text1.text = "";
 			param = "";
 			input = parseInt(param);
-
-		} else if (key == "Backspace") {
-
+		}
+		else if (key == "Backspace")
+		{
 			param = param.substring(0, param.length - 1);
 			text1.text = param;
 			input = parseInt(param);
-
-		} else if (key == "0" || key == "1" || key == "2" || key == "3" || key == "4" ||
-							 key == "5" || key == "6" || key == "7" || key == "8" || key == "9" || key == ".") {
-			if(param.length < 3) {
+		}
+		else if(key == "0" || key == "1" || key == "2" || key == "3" || key == "4" ||
+				key == "5" || key == "6" || key == "7" || key == "8" || key == "9" || key == ".")
+		{
+			if(param.length < 3)
+			{
 				param += key;
 				text1.text = param;
 				input = parseInt(param);
 			}
-
 		}
-
 		console.log(text1.text);
 		console.log(typeof param);
 		console.log(typeof input);
 
 	});
 	scene.actionManager.registerAction(action);
-
 	var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "res/login-button.png");
 	button.height = "90px";
 	button.width = "290px";
@@ -367,12 +370,9 @@ advTexture.addControl(hitmarker_t);
 	button.left = "-750px";
 	advTexture.addControl(button);
 	// button.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-
 	button.onPointerClickObservable.add(function() {
 		message.render = 1;
     advTexture.dispose();
 	});
-
 	return scene;
-
 };
