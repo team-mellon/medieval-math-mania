@@ -20,7 +20,7 @@ function createMenu(engine, canvas, message, database) {                        
   var music6 = new BABYLON.Sound("fiddles_mcGinty", "res/music/fiddles_mcGinty.wav", scene, null, { loop: false, autoplay: false});
   var music7 = new BABYLON.Sound("galway", "res/music/galway.wav", scene, null, { loop: false, autoplay: false});
   var music8 = new BABYLON.Sound("hidden_past", "res/music/hidden_past.wav", scene, null, { loop: false, autoplay: false});
-  var music9 = new BABYLON.Sound("hidden_past", "res/music/hidden_past.wav", scene, null, { loop: false, autoplay: false});
+  var music9 = new BABYLON.Sound("one-eyed_maestro", "res/music/one-eyed_maestro.wav", scene, null, { loop: false, autoplay: false});
   var music10 = new BABYLON.Sound("parisian", "res/music/parisian.wav", scene, null, { loop: false, autoplay: false});
   
   music1.onEndedObservable.add(function(){
@@ -52,7 +52,7 @@ function createMenu(engine, canvas, message, database) {                        
   });
   music10.onEndedObservable.add(function(){
 	  music1.play();
-  });
+  });//end music
   
   // GUI
   var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
