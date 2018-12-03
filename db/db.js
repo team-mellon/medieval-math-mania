@@ -1,15 +1,40 @@
 var db = {
+
   users: {
-    a12b3c4d: {
-      username: "Jane Doe",
-      password: "bd79minus10"
+    0: {
+      username: "ebitikofer",
+      password: "password"
+    },
+    1: {
+      username: "ebradford",
+      password: "password"
+    },
+    2: {
+      username: "dobrien",
+      password: "password"
+    },
+    3: {
+      username: "nestep",
+      password: "password"
     }
   },
 
   stats: {
-    a12b3c4d: {
-      hits: 469,
-      misses: 469
-    }
+    0: {
+      hits: 100,
+      misses: 89
+    },
+    1: {
+      hits: 76,
+      misses: 49
+    },
+    2: {
+      hits: 49,
+      misses: 46
+    },
+    3: {
+      hits: 48,
+      misses: 49
+    },
   }
 };
