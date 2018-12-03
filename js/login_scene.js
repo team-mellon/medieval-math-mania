@@ -81,7 +81,7 @@ function createLogin(engine, canvas, message, database) {                       
     
 
     login_button.onPointerClickObservable.add(function() {
-	let key = username_input.text;
+	var key = username_input.text;
 	if( key in database.users) {
 	    if(database["users"][key]["password"] == password_input.text) {
 		username_input.text = "";

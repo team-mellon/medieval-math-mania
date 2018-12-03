@@ -207,7 +207,7 @@ function createCreateAcc(engine, canvas, message, database) {           //functi
 		re_password_input.text = "";
 	    }
 	    else{
-		let key = username_input.text;
+		var key = username_input.text;
 
 		database["users"][key] = {
 		    firstname: firstname_input.text,
