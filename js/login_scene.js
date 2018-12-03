@@ -17,6 +17,9 @@ function createLogin(engine, canvas, message, database) {                       
   advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
   var enable = true;                                                            // render enable bit for the ADT controls
 
+  var username = "";
+  var password = "";
+
   var username_text = new BABYLON.GUI.TextBlock();                              // username textblock
   username_text.top = "-110px";
   username_text.left = "-265px";
@@ -41,6 +44,11 @@ function createLogin(engine, canvas, message, database) {                       
   username_input.thickness = 0;
   username_input.focusedBackground = "white";
   username_input.isEnabled = enable;
+  username_input.onTextChangedObservable.add(function() {
+    if (username_input.currentKey != "Delete" || username_input.currentKey != "Backspace") {
+      username = username_input.text;
+    }
+  });
 
   var password_text = new BABYLON.GUI.TextBlock();                              // password textblock
   password_text.top = "-25px";
@@ -66,6 +74,11 @@ function createLogin(engine, canvas, message, database) {                       
   password_input.thickness = 0;
   password_input.focusedBackground = "white";
   password_input.isEnabled = enable;
+  password_input.onTextChangedObservable.add(function() {
+    if (password_input.currentKey != "Delete" || password_input.currentKey != "Backspace") {
+      password = password_input.text;
+    }
+  });
 
     var login_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("login_button", "Login", "res/login-button.png");         // login button
     login_button.top = "90px";
@@ -79,8 +92,15 @@ function createLogin(engine, canvas, message, database) {                       
   login_button.fontSize = 26;
   login_button.isEnabled = enable;
   login_button.onPointerClickObservable.add(function() {
-    message.render = 1;
-    advTexture.dispose();
+    for (var i = 0; i < Object.keys(database.users).length; i++) {
+      console.log(Object.values(database.users[i])[0] + " " + username + " " + Object.values(database.users[i])[1] + " " + password);
+      if (Object.values(database.users[i])[0] == username && Object.values(database.users[i])[1] == password) {
+        message.render = 1;
+        advTexture.dispose();
+      } else {
+        console.log("no match");
+      }
+    }
   });
 
     var account_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("account_button", "Create Account", "res/login-button.png");
