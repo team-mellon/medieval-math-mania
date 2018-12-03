@@ -8,7 +8,7 @@ function createGame(engine, canvas, message, database) {                        
     scene);                                                                     // creates camera pointed at the scene
   camera.setTarget(BABYLON.Vector3.Zero());                                     // targets the camera to scene origin
 
-  var background = new BABYLON.Layer("bg", "res/game.png", scene, true);        // background layer
+  scene.clearColor = new BABYLON.Color4(0.78, 1, 0.98, 1);
 
   // GUI
   var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
@@ -177,6 +177,18 @@ function createGame(engine, canvas, message, database) {                        
 	range.zIndex = 1;
 	advTexture.addControl(range);
 
+  // lighting.play();
+  rand_num1 = Math.floor((Math.random() * 10) + 1);
+  rand_num2 = Math.floor((Math.random() * 100) + 1);
+  temp1 = rand_num1 * rand_num2;
+  temp2 = rand_num1 * (rand_num2 + 3);
+  text2.text = (rand_num1.toString()) + "  x  ";
+  range.text = "[" + (temp1.toString()) + " , " + (temp2.toString()) + "]";
+  output.text = "";
+  text1.text = "";
+  param = "";
+  input = parseInt(param);
+
 	var param = "";
 	var rand_num1;
 	var rand_num2;
@@ -185,16 +197,28 @@ function createGame(engine, canvas, message, database) {                        
 	var input;
 	var result;
 
+  var spriteManagerLCT = new BABYLON.SpriteManager("spriteManagerLCT", "res/left-center-tower.png", 1, {width: 5120, height: 2560}, scene);
+	var spriteManagerCT = new BABYLON.SpriteManager("spriteManagerCT", "res/center-tower.png", 1, {width: 5120, height: 2560}, scene);
+	var spriteManagerRCT = new BABYLON.SpriteManager("spriteManagerRCT", "res/right-center-tower.png", 1, {width: 5120, height: 2560}, scene);
 	var spriteManagerBadKnight = new BABYLON.SpriteManager("spriteManagerBadKnight", "res/bad-knight.png", 1, {width: 320, height: 320}, scene);
 	var spriteManagerBadArcher = new BABYLON.SpriteManager("spriteManagerBadArcher", "res/bad-archer.png", 4, {width: 320, height: 320}, scene);
+	var spriteManagerLT = new BABYLON.SpriteManager("spriteManagerLT", "res/left-tower.png", 1, {width: 5120, height: 2560}, scene);
+	var spriteManagerRT = new BABYLON.SpriteManager("spriteManagerRT", "res/right-tower.png", 1, {width: 5120, height: 2560}, scene);
+	var spriteManagerBody = new BABYLON.SpriteManager("spriteManagerBody", "res/body.png", 1, {width: 5120, height: 2560}, scene);
 	var spriteManagerFire = new BABYLON.SpriteManager("spriteManagerFire", "res/ammo.png", 5, {width: 320, height: 320}, scene);
 	var spriteManagerCatapult = new BABYLON.SpriteManager("spriteManagerCatapult", "res/catapult.png", 1, {width: 2560, height: 1280}, scene);
 
-	var badKnight1 = new BABYLON.Sprite("badKnight1", spriteManagerBadKnight);
-	var badArcher1 = new BABYLON.Sprite("badArcher1", spriteManagerBadArcher);
+  var badArcher1 = new BABYLON.Sprite("badArcher1", spriteManagerBadArcher);
+  var lt1 = new BABYLON.Sprite("lt1", spriteManagerLT);
 	var badArcher2 = new BABYLON.Sprite("badArcher2", spriteManagerBadArcher);
+  var lct1 = new BABYLON.Sprite("lct1", spriteManagerLCT);
 	var badArcher3 = new BABYLON.Sprite("badArcher3", spriteManagerBadArcher);
+  var ct1 = new BABYLON.Sprite("ct1", spriteManagerCT);
+	var badKnight1 = new BABYLON.Sprite("badKnight1", spriteManagerBadKnight);
+  var rct1 = new BABYLON.Sprite("rct1", spriteManagerRCT);
 	var badArcher4 = new BABYLON.Sprite("badArcher4", spriteManagerBadArcher);
+  var rt1 = new BABYLON.Sprite("rt1", spriteManagerRT);
+  var body1 = new BABYLON.Sprite("body1", spriteManagerBody);
 	var fire1 = new BABYLON.Sprite("fire1", spriteManagerFire);
 	var fire2 = new BABYLON.Sprite("fire2", spriteManagerFire);
 	var fire3 = new BABYLON.Sprite("fire3", spriteManagerFire);
@@ -206,6 +230,22 @@ function createGame(engine, canvas, message, database) {                        
 	catapult1.position.y = -2.275;
 	catapult1.width = 8.0;
 	catapult1.height =  4.0;
+
+  var g_height = 8.63;
+  var g_width = 17.56;
+
+  lt1.width = g_width;
+  lt1.height = g_height;
+  lct1.width = g_width;
+  lct1.height = g_height;
+  ct1.width = g_width;
+  ct1.height = g_height;
+  rct1.width = g_width;
+  rct1.height = g_height;
+  rt1.width = g_width;
+  rt1.height = g_height;
+  body1.width = g_width;
+  body1.height = g_height;
 
 	badKnight1.position.x =  0.02;
 	badKnight1.position.y =  0.175;
@@ -321,26 +361,41 @@ function createGame(engine, canvas, message, database) {                        
 			}
 			xSlide.setKeys(xKeyFrames);
 			ySlide.setKeys(yKeyFrames);
+      console.log(fire_switch);
       switch (fire_switch) {
         case 0:
 			     scene.beginDirectAnimation(fire1, [xSlide], 0, frame_count * frameRate, true);
 			     scene.beginDirectAnimation(fire1, [ySlide], 0, frame_count * frameRate, true);
+           // , function() {
+           //   lt1.isVisible = false;
+           // });
            break;
         case 1:
 			     scene.beginDirectAnimation(fire2, [xSlide], 0, frame_count * frameRate, true);
 			     scene.beginDirectAnimation(fire2, [ySlide], 0, frame_count * frameRate, true);
+           // , function() {
+           //   lct1.isVisible = false;
+           // });
            break;
         case 2:
 			     scene.beginDirectAnimation(fire3, [xSlide], 0, frame_count * frameRate, true);
 			     scene.beginDirectAnimation(fire3, [ySlide], 0, frame_count * frameRate, true);
+           // , function() {
+           //   ct1.isVisible = false;
+           // });
            break;
         case 3:
 			     scene.beginDirectAnimation(fire4, [xSlide], 0, frame_count * frameRate, true);
 			     scene.beginDirectAnimation(fire4, [ySlide], 0, frame_count * frameRate, true);
+           // , function() {
+           //   rct1.isVisible = false;
+           // });
            break;
         case 4:
 			     scene.beginDirectAnimation(fire5, [xSlide], 0, frame_count * frameRate, true);
-			     scene.beginDirectAnimation(fire5, [ySlide], 0, frame_count * frameRate, true);
+			     scene.beginDirectAnimation(fire5, [ySlide], 0, frame_count * frameRate, true, function() {
+             rt1.isVisible = false;
+           });
            break;
       }
 
@@ -348,7 +403,7 @@ function createGame(engine, canvas, message, database) {                        
 		}
 		else if (key == "a")
 		{
-			lighting.play();
+			// lighting.play();
 			rand_num1 = Math.floor((Math.random() * 10) + 1);
 			rand_num2 = Math.floor((Math.random() * 100) + 1);
 			temp1 = rand_num1 * rand_num2;

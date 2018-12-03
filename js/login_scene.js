@@ -91,17 +91,18 @@ function createLogin(engine, canvas, message, database) {                       
   login_button.fontStyle = "italic";
   login_button.fontSize = 26;
   login_button.isEnabled = enable;
-  login_button.onPointerClickObservable.add(function() {
-    for (var i = 0; i < Object.keys(database.users).length; i++) {
-      console.log(Object.values(database.users[i])[0] + " " + username + " " + Object.values(database.users[i])[1] + " " + password);
-      if (Object.values(database.users[i])[0] == username && Object.values(database.users[i])[1] == password) {
-        message.render = 1;
-        advTexture.dispose();
-      } else {
-        console.log("no match");
-      }
-    }
-  });
+
+  // login_button.onPointerClickObservable.add(function() {
+  //   for (var i = 0; i < Object.keys(database.users).length; i++) {
+  //     console.log(Object.values(database.users[i])[0] + " " + username + " " + Object.values(database.users[i])[1] + " " + password);
+  //     if (Object.values(database.users[i])[0] == username && Object.values(database.users[i])[1] == password) {
+  //       message.render = 1;
+  //       advTexture.dispose();
+  //     } else {
+  //       console.log("no match");
+  //     }
+  //   }
+  // });
 
     var account_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("account_button", "Create Account", "res/login-button.png");
     account_button.top = "90px";
