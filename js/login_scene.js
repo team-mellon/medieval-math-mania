@@ -78,11 +78,31 @@ function createLogin(engine, canvas, message, database) {                       
   login_button.fontStyle = "italic";
   login_button.fontSize = 26;
   login_button.isEnabled = enable;
-  login_button.onPointerClickObservable.add(function() {
-    message.render = 1;
-    // advTexture.dispose();
-  });
+    
 
+    login_button.onPointerClickObservable.add(function() {
+	let key = username_input.text;
+	if( key in database.users) {
+	    if(database["users"][key]["password"] == password_input.text) {
+		username_input.text = "";
+		password_input.text = "";
+		login_error.alpha = 0;
+		message.render = 1;
+	    }
+	    else {
+		username_input.text = "";
+		password_input.text = "";
+		login_error.alpha = 1;
+	    }
+	}
+	else {
+	    username_input.text = "";
+	    password_input.text = "";
+	    login_error.alpha = 1;
+	}
+    });
+
+    
     var account_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("account_button", "Create Account", "res/login-button.png");
     account_button.top = "90px";
     account_button.left = "130px";
@@ -95,6 +115,9 @@ function createLogin(engine, canvas, message, database) {                       
     account_button.fontSize = 26;
     account_button.isEnabled = enable;
     account_button.onPointerClickObservable.add(function() {
+	username_input.text = "";
+	password_input.text = "";
+	login_error.alpha = 0;
 	message.render = 7;
     });
 
@@ -117,6 +140,20 @@ function createLogin(engine, canvas, message, database) {                       
     password_line.color ="saddlebrown";
 
     
+    var login_error = new BABYLON.GUI.TextBlock();
+    login_error.top = "200px";
+    login_error.left = "0px";
+    login_error.height = "200px";
+    login_error.width = "600px";
+    login_error.color = "darkred";
+    login_error.fontFamily = "blackadder ITC";
+    //login_error.fontStyle = "bold";
+    login_error.fontSize = 30;
+    login_error.text = "Username and/or Password did not match.\n Please try again.";
+    login_error.isEnabled = enable;
+    login_error.alpha = 0;
+
+    
 
   advTexture.addControl(username_text);                                         // add controls to texture
   advTexture.addControl(username_input);
@@ -126,6 +163,7 @@ function createLogin(engine, canvas, message, database) {                       
     advTexture.addControl(account_button);
     advTexture.addControl(username_line);
     advTexture.addControl(password_line);
+    advTexture.addControl(login_error);
   return scene;
 
 };

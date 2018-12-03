@@ -147,6 +147,35 @@ function createCreateAcc(engine, canvas, message, database) {           //functi
     re_password_input.focusedBackground = "white";
     re_password_input.isEnabled = enable;
 
+
+    var password_error = new BABYLON.GUI.TextBlock();   // textblock for password check error
+    password_error.top = "-70px";
+    password_error.left = "170px";
+    password_error.height = "150px";
+    password_error.width = "600px";
+    password_error.color = "darkred";
+    password_error.fontFamily = "blackadder ITC";
+    //password_error.fontStyle = "bold";
+    password_error.fontSize = 32;
+    password_error.text = "Passwords did not match.\n Please try again.";
+    password_error.alpha = 0;
+    password_error.isEnabled = enable;
+
+
+    var fieldInput_error = new BABYLON.GUI.TextBlock();   // first name textblock
+    fieldInput_error.top = "-70px";
+    fieldInput_error.left = "170px";
+    fieldInput_error.height = "150px";
+    fieldInput_error.width = "600px";
+    fieldInput_error.color = "darkred";
+    fieldInput_error.fontFamily = "blackadder ITC";
+    //fieldInput_error.fontStyle = "bold";
+    fieldInput_error.fontSize = 32;
+    fieldInput_error.text = "Please fill-in\n every field";
+    fieldInput_error.alpha = 0;
+    fieldInput_error.isEnabled = enable;
+    
+
 //Submit button with sword image
     var submit_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("submit_button", "SUBMIT", "res/sword-button-left.png");
     submit_button.top = "150px";
@@ -160,6 +189,57 @@ function createCreateAcc(engine, canvas, message, database) {           //functi
     submit_button.fontSize = 25;
     submit_button.isEnabled = enable;
 
+
+    submit_button.onPointerClickObservable.add(function() {
+	if(firstname_input.text == "" || lastname_input.text == "" || username_input.text == "" || password_input.text == "" || re_password_input.text == "") {
+	    fieldInput_error.alpha = 1;
+	    firstname_input.text = "";
+	    lastname_input.text = "";
+	    username_input.text = "";
+	    password_input.text = "";
+	    re_password_input.text = "";
+	}
+	else{
+	    if(password_input.text != re_password_input.text) {
+		password_error.alpha = 1;
+		fieldInput_error.alpha = 0;
+		password_input.text = "";
+		re_password_input.text = "";
+	    }
+	    else{
+		let key = username_input.text;
+
+		database["users"][key] = {
+		    firstname: firstname_input.text,
+		    lastname: lastname_input.text,
+		    password: password_input.text
+		};
+
+		firstname_input.text = "";
+		lastname_input.text = "";
+		username_input.text = "";
+		password_input.text = "";
+		re_password_input.text = "";
+		fieldInput_error.alpha = 0;
+		password_error.alpha =0;
+		message.render = 0;
+	    }
+	}
+		
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+    
 //Cancel button with sword image    
     var cancel_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("cancel_button", "CANCEL", "res/sword-button-right.png");
     cancel_button.top = "150px";
@@ -178,6 +258,8 @@ function createCreateAcc(engine, canvas, message, database) {           //functi
 	username_input.text = "";
 	password_input.text = "";
 	re_password_input.text = "";
+	fieldInput_error.alpha = 0;
+	password_error.alpha = 0;
 	message.render = 0;
     });
 	
@@ -198,5 +280,7 @@ function createCreateAcc(engine, canvas, message, database) {           //functi
     advTexture.addControl(submit_button);
     advTexture.addControl(cancel_button);
 
+    advTexture.addControl(password_error);
+    advTexture.addControl(fieldInput_error);
     return scene;
 };

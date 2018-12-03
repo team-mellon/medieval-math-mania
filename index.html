@@ -36,7 +36,7 @@
 
         var canvas = document.getElementById('renderCanvas');                   // get the canvas DOM element context
         var engine = new BABYLON.Engine(canvas, true);                          // load the babylon.js engine
-        var database = db;                                                      // database object
+        var database = {users: {}};                                             // database object
 
         var message = {
           render: 0
