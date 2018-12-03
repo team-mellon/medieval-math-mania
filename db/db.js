@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var db = {
 
   users: {
@@ -38,3 +39,6 @@ var db = {
     },
   }
 };
+=======
+var db = {users: {}};
+>>>>>>> create_account

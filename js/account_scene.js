@@ -26,7 +26,7 @@ function createAccount(engine, canvas, message, database) {                     
   username_text.fontFamily = "Blackadder ITC";
   username_text.fontStyle = "italic";
   username_text.fontSize = 35;
-  username_text.text = "Username: " + database.users.a12b3c4d.username;
+    username_text.text = "Username: ";// + database.users.a12b3c4d.username;
   username_text.isEnabled = enable;
 
   var password_text = new BABYLON.GUI.TextBlock();
@@ -37,7 +37,7 @@ function createAccount(engine, canvas, message, database) {                     
   password_text.fontFamily = "Blackadder ITC";
   password_text.fontStyle = "italic";
   password_text.fontSize = 35;
-  password_text.text = "Password: " + database.users.a12b3c4d.password;
+    password_text.text = "Password: ";// + database.users.a12b3c4d.password;
   password_text.isEnabled = enable;
 
   var menu_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton(
