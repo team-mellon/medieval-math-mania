@@ -65,7 +65,8 @@ function createGame(engine, canvas, message, database) {                        
 	line4.dash = [1,12];
 	line4.color = "black";
 	advTexture.addControl(line4);
-				// ><><><><><><><><><>< END OF NUMBER LINE CODE ><><><><><><><><><><
+
+	// ><><><><><><><><><>< END OF NUMBER LINE CODE ><><><><><><><><><><
 
 	var text1 = new BABYLON.GUI.TextBlock();
 	text1.color = "black";

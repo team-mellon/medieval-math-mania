@@ -93,36 +93,27 @@ function createLogin(engine, canvas, message, database) {                       
     login_button.fontStyle = "italic";
     login_button.fontSize = 26;
     login_button.isEnabled = enable;
-
-  // login_button.onPointerClickObservable.add(function() {
-  //   for (var i = 0; i < Object.keys(database.users).length; i++) {
-  //     console.log(Object.values(database.users[i])[0] + " " + username + " " + Object.values(database.users[i])[1] + " " + password);
-  //     if (Object.values(database.users[i])[0] == username && Object.values(database.users[i])[1] == password) {
-  //       message.render = 1;
-  //     } else {
-  //       console.log("no match");
-  //     }
-  //   }
-  // });
-
     login_button.onPointerClickObservable.add(function() {
-    	// let key = username_input.text;
-    	// if( key in database.users) {
-  	  //   if(database["users"][key]["password"] == password_input.text) {
-      // 		username_input.text = "";
-      // 		password_input.text = "";
-      // 		login_error.alpha = 0;
-      		message.render = 1;
-  	  //   } else {
-      // 		username_input.text = "";
-      // 		password_input.text = "";
-      // 		login_error.alpha = 1;
-  	  //   }
-    	// }	else {
-  	  //   username_input.text = "";
-  	  //   password_input.text = "";
-  	  //   login_error.alpha = 1;
-    	// }
+    	var key = username_input.text;
+    	if( key in database.users) {
+    	    if(database["users"][key]["password"] == password_input.text) {
+    		username_input.text = "";
+    		password_input.text = "";
+    		login_error.alpha = 0;
+    		message.render = 1;
+    		message.current_user = key;
+    	    }
+    	    else {
+    		username_input.text = "";
+    		password_input.text = "";
+    		login_error.alpha = 1;
+    	    }
+    	}
+    	else {
+    	    username_input.text = "";
+    	    password_input.text = "";
+    	    login_error.alpha = 1;
+    	}
     });
 
 

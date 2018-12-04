@@ -100,7 +100,8 @@ function createMenu(engine, canvas, message, database) {                        
   logout_button.fontSize = 36;
   logout_button.color = "gold";
   logout_button.thickness = 0;
-  logout_button.onPointerUpObservable.add( function() {
+    logout_button.onPointerUpObservable.add( function() {
+	message.current_user = "";
     message.render = 0;
   });
   logout_button.isEnabled = enable;

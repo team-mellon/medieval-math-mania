@@ -19,6 +19,8 @@ function createStats(engine, canvas, message, database) {                       
   advTexture.attach();
   var enable = true;
 
+    var key = message.current_user;
+    
   var stats1_text = new BABYLON.GUI.TextBlock();
   stats1_text.top = "-140px";
   stats1_text.left = "-43px";
@@ -27,7 +29,7 @@ function createStats(engine, canvas, message, database) {                       
   stats1_text.fontFamily = "Blackadder ITC";
   stats1_text.fontStyle = "italic";
   stats1_text.fontSize = 35;
-    stats1_text.text = "Hits: ";// + database.stats.a12b3c4d.hits;
+    stats1_text.text = "Hits: " + database["stats"][key]["hits"];
   stats1_text.isEnabled = enable;
 
   var stats2_text = new BABYLON.GUI.TextBlock();
@@ -38,7 +40,7 @@ function createStats(engine, canvas, message, database) {                       
   stats2_text.fontFamily = "Blackadder ITC";
   stats2_text.fontStyle = "italic";
   stats2_text.fontSize = 35;
-    stats2_text.text = "Misses: ";// + database.stats.a12b3c4d.misses;
+    stats2_text.text = "Misses: " + database["stats"][key]["misses"];
   stats2_text.isEnabled = enable;
 
   var menu_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton(

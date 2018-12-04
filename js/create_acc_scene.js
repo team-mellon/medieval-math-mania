@@ -209,8 +209,14 @@ function createCreateAcc(engine, canvas, message, database) {           //functi
 		re_password_input.text = "";
 	    }
 	    else{
-		let key = username_input.text;
+		var key = username_input.text;
 
+		database["stats"][key] = {
+		    hits: 0,
+		    misses: 0
+		};
+
+				
 		database["users"][key] = {
 		    firstname: firstname_input.text,
 		    lastname: lastname_input.text,
@@ -224,7 +230,9 @@ function createCreateAcc(engine, canvas, message, database) {           //functi
 		re_password_input.text = "";
 		fieldInput_error.alpha = 0;
 		password_error.alpha =0;
+		message.current_user = key;
 		message.render = 0;
+		
 	    }
 	}
 
