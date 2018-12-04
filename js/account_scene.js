@@ -16,7 +16,9 @@ function createAccount(engine, canvas, message, database) {                     
   var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
   advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
   advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
-  var enable = true;
+    var enable = true;
+
+    var key = message.current_user;
 
   var username_text = new BABYLON.GUI.TextBlock();
   username_text.top = "-140px";
@@ -26,7 +28,7 @@ function createAccount(engine, canvas, message, database) {                     
   username_text.fontFamily = "Blackadder ITC";
   username_text.fontStyle = "italic";
   username_text.fontSize = 35;
-    username_text.text = "Username: ";// + database.users.a12b3c4d.username;
+  username_text.text = "Fullname: " + database["users"][key]["firstname"] + " " + database["users"][key]["lastname"];
   username_text.isEnabled = enable;
 
   var password_text = new BABYLON.GUI.TextBlock();
@@ -37,7 +39,7 @@ function createAccount(engine, canvas, message, database) {                     
   password_text.fontFamily = "Blackadder ITC";
   password_text.fontStyle = "italic";
   password_text.fontSize = 35;
-    password_text.text = "Password: ";// + database.users.a12b3c4d.password;
+    password_text.text = "Password: " + database["users"][key]["password"];
   password_text.isEnabled = enable;
 
   var menu_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton(

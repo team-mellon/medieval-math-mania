@@ -81,13 +81,14 @@ function createLogin(engine, canvas, message, database) {                       
     
 
     login_button.onPointerClickObservable.add(function() {
-	let key = username_input.text;
+	var key = username_input.text;
 	if( key in database.users) {
 	    if(database["users"][key]["password"] == password_input.text) {
 		username_input.text = "";
 		password_input.text = "";
 		login_error.alpha = 0;
 		message.render = 1;
+		message.current_user = key;
 	    }
 	    else {
 		username_input.text = "";

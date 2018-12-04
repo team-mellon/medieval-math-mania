@@ -36,10 +36,27 @@
 
         var canvas = document.getElementById('renderCanvas');                   // get the canvas DOM element context
         var engine = new BABYLON.Engine(canvas, true);                          // load the babylon.js engine
-        var database = {users: {}};                                             // database object
+      var database = {
+      users: {
+      admin: {
+      firstname: "john",
+      lastname: "Doe",
+      password: "1234"
+      }
+      },
+      stats: {
+      admin: {
+      hits: "420",
+      misses: "69"
+      }
+      }
+      };
+      
+      
 
         var message = {
-          render: 0
+      render: 0,
+      current_user: "admin"
         };                                                                      // possible message passing system???
 
         var login_scene = createLogin(engine, canvas, message, database);       // create the login scene
