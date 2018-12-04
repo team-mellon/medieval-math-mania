@@ -1,6 +1,7 @@
 function createMenu(engine, canvas, message, database) {                        // function that returns the menu scene
 
   var scene = new BABYLON.Scene(engine);                                        // create the scene
+  scene.attachControl();
 
   var camera = new BABYLON.UniversalCamera(
     "menu_cam",
@@ -11,55 +12,11 @@ function createMenu(engine, canvas, message, database) {                        
 
   var background = new BABYLON.Layer("bg", "res/menu.png", scene, true);        // background layer
 
-  //music
-  var music = new BABYLON.Sound("achaidh_cheide", "res/music/achaidh_cheide.wav", scene, null, { loop: true, autoplay: true });
-
-  var music1 = new BABYLON.Sound("achaidh_cheide", "res/music/achaidh_cheide.wav", scene, null, { loop: false, autoplay: true});
-  var music2 = new BABYLON.Sound("cartoon_battle", "res/music/cartoon_battle.wav", scene, null, { loop: false, autoplay: false});
-  var music3 = new BABYLON.Sound("celtic_impulse", "res/music/celtic_impulse.wav", scene, null, { loop: false, autoplay: false});
-  var music4 = new BABYLON.Sound("clenched_teeth", "res/music/clenched_teeth.wav", scene, null, { loop: false, autoplay: false});
-  var music5 = new BABYLON.Sound("failing_defense", "res/music/failing_defense.wav", scene, null, { loop: false, autoplay: false});
-  var music6 = new BABYLON.Sound("fiddles_mcGinty", "res/music/fiddles_mcGinty.wav", scene, null, { loop: false, autoplay: false});
-  var music7 = new BABYLON.Sound("galway", "res/music/galway.wav", scene, null, { loop: false, autoplay: false});
-  var music8 = new BABYLON.Sound("hidden_past", "res/music/hidden_past.wav", scene, null, { loop: false, autoplay: false});
-  var music9 = new BABYLON.Sound("one-eyed_maestro", "res/music/one-eyed_maestro.wav", scene, null, { loop: false, autoplay: false});
-  var music10 = new BABYLON.Sound("parisian", "res/music/parisian.wav", scene, null, { loop: false, autoplay: false});
-
-  music1.onEndedObservable.add(function(){
-	  music2.play();
-  });
-  music2.onEndedObservable.add(function(){
-	  music3.play();
-  });
-  music3.onEndedObservable.add(function(){
-	  music4.play();
-  });
-  music4.onEndedObservable.add(function(){
-	  music5.play();
-  });
-  music5.onEndedObservable.add(function(){
-	  music6.play();
-  });
-  music6.onEndedObservable.add(function(){
-	  music7.play();
-  });
-  music7.onEndedObservable.add(function(){
-	  music8.play();
-  });
-  music8.onEndedObservable.add(function(){
-	  music9.play();
-  });
-  music9.onEndedObservable.add(function(){
-	  music10.play();
-  });
-  music10.onEndedObservable.add(function(){
-	  music1.play();
-  });//end music
-
   // GUI
   var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
   advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
   advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
+  advTexture.attach();
   var enable = true;                                                            // render enable bit for the ADT controls
 
   var panel1 = new BABYLON.GUI.StackPanel();
@@ -76,7 +33,6 @@ function createMenu(engine, canvas, message, database) {                        
   game_button.thickness = 0;
   game_button.onPointerUpObservable.add(function() {
      message.render = 2;
-     advTexture.dispose();
   });
   game_button.isEnabled = enable;
 
@@ -94,7 +50,6 @@ function createMenu(engine, canvas, message, database) {                        
   stats_button.thickness = 0;
   stats_button.onPointerUpObservable.add(function() {
     message.render = 3;
-    advTexture.dispose();
   });
   stats_button.isEnabled = enable;
 
@@ -112,7 +67,6 @@ function createMenu(engine, canvas, message, database) {                        
   h2p_button.thickness = 0;
   h2p_button.onPointerUpObservable.add(function() {
     message.render = 4;
-    advTexture.dispose();
   });
   h2p_button.isEnabled = enable;
 
@@ -130,7 +84,6 @@ function createMenu(engine, canvas, message, database) {                        
   settings_button.thickness = 0;
   settings_button.onPointerUpObservable.add(function() {
     message.render = 5;
-    advTexture.dispose();
   });
   settings_button.isEnabled = enable;
 
@@ -149,7 +102,6 @@ function createMenu(engine, canvas, message, database) {                        
   logout_button.thickness = 0;
   logout_button.onPointerUpObservable.add( function() {
     message.render = 0;
-    advTexture.dispose();
   });
   logout_button.isEnabled = enable;
 
@@ -168,9 +120,25 @@ function createMenu(engine, canvas, message, database) {                        
   account_button.thickness = 0;
   account_button.onPointerUpObservable.add( function() {
     message.render = 6;
-    advTexture.dispose();
   });
   account_button.isEnabled = enable;
+
+
+	var lute = BABYLON.GUI.Button.CreateImageWithCenterTextButton("lute_butt", "", "res/lute.png");
+	lute.height = "110px";
+	lute.width = "110px";
+	lute.fontFamily = "Blackadder ITC";
+	lute.fontStyle = "italic";
+	lute.fontSize = 36;
+	lute.color = "gold";
+	lute.thickness = 0;
+	lute.top = "350px";
+  lute.left = "875px";
+	advTexture.addControl(lute);
+	// lute.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+	lute.onPointerClickObservable.add(function() {
+    message.music_pause = !message.music_pause;
+	});
 
   panel1.addControl(game_button);
   panel2.addControl(stats_button);

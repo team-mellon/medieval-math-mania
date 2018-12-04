@@ -1,6 +1,7 @@
 function createGame(engine, canvas, message, database) {                        // function that returns the game scene
 
   var scene = new BABYLON.Scene(engine);                                        // create the scene
+  scene.attachControl();
 
   var camera = new BABYLON.UniversalCamera(
     "game_cam",
@@ -14,6 +15,7 @@ function createGame(engine, canvas, message, database) {                        
   var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
   advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
   advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
+  advTexture.attach();
   var enable = true;                                                            // render enable bit for the ADT controls
 
 	// var foreground = new BABYLON.Layer("fore", "hit-target-castle-facade-concept-high-res.png", scene);
@@ -312,14 +314,14 @@ function createGame(engine, canvas, message, database) {                        
 			{
 				hitmarker_l.alpha = 1;
 				setTimeout(function(){hitmarker_l.alpha = 0}, 2000);
-				x = -8.0;
+				x = -7.5;
         fire_switch = 0;
 				reload.play(2.5);
 			}
 			else if (result > temp2) {
 				hitmarker_h.alpha = 1;
 				setTimeout(function(){hitmarker_h.alpha = 0}, 2000);
-				x = 8.0;
+				x = 8.5;
         fire_switch = 1;
 				reload.play(2.5);
 			}
@@ -329,9 +331,9 @@ function createGame(engine, canvas, message, database) {                        
 				setTimeout(function(){hitmarker_t.alpha = 0}, 2000);
 				switch (hit_count)
 				{
-					case 0: x = -4.25; break;
-					case 1: x = 4.25; break;
-					case 2: x = 0.02; break;
+					case 0: x = -3.75; break;
+					case 1: x = 4.75; break;
+					case 2: x = 0.52; break;
 				}
         fire_switch = 2 + hit_count;
 				hit_count++;
@@ -393,9 +395,10 @@ function createGame(engine, canvas, message, database) {                        
            break;
         case 4:
 			     scene.beginDirectAnimation(fire5, [xSlide], 0, frame_count * frameRate, true);
-			     scene.beginDirectAnimation(fire5, [ySlide], 0, frame_count * frameRate, true, function() {
-             rt1.isVisible = false;
-           });
+			     scene.beginDirectAnimation(fire5, [ySlide], 0, frame_count * frameRate, true);
+           // , function() {
+           //   rt1.isVisible = false;
+           // });
            break;
       }
 
@@ -451,7 +454,21 @@ function createGame(engine, canvas, message, database) {                        
 	// button.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
 	button.onPointerClickObservable.add(function() {
 		message.render = 1;
-    advTexture.dispose();
+	});
+	var lute = BABYLON.GUI.Button.CreateImageWithCenterTextButton("lute_butt", "", "res/lute.png");
+	lute.height = "110px";
+	lute.width = "110px";
+	lute.fontFamily = "Blackadder ITC";
+	lute.fontStyle = "italic";
+	lute.fontSize = 36;
+	lute.color = "gold";
+	lute.thickness = 0;
+	lute.top = "350px";
+  lute.left = "875px";
+	advTexture.addControl(lute);
+	// lute.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+	lute.onPointerClickObservable.add(function() {
+    message.music_pause = !message.music_pause;
 	});
 	return scene;
 };

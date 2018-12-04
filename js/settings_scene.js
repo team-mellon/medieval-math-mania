@@ -1,6 +1,7 @@
 function createSettings(engine, canvas, message, database) {                    // function that returns the settings scene
 
   var scene = new BABYLON.Scene(engine);                                        // create the scene
+  scene.attachControl();
 
   var camera = new BABYLON.UniversalCamera(
     "settings_cam",
@@ -15,6 +16,7 @@ function createSettings(engine, canvas, message, database) {                    
   var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
   advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
   advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
+  advTexture.attach();
   var enable = true;
 
   var volume_text = new BABYLON.GUI.TextBlock();
@@ -34,9 +36,10 @@ function createSettings(engine, canvas, message, database) {                    
   volume_input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
   volume_input.width = "200px";
   volume_input.minimum = 0;
-  volume_input.maximum = 2 * Math.PI;
-  volume_input.value = 0;
+  volume_input.maximum = 1;
+  volume_input.value = 1;
   volume_input.onValueChangedObservable.add(function(value) {
+    message.volume = value;
   });
 
   var time_text = new BABYLON.GUI.TextBlock();
@@ -77,7 +80,23 @@ function createSettings(engine, canvas, message, database) {                    
   menu_button.isEnabled = enable;
   menu_button.onPointerClickObservable.add(function() {
 		message.render = 1;
-    advTexture.dispose();
+	});
+
+
+	var lute = BABYLON.GUI.Button.CreateImageWithCenterTextButton("lute_butt", "", "res/lute.png");
+	lute.height = "110px";
+	lute.width = "110px";
+	lute.fontFamily = "Blackadder ITC";
+	lute.fontStyle = "italic";
+	lute.fontSize = 36;
+	lute.color = "gold";
+	lute.thickness = 0;
+	lute.top = "350px";
+  lute.left = "875px";
+	advTexture.addControl(lute);
+	// lute.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+	lute.onPointerClickObservable.add(function() {
+    message.music_pause = !message.music_pause;
 	});
 
   advTexture.addControl(volume_text);

@@ -1,6 +1,7 @@
 function createAccount(engine, canvas, message, database) {                     // function that returns the account scene
 
   var scene = new BABYLON.Scene(engine);                                        // create the scene
+  scene.attachControl();
 
   var camera = new BABYLON.UniversalCamera(
     "account_cam",
@@ -16,6 +17,7 @@ function createAccount(engine, canvas, message, database) {                     
   var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
   advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
   advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
+  advTexture.attach();
   var enable = true;
 
   var username_text = new BABYLON.GUI.TextBlock();
@@ -57,7 +59,23 @@ function createAccount(engine, canvas, message, database) {                     
   menu_button.isEnabled = enable;
   menu_button.onPointerClickObservable.add(function() {
 		message.render = 1;
-    advTexture.dispose();
+	});
+
+
+	var lute = BABYLON.GUI.Button.CreateImageWithCenterTextButton("lute_butt", "", "res/lute.png");
+	lute.height = "110px";
+	lute.width = "110px";
+	lute.fontFamily = "Blackadder ITC";
+	lute.fontStyle = "italic";
+	lute.fontSize = 36;
+	lute.color = "gold";
+	lute.thickness = 0;
+	lute.top = "350px";
+  lute.left = "875px";
+	advTexture.addControl(lute);
+	// lute.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+	lute.onPointerClickObservable.add(function() {
+    message.music_pause = !message.music_pause;
 	});
 
   advTexture.addControl(username_text);

@@ -1,6 +1,7 @@
 function createCreateAcc(engine, canvas, message, database) {           //function that returns the create account scene
 
     var scene = new BABYLON.Scene(engine);          // create the scene
+    scene.attachControl();
 
     var camera = new BABYLON.UniversalCamera("create_acc_cam", new BABYLON.Vector3(0, 0, -10), scene);            // creates camera pointed at the scene
 
@@ -15,6 +16,7 @@ function createCreateAcc(engine, canvas, message, database) {           //functi
     advTexture.idealWidth = 1920;          //ideal screen width for the UI to scale to
 
     advTexture.idealHeight = 1080;         //ideal screen height for the UI to scale to
+    advTexture.attach();
 
     var enable = true;            //render enable bit for the ADT controls
 
@@ -264,6 +266,21 @@ function createCreateAcc(engine, canvas, message, database) {           //functi
     });
 
 
+    var lute = BABYLON.GUI.Button.CreateImageWithCenterTextButton("lute_butt", "", "res/lute.png");
+    lute.height = "110px";
+    lute.width = "110px";
+    lute.fontFamily = "Blackadder ITC";
+    lute.fontStyle = "italic";
+    lute.fontSize = 36;
+    lute.color = "gold";
+    lute.thickness = 0;
+    lute.top = "350px";
+    lute.left = "875px";
+    advTexture.addControl(lute);
+    // lute.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+    lute.onPointerClickObservable.add(function() {
+      message.music_pause = !message.music_pause;
+    });
 
 //adds control of all text blocks and input boxes to texture
     advTexture.addControl(firstname_text);
