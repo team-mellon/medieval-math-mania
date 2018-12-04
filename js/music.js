@@ -1,4 +1,4 @@
-function createMusic(engine, canvas, message, database) {                        // function that returns the menu scene
+function createMusic(engine, canvas, message, database) {                       // function that returns the menu scene
 
   var scene = new BABYLON.Scene(engine);                                        // create the scene
 

@@ -1,7 +1,6 @@
 function createGame(engine, canvas, message, database) {                        // function that returns the game scene
 
   var scene = new BABYLON.Scene(engine);                                        // create the scene
-  scene.attachControl();
 
   var camera = new BABYLON.UniversalCamera(
     "game_cam",
@@ -15,7 +14,6 @@ function createGame(engine, canvas, message, database) {                        
   var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
   advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
   advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
-  advTexture.attach();
   var enable = true;                                                            // render enable bit for the ADT controls
 
 	// var foreground = new BABYLON.Layer("fore", "hit-target-castle-facade-concept-high-res.png", scene);
