@@ -52,6 +52,8 @@ function createLogin(engine, canvas, message, database) {                       
     }
   });
 
+  var username_line = createLine(805, 370, 1305, 370, 1.5, "saddlebrown");
+
   var password_text = new BABYLON.GUI.TextBlock();                              // password textblock
   password_text.top = "-25px";
   password_text.left = "-270px";
@@ -82,76 +84,60 @@ function createLogin(engine, canvas, message, database) {                       
     }
   });
 
-    var login_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("login_button", "Login", "res/login-button.png");         // login button
-    login_button.top = "90px";
-    login_button.left ="-130px";
-    login_button.height = "60px";
-    login_button.width = "200px";
-    login_button.color = "gold";
-    login_button.thickness = 0;
-    login_button.fontFamily = "Blackadder ITC";
-    login_button.fontStyle = "italic";
-    login_button.fontSize = 26;
-    login_button.isEnabled = enable;
-    login_button.onPointerClickObservable.add(function() {
-    	var key = username_input.text;
-    	if( key in database.users) {
-    	    if(database["users"][key]["password"] == password_input.text) {
-    		username_input.text = "";
-    		password_input.text = "";
-    		login_error.alpha = 0;
-    		message.render = 1;
-    		message.current_user = key;
-    	    }
-    	    else {
-    		username_input.text = "";
-    		password_input.text = "";
-    		login_error.alpha = 1;
-    	    }
-    	}
-    	else {
-    	    username_input.text = "";
-    	    password_input.text = "";
-    	    login_error.alpha = 1;
-    	}
-    });
+  var password_line = createLine(805, 451, 1305, 451, 1.5, "saddlebrown");
+
+  var login_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("login_button", "Login", "res/login-button.png");         // login button
+  login_button.top = "90px";
+  login_button.left ="-130px";
+  login_button.height = "60px";
+  login_button.width = "200px";
+  login_button.color = "gold";
+  login_button.thickness = 0;
+  login_button.fontFamily = "Blackadder ITC";
+  login_button.fontStyle = "italic";
+  login_button.fontSize = 26;
+  login_button.isEnabled = enable;
+  login_button.onPointerClickObservable.add(function() {
+  	var key = username_input.text;
+  	if( key in database.users) {
+  	    if(database["users"][key]["password"] == password_input.text) {
+  		username_input.text = "";
+  		password_input.text = "";
+  		login_error.alpha = 0;
+  		message.render = 1;
+  		message.current_user = key;
+  	    }
+  	    else {
+  		username_input.text = "";
+  		password_input.text = "";
+  		login_error.alpha = 1;
+  	    }
+  	}
+  	else {
+  	    username_input.text = "";
+  	    password_input.text = "";
+  	    login_error.alpha = 1;
+  	}
+  });
 
 
-    var account_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("account_button", "Create Account", "res/login-button.png");
-    account_button.top = "90px";
-    account_button.left = "130px";
-    account_button.width = "200px";
-    account_button.height = "60px";
-    account_button.color = "gold";
-    account_button.thickness = 0;
-    account_button.fontFamily = "Blackadder ITC";
-    account_button.fontStyle = "italic";
-    account_button.fontSize = 26;
-    account_button.isEnabled = enable;
-    account_button.onPointerClickObservable.add(function() {
-    	username_input.text = "";
-    	password_input.text = "";
-    	login_error.alpha = 0;
-    	message.render = 7;
-    });
-
-
-  var username_line = new BABYLON.GUI.Line();
-  username_line.x1 = 805;
-  username_line.y1 = 370;
-  username_line.x2 = 1305;
-  username_line.y2 = 370;
-  username_line.lineWidth = 1.5;
-  username_line.color ="saddlebrown";
-
-
-  var password_line = new BABYLON.GUI.Line();
-  password_line.x1 = 805;
-  password_line.y1 = 451;
-  password_line.x2 = 1305;
-  password_line.y2 = 451;
-  password_line.lineWidth = 1.5;
-  password_line.color ="saddlebrown";
+  var account_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("account_button", "Create Account", "res/login-button.png");
+  account_button.top = "90px";
+  account_button.left = "130px";
+  account_button.width = "200px";
+  account_button.height = "60px";
+  account_button.color = "gold";
+  account_button.thickness = 0;
+  account_button.fontFamily = "Blackadder ITC";
+  account_button.fontStyle = "italic";
+  account_button.fontSize = 26;
+  account_button.isEnabled = enable;
+  account_button.onPointerClickObservable.add(function() {
+  	username_input.text = "";
+  	password_input.text = "";
+  	login_error.alpha = 0;
+  	message.render = 7;
+  });
 
   var login_error = new BABYLON.GUI.TextBlock();
   login_error.top = "200px";
