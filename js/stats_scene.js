@@ -20,7 +20,7 @@ function createStats(engine, canvas, message, database) {                       
   var enable = true;
 
     var key = message.current_user;
-    
+
   var stats1_text = new BABYLON.GUI.TextBlock();
   stats1_text.top = "-140px";
   stats1_text.left = "-43px";

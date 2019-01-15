@@ -2,7 +2,7 @@ function runGame(renderingCanvas) {
 
   var canvas = document.getElementById('renderCanvas');                   // get the canvas DOM element context
   var engine = new BABYLON.Engine(canvas, true);                          // load the babylon.js engine
-  
+
   var database = {
   users: {
   admin: {
