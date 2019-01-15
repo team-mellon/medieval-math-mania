@@ -1,103 +1,25 @@
-function createSettings(engine, canvas, message, database) {                    // function that returns the settings scene
+var volume_text;
+var volume_input;
+var time_text;
+var time_input;
+var menu_button;
 
-  var scene = new BABYLON.Scene(engine);                                        // create the scene
-  scene.attachControl();
-
-  var camera = new BABYLON.UniversalCamera(
-    "settings_cam",
-    new BABYLON.Vector3(0, 0, -10),
-    scene);                                                                     // creates camera pointed at the scene
-  camera.setTarget(BABYLON.Vector3.Zero());                                     // targets the camera to scene origin
-  camera.attachControl(canvas, true);                                           // attaches the camera to the canvas
+function createSettings(scene, camera, advTexture, message, database) {                    // function that returns the settings scene
 
   var background = new BABYLON.Layer("bg", "res/login.png", scene, true);       // background
 
-  // GUI
-  var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
-  advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
-  advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
-  advTexture.attach();
   var enable = true;
 
-  var volume_text = new BABYLON.GUI.TextBlock();
-  volume_text.top = "-140px";
-  volume_text.left = "-43px";
-  volume_text.height = "43px";
-  volume_text.color = "saddlebrown";
-  volume_text.fontFamily = "Blackadder ITC";
-  volume_text.fontStyle = "italic";
-  volume_text.fontSize = 35;
-  volume_text.text = "Volume";
-  volume_text.isEnabled = enable;
-
-  var volume_input = new BABYLON.GUI.Slider();
-  volume_input.top = "-110px";
-  volume_input.height = "20px";
-  volume_input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-  volume_input.width = "200px";
-  volume_input.minimum = 0;
-  volume_input.maximum = 1;
-  volume_input.value = 1;
-  volume_input.onValueChangedObservable.add(function(value) {
+  volume_text = createSettingsTextBlock("-43px", "-140px", "43px", "100px", "Volume", enable);
+  volume_input = createSettingsSlider("0px", "-110px", "20px", "200px", enable, function(value) {
     message.volume = value;
   });
-
-  var time_text = new BABYLON.GUI.TextBlock();
-  time_text.top = "-65px";
-  time_text.left = "-45px";
-  time_text.height = "43px";
-  time_text.color = "saddlebrown";
-  time_text.fontFamily = "Blackadder ITC";
-  time_text.fontStyle = "italic";
-  time_text.fontSize = 35;
-  time_text.text = "Time?";
-  time_text.isEnabled = enable;
-
-  var time_input = new BABYLON.GUI.Checkbox();
-  time_input.top = "-30px";
-  time_input.width = "20px";
-  time_input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-  time_input.height = "20px";
-  time_input.color = "black";
-  time_input.isChecked = true;
-  time_input.onIsCheckedChangedObservable.add(function(value) {
+  time_text = createSettingsTextBlock("-45px", "-65px", "43px", "100px", "Time?", enable);
+  time_input = createSettingsCheckbox("0px", "-30px", "20px", "20px", enable, function(value) {
   });
-
-  var menu_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton(
-    "menu_button",
-    "Menu",
-    "res/login-button.png"
-  );
-	menu_button.top = "350px";
-	menu_button.left = "-750px";
-  menu_button.height = "90px";
-  menu_button.width = "290px";
-  menu_button.color = "gold";
-  menu_button.thickness = 0;
-  menu_button.fontFamily = "Blackadder ITC";
-  menu_button.fontStyle = "italic";
-  menu_button.fontSize = 36;
-  menu_button.isEnabled = enable;
-  menu_button.onPointerClickObservable.add(function() {
-		message.render = 1;
-	});
-
-
-	var lute = BABYLON.GUI.Button.CreateImageWithCenterTextButton("lute_butt", "", "res/lute.png");
-	lute.height = "110px";
-	lute.width = "110px";
-	lute.fontFamily = "Blackadder ITC";
-	lute.fontStyle = "italic";
-	lute.fontSize = 36;
-	lute.color = "gold";
-	lute.thickness = 0;
-	lute.top = "350px";
-  lute.left = "875px";
-	advTexture.addControl(lute);
-	// lute.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-	lute.onPointerClickObservable.add(function() {
-    message.music_pause = !message.music_pause;
-	});
+  menu_button = createSettingsButton("Menu", "res/login-button.png", "-750px", "350px", "90px", "290px", enable, function() {
+    message.render = 1;
+  });
 
   advTexture.addControl(volume_text);
   advTexture.addControl(volume_input);
@@ -108,3 +30,86 @@ function createSettings(engine, canvas, message, database) {                    
   return scene;
 
 };
+
+function destroySettings() {
+
+  volume_text.dispose();
+  volume_input.dispose();
+  time_text.dispose();
+  time_input.dispose();
+  menu_button.dispose();
+
+}
+
+function createSettingsTextBlock(x, y, h, w, txt, e) {
+
+  var text = new BABYLON.GUI.TextBlock();
+
+  text.left = x;
+  text.top = y;
+  text.height = h;
+  text.color = "saddlebrown";
+  text.fontFamily = "Blackadder ITC";
+  text.fontStyle = "italic";
+  text.fontSize = 35;
+  text.text = txt;
+  text.isEnabled = e;
+
+  return text;
+
+};
+
+function createSettingsSlider(x, y, h, w, e, func) {
+
+  var input = new BABYLON.GUI.Slider();
+
+  input.left = x;
+  input.top = y;
+  input.height = h;
+  input.width = w;
+  input.minimum = 0;
+  input.maximum = 1;
+  input.value = 1;
+  input.isEnabled = e;
+  input.onValueChangedObservable.add(func);
+
+  return input;
+
+};
+
+function createSettingsCheckbox(x, y, h, w, e, func) {
+
+  var input = new BABYLON.GUI.Checkbox();
+
+  input.left = x;
+  input.top = y;
+  input.height = h;
+  input.width = w;
+  input.color = "black";
+  input.isChecked = true;
+  input.isEnabled = e;
+  input.onIsCheckedChangedObservable.add(func);
+
+  return input;
+
+};
+
+function createSettingsButton(txt, url, x, y, h, w, e, func) {
+
+  var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton(txt + "_Button", txt, url);
+
+  button.left = x;
+  button.top = y;
+  button.height = h;
+  button.width = w;
+  button.color = "gold";
+  button.thickness = 0;
+  button.fontFamily = "Blackadder ITC";
+  button.fontStyle = "italic";
+  button.fontSize = 36;
+  button.isEnabled = e;
+  button.onPointerClickObservable.add(func);
+
+  return button;
+
+}

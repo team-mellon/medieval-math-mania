@@ -1,83 +1,19 @@
-function createAccount(engine, canvas, message, database) {                     // function that returns the account scene
+var username_text;
+var password_text;
+var menu_button;
 
-  var scene = new BABYLON.Scene(engine);                                        // create the scene
-  scene.attachControl();
-
-  var camera = new BABYLON.UniversalCamera(
-    "account_cam",
-    new BABYLON.Vector3(0, 0, -10),
-    scene
-  );                                                                            // creates camera pointed at the scene
-  camera.setTarget(BABYLON.Vector3.Zero());                                     // targets the camera to scene origin
-  camera.attachControl(canvas, true);                                           // attaches the camera to the canvas
+function createAccount(scene, camera, advTexture, message, database) {          // function that returns the account scene
 
   var background = new BABYLON.Layer("bg", "res/login.png", scene, true);       // background
 
-  // GUI
-  var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
-  advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
-  advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
-  advTexture.attach();
   var enable = true;
 
   var key = message.current_user;
 
-  var username_text = new BABYLON.GUI.TextBlock();
-  username_text.top = "-140px";
-  username_text.left = "-43px";
-  username_text.height = "43px";
-  username_text.color = "saddlebrown";
-  username_text.fontFamily = "Blackadder ITC";
-  username_text.fontStyle = "italic";
-  username_text.fontSize = 35;
-  username_text.text = "Fullname: " + database["users"][key]["firstname"] + " " + database["users"][key]["lastname"];
-  username_text.isEnabled = enable;
-
-  var password_text = new BABYLON.GUI.TextBlock();
-  password_text.top = "-65px";
-  password_text.left = "-45px";
-  password_text.height = "43px";
-  password_text.color = "saddlebrown";
-  password_text.fontFamily = "Blackadder ITC";
-  password_text.fontStyle = "italic";
-  password_text.fontSize = 35;
-    password_text.text = "Password: " + database["users"][key]["password"];
-  password_text.isEnabled = enable;
-
-  var menu_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton(
-    "menu_button",
-    "Menu",
-    "res/login-button.png"
-  );
-	menu_button.top = "350px";
-	menu_button.left = "-750px";
-  menu_button.height = "90px";
-  menu_button.width = "290px";
-  menu_button.color = "gold";
-  menu_button.thickness = 0;
-  menu_button.fontFamily = "Blackadder ITC";
-  menu_button.fontStyle = "italic";
-  menu_button.fontSize = 36;
-  menu_button.isEnabled = enable;
-  menu_button.onPointerClickObservable.add(function() {
+  username_text = createAccountTextBlock("-43px", "-140px", "43px", "100px", "Fullname: " + database["users"][key]["firstname"] + " " + database["users"][key]["lastname"], enable);
+  password_text = createAccountTextBlock("-45px", "-65px", "43px", "100px", "Password: " + database["users"][key]["password"], enable);
+  menu_button = createAccountButton("Menu", "res/login-button.png", "-750px", "350px", "90px", "290px", enable, function() {
 		message.render = 1;
-	});
-
-
-	var lute = BABYLON.GUI.Button.CreateImageWithCenterTextButton("lute_butt", "", "res/lute.png");
-	lute.height = "110px";
-	lute.width = "110px";
-	lute.fontFamily = "Blackadder ITC";
-	lute.fontStyle = "italic";
-	lute.fontSize = 36;
-	lute.color = "gold";
-	lute.thickness = 0;
-	lute.top = "350px";
-  lute.left = "875px";
-	advTexture.addControl(lute);
-	// lute.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-	lute.onPointerClickObservable.add(function() {
-    message.music_pause = !message.music_pause;
 	});
 
   advTexture.addControl(username_text);
@@ -87,3 +23,49 @@ function createAccount(engine, canvas, message, database) {                     
   return scene;
 
 };
+
+function destroyAccount() {
+
+  username_text.dispose();
+  password_text.dispose();
+  menu_button.dispose();
+
+}
+
+function createAccountTextBlock(x, y, h, w, txt, e) {
+
+  var text = new BABYLON.GUI.TextBlock();
+
+  text.left = x;
+  text.top = y;
+  text.height = h;
+  text.color = "saddlebrown";
+  text.fontFamily = "Blackadder ITC";
+  text.fontStyle = "italic";
+  text.fontSize = 35;
+  text.text = txt;
+  text.isEnabled = e;
+
+  return text;
+
+};
+
+function createAccountButton(txt, url, x, y, h, w, e, func) {
+
+  var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton(txt + "_Button", txt, url);
+
+  button.left = x;
+  button.top = y;
+  button.height = h;
+  button.width = w;
+  button.color = "gold";
+  button.thickness = 0;
+  button.fontFamily = "Blackadder ITC";
+  button.fontStyle = "italic";
+  button.fontSize = 36;
+  button.isEnabled = e;
+  button.onPointerClickObservable.add(func);
+
+  return button;
+
+}

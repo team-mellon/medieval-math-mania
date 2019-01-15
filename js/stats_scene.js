@@ -1,82 +1,19 @@
-function createStats(engine, canvas, message, database) {                       // function that returns the menu scene
+var stats1_text;
+var stats2_text;
+var menu_button;
 
-  var scene = new BABYLON.Scene(engine);                                        // create the scene
-  scene.attachControl();
-
-  var camera = new BABYLON.UniversalCamera(
-    "stats_cam",
-    new BABYLON.Vector3(0, 0, -10),
-    scene);                                                                     // creates camera pointed at the scene
-  camera.setTarget(BABYLON.Vector3.Zero());                                     // targets the camera to scene origin
-  camera.attachControl(canvas, true);                                           // attaches the camera to the canvas
+function createStats(scene, camera, advTexture, message, database) {                       // function that returns the menu scene
 
   var background = new BABYLON.Layer("bg", "res/login.png", scene, true);        // background layer
 
-  // GUI
-  var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
-  advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
-  advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
-  advTexture.attach();
   var enable = true;
 
-    var key = message.current_user;
-    
-  var stats1_text = new BABYLON.GUI.TextBlock();
-  stats1_text.top = "-140px";
-  stats1_text.left = "-43px";
-  stats1_text.height = "43px";
-  stats1_text.color = "saddlebrown";
-  stats1_text.fontFamily = "Blackadder ITC";
-  stats1_text.fontStyle = "italic";
-  stats1_text.fontSize = 35;
-    stats1_text.text = "Hits: " + database["stats"][key]["hits"];
-  stats1_text.isEnabled = enable;
+  var key = message.current_user;
 
-  var stats2_text = new BABYLON.GUI.TextBlock();
-  stats2_text.top = "-65px";
-  stats2_text.left = "-45px";
-  stats2_text.height = "43px";
-  stats2_text.color = "saddlebrown";
-  stats2_text.fontFamily = "Blackadder ITC";
-  stats2_text.fontStyle = "italic";
-  stats2_text.fontSize = 35;
-    stats2_text.text = "Misses: " + database["stats"][key]["misses"];
-  stats2_text.isEnabled = enable;
-
-  var menu_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton(
-    "menu_button",
-    "Menu",
-    "res/login-button.png"
-  );
-	menu_button.top = "350px";
-	menu_button.left = "-750px";
-  menu_button.height = "90px";
-  menu_button.width = "290px";
-  menu_button.color = "gold";
-  menu_button.thickness = 0;
-  menu_button.fontFamily = "Blackadder ITC";
-  menu_button.fontStyle = "italic";
-  menu_button.fontSize = 36;
-  menu_button.isEnabled = enable;
-  menu_button.onPointerClickObservable.add(function() {
+  stats1_text = createStatsTextBlock("-43px", "-140px", "43px", "100px", "Hits: " + database["stats"][key]["hits"], enable);
+  stats2_text = createStatsTextBlock("-45px", "-65px", "43px", "100px", "Misses: " + database["stats"][key]["misses"], enable);
+  menu_button = createStatsButton("Menu", "res/login-button.png", "-750px", "350px", "90px", "290px", enable, function() {
 		message.render = 1;
-	});
-
-
-	var lute = BABYLON.GUI.Button.CreateImageWithCenterTextButton("lute_butt", "", "res/lute.png");
-	lute.height = "110px";
-	lute.width = "110px";
-	lute.fontFamily = "Blackadder ITC";
-	lute.fontStyle = "italic";
-	lute.fontSize = 36;
-	lute.color = "gold";
-	lute.thickness = 0;
-	lute.top = "350px";
-  lute.left = "875px";
-	advTexture.addControl(lute);
-	// lute.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-	lute.onPointerClickObservable.add(function() {
-    message.music_pause = !message.music_pause;
 	});
 
   advTexture.addControl(stats1_text);
@@ -86,3 +23,49 @@ function createStats(engine, canvas, message, database) {                       
   return scene;
 
 };
+
+function destroyStats() {
+
+  stats1_text.dispose();
+  stats2_text.dispose();
+  menu_button.dispose();
+
+}
+
+function createStatsTextBlock(x, y, h, w, txt, e) {
+
+  var text = new BABYLON.GUI.TextBlock();
+
+  text.left = x;
+  text.top = y;
+  text.height = h;
+  text.color = "saddlebrown";
+  text.fontFamily = "Blackadder ITC";
+  text.fontStyle = "italic";
+  text.fontSize = 35;
+  text.text = txt;
+  text.isEnabled = e;
+
+  return text;
+
+};
+
+function createStatsButton(txt, url, x, y, h, w, e, func) {
+
+  var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton(txt + "_Button", txt, url);
+
+  button.left = x;
+  button.top = y;
+  button.height = h;
+  button.width = w;
+  button.color = "gold";
+  button.thickness = 0;
+  button.fontFamily = "Blackadder ITC";
+  button.fontStyle = "italic";
+  button.fontSize = 36;
+  button.isEnabled = e;
+  button.onPointerClickObservable.add(func);
+
+  return button;
+
+}

@@ -1,20 +1,15 @@
-function createGame(engine, canvas, message, database) {                        // function that returns the game scene
+function createGame(scene, camera, advTexture, message, database) {                         // function that returns the game scene
 
-  var scene = new BABYLON.Scene(engine);                                        // create the scene
+  var enable = true;  
 
-  var camera = new BABYLON.UniversalCamera(
-    "game_cam",
-    new BABYLON.Vector3(0, 0, -10),
-    scene);                                                                     // creates camera pointed at the scene
-  camera.setTarget(BABYLON.Vector3.Zero());                                     // targets the camera to scene origin
+  camera.mode = BABYLON.Camera.ORTHOGRAPHIC_CAMERA;
 
-  scene.clearColor = new BABYLON.Color4(0.78, 1, 0.98, 1);
+  camera.orthoTop = 384;
+  camera.orthoBottom = -384;
+  camera.orthoLeft = -960;
+  camera.orthoRight = 960;                                                        // targets the camera to scene origin
 
-  // GUI
-  var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
-  advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
-  advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
-  var enable = true;                                                            // render enable bit for the ADT controls
+  scene.clearColor = new BABYLON.Color4(0.78, 1, 0.98, 1);                                                          // render enable bit for the ADT controls
 
 	// var foreground = new BABYLON.Layer("fore", "hit-target-castle-facade-concept-high-res.png", scene);
 	// foreground.isBackground = false;
@@ -198,14 +193,15 @@ function createGame(engine, canvas, message, database) {                        
 	var input;
 	var result;
 
-  var spriteManagerLCT = new BABYLON.SpriteManager("spriteManagerLCT", "res/left-center-tower.png", 1, {width: 5120, height: 2560}, scene);
-	var spriteManagerCT = new BABYLON.SpriteManager("spriteManagerCT", "res/center-tower.png", 1, {width: 5120, height: 2560}, scene);
-	var spriteManagerRCT = new BABYLON.SpriteManager("spriteManagerRCT", "res/right-center-tower.png", 1, {width: 5120, height: 2560}, scene);
+  var spriteManagerLCT = new BABYLON.SpriteManager("spriteManagerLCT", "res/castle/left-center-tower.png", 1, {width: 1920, height: 768}, scene);
+	var spriteManagerCT = new BABYLON.SpriteManager("spriteManagerCT", "res/castle/center-tower.png", 1, {width: 1920, height: 768}, scene);
+	var spriteManagerRCT = new BABYLON.SpriteManager("spriteManagerRCT", "res/castle/right-center-tower.png", 1, {width: 1920, height: 768}, scene);
 	var spriteManagerBadKnight = new BABYLON.SpriteManager("spriteManagerBadKnight", "res/bad-knight.png", 1, {width: 320, height: 320}, scene);
 	var spriteManagerBadArcher = new BABYLON.SpriteManager("spriteManagerBadArcher", "res/bad-archer.png", 4, {width: 320, height: 320}, scene);
-	var spriteManagerLT = new BABYLON.SpriteManager("spriteManagerLT", "res/left-tower.png", 1, {width: 5120, height: 2560}, scene);
-	var spriteManagerRT = new BABYLON.SpriteManager("spriteManagerRT", "res/right-tower.png", 1, {width: 5120, height: 2560}, scene);
-	var spriteManagerBody = new BABYLON.SpriteManager("spriteManagerBody", "res/body.png", 1, {width: 5120, height: 2560}, scene);
+	var spriteManagerLT = new BABYLON.SpriteManager("spriteManagerLT", "res/castle/left-tower.png", 1, {width: 1920, height: 768}, scene);
+	var spriteManagerRT = new BABYLON.SpriteManager("spriteManagerRT", "res/castle/right-tower.png", 1, {width: 1920, height: 768}, scene);
+	var spriteManagerBody = new BABYLON.SpriteManager("spriteManagerBody", "res/castle/body.png", 1, {width: 1920, height: 768}, scene);
+	var spriteManagerFacade = new BABYLON.SpriteManager("spriteManagerFacade", "res/castle/facade.png", 1, {width: 1920, height: 768}, scene);
 	var spriteManagerFire = new BABYLON.SpriteManager("spriteManagerFire", "res/ammo.png", 5, {width: 320, height: 320}, scene);
 	var spriteManagerCatapult = new BABYLON.SpriteManager("spriteManagerCatapult", "res/catapult.png", 1, {width: 2560, height: 1280}, scene);
 
@@ -220,6 +216,7 @@ function createGame(engine, canvas, message, database) {                        
 	var badArcher4 = new BABYLON.Sprite("badArcher4", spriteManagerBadArcher);
   var rt1 = new BABYLON.Sprite("rt1", spriteManagerRT);
   var body1 = new BABYLON.Sprite("body1", spriteManagerBody);
+  var facade1 = new BABYLON.Sprite("facade1", spriteManagerFacade);
 	var fire1 = new BABYLON.Sprite("fire1", spriteManagerFire);
 	var fire2 = new BABYLON.Sprite("fire2", spriteManagerFire);
 	var fire3 = new BABYLON.Sprite("fire3", spriteManagerFire);
@@ -228,12 +225,15 @@ function createGame(engine, canvas, message, database) {                        
 	var catapult1 = new BABYLON.Sprite("catapult1", spriteManagerCatapult);
 
 	catapult1.position.x = 0.0;
-	catapult1.position.y = -2.275;
+	catapult1.position.y = -2.0;
 	catapult1.width = 8.0;
 	catapult1.height =  4.0;
 
-  var g_height = 8.63;
-  var g_width = 17.56;
+  // console.log(engine.getRenderHeight());
+  // console.log(engine.getRenderWidth());
+
+  var g_height = 768.0;
+  var g_width = 1920.0;
 
   lt1.width = g_width;
   lt1.height = g_height;
@@ -247,6 +247,8 @@ function createGame(engine, canvas, message, database) {                        
   rt1.height = g_height;
   body1.width = g_width;
   body1.height = g_height;
+  facade1.width = g_width;
+  facade1.height = g_height;
 
 	badKnight1.position.x =  0.02;
 	badKnight1.position.y =  0.175;
@@ -454,6 +456,45 @@ function createGame(engine, canvas, message, database) {                        
 	button.onPointerClickObservable.add(function() {
 		message.render = 1;
 	});
+
+  //Level Down button with sword image
+  var cancel_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("cancel_button", "PREVIOUS " + message.level.toString(), "res/sword-button-right.png");
+  cancel_button.top = "400px";
+  cancel_button.left= "-325px";
+  cancel_button.height = "70px";
+  cancel_button.width = "290px";
+  cancel_button.color = "firebrick";
+  cancel_button.thickness = 0;
+  cancel_button.fontFamily = "Blackadder ITC";
+  cancel_button.fontSize = 25;
+  cancel_button.isEnabled = enable;
+  cancel_button.onPointerClickObservable.add(function() {
+    message.level--;
+    if (message.level < 1) {
+      message.level = 1;
+    }
+  });
+
+  // Level Up button with sword image
+  var submit_button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("submit_button", "NEXT", "res/sword-button-left.png");
+  submit_button.top = "400px";
+  submit_button.left= "325px";
+  submit_button.height = "70px";
+  submit_button.width = "290px";
+  submit_button.color = "firebrick";
+  submit_button.thickness = 0;
+  submit_button.fontFamily = "Blackadder ITC";
+  submit_button.fontSize = 25;
+  submit_button.isEnabled = enable;
+  submit_button.onPointerClickObservable.add(function() {
+    message.level++;
+    if (message.level > 10) {
+      message.level = 10;
+    }
+  });
+  advTexture.addControl(submit_button);
+  advTexture.addControl(cancel_button);
+
 	var lute = BABYLON.GUI.Button.CreateImageWithCenterTextButton("lute_butt", "", "res/lute.png");
 	lute.height = "110px";
 	lute.width = "110px";
