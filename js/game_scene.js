@@ -438,36 +438,39 @@ function createGame(engine, canvas, message, database) {                        
 		console.log(typeof input);
 
 	});
+  
 	scene.actionManager.registerAction(action);
 	var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "res/login-button.png");
+	button.top = "350px";
+	button.left = "-750px";
 	button.height = "90px";
 	button.width = "290px";
+	button.color = "gold";
 	button.fontFamily = "Blackadder ITC";
 	button.fontStyle = "italic";
 	button.fontSize = 36;
-	button.color = "gold";
 	button.thickness = 0;
-	button.top = "350px";
-	button.left = "-750px";
-	advTexture.addControl(button);
-	// button.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
 	button.onPointerClickObservable.add(function() {
 		message.render = 1;
 	});
+
 	var lute = BABYLON.GUI.Button.CreateImageWithCenterTextButton("lute_butt", "", "res/lute.png");
+  lute.left = "875px";
+	lute.top = "350px";
 	lute.height = "110px";
 	lute.width = "110px";
+	lute.color = "gold";
 	lute.fontFamily = "Blackadder ITC";
 	lute.fontStyle = "italic";
 	lute.fontSize = 36;
-	lute.color = "gold";
 	lute.thickness = 0;
-	lute.top = "350px";
-  lute.left = "875px";
-	advTexture.addControl(lute);
-	// lute.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
 	lute.onPointerClickObservable.add(function() {
     message.music_pause = !message.music_pause;
 	});
+
+	advTexture.addControl(button);
+	advTexture.addControl(lute);
+
 	return scene;
+
 };

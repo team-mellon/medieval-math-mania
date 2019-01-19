@@ -3,32 +3,40 @@
   <head>
 
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
+    <meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
     <title>Hit Target Math Game</title>
     <link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
 
-    <script src="js/libs/babylon.custom.js"></script>                           <!-- babylon.js  -->
-    <script src="js/utils/user_interface.js"></script>
+    <!-- <script src="js/libs/babylon.custom.js"></script>                           babylon.js  -->
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <!-- <script src="js/utils/user_interface.js"></script> -->
     <script src="js/game.js"></script>
-    <script src="js/login_scene.js"></script>
-    <script src="js/menu_scene.js"></script>
-    <script src="js/game_scene.js"></script>
-    <script src="js/stats_scene.js"></script>
-    <script src="js/h2p_scene.js"></script>
-    <script src="js/settings_scene.js"></script>
-    <script src="js/account_scene.js"></script>
-    <script src="js/create_acc_scene.js"></script>
-    <script src="js/music.js"></script>
+    <!-- <script src="js/login_scene.js"></script> -->
+    <!-- <script src="js/menu_scene.js"></script> -->
+    <!-- <script src="js/game_scene.js"></script> -->
+    <!-- <script src="js/stats_scene.js"></script> -->
+    <!-- <script src="js/h2p_scene.js"></script> -->
+    <!-- <script src="js/settings_scene.js"></script> -->
+    <!-- <script src="js/account_scene.js"></script> -->
+    <!-- <script src="js/create_acc_scene.js"></script> -->
+    <!-- <script src="js/music.js"></script> -->
 
   </head>
-  <body>
+  <body onload="init();">
 
-    <canvas id="renderCanvas"></canvas>                                         <!-- canvas for rendering webgl and babylon -->
+    <!-- <canvas id="renderCanvas"></canvas>                                          canvas for rendering webgl and babylon -->
+
+    <canvas id="demoCanvas">alternate content</canvas>
 
     <script type="text/javascript">
 
-      window.addEventListener('DOMContentLoaded', function() {                  // start game when DOM loads
-        runGame('renderCanvas');
-      });
+      window.addEventListener('resize', resize, false);
+
+      // init();
+
+      // window.addEventListener('DOMContentLoaded', function() {                  // start game when DOM loads
+      //   runGame('renderCanvas');
+      // });
 
     </script>
 
