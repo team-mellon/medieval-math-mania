@@ -1,7 +1,15 @@
 var stage;
 var bg;
 var bg_color;
-var logo, content, monalisa;
+var logo, content;
+var y_scale, x_max, y_max;
+var castle_center_tower,
+    castle_left_center_tower,
+    castle_right_center_tower,
+    castle_body,
+    castle_left_tower,
+    castle_right_tower,
+    castle_facade;
 
 function init() {
 
@@ -51,9 +59,27 @@ function createContent() {
 
 	// Load the Monalisa Image
 	// (You should also use PreloadJS to avoid the onload listener)
-	monalisa = new Image();
-	monalisa.src = "res/castle-facade.png";
-	monalisa.onload = handleImageLoad;
+	castle_center_tower = new Image();
+	castle_center_tower.src = "res/castle/center-tower.png";
+	castle_center_tower.onload = handleImageLoad;
+	castle_left_center_tower = new Image();
+	castle_left_center_tower.src = "res/castle/left-center-tower.png";
+	castle_left_center_tower.onload = handleImageLoad;
+	castle_right_center_tower = new Image();
+	castle_right_center_tower.src = "res/castle/right-center-tower.png";
+	castle_right_center_tower.onload = handleImageLoad;
+	castle_body = new Image();
+	castle_body.src = "res/castle/body.png";
+	castle_body.onload = handleImageLoad;
+	castle_left_tower = new Image();
+	castle_left_tower.src = "res/castle/left-tower.png";
+	castle_left_tower.onload = handleImageLoad;
+	castle_right_tower = new Image();
+	castle_right_tower.src = "res/castle/right-tower.png";
+	castle_right_tower.onload = handleImageLoad;
+	castle_facade = new Image();
+	castle_facade.src = "res/castle/facade.png";
+	castle_facade.onload = handleImageLoad;
 
 
 }
@@ -61,20 +87,37 @@ function createContent() {
 function handleImageLoad() {
 
 	// Create a CreateJS bitmap from the loaded image
-	var bmpMonaLisa = new createjs.Bitmap(monalisa);
+	var bmpCastleCenterTower = new createjs.Bitmap(castle_center_tower);
+	var bmpCastleLeftCenterTower = new createjs.Bitmap(castle_left_center_tower);
+	var bmpCastleRightCenterTower = new createjs.Bitmap(castle_right_center_tower);
+	var bmpCastleBody = new createjs.Bitmap(castle_body);
+	var bmpCastleLeftTower = new createjs.Bitmap(castle_left_tower);
+	var bmpCastleRightTower = new createjs.Bitmap(castle_right_tower);
+	var bmpCastleFacade = new createjs.Bitmap(castle_facade);
 
 	// Add the bitmap to the Container
-	content.addChild(bmpMonaLisa);
+	content.addChild(bmpCastleCenterTower);
+	content.addChild(bmpCastleLeftCenterTower);
+	content.addChild(bmpCastleRightCenterTower);
+	content.addChild(bmpCastleBody);
+	content.addChild(bmpCastleLeftTower);
+	content.addChild(bmpCastleRightTower);
+	content.addChild(bmpCastleFacade);
 
-	// Set the registration point of the content Container to center
-	content.regX = bmpMonaLisa.image.width/2
-	content.regY = bmpMonaLisa.image.height/2
+  x_max = bmpCastleCenterTower.image.width;
+  y_max = bmpCastleCenterTower.image.height;
 
 	// Set the scale value
 	// It could be useful to properly handle different mobile resolutions
-	content.scaleX = 0.29;
-	content.scaleY = 0.29;
 
+  // Set the registration point of the content Container to center
+  content.regX = x_max/2;
+  content.regY = y_max/2;
+
+  y_scale = (y_max - (y_max - stage.canvas.height) ) / y_max;
+
+	content.scaleX = y_scale;
+	content.scaleY = y_scale;
 
 }
 
@@ -99,7 +142,17 @@ function resize() {
   content.x = stage.canvas.width / 2;
   content.y = stage.canvas.height / 2;
 
-  // draw();
+  // Set the registration point of the content Container to center
+  content.regX = x_max/2;
+  content.regY = y_max/2;
+
+  console.log(y_max);
+  console.log(stage.canvas.height);
+
+  y_scale = (y_max - (y_max - stage.canvas.height) ) / y_max;
+
+	content.scaleX = y_scale;
+	content.scaleY = y_scale;
 
 }
 
