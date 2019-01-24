@@ -1,170 +1,60 @@
-var stage;
-var bg;
-var bg_color;
-var logo, content;
-var y_scale, x_max, y_max;
-var castle_center_tower,
-    castle_left_center_tower,
-    castle_right_center_tower,
-    castle_body,
-    castle_left_tower,
-    castle_right_tower,
-    castle_facade;
+var frame_counter = 0;
 
-function init() {
+var fired = false;
+var projectile_speed = 57;
 
-  stage = new createjs.Stage("demoCanvas");
-  createjs.Touch.enable(stage);
+var soundID = "Thunder";
 
-  bg_color = "#89a7a0";
-  createBackground();
+function tick(event) {
 
-  createLogo();
-  createContent();
+  if (current_scene == 3) {
+    //Key checks at the beginning of the update loop
+    if (keys[32]) {
+      catapult.gotoAndPlay(0);
+      fired = true;
+    }
 
-  createjs.Ticker.addEventListener("tick", tick);
+    //Also stop animations
+    if (catapult.currentFrame == 23)
+      catapult.stop();
+  }
 
-  resize();
+  //Update frame counter for drawing
+  frame_counter++;
 
-}
+  if (current_scene == 3) {
+    //Catapult projectile animtion
+    if (fired == true) {
+      if (frame_counter > 9) {
+        projectile.y -= projectile_speed * scene_scale_Y;
+        projectile_speed -= 3;
+      }
+    }
 
-function createBackground() {
+    //Catapult landing animation
+    if (projectile_speed < 0 && projectile.y >= boss.y) {
+      boss.alpha = 0;
+      projectile.alpha = 0;
+    }
+  }
 
-	bg = new createjs.Shape();
-  bg.addEventListener("click", bg_change);
-	stage.addChild(bg);
+  if (frame_counter > 9) {
+    frame_counter = 0;
+  }
 
-}
-
-/**
- * create and display logo (top-right)
- */
-function createLogo() {
-
-	logo = new createjs.Bitmap("res/lute.png");
-	logo.y = 10;
-	stage.addChild(logo);
-
-}
-
-
-/**
- * create content (centered)
- */
-function createContent() {
-
-
-	content = new createjs.Container();
-	stage.addChild(content);
-
-	// Load the Monalisa Image
-	// (You should also use PreloadJS to avoid the onload listener)
-	castle_center_tower = new Image();
-	castle_center_tower.src = "res/castle/center-tower.png";
-	castle_center_tower.onload = handleImageLoad;
-	castle_left_center_tower = new Image();
-	castle_left_center_tower.src = "res/castle/left-center-tower.png";
-	castle_left_center_tower.onload = handleImageLoad;
-	castle_right_center_tower = new Image();
-	castle_right_center_tower.src = "res/castle/right-center-tower.png";
-	castle_right_center_tower.onload = handleImageLoad;
-	castle_body = new Image();
-	castle_body.src = "res/castle/body.png";
-	castle_body.onload = handleImageLoad;
-	castle_left_tower = new Image();
-	castle_left_tower.src = "res/castle/left-tower.png";
-	castle_left_tower.onload = handleImageLoad;
-	castle_right_tower = new Image();
-	castle_right_tower.src = "res/castle/right-tower.png";
-	castle_right_tower.onload = handleImageLoad;
-	castle_facade = new Image();
-	castle_facade.src = "res/castle/facade.png";
-	castle_facade.onload = handleImageLoad;
-
+  stage.update(event);
 
 }
 
-function handleImageLoad() {
-
-	// Create a CreateJS bitmap from the loaded image
-	var bmpCastleCenterTower = new createjs.Bitmap(castle_center_tower);
-	var bmpCastleLeftCenterTower = new createjs.Bitmap(castle_left_center_tower);
-	var bmpCastleRightCenterTower = new createjs.Bitmap(castle_right_center_tower);
-	var bmpCastleBody = new createjs.Bitmap(castle_body);
-	var bmpCastleLeftTower = new createjs.Bitmap(castle_left_tower);
-	var bmpCastleRightTower = new createjs.Bitmap(castle_right_tower);
-	var bmpCastleFacade = new createjs.Bitmap(castle_facade);
-
-	// Add the bitmap to the Container
-	content.addChild(bmpCastleCenterTower);
-	content.addChild(bmpCastleLeftCenterTower);
-	content.addChild(bmpCastleRightCenterTower);
-	content.addChild(bmpCastleBody);
-	content.addChild(bmpCastleLeftTower);
-	content.addChild(bmpCastleRightTower);
-	content.addChild(bmpCastleFacade);
-
-  x_max = bmpCastleCenterTower.image.width;
-  y_max = bmpCastleCenterTower.image.height;
-
-	// Set the scale value
-	// It could be useful to properly handle different mobile resolutions
-
-  // Set the registration point of the content Container to center
-  content.regX = x_max/2;
-  content.regY = y_max/2;
-
-  y_scale = (y_max - (y_max - stage.canvas.height) ) / y_max;
-
-	content.scaleX = y_scale;
-	content.scaleY = y_scale;
-
-}
-
-function tick() {
-  stage.update();
-}
-
-
-function resize() {
-
-  // Resize the canvas element
-  stage.canvas.width = window.innerWidth;
-  stage.canvas.height = window.innerHeight;
-
-  // Logo: top-right position (canvasWidth - image width - 10 px padding)
-  logo.x = stage.canvas.width - 120 - 10
-
-  // Background: full screen redraw
-  draw_bg();
-
-  // Content: centered
-  content.x = stage.canvas.width / 2;
-  content.y = stage.canvas.height / 2;
-
-  // Set the registration point of the content Container to center
-  content.regX = x_max/2;
-  content.regY = y_max/2;
-
-  console.log(y_max);
-  console.log(stage.canvas.height);
-
-  y_scale = (y_max - (y_max - stage.canvas.height) ) / y_max;
-
-	content.scaleX = y_scale;
-	content.scaleY = y_scale;
-
-}
-
-function draw_bg() {
-  bg.graphics.clear()
-  bg.graphics.beginFill(bg_color).drawRect(0, 0, stage.canvas.width, stage.canvas.height);
-}
-
-function bg_change(){
-  bg_color = "#460a14";
-  draw_bg();
-}
+// function loadImage() {
+//   var preload = new createjs.LoadQueue();
+//   preload.addEventListener("fileload", handleFileComplete);
+//   preload.loadFile("assets/preloadjs-bg-center.png");
+// }
+//
+// function handleFileComplete(event) {
+//   document.body.appendChild(event.result);
+// }
 
 // function runGame(renderingCanvas) {
 //
