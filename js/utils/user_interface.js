@@ -27,7 +27,7 @@ function createButton(location, text, width, height, handleClick) {
   image.regX = width/2;
   image.regY = height/2;
 
-  var label = new createjs.Text(text, "bold 24px Arial", "#FFFFFF");
+  var label = new createjs.Text(text, "normal 24px Blackadder ITC", "#DAA520");
   // label.name = "label";
   label.textAlign = "center";
   label.textBaseline = "middle";
