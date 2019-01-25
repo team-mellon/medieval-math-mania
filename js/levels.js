@@ -164,19 +164,19 @@ function scaleLevel() {
 
   // Bad guys in midground
   scale_image(henchman_left, henchmanX, henchmanY);
-  henchman_left.x = (henchmanX/2 + 103) * scene_scale_Y;
+  henchman_left.x = stage.canvas.width / 2 - (henchmanX/2 + 625) * scene_scale_Y;
   henchman_left.y = stage.canvas.height / 2 + (24) * scene_scale_Y;
   scale_image(henchman_left_center, henchmanX, henchmanY);
-  henchman_left_center.x = (henchmanX/2 + 366) * scene_scale_Y;
+  henchman_left_center.x = stage.canvas.width / 2 - (henchmanX/2 + 375) * scene_scale_Y;
   henchman_left_center.y = stage.canvas.height / 2;
   scale_image(boss, bossX, bossY);
   boss.x = stage.canvas.width / 2;
   boss.y = stage.canvas.height / 2;
   scale_image(henchman_right_center, henchmanX, henchmanY);
-  henchman_right_center.x = stage.canvas.width - (henchmanX/2 + 366) * scene_scale_Y;
+  henchman_right_center.x = stage.canvas.width / 2 + (henchmanX/2 + 375) * scene_scale_Y;
   henchman_right_center.y = stage.canvas.height / 2;
   scale_image(henchman_right, henchmanX, henchmanY);
-  henchman_right.x = stage.canvas.width - (henchmanX/2 + 103 ) * scene_scale_Y;
+  henchman_right.x = stage.canvas.width / 2 + (henchmanX/2 + 625 ) * scene_scale_Y;
   henchman_right.y = stage.canvas.height / 2 + (24) * scene_scale_Y;
 
   // Level structure in foreground
