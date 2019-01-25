@@ -25,10 +25,10 @@ function tick(event) {
   if (current_scene == 3) {
     //Catapult projectile animtion
     if (fired == true) {
-      if (frame_counter > 9) {
+      // if (frame_counter > 9) {
         projectile.y -= projectile_speed * scene_scale_Y;
         projectile_speed -= 3;
-      }
+      // }
     }
 
     //Catapult landing animation
