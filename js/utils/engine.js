@@ -39,6 +39,14 @@ function keyup(event) {
     delete keys[event.keyCode];
 }
 
+// Touch detection
+
+function handleEnd(evt) {
+  evt.preventDefault();
+  touch = true;
+  console.log("here");
+}
+
 // Scaling the stage and assets
 
 var max_scale_Y = 768;
