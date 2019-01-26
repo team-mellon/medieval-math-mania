@@ -27,42 +27,7 @@ function init() {
 
 }
 
-// Key detection
-
-var keys = {};
-
-function keydown(event) {
-    keys[event.keyCode] = true;
-}
-
-function keyup(event) {
-    delete keys[event.keyCode];
-}
-
-// Touch detection
-
-function handleEnd(evt) {
-  evt.preventDefault();
-  touch = true;
-  console.log("here");
-}
-
-// Scaling the stage and assets
-
-var max_scale_Y = 768;
-var max_scale_X = 1920;
-
-var scene_scale_X;
-var scene_scale_Y;
-
-var scene_margin_X;
-
-function scale_image(image, x_size, y_size) {
-
-  image.scaleX = scene_scale_X;
-  image.scaleY = scene_scale_Y;
-
-}
+// Engine scaling
 
 function resize() {
 

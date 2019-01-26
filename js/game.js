@@ -1,7 +1,5 @@
 var frame_counter = 0;
 
-var touch = false;
-
 var fired = false;
 var reload = false;
 var reload_counter = 0;
@@ -15,10 +13,10 @@ function tick(event) {
 
   if (current_scene == 3) {
     //Key checks at the beginning of the update loop
-    if (keys[32] || touch) {
+    if (keys[32] || drag_up) {
       catapult.gotoAndPlay(0);
       fired = true;
-      touch = false;
+      drag_up = false;
     }
 
     //Also stop animations
