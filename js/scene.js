@@ -244,13 +244,13 @@ function createGUI() {
 
 				play_button = createButton("res/menu-button.png", "Play", play_buttonX, play_buttonY, function() {
 					last_scene = current_scene;
-					current_scene = 0;
+					current_scene = 3;
 					changeScene();
 				});
 
         play_button.addEventListener("click", function() {
           last_scene = current_scene;
-          current_scene = 0;
+          current_scene = 3;
           changeScene();
         });
 
@@ -447,11 +447,11 @@ function scaleGUI() {
 
 				scale_image(left_sword_button, left_sword_buttonX, left_sword_buttonY);
 				left_sword_button.x = stage.canvas.width/2 - (left_sword_buttonX/2 + 10) * scene_scale_Y;
-				left_sword_button.y = stage.canvas.height/2 + (left_sword_buttonY/2 + 100) * scene_scale_Y;
+				left_sword_button.y = stage.canvas.height/2 + (left_sword_buttonY/2 + 140) * scene_scale_Y;
 
 				scale_image(right_sword_button, right_sword_buttonX, right_sword_buttonY);
-				right_sword_button.x = stage.canvas.width/2 + (right_sword_buttonX/2 + 10) * scene_scale_Y;
-				right_sword_button.y = stage.canvas.height/2 + (right_sword_buttonY/2 + 100) * scene_scale_Y;
+				right_sword_button.x = stage.canvas.width/2 + (right_sword_buttonX/2 + 50) * scene_scale_Y;
+				right_sword_button.y = stage.canvas.height/2 + (right_sword_buttonY/2 + 140) * scene_scale_Y;
 
 			break;
 
@@ -467,11 +467,11 @@ function scaleGUI() {
 
 				scale_image(left_sword_button, left_sword_buttonX, left_sword_buttonY);
 				left_sword_button.x = stage.canvas.width/2 - (left_sword_buttonX/2 + 10) * scene_scale_Y;
-				left_sword_button.y = stage.canvas.height/2 + (left_sword_buttonY/2 + 100) * scene_scale_Y;
+				left_sword_button.y = stage.canvas.height/2 + (left_sword_buttonY/2 + 140) * scene_scale_Y;
 
 				scale_image(right_sword_button, right_sword_buttonX, right_sword_buttonY);
-				right_sword_button.x = stage.canvas.width/2 + (right_sword_buttonX/2 + 10) * scene_scale_Y;
-				right_sword_button.y = stage.canvas.height/2 + (right_sword_buttonY/2 + 100) * scene_scale_Y;
+				right_sword_button.x = stage.canvas.width/2 + (right_sword_buttonX/2 + 50) * scene_scale_Y;
+				right_sword_button.y = stage.canvas.height/2 + (right_sword_buttonY/2 + 140) * scene_scale_Y;
 
 			break;
 
