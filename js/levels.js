@@ -135,6 +135,8 @@ function destroyLevel() {
 
 function changeLevel() {
 
+  hide_knight = false;
+
   current_level++;
 
   if (current_level > num_levels) {
@@ -142,8 +144,8 @@ function changeLevel() {
   }
 
   loadLevel();
-  destroyLevel();
-  createLevel();
+  destroyScene();
+  createScene();
   resize();
   playSound();
 

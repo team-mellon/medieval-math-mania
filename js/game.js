@@ -1,7 +1,11 @@
 var frame_counter = 0;
 
 var fired = false;
+var reload = false;
+var reload_counter = 0;
 var projectile_speed = 57;
+
+var hide_knight = false;
 
 var soundID = "Thunder";
 
@@ -33,13 +37,36 @@ function tick(event) {
 
     //Catapult landing animation
     if (projectile_speed < 0 && projectile.y >= boss.y) {
-      boss.alpha = 0;
-      projectile.alpha = 0;
+      hide_knight = true;
+      reload = true;
     }
+
+    if (hide_knight) {
+      boss.alpha = 0;
+    } else {
+      boss.alpha = 1;
+    }
+
+    if (reload) {
+      fired = false;
+      projectile.alpha = 0;
+      projectile.x = stage.canvas.width / 2;
+      projectile.y = stage.canvas.height - (projectileY/2 + 57) * scene_scale_Y;
+      projectile_speed = 57;
+    } else {
+      projectile.alpha = 1;
+    }
+
   }
 
   if (frame_counter > 9) {
+    reload_counter += frame_counter;
     frame_counter = 0;
+  }
+
+  if (reload_counter > 400) {
+    reload = false;
+    reload_counter = 0;
   }
 
   stage.update(event);
