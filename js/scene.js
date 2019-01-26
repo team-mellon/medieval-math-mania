@@ -6,6 +6,14 @@ var lute;
 var luteX = 96;
 var luteY = 96;
 
+var left_sword_button;
+var left_sword_buttonX = 216;
+var left_sword_buttonY = 72;
+
+var right_sword_button;
+var right_sword_buttonX = 216;
+var right_sword_buttonY = 72;
+
 var background;
 var foreground;
 var backgroundX = 1920;
@@ -172,15 +180,27 @@ function createGUI() {
 
 				foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
 
-				login_button = createButton("res/login-button.png", "Login", login_buttonX, login_buttonY, function() {
+				left_sword_button = createButton("res/sword-left.png", "Login", left_sword_buttonX, left_sword_buttonY, function() {
 					last_scene = current_scene;
 					current_scene = 2;
 					changeScene();
 				});
 
-				login_button.addEventListener("click", function() {
+				left_sword_button.addEventListener("click", function() {
 					last_scene = current_scene;
 					current_scene = 2;
+					changeScene();
+				});
+
+				right_sword_button = createButton("res/sword-right.png", "Signup", right_sword_buttonX, right_sword_buttonY, function() {
+					last_scene = current_scene;
+					current_scene = 1;
+					changeScene();
+				});
+
+				right_sword_button.addEventListener("click", function() {
+					last_scene = current_scene;
+					current_scene = 1;
 					changeScene();
 				});
 
@@ -192,15 +212,27 @@ function createGUI() {
 
 				foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
 
-				login_button = createButton("res/login-button.png", "Login", login_buttonX, login_buttonY, function() {
+				left_sword_button = createButton("res/sword-left.png", "Create", left_sword_buttonX, left_sword_buttonY, function() {
 					last_scene = current_scene;
 					current_scene = 2;
 					changeScene();
 				});
 
-				login_button.addEventListener("click", function() {
+				left_sword_button.addEventListener("click", function() {
 					last_scene = current_scene;
 					current_scene = 2;
+					changeScene();
+				});
+
+				right_sword_button = createButton("res/sword-right.png", "Cancel", right_sword_buttonX, right_sword_buttonY, function() {
+					last_scene = current_scene;
+					current_scene = 0;
+					changeScene();
+				});
+
+				right_sword_button.addEventListener("click", function() {
+					last_scene = current_scene;
+					current_scene = 0;
 					changeScene();
 				});
 
@@ -212,13 +244,13 @@ function createGUI() {
 
 				play_button = createButton("res/menu-button.png", "Play", play_buttonX, play_buttonY, function() {
 					last_scene = current_scene;
-					current_scene = 3;
+					current_scene = 0;
 					changeScene();
 				});
 
         play_button.addEventListener("click", function() {
           last_scene = current_scene;
-          current_scene = 3;
+          current_scene = 0;
           changeScene();
         });
 
@@ -413,9 +445,13 @@ function scaleGUI() {
 				foreground.x = stage.canvas.width/2;
 				foreground.y = stage.canvas.height/2;
 
-				scale_image(login_button, login_buttonX, login_buttonY);
-				login_button.x = (login_buttonX/2 + 10) * scene_scale_Y;
-				login_button.y = stage.canvas.height - (login_buttonY/2 + 10) * scene_scale_Y;
+				scale_image(left_sword_button, left_sword_buttonX, left_sword_buttonY);
+				left_sword_button.x = stage.canvas.width/2 - (left_sword_buttonX/2 + 10) * scene_scale_Y;
+				left_sword_button.y = stage.canvas.height/2 + (left_sword_buttonY/2 + 100) * scene_scale_Y;
+
+				scale_image(right_sword_button, right_sword_buttonX, right_sword_buttonY);
+				right_sword_button.x = stage.canvas.width/2 + (right_sword_buttonX/2 + 10) * scene_scale_Y;
+				right_sword_button.y = stage.canvas.height/2 + (right_sword_buttonY/2 + 100) * scene_scale_Y;
 
 			break;
 
@@ -429,9 +465,13 @@ function scaleGUI() {
 				foreground.x = stage.canvas.width/2;
 				foreground.y = stage.canvas.height/2;
 
-				scale_image(login_button, login_buttonX, login_buttonY);
-				login_button.x = (login_buttonX/2 + 10) * scene_scale_Y;
-				login_button.y = stage.canvas.height - (login_buttonY/2 + 10) * scene_scale_Y;
+				scale_image(left_sword_button, left_sword_buttonX, left_sword_buttonY);
+				left_sword_button.x = stage.canvas.width/2 - (left_sword_buttonX/2 + 10) * scene_scale_Y;
+				left_sword_button.y = stage.canvas.height/2 + (left_sword_buttonY/2 + 100) * scene_scale_Y;
+
+				scale_image(right_sword_button, right_sword_buttonX, right_sword_buttonY);
+				right_sword_button.x = stage.canvas.width/2 + (right_sword_buttonX/2 + 10) * scene_scale_Y;
+				right_sword_button.y = stage.canvas.height/2 + (right_sword_buttonY/2 + 100) * scene_scale_Y;
 
 			break;
 

@@ -27,7 +27,16 @@ function createButton(location, text, width, height, handleClick) {
   image.regX = width/2;
   image.regY = height/2;
 
-  var label = new createjs.Text(text, "normal 24px Blackadder ITC", "#DAA520");
+  var color = "#DAA520";
+
+  if (
+    text == "Login" || text == "Signup" ||
+    text == "Create" || text == "Cancel"
+  ) {
+    color = "#646464";
+  }
+
+  var label = new createjs.Text(text, "normal 24px Blackadder ITC", color);
   // label.name = "label";
   label.textAlign = "center";
   label.textBaseline = "middle";
