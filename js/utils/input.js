@@ -29,7 +29,7 @@ function handleEnd(evt) {
   evt.preventDefault();
   end_touch = evt.changedTouches[0].screenY
   console.log("end: " + end_touch);
-  if (end_touch - start_touch < 0) {
+  if (end_touch - start_touch < -50) {
     drag_up = true;
   }
   start_touch = end_touch = 0;
