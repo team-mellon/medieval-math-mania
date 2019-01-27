@@ -136,6 +136,10 @@ function destroyLevel() {
 function changeLevel() {
 
   hide_knight = false;
+  hide_archer1 = false;
+  hide_archer2 = false;
+  hide_archer3 = false;
+  hide_archer4 = false;
 
   current_level++;
 

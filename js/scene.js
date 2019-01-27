@@ -418,7 +418,7 @@ function createGUI() {
 	}
 
 	lute = createImage("res/lute.png", luteX, luteY);
-  lute.addEventListener("click", changeLevel);
+  // lute.addEventListener("click", changeLevel);
 
   // lute.regX = 160;
   // lute.regY = 160;

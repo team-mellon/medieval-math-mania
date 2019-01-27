@@ -1,11 +1,17 @@
 var frame_counter = 0;
 
 var fired = false;
+var fire_counter = 0;
 var reload = false;
 var reload_counter = 0;
 var projectile_speed = 57;
+var projectile_x_speed = 0;
 
 var hide_knight = false;
+var hide_archer1 = false;
+var hide_archer2 = false;
+var hide_archer3 = false;
+var hide_archer4 = false;
 
 var soundID = "Thunder";
 
@@ -13,15 +19,99 @@ function tick(event) {
 
   if (current_scene == 3) {
     //Key checks at the beginning of the update loop
-    if (keys[32] || drag_up) {
+    if ((keys[32] || drag_up) && catapult.paused) {
       catapult.gotoAndPlay(0);
       fired = true;
       drag_up = false;
     }
 
     //Also stop animations
-    if (catapult.currentFrame == 23)
+    if (!catapult.paused && catapult.currentFrame == 23) {
       catapult.stop();
+      reload = false;
+      fire_counter++;
+    }
+
+    switch (fire_counter) {
+      case 0:
+        target_x = boss.x;
+        projectile_x_speed = 0;
+        if (projectile_speed < 0 && projectile.y >= boss.y) {
+          hide_knight = true;
+          reload = true;
+        }
+        break;
+      case 1:
+        target_x = henchman_left_center.x;
+        projectile_x_speed = 12;
+        if (projectile_speed < 0 && projectile.y >= boss.y) {
+          hide_archer1 = true;
+          reload = true;
+        }
+        break;
+      case 2:
+        target_x = henchman_right_center.x;
+        projectile_x_speed = 12;
+        if (projectile_speed < 0 && projectile.y >= boss.y) {
+          hide_archer2 = true;
+          reload = true;
+        }
+        break;
+      case 3:
+        target_x = henchman_left.x;
+        projectile_x_speed = 20;
+        if (projectile_speed < 0 && projectile.y >= boss.y) {
+          hide_archer3 = true;
+          reload = true;
+        }
+        break;
+      case 4:
+        target_x = henchman_right.x;
+        projectile_x_speed = 20;
+        if (projectile_speed < 0 && projectile.y >= boss.y) {
+          hide_archer4 = true;
+          reload = true;
+        }
+        break;
+      case 5:
+        changeLevel();
+        target_x = 0;
+        fire_counter = 0;
+        projectile_x_speed = 0;
+        break;
+      default:
+    }
+
+    if (hide_knight) {
+      boss.alpha = 0;
+    } else {
+      boss.alpha = 1;
+    }
+
+    if (hide_archer1) {
+      henchman_left_center.alpha = 0;
+    } else {
+      henchman_left_center.alpha = 1;
+    }
+
+    if (hide_archer2) {
+      henchman_right_center.alpha = 0;
+    } else {
+      henchman_right_center.alpha = 1;
+    }
+
+    if (hide_archer3) {
+      henchman_left.alpha = 0;
+    } else {
+      henchman_left.alpha = 1;
+    }
+
+    if (hide_archer4) {
+      henchman_right.alpha = 0;
+    } else {
+      henchman_right.alpha = 1;
+    }
+
   }
 
   //Update frame counter for drawing
@@ -32,20 +122,13 @@ function tick(event) {
     if (fired == true) {
       // if (frame_counter > 9) {
         projectile.y -= projectile_speed * scene_scale_Y;
+        if (projectile.x < target_x) {
+          projectile.x += projectile_x_speed * scene_scale_Y;
+        } else if (projectile.x > target_x) {
+          projectile.x -= projectile_x_speed * scene_scale_Y;
+        }
         projectile_speed -= 3;
       // }
-    }
-
-    //Catapult landing animation
-    if (projectile_speed < 0 && projectile.y >= boss.y) {
-      hide_knight = true;
-      reload = true;
-    }
-
-    if (hide_knight) {
-      boss.alpha = 0;
-    } else {
-      boss.alpha = 1;
     }
 
     if (reload) {
@@ -63,11 +146,6 @@ function tick(event) {
   if (frame_counter > 9) {
     reload_counter += frame_counter;
     frame_counter = 0;
-  }
-
-  if (reload_counter > 400) {
-    reload = false;
-    reload_counter = 0;
   }
 
   stage.update(event);
