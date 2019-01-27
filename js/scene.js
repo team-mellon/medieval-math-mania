@@ -99,6 +99,16 @@ function createScene() {
 
   switch(current_scene) {
 
+    case 0:
+      var el = document.getElementById("loginForm");
+      el.style.display = "inline";
+      break;
+
+    case 1:
+      var el = document.getElementById("signupForm");
+      el.style.display = "inline";
+      break;
+
     case 3:
 			createLevel();
       break;
@@ -123,23 +133,29 @@ function changeScene() {
 
 function destroyScene() {
 
-	// switch(last_scene) {
-  //
-	// 	case 0:
-  //
-  //     stage.removeChild(background);
-  //     stage.removeChild(foreground);
-  // 		stage.removeChild(login_button);
-  //
-	// 		break;
-  //
-  //   case 1:
-  //
-  //     stage.removeChild(background);
-  //     stage.removeChild(foreground);
-  // 		stage.removeChild(login_button);
-  //
-  //     break;
+	switch(last_scene) {
+
+		case 0:
+
+      // stage.removeChild(background);
+      // stage.removeChild(foreground);
+  		// stage.removeChild(login_button);
+
+      var el = document.getElementById("loginForm");
+      el.style.display = "none";
+
+			break;
+
+    case 1:
+
+      // stage.removeChild(background);
+      // stage.removeChild(foreground);
+  		// stage.removeChild(login_button);
+
+      var el = document.getElementById("signupForm");
+      el.style.display = "none";
+
+      break;
   //
 	// 	case 2:
   //
@@ -159,9 +175,9 @@ function destroyScene() {
   //
 	// 		break;
   //
-	// 	default:
-  //
-	// }
+		default:
+
+	}
 
   stage.removeAllChildren();
 

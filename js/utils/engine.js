@@ -57,13 +57,17 @@ function loadSound () {
 
 function playSound () {
 
-  if (sound_off) {
+  if (sound_off) { // runs once to start music
+
     current_song = createjs.Sound.play(playlist.ids[0]);
     sound_off = false;
-  } else {
+
+  } else { // runs every other time to play and pause the current song
+
     current_song.paused = !current_song.paused;
+
   }
-  
+
 }
 
 // Engine scaling

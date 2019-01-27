@@ -17,3 +17,47 @@ html, body {
     height  : 100%;
     touch-action: none;
 }
+
+#loginForm {
+  position: absolute;
+  top: 35%;
+  left: 45%;
+  z-index: 2;
+  display: none;
+}
+
+#signupForm {
+  position: absolute;
+  top: 30%;
+  left: 38%;
+  z-index: 2;
+  display: none;
+}
+
+.login {
+  display: block;
+  align-content: center;
+}
+
+.signup {
+  display: inline-block;
+  align-content: center;
+}
+
+p {
+  width: inherit;
+  text-align: center;
+  font-family: "Blackadder ITC";
+  font-size: 25px;
+  color: saddlebrown;
+  margin: 5px;
+}
+
+input {
+  border: none;
+  font-family: "Blackadder ITC";
+  font-size: 25px;
+  color: saddlebrown;
+  border-bottom: 2px solid saddlebrown;
+  background-color: blanchedalmond;
+}
