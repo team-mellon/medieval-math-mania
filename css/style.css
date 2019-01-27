@@ -66,7 +66,7 @@ input {
   p {
     text-align: center;
     font-family: "Blackadder ITC";
-    font-size: 20px;
+    font-size: 10px;
     color: saddlebrown;
     margin: 5px;
   }
@@ -74,10 +74,26 @@ input {
   input {
     border: none;
     font-family: "Blackadder ITC";
-    font-size: 20px;
+    font-size: 10px;
     color: saddlebrown;
     border-bottom: 2px solid saddlebrown;
     background-color: blanchedalmond;
+  }
+
+  #loginForm {
+    position: absolute;
+    top: 30%;
+    left: 43%;
+    z-index: 2;
+    display: none;
+  }
+
+  #signupForm {
+    position: absolute;
+    top: 25%;
+    left: 35%;
+    z-index: 2;
+    display: none;
   }
 }
 
@@ -86,7 +102,7 @@ input {
   p {
     text-align: center;
     font-family: "Blackadder ITC";
-    font-size: 15px;
+    font-size: 5px;
     color: saddlebrown;
     margin: 5px;
   }
@@ -94,9 +110,25 @@ input {
   input {
     border: none;
     font-family: "Blackadder ITC";
-    font-size: 15px;
+    font-size: 5px;
     color: saddlebrown;
     border-bottom: 2px solid saddlebrown;
     background-color: blanchedalmond;
+  }
+
+  #loginForm {
+    position: absolute;
+    top: 35%;
+    left: 45%;
+    z-index: 2;
+    display: none;
+  }
+
+  #signupForm {
+    position: absolute;
+    top: 30%;
+    left: 38%;
+    z-index: 2;
+    display: none;
   }
 }
