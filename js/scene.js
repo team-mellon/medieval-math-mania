@@ -118,7 +118,6 @@ function changeScene() {
   createScene();
   resize();
 	scaleGUI();
-  playSound();
 
 }
 
@@ -314,7 +313,6 @@ function createGUI() {
           changeScene();
         });
 
-
 			break;
 
 		case 3:
@@ -418,7 +416,7 @@ function createGUI() {
 	}
 
 	lute = createImage("res/lute.png", luteX, luteY);
-  // lute.addEventListener("click", changeLevel);
+  lute.addEventListener("click", playSound);
 
   // lute.regX = 160;
   // lute.regY = 160;
@@ -582,17 +580,5 @@ function scaleGUI() {
 	scale_image(lute, luteX, luteY);
 	lute.x = stage.canvas.width - (luteX/2) * scene_scale_Y;
 	lute.y = stage.canvas.height - (luteY/2) * scene_scale_Y;
-
-}
-
-function loadSound () {
-
-  createjs.Sound.registerSound("res/music/one-eyed_maestro.wav", soundID);
-
-}
-
-function playSound () {
-
-  createjs.Sound.play(soundID);
 
 }

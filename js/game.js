@@ -13,7 +13,13 @@ var hide_archer2 = false;
 var hide_archer3 = false;
 var hide_archer4 = false;
 
-var soundID = "Thunder";
+var playlistSources = [
+  "res/music/one-eyed_maestro.wav"
+];
+
+var playlistIDs = [
+  "OneEyedMaestro"
+];
 
 function tick(event) {
 

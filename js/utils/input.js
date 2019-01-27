@@ -34,20 +34,3 @@ function handleEnd(evt) {
   }
   start_touch = end_touch = 0;
 }
-
-// Scaling the stage and assets
-
-var max_scale_Y = 768;
-var max_scale_X = 1920;
-
-var scene_scale_X;
-var scene_scale_Y;
-
-var scene_margin_X;
-
-function scale_image(image, x_size, y_size) {
-
-  image.scaleX = scene_scale_X;
-  image.scaleY = scene_scale_Y;
-
-}

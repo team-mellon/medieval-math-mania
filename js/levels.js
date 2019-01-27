@@ -151,7 +151,6 @@ function changeLevel() {
   destroyScene();
   createScene();
   resize();
-  playSound();
 
 }
 

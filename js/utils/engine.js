@@ -1,6 +1,19 @@
 // Initialize the engine
 
+// Stage for drawing pictures and shapes
 var stage;
+
+// Player to play playlist music
+var playlist = {
+  size: 0,
+  sources: [],
+  ids: []
+}
+var current_song;
+var sound_off = true;
+
+// Volume for
+var volume = 50;
 
 var bg;
 var bg_color;
@@ -12,6 +25,9 @@ function init() {
 
   bg = new createjs.Shape();
   stage.addChild(bg);
+
+  loadSound();
+  console.log(playlist);
 
   loadScene();
   createScene();
@@ -27,7 +43,47 @@ function init() {
 
 }
 
+// Music
+
+function loadSound () {
+
+  playlist.size = playlistSources.length;
+  playlist.sources = playlistSources;
+  playlist.ids = playlistIDs;
+
+  createjs.Sound.registerSound(playlist.sources[0], playlist.ids[0]);
+
+}
+
+function playSound () {
+
+  if (sound_off) {
+    current_song = createjs.Sound.play(playlist.ids[0]);
+    sound_off = false;
+  } else {
+    current_song.paused = !current_song.paused;
+  }
+  
+}
+
 // Engine scaling
+
+// Scaling the stage and assets
+
+var max_scale_Y = 768;
+var max_scale_X = 1920;
+
+var scene_scale_X;
+var scene_scale_Y;
+
+var scene_margin_X;
+
+function scale_image(image, x_size, y_size) {
+
+  image.scaleX = scene_scale_X;
+  image.scaleY = scene_scale_Y;
+
+}
 
 function resize() {
 
