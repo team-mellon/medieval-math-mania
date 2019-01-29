@@ -23,7 +23,7 @@ html, body {
   top: 35%;
   left: 45%;
   z-index: 2;
-  display: none;
+  display: inline;
 }
 
 #signupForm {
@@ -31,7 +31,7 @@ html, body {
   top: 30%;
   left: 38%;
   z-index: 2;
-  display: none;
+  display: inline;
 }
 
 .login {
@@ -63,6 +63,7 @@ input {
 
 /* On screens that are 992px or less, set the background color to blue */
 @media screen and (max-width: 992px) {
+
   p {
     text-align: center;
     font-family: "Blackadder ITC";
@@ -85,7 +86,7 @@ input {
     top: 30%;
     left: 43%;
     z-index: 2;
-    display: none;
+    display: inline;
   }
 
   #signupForm {
@@ -93,8 +94,9 @@ input {
     top: 25%;
     left: 35%;
     z-index: 2;
-    display: none;
+    display: inline;
   }
+
 }
 
 /* On screens that are 600px or less, set the background color to olive */
@@ -121,7 +123,7 @@ input {
     top: 35%;
     left: 45%;
     z-index: 2;
-    display: none;
+    display: inline;
   }
 
   #signupForm {
@@ -129,6 +131,6 @@ input {
     top: 30%;
     left: 38%;
     z-index: 2;
-    display: none;
+    display: inline;
   }
 }

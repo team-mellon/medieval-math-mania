@@ -11,6 +11,7 @@
     <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
     <script src="js/utils/engine.js"></script>
     <script src="js/utils/input.js"></script>
+    <script src="js/utils/forms.js"></script>
     <script src="js/utils/user_interface.js"></script>
     <script src="js/levels.js"></script>
     <script src="js/scene.js"></script>
@@ -32,38 +33,9 @@
     <!-- <canvas id="renderCanvas"></canvas>                                          canvas for rendering webgl and babylon -->
 
     <canvas id="demoCanvas">alternate content</canvas>
-    <form id="loginForm">
-      <div class="login">
-        <p>Username:</p>
-        <input type="text" name="username">
-      </div>
-      <div class="login">
-        <p>Password:</p>
-        <input type="password" name="psw">
-      </div>
-    </form>
-    <form id="signupForm">
-      <div class="signup">
-        <p>Firstname:</p>
-        <input type="text" name="firstname">
-      </div>
-      <div class="signup">
-        <p>Lastname:</p>
-        <input type="text" name="lastname">
-      </div><br>
-      <div class="signup">
-        <p>Username:</p>
-        <input type="text" name="username">
-      </div><br>
-      <div class="signup">
-        <p>Password:</p>
-        <input type="password" name="psw">
-      </div>
-      <div class="signup">
-        <p>Confirm:</p>
-        <input type="password" name="cfrm">
-      <div>
-    </form>
+
+    <div id="sceneHTML"><div/>
+
     <script type="text/javascript">
 
       window.addEventListener('resize', resize, false);

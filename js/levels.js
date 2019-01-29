@@ -21,9 +21,9 @@ var structure_center,
     structure_left,
     structure_right,
     structure_facade;
-var center,
-    left_center,
-    right_center,
+var centerS,
+    left_centerS,
+    right_centerS,
     body,
     left,
     right,
@@ -55,9 +55,9 @@ function loadLevel() {
       henchmanS = city_henchman;
       projectileS = city_projectile;
       catapultS = city_catapult;
-      center = city_center;
-      left_center = city_left_center;
-      right_center = city_right_center;
+      centerS = city_center;
+      left_centerS = city_left_center;
+      right_centerS = city_right_center;
       body = city_body;
       left = city_left;
       right = city_right;
@@ -70,9 +70,9 @@ function loadLevel() {
       henchmanS = sea_henchman;
       projectileS = sea_projectile;
       catapultS = sea_catapult;
-      center = sea_center;
-      left_center = sea_left_center;
-      right_center = sea_right_center;
+      centerS = sea_center;
+      left_centerS = sea_left_center;
+      right_centerS = sea_right_center;
       body = sea_body;
       left = sea_left;
       right = sea_right;
@@ -88,9 +88,9 @@ function loadLevel() {
 
 function createLevel() {
 
-  structure_center = createImage(center, structureX, structureY);
-  structure_left_center = createImage(left_center, structureX, structureY);
-  structure_right_center = createImage(right_center, structureX, structureY);
+  structure_center = createSprite(centerS, structureX, structureY);
+  structure_left_center = createSprite(left_centerS, structureX, structureY);
+  structure_right_center = createSprite(right_centerS, structureX, structureY);
   henchman_left = createSprite(henchmanS, henchmanX, henchmanY);
   henchman_left.gotoAndPlay(0);
   henchman_left_center = createSprite(henchmanS, henchmanX, henchmanY);
@@ -209,12 +209,12 @@ function scaleLevel() {
 }
 
 city_boss = {
-    images: ["res/knight.png"],
+    images: ["res/level01/boss.png"],
     frames: {width:96, height:96, count:12, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
 };
 city_henchman = {
-    images: ["res/archer.png"],
+    images: ["res/level01/henchman.png"],
     frames: {width:96, height:96, count:12, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
 };
@@ -228,21 +228,33 @@ city_catapult = {
     frames: {width:288, height:384, count:24, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
 };
-city_center = "res/castle/center-tower.png";
-city_left_center = "res/castle/left-center-tower.png";
-city_right_center = "res/castle/right-center-tower.png";
-city_body = "res/castle/body.png";
-city_left = "res/castle/left-tower.png";
-city_right = "res/castle/right-tower.png";
-city_facade = "res/castle/facade.png";
+city_center = {
+    images: ["res/level01/center-tower.png"],
+    frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+};
+city_left_center = {
+    images: ["res/level01/left-center-tower.png"],
+    frames: {width:1920, height:768, count:6, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+};
+city_right_center = {
+    images: ["res/level01/right-center-tower.png"],
+    frames: {width:1920, height:768, count:6, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+};
+city_body = "res/level01/body.png";
+city_left = "res/level01/left-tower.png";
+city_right = "res/level01/right-tower.png";
+city_facade = "res/level01/facade.png";
 
 sea_boss = {
-    images: ["res/pirate.png"],
+    images: ["res/level02/boss.png"],
     frames: {width:96, height:96, count:12, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
 };
 sea_henchman = {
-    images: ["res/mermaid.png"],
+    images: ["res/level02/henchman.png"],
     frames: {width:96, height:96, count:12, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
 };
@@ -256,10 +268,22 @@ sea_catapult = {
     frames: {width:288, height:384, count:24, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
 };
-sea_center = "res/ship/center-tower.png";
-sea_left_center = "res/ship/left-center-tower.png";
-sea_right_center = "res/ship/right-center-tower.png";
-sea_body = "res/ship/body.png";
-sea_left = "res/ship/left-tower.png";
-sea_right = "res/ship/right-tower.png";
-sea_facade = "res/ship/facade.png";
+sea_center = {
+    images: ["res/level02/center-tower.png"],
+    frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+};
+sea_left_center = {
+    images: ["res/level02/left-center-tower.png"],
+    frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+};
+sea_right_center = {
+    images: ["res/level02/right-center-tower.png"],
+    frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+};
+sea_body = "res/level02/body.png";
+sea_left = "res/level02/left-tower.png";
+sea_right = "res/level02/right-tower.png";
+sea_facade = "res/level02/facade.png";

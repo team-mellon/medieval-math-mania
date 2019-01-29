@@ -100,13 +100,11 @@ function createScene() {
   switch(current_scene) {
 
     case 0:
-      var el = document.getElementById("loginForm");
-      el.style.display = "inline";
+      createLoginForm();
       break;
 
     case 1:
-      var el = document.getElementById("signupForm");
-      el.style.display = "inline";
+      createSignupForm();
       break;
 
     case 3:
@@ -141,8 +139,10 @@ function destroyScene() {
       // stage.removeChild(foreground);
   		// stage.removeChild(login_button);
 
-      var el = document.getElementById("loginForm");
-      el.style.display = "none";
+      var scene_html = document.getElementById("sceneHTML");
+      while (scene_html.firstChild) {
+        scene_html.removeChild(scene_html.firstChild);
+      }
 
 			break;
 
@@ -152,29 +152,36 @@ function destroyScene() {
       // stage.removeChild(foreground);
   		// stage.removeChild(login_button);
 
-      var el = document.getElementById("signupForm");
-      el.style.display = "none";
+      var scene_html = document.getElementById("sceneHTML");
+      while (scene_html.firstChild) {
+        scene_html.removeChild(scene_html.firstChild);
+      }
 
       break;
-  //
-	// 	case 2:
-  //
-	// 		stage.removeChild(play_button);
-	// 		stage.removeChild(stats_button);
-	// 		stage.removeChild(h2p_button);
-	// 		stage.removeChild(settings_button);
-	// 		stage.removeChild(logout_button);
-	// 		stage.removeChild(account_button);
-  //
-	// 		break;
-  //
-	// 	case 3:
-  //
+
+		// case 2:
+
+			// stage.removeChild(play_button);
+			// stage.removeChild(stats_button);
+			// stage.removeChild(h2p_button);
+			// stage.removeChild(settings_button);
+			// stage.removeChild(logout_button);
+			// stage.removeChild(account_button);
+
+			// break;
+
+		case 3:
+
 	// 		stage.removeChild(login_button);
 	// 		destroyLevel();
-  //
-	// 		break;
-  //
+
+      var scene_html = document.getElementById("sceneHTML");
+      while (scene_html.firstChild) {
+        scene_html.removeChild(scene_html.firstChild);
+      }
+
+			break;
+
 		default:
 
 	}
