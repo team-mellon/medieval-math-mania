@@ -1,5 +1,3 @@
-  var background = new BABYLON.Layer("bg", "res/login.png", scene, true);       // background
-
   var key = message.current_user;
 
   var username_text = new BABYLON.GUI.TextBlock();
@@ -42,24 +40,3 @@
   menu_button.onPointerClickObservable.add(function() {
 		message.render = 1;
 	});
-
-
-	var lute = BABYLON.GUI.Button.CreateImageWithCenterTextButton("lute_butt", "", "res/lute.png");
-	lute.height = "110px";
-	lute.width = "110px";
-	lute.fontFamily = "Blackadder ITC";
-	lute.fontStyle = "italic";
-	lute.fontSize = 36;
-	lute.color = "gold";
-	lute.thickness = 0;
-	lute.top = "350px";
-  lute.left = "875px";
-	advTexture.addControl(lute);
-	// lute.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-	lute.onPointerClickObservable.add(function() {
-    message.music_pause = !message.music_pause;
-	});
-
-  advTexture.addControl(username_text);
-  advTexture.addControl(password_text);
-	advTexture.addControl(menu_button);

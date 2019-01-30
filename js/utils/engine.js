@@ -43,8 +43,11 @@ function init() {
 
 }
 
-// Music
+///////////
+// Music //
+///////////
 
+//
 function loadSound () {
 
   playlist.size = playlistSources.length;
@@ -55,6 +58,7 @@ function loadSound () {
 
 }
 
+//
 function playSound () {
 
   if (sound_off) { // runs once to start music
@@ -70,9 +74,11 @@ function playSound () {
 
 }
 
-// Engine scaling
 
-// Scaling the stage and assets
+
+////////////////////
+// Engine scaling //
+////////////////////
 
 var max_scale_Y = 768;
 var max_scale_X = 1920;
@@ -82,13 +88,20 @@ var scene_scale_Y;
 
 var scene_margin_X;
 
-function scale_image(image, x_size, y_size) {
+
+
+// Scale the image-like assets
+function scale_image(image, x_loc, y_loc) {
 
   image.scaleX = scene_scale_X;
   image.scaleY = scene_scale_Y;
+  image.x = x_loc;
+  image.y = y_loc;
+
 
 }
 
+// Scale the stage
 function resize() {
 
   // Resize the canvas element with new window size

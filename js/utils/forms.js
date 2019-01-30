@@ -166,3 +166,203 @@ function createSignupForm() {
   scene_html.appendChild(signup_form);
 
 }
+
+function createStatsForm() {
+
+  // Creates username display text
+  var username_p_tag = document.createElement("p");
+  var username_text = document.createTextNode("Username:");
+  username_p_tag.appendChild(username_text);
+
+  // Creates username input box
+  var username_input = document.createElement("input");
+  username_input.setAttribute("type", "text");
+  username_input.setAttribute("name", "username");
+
+  // Creates username div to hold display text and input box
+  var login_username_div = document.createElement("div");
+  login_username_div.className = "login";
+  login_username_div.appendChild(username_p_tag);
+  login_username_div.appendChild(username_input);
+
+
+
+  // Creates password display text
+  var password_p_tag = document.createElement("p");
+  var password_text = document.createTextNode("Password:");
+  password_p_tag.appendChild(password_text);
+
+  // Creates password input box
+  var password_input = document.createElement("input");
+  password_input.setAttribute("type", "password");
+  password_input.setAttribute("name", "password");
+
+  // Creates password div to hold display text and input box
+  var login_password_div = document.createElement("div");
+  login_password_div.className = "login";
+  login_password_div.appendChild(password_p_tag);
+  login_password_div.appendChild(password_input);
+
+
+
+  // Creates login form to hold username and password divs
+  var login_form = document.createElement("form");
+  login_form.id = "loginForm";
+  login_form.appendChild(login_username_div);
+  login_form.appendChild(login_password_div);
+
+  // Injecting login form into existing html
+  var scene_html = document.getElementById("sceneHTML");
+  scene_html.appendChild(login_form);
+
+}
+
+function createHow2PlayForm() {
+
+  // Creates username display text
+  var username_p_tag = document.createElement("p");
+  var username_text = document.createTextNode("Username:");
+  username_p_tag.appendChild(username_text);
+
+  // Creates username input box
+  var username_input = document.createElement("input");
+  username_input.setAttribute("type", "text");
+  username_input.setAttribute("name", "username");
+
+  // Creates username div to hold display text and input box
+  var login_username_div = document.createElement("div");
+  login_username_div.className = "login";
+  login_username_div.appendChild(username_p_tag);
+  login_username_div.appendChild(username_input);
+
+
+
+  // Creates password display text
+  var password_p_tag = document.createElement("p");
+  var password_text = document.createTextNode("Password:");
+  password_p_tag.appendChild(password_text);
+
+  // Creates password input box
+  var password_input = document.createElement("input");
+  password_input.setAttribute("type", "password");
+  password_input.setAttribute("name", "password");
+
+  // Creates password div to hold display text and input box
+  var login_password_div = document.createElement("div");
+  login_password_div.className = "login";
+  login_password_div.appendChild(password_p_tag);
+  login_password_div.appendChild(password_input);
+
+
+
+  // Creates login form to hold username and password divs
+  var login_form = document.createElement("form");
+  login_form.id = "loginForm";
+  login_form.appendChild(login_username_div);
+  login_form.appendChild(login_password_div);
+
+  // Injecting login form into existing html
+  var scene_html = document.getElementById("sceneHTML");
+  scene_html.appendChild(login_form);
+
+}
+
+function createSettingsForm() {
+
+  // Creates username display text
+  var username_p_tag = document.createElement("p");
+  var username_text = document.createTextNode("Username:");
+  username_p_tag.appendChild(username_text);
+
+  // Creates username input box
+  var username_input = document.createElement("input");
+  username_input.setAttribute("type", "text");
+  username_input.setAttribute("name", "username");
+
+  // Creates username div to hold display text and input box
+  var login_username_div = document.createElement("div");
+  login_username_div.className = "login";
+  login_username_div.appendChild(username_p_tag);
+  login_username_div.appendChild(username_input);
+
+
+
+  // Creates password display text
+  var password_p_tag = document.createElement("p");
+  var password_text = document.createTextNode("Password:");
+  password_p_tag.appendChild(password_text);
+
+  // Creates password input box
+  var password_input = document.createElement("input");
+  password_input.setAttribute("type", "password");
+  password_input.setAttribute("name", "password");
+
+  // Creates password div to hold display text and input box
+  var login_password_div = document.createElement("div");
+  login_password_div.className = "login";
+  login_password_div.appendChild(password_p_tag);
+  login_password_div.appendChild(password_input);
+
+
+
+  // Creates login form to hold username and password divs
+  var login_form = document.createElement("form");
+  login_form.id = "loginForm";
+  login_form.appendChild(login_username_div);
+  login_form.appendChild(login_password_div);
+
+  // Injecting login form into existing html
+  var scene_html = document.getElementById("sceneHTML");
+  scene_html.appendChild(login_form);
+
+}
+
+function createAccountForm() {
+
+  // Creates username display text
+  var username_p_tag = document.createElement("p");
+  var username_text = document.createTextNode("Username:");
+  username_p_tag.appendChild(username_text);
+
+  // Creates username input box
+  var username_input = document.createElement("input");
+  username_input.setAttribute("type", "text");
+  username_input.setAttribute("name", "username");
+
+  // Creates username div to hold display text and input box
+  var login_username_div = document.createElement("div");
+  login_username_div.className = "login";
+  login_username_div.appendChild(username_p_tag);
+  login_username_div.appendChild(username_input);
+
+
+
+  // Creates password display text
+  var password_p_tag = document.createElement("p");
+  var password_text = document.createTextNode("Password:");
+  password_p_tag.appendChild(password_text);
+
+  // Creates password input box
+  var password_input = document.createElement("input");
+  password_input.setAttribute("type", "password");
+  password_input.setAttribute("name", "password");
+
+  // Creates password div to hold display text and input box
+  var login_password_div = document.createElement("div");
+  login_password_div.className = "login";
+  login_password_div.appendChild(password_p_tag);
+  login_password_div.appendChild(password_input);
+
+
+
+  // Creates login form to hold username and password divs
+  var login_form = document.createElement("form");
+  login_form.id = "loginForm";
+  login_form.appendChild(login_username_div);
+  login_form.appendChild(login_password_div);
+
+  // Injecting login form into existing html
+  var scene_html = document.getElementById("sceneHTML");
+  scene_html.appendChild(login_form);
+
+}

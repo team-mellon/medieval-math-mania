@@ -1,24 +1,3 @@
-function createLogin(engine, canvas, message, database) {                       // function that returns the login scene
-
-  var scene = new BABYLON.Scene(engine);                                        // create the scene
-  scene.attachControl();
-
-  var camera = new BABYLON.UniversalCamera(
-    "login_cam",
-    new BABYLON.Vector3(0, 0, -10),
-    scene);                                                                     // creates camera pointed at the scene
-  camera.setTarget(BABYLON.Vector3.Zero());                                     // targets the camera to scene origin
-  camera.attachControl(canvas, true);                                           // attaches the camera to the canvas
-
-  var background = new BABYLON.Layer("bg", "res/login.png", scene, true);       // background layer
-
-  // GUI
-  var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
-  advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
-  advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
-  advTexture.attach();
-  var enable = true;                                                            // render enable bit for the ADT controls
-
   var username = "";
   var password = "";
 
@@ -88,18 +67,3 @@ function createLogin(engine, canvas, message, database) {                       
   //   message.music_pause = !message.music_pause;
   //   console.log(message.music_pause);
   // });
-
-  advTexture.addControl(username_text);                                         // add controls to texture
-  advTexture.addControl(username_input);
-  advTexture.addControl(username_line);
-  advTexture.addControl(password_text);
-  advTexture.addControl(password_input);
-  advTexture.addControl(password_line);
-  advTexture.addControl(login_error);
-  advTexture.addControl(login_button);
-  advTexture.addControl(account_button);
-  advTexture.addControl(mute_button);
-
-  return scene;
-
-};

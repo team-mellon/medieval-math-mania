@@ -1,25 +1,3 @@
-function createCreateAcc(engine, canvas, message, database) {           //function that returns the create account scene
-
-    var scene = new BABYLON.Scene(engine);          // create the scene
-    scene.attachControl();
-
-    var camera = new BABYLON.UniversalCamera("create_acc_cam", new BABYLON.Vector3(0, 0, -10), scene);            // creates camera pointed at the scene
-
-    camera.setTarget(BABYLON.Vector3.Zero());           //targets the camera to scene origin
-
-    camera.attachControl(canvas, true);                //attaches the camera to the canvas
-
-    var background = new BABYLON.Layer("bg", "res/login.png", scene, true);   //background layer
-
-    var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");     //AdvancedDynamicTexture for the controls of the gui
-
-    advTexture.idealWidth = 1920;          //ideal screen width for the UI to scale to
-
-    advTexture.idealHeight = 1080;         //ideal screen height for the UI to scale to
-    advTexture.attach();
-
-    var enable = true;            //render enable bit for the ADT controls
-
     var firstname_text = new BABYLON.GUI.TextBlock();   // first name textblock
     firstname_text.top = "-217px";
     firstname_text.left = "-240px";
@@ -216,7 +194,7 @@ function createCreateAcc(engine, canvas, message, database) {           //functi
 		    misses: 0
 		};
 
-				
+
 		database["users"][key] = {
 		    firstname: firstname_input.text,
 		    lastname: lastname_input.text,
@@ -232,7 +210,7 @@ function createCreateAcc(engine, canvas, message, database) {           //functi
 		password_error.alpha =0;
 		message.current_user = key;
 		message.render = 0;
-		
+
 	    }
 	}
 
@@ -272,40 +250,3 @@ function createCreateAcc(engine, canvas, message, database) {           //functi
   	password_error.alpha = 0;
   	message.render = 0;
     });
-
-
-    var lute = BABYLON.GUI.Button.CreateImageWithCenterTextButton("lute_butt", "", "res/lute.png");
-    lute.height = "110px";
-    lute.width = "110px";
-    lute.fontFamily = "Blackadder ITC";
-    lute.fontStyle = "italic";
-    lute.fontSize = 36;
-    lute.color = "gold";
-    lute.thickness = 0;
-    lute.top = "350px";
-    lute.left = "875px";
-    advTexture.addControl(lute);
-    // lute.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-    lute.onPointerClickObservable.add(function() {
-      message.music_pause = !message.music_pause;
-    });
-
-//adds control of all text blocks and input boxes to texture
-    advTexture.addControl(firstname_text);
-    advTexture.addControl(lastname_text);
-    advTexture.addControl(username_text);
-    advTexture.addControl(password_text);
-    advTexture.addControl(re_password_text);
-    advTexture.addControl(firstname_input);
-    advTexture.addControl(lastname_input);
-    advTexture.addControl(username_input);
-    advTexture.addControl(password_input);
-    advTexture.addControl(re_password_input);
-
-    advTexture.addControl(submit_button);
-    advTexture.addControl(cancel_button);
-
-    advTexture.addControl(password_error);
-    advTexture.addControl(fieldInput_error);
-    return scene;
-};
