@@ -43,39 +43,6 @@ function init() {
 
 }
 
-///////////
-// Music //
-///////////
-
-//
-function loadSound () {
-
-  playlist.size = playlistSources.length;
-  playlist.sources = playlistSources;
-  playlist.ids = playlistIDs;
-
-  createjs.Sound.registerSound(playlist.sources[0], playlist.ids[0]);
-
-}
-
-//
-function playSound () {
-
-  if (sound_off) { // runs once to start music
-
-    current_song = createjs.Sound.play(playlist.ids[0]);
-    sound_off = false;
-
-  } else { // runs every other time to play and pause the current song
-
-    current_song.paused = !current_song.paused;
-
-  }
-
-}
-
-
-
 ////////////////////
 // Engine scaling //
 ////////////////////

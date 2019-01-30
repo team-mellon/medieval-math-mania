@@ -40,30 +40,7 @@
   	}
   });
 
-  var account_button = createButton("Create_Account", "res/login-button.png", "130px", "90px", "60px", "200px", "gold", "italic", 26, 0, enable, function() {
-    username_input.text = "";
-    password_input.text = "";
-    login_error.alpha = 0;
-    message.render = 7;
-  });
-
   var mute_button = createButton("", "res/lute.png", "875px", "350px", "110px", "110px", "gold", "italic", 36, 0, enable, function() {
     message.music_pause = !message.music_pause;
     console.log(message.music_pause);
   });
-
-  // var lute = BABYLON.GUI.Button.CreateImageWithCenterTextButton("lute_butt", "", "res/lute.png");
-  // lute.height = "110px";
-  // lute.width = "110px";
-  // lute.fontFamily = "Blackadder ITC";
-  // lute.fontStyle = "italic";
-  // lute.fontSize = 36;
-  // lute.color = "gold";
-  // lute.thickness = 0;
-  // lute.top = "350px";
-  // lute.left = "875px";
-  // // lute.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-  // lute.onPointerClickObservable.add(function() {
-  //   message.music_pause = !message.music_pause;
-  //   console.log(message.music_pause);
-  // });

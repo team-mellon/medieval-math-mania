@@ -1,25 +1,47 @@
-function createMusic(engine, canvas, message, database) {                       // function that returns the menu scene
+var playlistSources = [
+  "res/music/one-eyed_maestro.wav"
+];
 
-  var scene = new BABYLON.Scene(engine);                                        // create the scene
+var playlistIDs = [
+  "OneEyedMaestro"
+];
 
-  var camera = new BABYLON.UniversalCamera(
-    "menu_cam",
-    new BABYLON.Vector3(0, 0, -10),
-    scene);                                                                     // creates camera pointed at the scene
-  camera.setTarget(BABYLON.Vector3.Zero());                                     // targets the camera to scene origin
-  camera.attachControl(canvas, true);                                           // attaches the camera to the canvas
+///////////
+// Music //
+///////////
 
-  var current_music = 1;
+//
+function loadSound () {
 
-  // GUI
-  var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
-  advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
-  advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
-  var enable = true;
+  playlist.size = playlistSources.length;
+  playlist.sources = playlistSources;
+  playlist.ids = playlistIDs;
+
+  createjs.Sound.registerSound(playlist.sources[0], playlist.ids[0]);
+
+}
+
+//
+function playSound () {
+
+  if (sound_off) { // runs once to start music
+
+    current_song = createjs.Sound.play(playlist.ids[0]);
+    sound_off = false;
+
+  } else { // runs every other time to play and pause the current song
+
+    current_song.paused = !current_song.paused;
+
+  }
+
+}
+
+  // set current music to the first song, or maybe randomize
 
   //music
-  var music1 = new BABYLON.Sound("achaidh_cheide", "res/music/achaidh_cheide.wav", scene, null, { loop: false, autoplay: true});
-   var music2 = new BABYLON.Sound("cartoon_battle", "res/music/cartoon_battle.wav", scene, null, { loop: false, autoplay: false});
+  // var music1 = new BABYLON.Sound("achaidh_cheide", "res/music/achaidh_cheide.wav", scene, null, { loop: false, autoplay: true});
+  //  var music2 = new BABYLON.Sound("cartoon_battle", "res/music/cartoon_battle.wav", scene, null, { loop: false, autoplay: false});
   // var music3 = new BABYLON.Sound("celtic_impulse", "res/music/celtic_impulse.wav", scene, null, { loop: false, autoplay: false});
   // var music4 = new BABYLON.Sound("clenched_teeth", "res/music/clenched_teeth.wav", scene, null, { loop: false, autoplay: false});
   // var music5 = new BABYLON.Sound("failing_defense", "res/music/failing_defense.wav", scene, null, { loop: false, autoplay: false});
@@ -29,10 +51,10 @@ function createMusic(engine, canvas, message, database) {                       
   // var music9 = new BABYLON.Sound("one-eyed_maestro", "res/music/one-eyed_maestro.wav", scene, null, { loop: false, autoplay: false});
   // var music10 = new BABYLON.Sound("parisian", "res/music/parisian.wav", scene, null, { loop: false, autoplay: false});
 
-  music1.onEndedObservable.add(function(){
-	  music2.play();
-    current_music = 2;
-  });
+  // music1.onEndedObservable.add(function(){
+	//   music2.play();
+  //   current_music = 2;
+  // });
   // music2.onEndedObservable.add(function(){
 	 //  music3.play();
   //   current_music = 3;
@@ -70,76 +92,62 @@ function createMusic(engine, canvas, message, database) {                       
   //   current_music = 1;
   // });//end music
 
-  
-
-  var volume_input = new BABYLON.GUI.Slider();
-  volume_input.top = "-110px";
-  volume_input.height = "20px";
-  volume_input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-  volume_input.width = "200px";
-  volume_input.minimum = 0;
-  volume_input.maximum = 1;
-  volume_input.value = 1;
-  advTexture.addControl(volume_input);
-  volume_input.onValueChangedObservable.add(function(value) {
-
-        music1.setVolume(value);
 
 
+  // var volume_input = new BABYLON.GUI.Slider();
+  // volume_input.top = "-110px";
+  // volume_input.height = "20px";
+  // volume_input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+  // volume_input.width = "200px";
+  // volume_input.minimum = 0;
+  // volume_input.maximum = 1;
+  // volume_input.value = 1;
+  // advTexture.addControl(volume_input);
+  // volume_input.onValueChangedObservable.add(function(value) {
+  //
+  //       music1.setVolume(value);
+  //       music2.setVolume(value);
+        // music3.setVolume(value);
+        // music4.setVolume(value);
+        // music5.setVolume(value);
+        // music6.setVolume(value);
+        // music7.setVolume(value);
+        // music8.setVolume(value);
+        // music9.setVolume(value);
+        // music10.setVolume(value);
 
-        music2.setVolume(value); 
+  // });
 
-   
-    //     music3.setVolume(value);
+  // var lute = BABYLON.GUI.Button.CreateImageWithCenterTextButton("lute_butt", "", "res/lute.png");
+  // lute.height = "110px";
+  // lute.width = "110px";
+  // lute.fontFamily = "Blackadder ITC";
+  // lute.fontStyle = "italic";
+  // lute.fontSize = 36;
+  // lute.color = "gold";
+  // lute.thickness = 0;
+  // lute.top = "350px";
+  // lute.left = "875px";
+  // advTexture.addControl(lute);
+  // // lute.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+  // lute.onPointerClickObservable.add(function() {
 
-    //     music4.setVolume(value);
-
-    //     music5.setVolume(value);
- 
-
-    //     music6.setVolume(value);
-    //     music7.setVolume(value);
-
-    //     music8.setVolume(value);
-
-    //     music9.setVolume(value);
-
-
-
-    //     music10.setVolume(value);
-     
-  });
-
-  var lute = BABYLON.GUI.Button.CreateImageWithCenterTextButton("lute_butt", "", "res/lute.png");
-  lute.height = "110px";
-  lute.width = "110px";
-  lute.fontFamily = "Blackadder ITC";
-  lute.fontStyle = "italic";
-  lute.fontSize = 36;
-  lute.color = "gold";
-  lute.thickness = 0;
-  lute.top = "350px";
-  lute.left = "875px";
-  advTexture.addControl(lute);
-  // lute.left = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-  lute.onPointerClickObservable.add(function() {
-
-    switch (current_music) {
-      case 1:
-        if (music1.isPlaying) {
-          music1.pause();
-        } else if (music1.isPaused) {
-          music1.play();
-        }
-        break;
-
-      case 2:
-        if (music2.isPlaying) {
-          music2.pause();
-        } else if (music2.isPaused) {
-          music2.play();
-        }
-        break;
+    // switch (current_music) {
+    //   case 1:
+    //     if (music1.isPlaying) {
+    //       music1.pause();
+    //     } else if (music1.isPaused) {
+    //       music1.play();
+    //     }
+    //     break;
+    //
+    //   case 2:
+    //     if (music2.isPlaying) {
+    //       music2.pause();
+    //     } else if (music2.isPaused) {
+    //       music2.play();
+    //     }
+    //     break;
 
       // case 3:
       //   if (music3.isPlaying) {
@@ -204,9 +212,9 @@ function createMusic(engine, canvas, message, database) {                       
       //     music10.play();
       //   }
       //   break;
-    }
-  });
-
-  return scene;
-
-};
+//     }
+//   });
+//
+//   return scene;
+//
+// };

@@ -102,7 +102,7 @@ function createScene() {
       break;
 
     case 6:
-      createSettingsForm();
+      createSettingsForm(); // Make volume slider affect volume and checkbox control time in scene
       break;
 
     case 7:

@@ -169,11 +169,6 @@ function createSignupForm() {
 
 function createStatsForm() {
 
-  var fake_stats = {
-    hits: 9001,
-    misses: 0
-  }
-
   // Creates username display text
   var hits_p_tagl = document.createElement("p");
   var hits_label = document.createTextNode("Hits: ");
@@ -181,7 +176,7 @@ function createStatsForm() {
 
   // Creates username display text
   var hits_p_tag = document.createElement("p");
-  var hits_text = document.createTextNode(fake_stats.hits);
+  var hits_text = document.createTextNode(fake_account.hits);
   hits_p_tag.appendChild(hits_text);
 
   // Creates username div to hold display text and input box
@@ -199,7 +194,7 @@ function createStatsForm() {
 
   // Creates password display text
   var misses_p_tag = document.createElement("p");
-  var misses_text = document.createTextNode(fake_stats.misses);
+  var misses_text = document.createTextNode(fake_account.misses);
   misses_p_tag.appendChild(misses_text);
 
   // Creates password div to hold display text and input box
@@ -306,11 +301,6 @@ function createSettingsForm() {
 }
 
 function createAccountForm() {
-
-  var fake_account = {
-    user: "admin",
-    pass: 1234
-  }
 
   // Creates username display text
   var username_p_tagl = document.createElement("p");

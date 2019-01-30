@@ -1,20 +1,4 @@
-function createGame(engine, canvas, message, database) {                        // function that returns the game scene
-
-  var scene = new BABYLON.Scene(engine);                                        // create the scene
-
-  var camera = new BABYLON.UniversalCamera(
-    "game_cam",
-    new BABYLON.Vector3(0, 0, -10),
-    scene);                                                                     // creates camera pointed at the scene
-  camera.setTarget(BABYLON.Vector3.Zero());                                     // targets the camera to scene origin
-
   scene.clearColor = new BABYLON.Color4(0.78, 1, 0.98, 1);
-
-  // GUI
-  var advTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"); // AdvancedDynamicTexture for the controls of the gui
-  advTexture.idealWidth = 1920;                                                 // Ideal screen width for the UI to scale to
-  advTexture.idealHeight = 1080;                                                // Ideal screen height for the UI to scale to
-  var enable = true;                                                            // render enable bit for the ADT controls
 
 	// var foreground = new BABYLON.Layer("fore", "hit-target-castle-facade-concept-high-res.png", scene);
 	// foreground.isBackground = false;
@@ -298,6 +282,7 @@ function createGame(engine, canvas, message, database) {                        
 	//   fire.playAnimation(0, 11, true, 200);
 	//   // tree.isPickable = true;
 	// }
+  s
   var hit_count = 0;
   var fire_switch = 0;
 	scene.actionManager = new BABYLON.ActionManager(scene);
@@ -438,38 +423,6 @@ function createGame(engine, canvas, message, database) {                        
 		console.log(typeof input);
 
 	});
-  
-	scene.actionManager.registerAction(action);
-	var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton("log_butt", "Menu", "res/login-button.png");
-	button.top = "350px";
-	button.left = "-750px";
-	button.height = "90px";
-	button.width = "290px";
-	button.color = "gold";
-	button.fontFamily = "Blackadder ITC";
-	button.fontStyle = "italic";
-	button.fontSize = 36;
-	button.thickness = 0;
-	button.onPointerClickObservable.add(function() {
-		message.render = 1;
-	});
-
-	var lute = BABYLON.GUI.Button.CreateImageWithCenterTextButton("lute_butt", "", "res/lute.png");
-  lute.left = "875px";
-	lute.top = "350px";
-	lute.height = "110px";
-	lute.width = "110px";
-	lute.color = "gold";
-	lute.fontFamily = "Blackadder ITC";
-	lute.fontStyle = "italic";
-	lute.fontSize = 36;
-	lute.thickness = 0;
-	lute.onPointerClickObservable.add(function() {
-    message.music_pause = !message.music_pause;
-	});
-
-	advTexture.addControl(button);
-	advTexture.addControl(lute);
 
 	return scene;
 

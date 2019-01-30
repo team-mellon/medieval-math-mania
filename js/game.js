@@ -13,13 +13,23 @@ var hide_archer2 = false;
 var hide_archer3 = false;
 var hide_archer4 = false;
 
-var playlistSources = [
-  "res/music/one-eyed_maestro.wav"
-];
+var fake_account = {
+  user: "admin",
+  pass: 1234,
+  hits: 9001,
+  misses: 0
+}
 
-var playlistIDs = [
-  "OneEyedMaestro"
-];
+// This was in account scene, may need this structure
+// var key = message.current_user;
+// username_text.text = "Fullname: " + database["users"][key]["firstname"] + " " + database["users"][key]["lastname"];
+// password_text.text = "Password: " + database["users"][key]["password"];
+
+// This was in stats scene, may need this structure
+// var key = message.current_user;
+// stats1_text.text = "Hits: " + database["stats"][key]["hits"];
+// stats2_text.text = "Misses: " + database["stats"][key]["misses"];
+
 
 function tick(event) {
 
