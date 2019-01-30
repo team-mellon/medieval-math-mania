@@ -34,6 +34,38 @@ html, body {
   display: inline;
 }
 
+#statsForm {
+  position: absolute;
+  top: 35%;
+  left: 45%;
+  z-index: 2;
+  display: inline;
+}
+
+#h2pForm {
+  position: absolute;
+  top: 35%;
+  left: 45%;
+  z-index: 2;
+  display: inline;
+}
+
+#settingsForm {
+  position: absolute;
+  top: 35%;
+  left: 45%;
+  z-index: 2;
+  display: inline;
+}
+
+#accountForm {
+  position: absolute;
+  top: 35%;
+  left: 45%;
+  z-index: 2;
+  display: inline;
+}
+
 .login {
   display: block;
   align-content: center;
