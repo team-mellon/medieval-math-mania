@@ -194,7 +194,7 @@ function destroyLevel() {
 
 }
 
-function changeLevel() {
+function changeLevel(new_level) {
 
   hide_knight = false;
   hide_archer1 = false;
@@ -202,7 +202,7 @@ function changeLevel() {
   hide_archer3 = false;
   hide_archer4 = false;
 
-  current_level++;
+  current_level = new_level;
 
   if (current_level > num_levels) {
     current_level = 1;

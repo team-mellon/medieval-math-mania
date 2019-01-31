@@ -282,7 +282,7 @@
 	//   fire.playAnimation(0, 11, true, 200);
 	//   // tree.isPickable = true;
 	// }
-  s
+  
   var hit_count = 0;
   var fire_switch = 0;
 	scene.actionManager = new BABYLON.ActionManager(scene);
