@@ -1,6 +1,9 @@
 var num_levels = 2;
 var current_level = 1;
 
+var big_boss;
+var big_bossS;
+
 var boss;
 var bossS;
 var bossX = 96;
@@ -131,6 +134,12 @@ function loadLevel() {
     framerate: 6
   };
 
+  big_bossS = {
+    images: ["res/level" + current_level + "/big-boss.png"],
+    frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+  };
+
 }
 
 function createLevel() {
@@ -192,6 +201,8 @@ function destroyLevel() {
   // REMOVE THIS!!!!! BUT ALSO THE REST OF IT
   stage.removeChild(lute);
 
+  stage.removeChild(big_boss);
+
 }
 
 function changeLevel(new_level) {
@@ -238,5 +249,8 @@ function scaleLevel() {
   // Main character in foreground
   scale_image(projectile, stage.canvas.width / 2, stage.canvas.height - (projectileY/2 + 57) * scene_scale_Y);
   scale_image(catapult, stage.canvas.width / 2, stage.canvas.height - (catapultY/2 - 57) * scene_scale_Y);
+
+  if (fire_counter == 5)
+    scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
 
 }

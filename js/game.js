@@ -108,7 +108,8 @@ function tick(event) {
         }
         break;
       case 5:
-        changeLevel();
+        big_boss = createSprite(big_bossS, structureX, structureY);
+        scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
         target_x = 0;
         fire_counter = 0;
         projectile_x_speed = 0;
