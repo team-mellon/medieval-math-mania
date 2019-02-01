@@ -110,6 +110,7 @@ function createScene() {
       break;
 
     case 3:
+      createGameForm();
 			createLevel();
       break;
 

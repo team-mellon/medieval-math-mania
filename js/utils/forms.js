@@ -320,3 +320,45 @@ function createMapForm() {
   scene_html.appendChild(map_form);
 
 }
+
+function createGameForm() {
+
+  var multiplicand = "7";
+  var sign = "x"; //&#37
+  var equal = "=";
+  var solution = "69";
+
+  // Creates username display text
+  var multiplicand_text = document.createTextNode(multiplicand);
+  var sign_text = document.createTextNode(sign);
+  var entry_input = document.createElement("input");
+  entry_input.id = "entryInput";
+  entry_input.setAttribute("type", "text");
+  entry_input.setAttribute("maxlength", "4");
+  entry_input.setAttribute("size", "4");
+  entry_input.setAttribute("name", "entry");
+  var equal_text = document.createTextNode(equal);
+  var solution_text = document.createTextNode(solution);
+
+  // Creates username div to hold display text and input box
+  var game_entry_div = document.createElement("div");
+  game_entry_div.className = "login";
+  game_entry_div.appendChild(multiplicand_text);
+  game_entry_div.appendChild(sign_text);
+  game_entry_div.appendChild(entry_input);
+  game_entry_div.appendChild(equal_text);
+  game_entry_div.appendChild(solution_text);
+
+
+
+  // Creates login form to hold username and password divs
+  var game_form = document.createElement("form");
+  game_form.id = "gameForm";
+  game_form.className = "scrollMenu";
+  game_form.appendChild(game_entry_div);
+
+  // Injecting login form into existing html
+  var scene_html = document.getElementById("sceneHTML");
+  scene_html.appendChild(game_form);
+
+}
