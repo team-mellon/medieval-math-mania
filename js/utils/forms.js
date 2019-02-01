@@ -39,6 +39,7 @@ function createLoginForm() {
   // Creates login form to hold username and password divs
   var login_form = document.createElement("form");
   login_form.id = "loginForm";
+  login_form.className = "scrollMenu";
   login_form.appendChild(login_username_div);
   login_form.appendChild(login_password_div);
 
@@ -153,6 +154,7 @@ function createSignupForm() {
   // Creates signup form to hold firstname, lastname, username, password and confirm divs
   var signup_form = document.createElement("form");
   signup_form.id = "signupForm";
+  signup_form.className = "scrollMenu";
   signup_form.appendChild(signup_firstname_div);
   signup_form.appendChild(signup_lastname_div);
   signup_form.appendChild(br1);
@@ -208,6 +210,7 @@ function createStatsForm() {
   // Creates login form to hold username and password divs
   var stats_form = document.createElement("form");
   stats_form.id = "statsForm";
+  stats_form.className = "scrollMenu";
   stats_form.appendChild(stats_hits_div);
   stats_form.appendChild(stats_misses_div);
 
@@ -242,6 +245,7 @@ function createHow2PlayForm() {
   // Creates login form to hold username and password divs
   var h2p_form = document.createElement("form");
   h2p_form.id = "h2pForm";
+  h2p_form.className = "scrollMenu";
   h2p_form.appendChild(h2p_h2p_div);
 
   // Injecting login form into existing html
@@ -291,6 +295,7 @@ function createSettingsForm() {
   // Creates login form to hold username and password divs
   var settings_form = document.createElement("form");
   settings_form.id = "settingsForm";
+  settings_form.className = "scrollMenu";
   settings_form.appendChild(settings_volume_div);
   settings_form.appendChild(settings_time_div);
 
@@ -341,6 +346,7 @@ function createAccountForm() {
   // Creates login form to hold username and password divs
   var account_form = document.createElement("form");
   account_form.id = "loginForm";
+  account_form.className = "scrollMenu";
   account_form.appendChild(account_username_div);
   account_form.appendChild(account_password_div);
 
@@ -355,8 +361,8 @@ function createMapForm() {
   var instructions = "Coming \n Soon";
 
   // Creates username display text
-    var map_p_tag = document.createElement("p");
-    map_p_tag.id = "mapForm";
+  var map_p_tag = document.createElement("p");
+  map_p_tag.id = "mapForm";
   var map_text = document.createTextNode(instructions);
   map_p_tag.appendChild(map_text);
 
@@ -370,6 +376,7 @@ function createMapForm() {
   // Creates login form to hold username and password divs
   var map_form = document.createElement("form");
   map_form.id = "mapForm";
+  map_form.className = "scrollMenu";
   map_form.appendChild(map_map_div);
 
   // Injecting login form into existing html
