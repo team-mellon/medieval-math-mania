@@ -120,6 +120,10 @@ function createScene() {
       createAccountForm();
       break;
 
+  case 8:
+      createMapForm();
+      break; 
+
     default:
 
   }
@@ -228,7 +232,7 @@ function createGUI() {
 
 		case 3:
 
-			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { changeScene(2); });
+			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { changeScene(8); });
 
 			break;
 

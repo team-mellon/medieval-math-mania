@@ -93,6 +93,16 @@ input {
   background-color: blanchedalmond;
 }
 
+#mapForm {
+  position: absolute;
+  top: 36%;
+  left: 58%;
+  z-index: 2;
+  font-size: 120px;
+  line-height: 0.7;
+  display: inline;
+}
+
 /* On screens that are 992px or less, set the background color to blue */
 @media screen and (max-width: 992px) {
 

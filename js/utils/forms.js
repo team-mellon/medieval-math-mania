@@ -349,3 +349,31 @@ function createAccountForm() {
   scene_html.appendChild(account_form);
 
 }
+
+function createMapForm() {
+
+  var instructions = "Coming \n Soon";
+
+  // Creates username display text
+    var map_p_tag = document.createElement("p");
+    map_p_tag.id = "mapForm";
+  var map_text = document.createTextNode(instructions);
+  map_p_tag.appendChild(map_text);
+
+  // Creates username div to hold display text and input box
+  var map_map_div = document.createElement("div");
+  map_map_div.className = "login";
+  map_map_div.appendChild(map_p_tag);
+
+
+
+  // Creates login form to hold username and password divs
+  var map_form = document.createElement("form");
+  map_form.id = "mapForm";
+  map_form.appendChild(map_map_div);
+
+  // Injecting login form into existing html
+  var scene_html = document.getElementById("sceneHTML");
+  scene_html.appendChild(map_form);
+
+}
