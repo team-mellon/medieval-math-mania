@@ -63,6 +63,16 @@ function tick(event) {
       structure_right_center.stop();
     }
 
+    //Also stop animations
+    if (!structure_left.paused && structure_left.currentFrame == 5) {
+      structure_left.stop();
+    }
+
+    //Also stop animations
+    if (!structure_right.paused && structure_right.currentFrame == 5) {
+      structure_right.stop();
+    }
+
     switch (fire_counter) {
       case 0:
         target_x = boss.x;
@@ -97,6 +107,7 @@ function tick(event) {
         if (projectile_speed < 0 && projectile.y >= boss.y) {
           hide_archer3 = true;
           reload = true;
+          structure_left.gotoAndPlay(0);
         }
         break;
       case 4:
@@ -105,6 +116,7 @@ function tick(event) {
         if (projectile_speed < 0 && projectile.y >= boss.y) {
           hide_archer4 = true;
           reload = true;
+          structure_right.gotoAndPlay(0);
         }
         break;
       case 5:
