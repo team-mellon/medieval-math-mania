@@ -163,13 +163,7 @@ function tick(event) {
     } else {
       henchman_right.alpha = 1;
     }
-
-  }
-
-  //Update frame counter for drawing
-  frame_counter++;
-
-  if (current_scene == 3) {
+    
     //Catapult projectile animtion
     if (fired == true) {
       // if (frame_counter > 9) {
@@ -194,6 +188,9 @@ function tick(event) {
     }
 
   }
+
+  //Update frame counter for drawing
+  frame_counter++;
 
   if (frame_counter > 9) {
     reload_counter += frame_counter;
