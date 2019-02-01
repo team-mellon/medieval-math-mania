@@ -112,6 +112,7 @@ function createScene() {
     case 3:
       createGameForm();
 			createLevel();
+      document.getElementById("entryInput").value = 0; 
       break;
 
     case 4:

@@ -323,11 +323,6 @@ function createMapForm() {
 
 function createGameForm() {
 
-  var multiplicand = "7";
-  var sign = "x"; //&#37
-  var equal = "=";
-  var solution = "69";
-
   // Creates username display text
   var multiplicand_text = document.createTextNode(multiplicand);
   var sign_text = document.createTextNode(sign);
