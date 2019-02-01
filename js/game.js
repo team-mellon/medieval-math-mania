@@ -20,16 +20,21 @@ var fake_account = {
   misses: 0
 }
 
-// This was in account scene, may need this structure
-// var key = message.current_user;
-// username_text.text = "Fullname: " + database["users"][key]["firstname"] + " " + database["users"][key]["lastname"];
-// password_text.text = "Password: " + database["users"][key]["password"];
-
-// This was in stats scene, may need this structure
-// var key = message.current_user;
-// stats1_text.text = "Hits: " + database["stats"][key]["hits"];
-// stats2_text.text = "Misses: " + database["stats"][key]["misses"];
-
+var database = {
+  users: {
+    admin: {
+      firstname: "john",
+      lastname: "Doe",
+      password: "1234"
+    }
+  },
+  stats: {
+    admin: {
+      hits: "9001",
+      misses: "0"
+    }
+  }
+};
 
 function tick(event) {
 
@@ -214,21 +219,6 @@ function tick(event) {
 //   var canvas = document.getElementById('renderCanvas');                   // get the canvas DOM element context
 //   var engine = new BABYLON.Engine(canvas, true);                          // load the babylon.js engine
 //
-//   var database = {
-//   users: {
-//   admin: {
-//   firstname: "john",
-//   lastname: "Doe",
-//   password: "1234"
-//   }
-//   },
-//   stats: {
-//   admin: {
-//   hits: "420",
-//   misses: "69"
-//   }
-//   }
-//   };
 //
 //   var current = null;
 //   var message = {

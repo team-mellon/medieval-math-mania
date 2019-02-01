@@ -98,6 +98,11 @@ function createScene() {
 
     case 1:
       createSignupForm();
+      // firstname_text.text = "First Name";
+      // lastname_text.text = "Last Name";
+      // username_text.text = "Create User Name";
+      // password_text.text = "Create Password";
+      // re_password_text.text = "Re-Enter Password";
       break;
 
     case 2:
@@ -109,6 +114,10 @@ function createScene() {
       break;
 
     case 4:
+      // This was in stats scene, may need this structure
+      // var key = message.current_user;
+      // stats1_text.text = "Hits: " + database["stats"][key]["hits"];
+      // stats2_text.text = "Misses: " + database["stats"][key]["misses"];
       createStatsForm();
       break;
 
@@ -121,6 +130,10 @@ function createScene() {
       break;
 
     case 7:
+      // This was in account scene, may need this structure
+      // var key = message.current_user;
+      // username_text.text = "Fullname: " + database["users"][key]["firstname"] + " " + database["users"][key]["lastname"];
+      // password_text.text = "Password: " + database["users"][key]["password"];
       createAccountForm();
       break;
 
@@ -206,18 +219,103 @@ function createGUI() {
 			background = createImage("res/login.png", backgroundX, backgroundY);
 			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
 
-			left_sword_button = createButton("res/sword-left.png", "Login", buttonX, buttonY, function() { changeScene(2); });
+			left_sword_button = createButton("res/sword-left.png", "Login", buttonX, buttonY, function() {
+        var key = document.getElementById('usernameInput').value;
+      	if(key in database.users) {
+    	    if(database["users"][key]["password"] == document.getElementById('passwordInput').value) {
+            document.getElementById('usernameInput').value = "";
+            document.getElementById('passwordInput').value = "";
+        		// login_error.alpha = 0;
+            // var login_error = createTextBlock("0px", "200px", "200px", "600px", "darkred", 30, "normal", "Username and/or Password did not match.\n Please try again.", 0, enable);
+        		// message.render = 1;
+        		// message.current_user = key;
+            changeScene(2);
+    	    } else {
+            document.getElementById('usernameInput').value = "";
+            document.getElementById('passwordInput').value = "";
+        		password_input.text = "";
+        		// login_error.alpha = 1;
+    	    }
+      	}	else {
+          document.getElementById('usernameInput').value = "";
+          document.getElementById('passwordInput').value = "";
+    	    // login_error.alpha = 1;
+      	}
+      });
 			right_sword_button = createButton("res/sword-right.png", "Signup", buttonX, buttonY, function() {	changeScene(1); });
 
 			break;
 
 		case 1:
 
+    // password_error.text = "Passwords did not match.\n Please try again.";
+    // fieldInput_error.text = "Please fill-in\n every field";
+
+
 			background = createImage("res/login.png", backgroundX, backgroundY);
 			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
 
-			left_sword_button = createButton("res/sword-left.png", "Create", buttonX, buttonY, function() {	changeScene(2); });
-			right_sword_button = createButton("res/sword-right.png", "Cancel", buttonX, buttonY, function() {	changeScene(0); });
+			left_sword_button = createButton("res/sword-left.png", "Create", buttonX, buttonY, function() {
+        // if(firstname_input.text == "" || lastname_input.text == "" || username_input.text == "" || password_input.text == "" || re_password_input.text == "") {
+        //
+      	//     fieldInput_error.alpha = 1;
+      	//     firstname_input.text = "";
+      	//     lastname_input.text = "";
+      	//     username_input.text = "";
+      	//     password_input.text = "";
+      	//     re_password_input.text = "";
+        //
+      	// } else {
+        //
+        //   if(password_input.text != re_password_input.text) {
+        //
+        // 		password_error.alpha = 1;
+        // 		fieldInput_error.alpha = 0;
+        // 		password_input.text = "";
+        // 		re_password_input.text = "";
+        //
+        //   } else {
+        //
+        // 		var key = username_input.text;
+        //
+        // 		database["stats"][key] = {
+        // 		    hits: 0,
+        // 		    misses: 0
+        // 		};
+        //
+        // 		database["users"][key] = {
+        // 		    firstname: firstname_input.text,
+        // 		    lastname: lastname_input.text,
+        // 		    password: password_input.text
+        // 		};
+        //
+        // 		firstname_input.text = "";
+        // 		lastname_input.text = "";
+        // 		username_input.text = "";
+        // 		password_input.text = "";
+        // 		re_password_input.text = "";
+        // 		fieldInput_error.alpha = 0;
+        // 		password_error.alpha = ;
+        // 		message.current_user = key;
+        // 		message.render = 0;
+        //
+        //   }
+      	// }
+        changeScene(2);
+      });
+			right_sword_button = createButton("res/sword-right.png", "Cancel", buttonX, buttonY, function() {
+
+      	// firstname_input.text = "";
+      	// lastname_input.text = "";
+      	// username_input.text = "";
+      	// password_input.text = "";
+      	// re_password_input.text = "";
+      	// fieldInput_error.alpha = 0;
+      	// password_error.alpha = 0;
+      	// message.render = 0;
+
+        changeScene(0);
+      });
 
 			break;
 

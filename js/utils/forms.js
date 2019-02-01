@@ -3,6 +3,7 @@ function createLoginForm() {
   // Creates username display label and input box
   var username_text = document.createTextNode("Username:");
   var username_input = document.createElement("input");
+  username_input.id = "usernameInput";
   username_input.setAttribute("type", "text");
   username_input.setAttribute("name", "username");
 
@@ -17,6 +18,7 @@ function createLoginForm() {
   // Creates password display label and input box
   var password_text = document.createTextNode("Password:");
   var password_input = document.createElement("input");
+  password_input.id = "passwordInput";
   password_input.setAttribute("type", "password");
   password_input.setAttribute("name", "password");
 
