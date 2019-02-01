@@ -3,18 +3,6 @@
 // Stage for drawing pictures and shapes
 var stage;
 
-// Player to play playlist music
-var playlist = {
-  size: 0,
-  sources: [],
-  ids: []
-}
-var current_song;
-var sound_off = true;
-
-// Volume for
-var volume = 50;
-
 var bg;
 var bg_color;
 

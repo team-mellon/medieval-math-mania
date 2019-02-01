@@ -6,6 +6,10 @@ var lute;
 var luteX = 96;
 var luteY = 96;
 
+
+var previous_indicator;
+var pause_indicator;
+var next_indicator;
 var indicatorX = 24;
 var indicatorY = 24;
 
@@ -122,7 +126,7 @@ function createScene() {
 
   case 8:
       createMapForm();
-      break; 
+      break;
 
     default:
 
@@ -288,8 +292,17 @@ function createGUI() {
 
 	}
 
+	previous_indicator = createImage("res/previous-indicator.png", indicatorX, indicatorY);
+  previous_indicator.addEventListener("click", previousSound);
+
+	pause_indicator = createImage("res/pause-indicator.png", indicatorX, indicatorY);
+  pause_indicator.addEventListener("click", playSound);
+
+	next_indicator = createImage("res/next-indicator.png", indicatorX, indicatorY);
+  next_indicator.addEventListener("click", nextSound);
+
 	lute = createImage("res/lute.png", luteX, luteY);
-  lute.addEventListener("click", playSound);
+  lute.addEventListener("click", muteSound);
 
   // lute.regX = 160;
   // lute.regY = 160;
@@ -398,6 +411,9 @@ function scaleGUI() {
 	}
 
 	// GUI in front of everything
-	scale_image(lute, stage.canvas.width - (luteX/2) * scene_scale_Y, stage.canvas.height - (luteY/2) * scene_scale_Y);
+	scale_image(previous_indicator, stage.canvas.width - (indicatorX/4 * 13) * scene_scale_Y, stage.canvas.height - (indicatorY/4 * 3) * scene_scale_Y);
+	scale_image(pause_indicator, stage.canvas.width - (indicatorX/4 * 8) * scene_scale_Y, stage.canvas.height - (indicatorY/4 * 3) * scene_scale_Y);
+	scale_image(next_indicator, stage.canvas.width - (indicatorX/4 * 3) * scene_scale_Y, stage.canvas.height - (indicatorY/4 * 3) * scene_scale_Y);
+	scale_image(lute, stage.canvas.width - (luteX/2) * scene_scale_Y, stage.canvas.height - (luteY/2 + 32) * scene_scale_Y);
 
 }

@@ -1,11 +1,7 @@
 function createLoginForm() {
 
-  // Creates username display text
-  var username_p_tag = document.createElement("p");
+  // Creates username display label and input box
   var username_text = document.createTextNode("Username:");
-  username_p_tag.appendChild(username_text);
-
-  // Creates username input box
   var username_input = document.createElement("input");
   username_input.setAttribute("type", "text");
   username_input.setAttribute("name", "username");
@@ -13,17 +9,13 @@ function createLoginForm() {
   // Creates username div to hold display text and input box
   var login_username_div = document.createElement("div");
   login_username_div.className = "login";
-  login_username_div.appendChild(username_p_tag);
+  login_username_div.appendChild(username_text);
   login_username_div.appendChild(username_input);
 
 
 
-  // Creates password display text
-  var password_p_tag = document.createElement("p");
+  // Creates password display label and input box
   var password_text = document.createTextNode("Password:");
-  password_p_tag.appendChild(password_text);
-
-  // Creates password input box
   var password_input = document.createElement("input");
   password_input.setAttribute("type", "password");
   password_input.setAttribute("name", "password");
@@ -31,7 +23,7 @@ function createLoginForm() {
   // Creates password div to hold display text and input box
   var login_password_div = document.createElement("div");
   login_password_div.className = "login";
-  login_password_div.appendChild(password_p_tag);
+  login_password_div.appendChild(password_text);
   login_password_div.appendChild(password_input);
 
 
@@ -51,12 +43,8 @@ function createLoginForm() {
 
 function createSignupForm() {
 
-  // Creates firstname display text
-  var firstname_p_tag = document.createElement("p");
+  // Creates firstname display label and input box
   var firstname_text = document.createTextNode("Firstname:");
-  firstname_p_tag.appendChild(firstname_text);
-
-  // Creates firstname input box
   var firstname_input = document.createElement("input");
   firstname_input.setAttribute("type", "text");
   firstname_input.setAttribute("name", "firstname");
@@ -64,17 +52,13 @@ function createSignupForm() {
   // Creates firstname div to hold display text and input box
   var signup_firstname_div = document.createElement("div");
   signup_firstname_div.className = "signup";
-  signup_firstname_div.appendChild(firstname_p_tag);
+  signup_firstname_div.appendChild(firstname_text);
   signup_firstname_div.appendChild(firstname_input);
 
 
 
-  // Creates lastname display text
-  var lastname_p_tag = document.createElement("p");
+  // Creates lastname display text and input box
   var lastname_text = document.createTextNode("Lastname:");
-  lastname_p_tag.appendChild(lastname_text);
-
-  // Creates lastname input box
   var lastname_input = document.createElement("input");
   lastname_input.setAttribute("type", "text");
   lastname_input.setAttribute("name", "lastname");
@@ -82,7 +66,7 @@ function createSignupForm() {
   // Creates lastname div to hold display text and input box
   var signup_lastname_div = document.createElement("div");
   signup_lastname_div.className = "signup";
-  signup_lastname_div.appendChild(lastname_p_tag);
+  signup_lastname_div.appendChild(lastname_text);
   signup_lastname_div.appendChild(lastname_input);
 
 
@@ -92,12 +76,8 @@ function createSignupForm() {
 
 
 
-  // Creates username display text
-  var username_p_tag = document.createElement("p");
+  // Creates username display text and input box
   var username_text = document.createTextNode("Username:");
-  username_p_tag.appendChild(username_text);
-
-  // Creates username input box
   var username_input = document.createElement("input");
   username_input.setAttribute("type", "text");
   username_input.setAttribute("name", "username");
@@ -105,7 +85,7 @@ function createSignupForm() {
   // Creates username div to hold display text and input box
   var signup_username_div = document.createElement("div");
   signup_username_div.className = "signup";
-  signup_username_div.appendChild(username_p_tag);
+  signup_username_div.appendChild(username_text);
   signup_username_div.appendChild(username_input);
 
 
@@ -115,12 +95,8 @@ function createSignupForm() {
 
 
 
-  // Creates password display text
-  var password_p_tag = document.createElement("p");
+  // Creates password display text and input box
   var password_text = document.createTextNode("Password:");
-  password_p_tag.appendChild(password_text);
-
-  // Creates password input box
   var password_input = document.createElement("input");
   password_input.setAttribute("type", "password");
   password_input.setAttribute("name", "password");
@@ -128,17 +104,13 @@ function createSignupForm() {
   // Creates password div to hold display text and input box
   var signup_password_div = document.createElement("div");
   signup_password_div.className = "signup";
-  signup_password_div.appendChild(password_p_tag);
+  signup_password_div.appendChild(password_text);
   signup_password_div.appendChild(password_input);
 
 
 
-  // Creates confirm display text
-  var confirm_p_tag = document.createElement("p");
+  // Creates confirm display text and input box
   var confirm_text = document.createTextNode("Confirm:");
-  confirm_p_tag.appendChild(confirm_text);
-
-  // Creates confirm input box
   var confirm_input = document.createElement("input");
   confirm_input.setAttribute("type", "password");
   confirm_input.setAttribute("name", "confirm");
@@ -146,7 +118,7 @@ function createSignupForm() {
   // Creates confirm div to hold display text and input box
   var signup_confirm_div = document.createElement("div");
   signup_confirm_div.className = "signup";
-  signup_confirm_div.appendChild(confirm_p_tag);
+  signup_confirm_div.appendChild(confirm_text);
   signup_confirm_div.appendChild(confirm_input);
 
 
@@ -171,39 +143,27 @@ function createSignupForm() {
 
 function createStatsForm() {
 
-  // Creates username display text
-  var hits_p_tagl = document.createElement("p");
+  // Creates username display label and text
   var hits_label = document.createTextNode("Hits: ");
-  hits_p_tagl.appendChild(hits_label);
-
-  // Creates username display text
-  var hits_p_tag = document.createElement("p");
   var hits_text = document.createTextNode(fake_account.hits);
-  hits_p_tag.appendChild(hits_text);
 
   // Creates username div to hold display text and input box
   var stats_hits_div = document.createElement("div");
   stats_hits_div.className = "login";
-  stats_hits_div.appendChild(hits_p_tagl);
-  stats_hits_div.appendChild(hits_p_tag);
+  stats_hits_div.appendChild(hits_label);
+  stats_hits_div.appendChild(hits_text);
 
 
 
-  // Creates password display text
-  var misses_p_tagl = document.createElement("p");
+  // Creates password display label and text
   var misses_label = document.createTextNode("Misses: ");
-  misses_p_tagl.appendChild(misses_label);
-
-  // Creates password display text
-  var misses_p_tag = document.createElement("p");
   var misses_text = document.createTextNode(fake_account.misses);
-  misses_p_tag.appendChild(misses_text);
 
   // Creates password div to hold display text and input box
   var stats_misses_div = document.createElement("div");
   stats_misses_div.className = "login";
-  stats_misses_div.appendChild(misses_p_tagl);
-  stats_misses_div.appendChild(misses_p_tag);
+  stats_misses_div.appendChild(misses_label);
+  stats_misses_div.appendChild(misses_text);
 
 
 
@@ -224,21 +184,15 @@ function createHow2PlayForm() {
 
   var instructions = "It's just math";
 
-  // Creates username display text
-  var h2p_p_tagl = document.createElement("p");
+  // Creates username display label and text
   var h2p_label = document.createTextNode("How 2 Play: ");
-  h2p_p_tagl.appendChild(h2p_label);
-
-  // Creates username display text
-  var h2p_p_tag = document.createElement("p");
   var h2p_text = document.createTextNode(instructions);
-  h2p_p_tag.appendChild(h2p_text);
 
   // Creates username div to hold display text and input box
   var h2p_h2p_div = document.createElement("div");
   h2p_h2p_div.className = "login";
-  h2p_h2p_div.appendChild(h2p_p_tagl);
-  h2p_h2p_div.appendChild(h2p_p_tag);
+  h2p_h2p_div.appendChild(h2p_label);
+  h2p_h2p_div.appendChild(h2p_text);
 
 
 
@@ -256,38 +210,30 @@ function createHow2PlayForm() {
 
 function createSettingsForm() {
 
-  // Creates username display text
-  var volume_p_tag = document.createElement("p");
+  // Creates username display text and input slider
   var volume_text = document.createTextNode("Volume:");
-  volume_p_tag.appendChild(volume_text);
-
-  // Creates username input box
   var volume_input = document.createElement("input");
   volume_input.setAttribute("type", "range");
   volume_input.setAttribute("name", "volume");
 
-  // Creates username div to hold display text and input box
+  // Creates username div to hold display text and input slider
   var settings_volume_div = document.createElement("div");
   settings_volume_div.className = "login";
-  settings_volume_div.appendChild(volume_p_tag);
+  settings_volume_div.appendChild(volume_text);
   settings_volume_div.appendChild(volume_input);
 
 
 
-  // Creates password display text
-  var time_p_tag = document.createElement("p");
+  // Creates password display text and check box
   var time_text = document.createTextNode("Time:");
-  time_p_tag.appendChild(time_text);
-
-  // Creates password input box
   var time_input = document.createElement("input");
   time_input.setAttribute("type", "checkbox");
   time_input.setAttribute("name", "time");
 
-  // Creates password div to hold display text and input box
+  // Creates password div to hold display text and check box
   var settings_time_div = document.createElement("div");
   settings_time_div.className = "login";
-  settings_time_div.appendChild(time_p_tag);
+  settings_time_div.appendChild(time_text);
   settings_time_div.appendChild(time_input);
 
 
@@ -307,39 +253,27 @@ function createSettingsForm() {
 
 function createAccountForm() {
 
-  // Creates username display text
-  var username_p_tagl = document.createElement("p");
-  var username_text = document.createTextNode("Username:");
-  username_p_tagl.appendChild(username_text);
-
-  // Creates username display text
-  var username_p_tag = document.createElement("p");
+  // Creates username display label and text
+  var username_label = document.createTextNode("Username:");
   var username_text = document.createTextNode(fake_account.user);
-  username_p_tag.appendChild(username_text);
 
   // Creates username div to hold display text and input box
   var account_username_div = document.createElement("div");
   account_username_div.className = "login";
-  account_username_div.appendChild(username_p_tagl);
-  account_username_div.appendChild(username_p_tag);
+  account_username_div.appendChild(username_label);
+  account_username_div.appendChild(username_text);
 
 
 
-  // Creates password display text
-  var password_p_tagl = document.createElement("p");
-  var password_text = document.createTextNode("Password:");
-  password_p_tagl.appendChild(password_text);
-
-  // Creates password display text
-  var password_p_tag = document.createElement("p");
+  // Creates password display label and text
+  var password_label = document.createTextNode("Password:");
   var password_text = document.createTextNode(fake_account.pass);
-  password_p_tag.appendChild(password_text);
 
   // Creates password div to hold display text and input box
   var account_password_div = document.createElement("div");
   account_password_div.className = "login";
-  account_password_div.appendChild(password_p_tagl);
-  account_password_div.appendChild(password_p_tag);
+  account_password_div.appendChild(password_label);
+  account_password_div.appendChild(password_text);
 
 
 

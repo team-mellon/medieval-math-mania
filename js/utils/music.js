@@ -1,14 +1,40 @@
 var playlistSources = [
-  "res/music/one-eyed_maestro.wav"
+  "res/music/one-eyed_maestro.wav",
+  "res/music/achaidh_cheide.wav",
+  "res/music/cartoon_battle.wav",
+  "res/music/celtic_impulse.wav",
+  "res/music/clenched_teeth.wav",
+  "res/music/failing_defense.wav",
+  "res/music/fiddles_mcGinty.wav",
+  "res/music/galway.wav",
+  "res/music/hidden_past.wav",
+  "res/music/parisian.wav"
 ];
 
 var playlistIDs = [
-  "OneEyedMaestro"
+  "OneEyedMaestro",
+  "AchaidhCheide",
+  "CartoonBattle",
+  "CelticImpulse",
+  "ClenchedTeeth",
+  "FailingDefense",
+  "FiddlesMcGinty",
+  "Galway",
+  "HiddenPast",
+  "Parisian"
 ];
 
-///////////
-// Music //
-///////////
+// Player to play playlist music
+var playlist = {
+  size: 0,
+  sources: [],
+  ids: []
+}
+var current_song;
+var sound_off = true;
+
+// Volume for
+var volume = 50;
 
 //
 function loadSound () {
@@ -35,6 +61,54 @@ function playSound () {
 
   }
 
+}
+
+//
+function previousSound () {
+
+  if (sound_off) {
+
+  } else { // runs every other time to play and pause the current song
+
+    // previous song
+
+  }
+
+}
+
+//
+function nextSound () {
+
+  if (sound_off) {
+
+  } else { // runs every other time to play and pause the current song
+
+    // next song
+
+  }
+
+}
+
+function muteSound () {
+
+  if (sound_off) {
+
+  } else { // runs every other time to play and pause the current song
+
+    current_song.muted = !current_song.muted;
+
+  }
+}
+
+function setVolume (volume) {
+
+  if (sound_off) {
+
+  } else { // runs every other time to play and pause the current song
+
+    current_song.volume = volume/100;
+
+  }
 }
 
   // set current music to the first song, or maybe randomize
