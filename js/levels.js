@@ -1,6 +1,11 @@
 var num_levels = 2;
 var current_level = 1;
 
+let number_text = [];
+var number_spacing = 888;
+var numberline;
+var numberlineS;
+
 var big_boss;
 var big_bossS;
 
@@ -68,6 +73,12 @@ function loadLevel() {
 
   }
 
+    numberlineS = {
+	images: ["res/numberline.png"],
+	frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
+        framerate: 6
+    };
+    
   bossS = {
     images: ["res/level" + current_level + "/boss.png"],
     frames: {width:96, height:96, count:12, regX: 0, regY:0, spacing:0, margin:0},
@@ -172,6 +183,9 @@ function createLevel() {
   projectile.gotoAndPlay(0);
   catapult = createSprite(catapultS, catapultX, catapultY);
 
+    numberline = createSprite(numberlineS, structureX, structureY);
+    createNumbers();
+        
 }
 
 function destroyLevel() {
@@ -198,11 +212,16 @@ function destroyLevel() {
   stage.removeChild(projectile);
   stage.removeChild(catapult);
 
+    
   // REMOVE THIS!!!!! BUT ALSO THE REST OF IT
   stage.removeChild(lute);
 
   stage.removeChild(big_boss);
 
+    stage.removeChild(numberline);
+    for(var i = 0; i < 33; i++){
+	stage.removeChild(number_text[i]);
+    }
 }
 
 function changeLevel(new_level) {
@@ -250,7 +269,22 @@ function scaleLevel() {
   scale_image(projectile, stage.canvas.width / 2, stage.canvas.height - (projectileY/2 + 57) * scene_scale_Y);
   scale_image(catapult, stage.canvas.width / 2, stage.canvas.height - (catapultY/2 - 57) * scene_scale_Y);
 
+    
+    scale_image(numberline, stage.canvas.width / 2, stage.canvas.height / 2);
+    
+    for(var i = 0; i < 33; i++){
+	scale_image(number_text[i], stage.canvas.width / 2 - (number_spacing - (i * 20)), stage.canvas.height / 2 - 400);
+    }
   if (fire_counter == 5)
     scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
 
+}
+
+
+function createNumbers(){
+    for(var i = 1; i <= 33; i++){
+	var temp = createText(i.toString(), "Arial", "16px", "bold", "black", structureX, structureY);
+	number_text.push(temp);
+    }
+    console.log("called");
 }
