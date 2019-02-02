@@ -49,6 +49,10 @@ html, body {
 #accountForm {
 }
 
+#gameForm {
+  font-family: "Arial";
+}
+
 #mapForm {
   position: absolute;
   top: 45%;
@@ -57,6 +61,12 @@ html, body {
   margin: 5px;
   font-size: 15vh;
   line-height: 0.7;
+}
+
+#gameForm {
+  position: absolute;
+  top: 60%;
+  left: 50%;
 }
 
 .login {
@@ -76,4 +86,8 @@ input {
   color: saddlebrown;
   border-bottom: 2px solid saddlebrown;
   background-color: blanchedalmond;
+}
+
+#entryInput {
+  font-family: "Arial";
 }
