@@ -374,27 +374,26 @@ function createGameForm() {
   game_entry_div.appendChild(solution_text);
 
 
-
   // Creates username display text
-  // var multiplicand_text = document.createTextNode(multiplicand);
-  // var sign_text = document.createTextNode(sign);
-  // var history_input = document.createElement("input");
-  // history_input.id = "entryInput";
-  // history_input.setAttribute("type", "text");
-  // history_input.setAttribute("maxlength", "4");
-  // history_input.setAttribute("size", "4");
-  // history_input.setAttribute("name", "entry");
-  // var equal_text = document.createTextNode(equal);
-  // var solution_text = document.createTextNode(solution);
+  var button_text = document.createTextNode("EB");
+  var history_button = document.createElement("button");
+  var history_div = document.createElement("div");
+  history_button.className = "dropbtn";
+  history_div.className = "dropdown-content";
+  history_div.id = "myDropdown";
+  history_button.appendChild(button_text);
+  var history_dropdown = document.createElement("div");
+  history_dropdown.className = "dropdown";
+  history_dropdown.appendChild(history_button);
+  history_dropdown.appendChild(history_div);
+  
+  
 
-  // Creates username div to hold display text and input box
-  // var game_history_div = document.createElement("div");
-  // game_history_div.className = "login";
-  // game_history_div.appendChild(multiplicand_text);
-  // game_history_div.appendChild(sign_text);
-  // game_history_div.appendChild(history_input);
-  // game_history_div.appendChild(equal_text);
-  // game_history_div.appendChild(solution_text);
+	// Does a thing
+	var game_history_div = document.createElement("div");
+	game_history_div.className = "login";
+	game_history_div.appendChild(history_dropdown);
+	
 
 
 
@@ -411,14 +410,14 @@ function createGameForm() {
   game_entry_form.appendChild(game_entry_div);
 
   // Creates login form to hold username and password divs
-  // var game_form = document.createElement("form");
-  // game_form.id = "gameForm";
-  // game_form.className = "scrollMenu";
-  // game_form.appendChild(game_entry_div);
+  var game_history_form = document.createElement("form");
+  game_history_form.id = "historyBanner";
+  game_history_form.className = "scrollMenu";
+  game_history_form.appendChild(game_history_div);
 
   // Injecting login form into existing html
   var scene_html = document.getElementById("sceneHTML");
   scene_html.appendChild(game_range_form);
   scene_html.appendChild(game_entry_form);
-
+  scene_html.appendChild(game_history_form);
 }
