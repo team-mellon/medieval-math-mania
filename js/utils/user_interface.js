@@ -50,8 +50,8 @@ function createButton(location, text, width, height, handleClick) {
   button.addChild(image, label);
   stage.addChild(button);
 
-  image.on("click", handleClick);
-  label.on("click", handleClick);
+  // image.on("click", handleClick);
+  // label.on("click", handleClick);
   button.on("click", handleClick);
 
   return button;

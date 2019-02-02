@@ -158,6 +158,7 @@ function changeScene(new_scene) {
 
   loadScene();
   destroyScene();
+  console.log("called");
   createScene();
   resize();
 	scaleGUI();
@@ -384,8 +385,8 @@ function createGUI() {
 
 			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { changeScene(2); });
 
-			level1_indicator = createButton("res/map-indicator.png", "", indicatorX, indicatorY, function() { changeLevel(1); changeScene(3); });
-			level2_indicator = createButton("res/map-indicator.png", "", indicatorX, indicatorY, function() { changeLevel(2); changeScene(3); });
+			level1_indicator = createButton("res/map-indicator.png", "", indicatorX, indicatorY, function() { current_level = 1; changeScene(3); });
+			level2_indicator = createButton("res/map-indicator.png", "", indicatorX, indicatorY, function() { current_level = 2; changeScene(3); });
 
 			break;
 
