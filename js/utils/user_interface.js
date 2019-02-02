@@ -50,8 +50,8 @@ function createButton(location, text, width, height, handleClick) {
   button.addChild(image, label);
   stage.addChild(button);
 
-  image.on("click", handleClick);
-  label.on("click", handleClick);
+  // image.on("click", handleClick);
+  // label.on("click", handleClick);
   button.on("click", handleClick);
 
   return button;
@@ -185,24 +185,3 @@ function createText(num, font, size, style, color, width, height) {
 //   return input;
 //
 // };
-//
-// function createButton(txt, url, x, y, h, w, c, sty, sz, th, e, func) {
-//
-//   var button = BABYLON.GUI.Button.CreateImageWithCenterTextButton(txt + "_Button", txt, url);
-//
-//   button.left = x;
-//   button.top = y;
-//   button.height = h;
-//   button.width = w;
-//   button.color = c;
-//   button.fontFamily = "Blackadder ITC";
-//   // button.fontFamily = fm;
-//   button.fontStyle = sty;
-//   button.fontSize = sz;
-//   button.thickness = th;
-//   button.isEnabled = e;
-//   button.onPointerClickObservable.add(func);
-//
-//   return button;
-//
-// }

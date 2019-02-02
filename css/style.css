@@ -50,7 +50,6 @@ html, body {
 }
 
 #gameForm {
-  font-family: "Arial";
 }
 
 #mapForm {
@@ -63,10 +62,25 @@ html, body {
   line-height: 0.7;
 }
 
-#gameForm {
+#rangeBanner {
+  font-family: "Arial";
   position: absolute;
-  top: 60%;
+  top: 62.5%;
+  left: 32%;
+}
+
+#equationBanner {
+  font-family: "Arial";
+  position: absolute;
+  top: 62.5%;
   left: 50%;
+}
+
+#historyBanner {
+  font-family: "Arial";
+  position: absolute;
+  top: 62.5%;
+  left: 60%;
 }
 
 .login {

@@ -1,7 +1,20 @@
 var frame_counter = 0;
 
+var hit = false;
+var miss_upper = false;
+var miss_lower = false;
+
+var upper = 100;
+var lower = 35;
+
+var waiting_hit = false;
+var waiting_miss = false;
+
 var fired = false;
 var fire_counter = 0;
+var hit_counter = 0;
+var miss_upper_counter = 0;
+var miss_lower_counter = 0;
 var reload = false;
 var reload_counter = 0;
 var projectile_speed = 57;
@@ -12,13 +25,6 @@ var hide_archer1 = false;
 var hide_archer2 = false;
 var hide_archer3 = false;
 var hide_archer4 = false;
-
-var fake_account = {
-  user: "admin",
-  pass: 1234,
-  hits: 9001,
-  misses: 0
-}
 
 var database = {
   users: {
@@ -36,21 +42,44 @@ var database = {
   }
 };
 
+var multiplicand = 7;
+var sign = " x "; //&#37
+var equal = " = ";
+var solution = 69;
+
 function tick(event) {
 
   if (current_scene == 3) {
+
     //Key checks at the beginning of the update loop
     if ((keys[32] || drag_up) && catapult.paused) {
       catapult.gotoAndPlay(0);
       fired = true;
       drag_up = false;
+      var multiplier = document.getElementById("entryInput").value;
+      console.log(multiplier);
+      solution = multiplier * multiplicand;
+      console.log(solution);
+      var scene_html = document.getElementById("sceneHTML");
+      while (scene_html.firstChild) {
+        scene_html.removeChild(scene_html.firstChild);
+      }
+      createGameForm();
+      document.getElementById("entryInput").value = 0;
+      if (solution <= upper && solution >= lower && hit_counter < 3) {
+        hit = true;
+      } else if (solution > upper && miss_upper_counter == 0) {
+        miss_upper = true;
+      } else if (solution < lower && miss_lower_counter == 0) {
+        miss_lower = true;
+      }
+      console.log(projectile.alpha);
     }
 
     //Also stop animations
     if (!catapult.paused && catapult.currentFrame == 23) {
       catapult.stop();
       reload = false;
-      fire_counter++;
     }
 
     //Also stop animations
@@ -78,60 +107,100 @@ function tick(event) {
       structure_right.stop();
     }
 
-    switch (fire_counter) {
-      case 0:
-        target_x = boss.x;
-        projectile_x_speed = 0;
-        if (projectile_speed < 0 && projectile.y >= boss.y) {
-          hide_knight = true;
-          reload = true;
-          structure_center.gotoAndPlay(0);
-        }
-        break;
-      case 1:
-        target_x = henchman_left_center.x;
-        projectile_x_speed = 12;
-        if (projectile_speed < 0 && projectile.y >= boss.y) {
-          hide_archer1 = true;
-          reload = true;
-          structure_left_center.gotoAndPlay(0);
-        }
-        break;
-      case 2:
-        target_x = henchman_right_center.x;
-        projectile_x_speed = 12;
-        if (projectile_speed < 0 && projectile.y >= boss.y) {
-          hide_archer2 = true;
-          reload = true;
-          structure_right_center.gotoAndPlay(0);
-        }
-        break;
-      case 3:
-        target_x = henchman_left.x;
-        projectile_x_speed = 20;
+    if (hit) {
+      switch (hit_counter) {
+        case 0:
+          target_x = henchman_left_center.x;
+          projectile_x_speed = 12;
+          break;
+        case 1:
+          target_x = henchman_right_center.x;
+          projectile_x_speed = 12;
+          break;
+        case 2:
+          target_x = boss.x;
+          projectile_x_speed = 0;
+          break;
+        default:
+      }
+      hit = false;
+      waiting_hit = true;
+    }
+
+    if (waiting_hit) {
+      switch (hit_counter) {
+        case 0:
+          if (projectile_speed < 0 && projectile.y >= boss.y) {
+            hide_archer1 = true;
+            reload = true;
+            structure_left_center.gotoAndPlay(0);
+          }
+          break;
+        case 1:
+          if (projectile_speed < 0 && projectile.y >= boss.y) {
+            hide_archer2 = true;
+            reload = true;
+            structure_right_center.gotoAndPlay(0);
+          }
+          break;
+        case 2:
+          if (projectile_speed < 0 && projectile.y >= boss.y) {
+            hide_knight = true;
+            reload = true;
+            structure_center.gotoAndPlay(0);
+          }
+          break;
+        default:
+      }
+      hit_counter++;
+      waiting_hit = false;
+    }
+
+    if (miss_lower) {
+      target_x = henchman_left.x;
+      projectile_x_speed = 20;
+      miss_lower = false;
+      miss_lower_counter++;
+      waiting_miss = true;
+    }
+
+    if (miss_upper) {
+      target_x = henchman_right.x;
+      projectile_x_speed = 20;
+      miss_upper = false;
+      miss_upper_counter++;
+      waiting_miss = true;
+    }
+
+    if (waiting_miss) {
+      if (miss_lower) {
         if (projectile_speed < 0 && projectile.y >= boss.y) {
           hide_archer3 = true;
           reload = true;
           structure_left.gotoAndPlay(0);
         }
-        break;
-      case 4:
-        target_x = henchman_right.x;
-        projectile_x_speed = 20;
+      }
+
+      if (miss_upper) {
         if (projectile_speed < 0 && projectile.y >= boss.y) {
           hide_archer4 = true;
           reload = true;
           structure_right.gotoAndPlay(0);
         }
-        break;
-      case 5:
-        big_boss = createSprite(big_bossS, structureX, structureY);
-        scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
-        target_x = 0;
-        fire_counter = 0;
-        projectile_x_speed = 0;
-        break;
-      default:
+      }
+    }
+
+    if (hit_counter == 3 && miss_upper && miss_lower) {
+      big_boss = createSprite(big_bossS, structureX, structureY);
+      scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
+      target_x = 0;
+      hit = false;
+      miss_upper = false;
+      miss_lower = false;
+      hit_counter = 0;
+      miss_upper_counter = 0;
+      miss_lower_counter = 0;
+      projectile_x_speed = 0;
     }
 
     if (hide_knight) {
@@ -163,7 +232,7 @@ function tick(event) {
     } else {
       henchman_right.alpha = 1;
     }
-    
+
     //Catapult projectile animtion
     if (fired == true) {
       // if (frame_counter > 9) {
@@ -178,6 +247,7 @@ function tick(event) {
     }
 
     if (reload) {
+      console.log("reload");
       fired = false;
       projectile.alpha = 0;
       projectile.x = stage.canvas.width / 2;
