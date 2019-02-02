@@ -2,7 +2,7 @@ var num_levels = 2;
 var current_level = 1;
 
 let number_text = [];
-var number_spacing = 888;
+var number_spacing = 878;
 var numberline;
 var numberlineS;
 
@@ -273,7 +273,8 @@ function scaleLevel() {
     scale_image(numberline, stage.canvas.width / 2, stage.canvas.height / 2);
     
     for(var i = 0; i < 33; i++){
-	scale_image(number_text[i], stage.canvas.width / 2 - (number_spacing - (i * 20)), stage.canvas.height / 2 - 400);
+	number_spacing -= 53;
+	scale_image(number_text[i], stage.canvas.width / 2 - number_spacing, stage.canvas.height / 2 - 400);
     }
   if (fire_counter == 5)
     scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
@@ -282,9 +283,9 @@ function scaleLevel() {
 
 
 function createNumbers(){
-    for(var i = 1; i <= 33; i++){
+    for(var i = 30; i <= 62; i++){
 	var temp = createText(i.toString(), "Arial", "16px", "bold", "black", structureX, structureY);
 	number_text.push(temp);
     }
-    console.log("called");
+
 }
