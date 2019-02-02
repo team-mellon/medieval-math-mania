@@ -65,12 +65,14 @@ function playSound () {
         }
         current_song.destroy();
         current_song = createjs.Sound.play(playlist.ids[playlist.current]);
+		current_song.volume = volume;
     });
     sound_off = false;
 
   } else { // runs every other time to play and pause the current song
 
     current_song.paused = !current_song.paused;
+	current_song.volume = volume;
 
   }
 
@@ -88,6 +90,7 @@ function previousSound () {
     }
     current_song.destroy();
     current_song = createjs.Sound.play(playlist.ids[playlist.current]);
+	current_song.volume = volume;
   }
 
 }
@@ -104,6 +107,7 @@ function nextSound () {
     }
     current_song.destroy();
     current_song = createjs.Sound.play(playlist.ids[playlist.current]);
+	current_song.volume = volume;
   }
 
 }
@@ -113,7 +117,8 @@ function nextSound () {
 // Mutes the current song
 function muteSound () {
 
-  if (!sound_off) {
+  if (!sound_off) 
+  {
     current_song.muted = !current_song.muted;
   }
 
@@ -122,10 +127,8 @@ function muteSound () {
 
 
 // Sets the volume based on an incomimng value from 0-100
-function setVolume (volume) {
-
-  if (sound_off) {
-    current_song.volume = volume/100;
-  }
-
+function setVolume()
+{
+    volume = document.getElementById("volumeSlider").value;
+	current_song.volume = volume;
 }
