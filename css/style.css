@@ -105,3 +105,61 @@ input {
 #entryInput {
   font-family: "Arial";
 }
+
+.dropbtn {
+  background-color: red;
+  font-family: "Blackadder ITC";
+  letter-spacing: -10px;
+  color: darkred;
+  padding: 8px 18px 3px 3px;
+  font-size: 40px;
+  border: none;
+  cursor: pointer;
+  border-radius: 30px;
+  margin: 0px 82px;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: none;
+}
+
+#myInput {
+  border-box: box-sizing;
+  background-image: url('searchicon.png');
+  background-position: 14px 12px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 14px 20px 12px 45px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+
+#myInput:focus {outline: 3px solid #ddd;}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  width: 230px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: none;
+  min-width: 230px;
+  overflow: auto;
+  border: 0px solid #ddd;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
