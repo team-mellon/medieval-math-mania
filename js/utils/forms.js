@@ -324,6 +324,24 @@ function createMapForm() {
 function createGameForm() {
 
   // Creates username display text
+  var left_paren = document.createTextNode("[");
+  var lower_number = document.createTextNode(lower);
+  var middle_comma = document.createTextNode(", ");
+  var upper_number = document.createTextNode(upper);
+  var right_paren = document.createTextNode("]");
+
+  // Creates username div to hold display text and input box
+  var game_range_div = document.createElement("div");
+  game_range_div.className = "login";
+  game_range_div.appendChild(left_paren);
+  game_range_div.appendChild(lower_number);
+  game_range_div.appendChild(middle_comma);
+  game_range_div.appendChild(upper_number);
+  game_range_div.appendChild(right_paren);
+
+
+
+  // Creates username display text
   var multiplicand_text = document.createTextNode(multiplicand);
   var sign_text = document.createTextNode(sign);
   var entry_input = document.createElement("input");
@@ -346,14 +364,50 @@ function createGameForm() {
 
 
 
+  // Creates username display text
+  // var multiplicand_text = document.createTextNode(multiplicand);
+  // var sign_text = document.createTextNode(sign);
+  // var history_input = document.createElement("input");
+  // history_input.id = "entryInput";
+  // history_input.setAttribute("type", "text");
+  // history_input.setAttribute("maxlength", "4");
+  // history_input.setAttribute("size", "4");
+  // history_input.setAttribute("name", "entry");
+  // var equal_text = document.createTextNode(equal);
+  // var solution_text = document.createTextNode(solution);
+
+  // Creates username div to hold display text and input box
+  // var game_history_div = document.createElement("div");
+  // game_history_div.className = "login";
+  // game_history_div.appendChild(multiplicand_text);
+  // game_history_div.appendChild(sign_text);
+  // game_history_div.appendChild(history_input);
+  // game_history_div.appendChild(equal_text);
+  // game_history_div.appendChild(solution_text);
+
+
+
   // Creates login form to hold username and password divs
-  var game_form = document.createElement("form");
-  game_form.id = "gameForm";
-  game_form.className = "scrollMenu";
-  game_form.appendChild(game_entry_div);
+  var game_range_form = document.createElement("form");
+  game_range_form.id = "rangeBanner";
+  game_range_form.className = "scrollMenu";
+  game_range_form.appendChild(game_range_div);
+
+  // Creates login form to hold username and password divs
+  var game_entry_form = document.createElement("form");
+  game_entry_form.id = "equationBanner";
+  game_entry_form.className = "scrollMenu";
+  game_entry_form.appendChild(game_entry_div);
+
+  // Creates login form to hold username and password divs
+  // var game_form = document.createElement("form");
+  // game_form.id = "gameForm";
+  // game_form.className = "scrollMenu";
+  // game_form.appendChild(game_entry_div);
 
   // Injecting login form into existing html
   var scene_html = document.getElementById("sceneHTML");
-  scene_html.appendChild(game_form);
+  scene_html.appendChild(game_range_form);
+  scene_html.appendChild(game_entry_form);
 
 }

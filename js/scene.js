@@ -112,7 +112,7 @@ function createScene() {
     case 3:
       createGameForm();
 			createLevel();
-      document.getElementById("entryInput").value = 0; 
+      document.getElementById("entryInput").value = 0;
       break;
 
     case 4:
@@ -245,6 +245,7 @@ function createGUI() {
       	}
       });
 			right_sword_button = createButton("res/sword-right.png", "Signup", buttonX, buttonY, function() {	changeScene(1); });
+			secret_button = createButton("res/secret_button.png", "shhhh...", backgroundX, backgroundY, function() {	changeScene(8); });
 
 			break;
 
@@ -426,6 +427,7 @@ function scaleGUI() {
 
 			scale_image(left_sword_button, stage.canvas.width/2 - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height/2 + (buttonY/2 + 140) * scene_scale_Y);
 			scale_image(right_sword_button, stage.canvas.width/2 + (buttonX/2 + 50) * scene_scale_Y, stage.canvas.height/2 + (buttonY/2 + 140) * scene_scale_Y);
+			scale_image(secret_button, stage.canvas.width/2, stage.canvas.height/2);
 
 			break;
 

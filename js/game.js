@@ -7,6 +7,9 @@ var miss_lower = false;
 var upper = 100;
 var lower = 35;
 
+var waiting_hit = false;
+var waiting_miss = false;
+
 var fired = false;
 var fire_counter = 0;
 var hit_counter = 0;
@@ -47,6 +50,7 @@ var solution = 69;
 function tick(event) {
 
   if (current_scene == 3) {
+
     //Key checks at the beginning of the update loop
     if ((keys[32] || drag_up) && catapult.paused) {
       catapult.gotoAndPlay(0);
@@ -61,6 +65,7 @@ function tick(event) {
         scene_html.removeChild(scene_html.firstChild);
       }
       createGameForm();
+      document.getElementById("entryInput").value = 0;
       if (solution <= upper && solution >= lower && hit_counter < 3) {
         hit = true;
       } else if (solution > upper && miss_upper_counter == 0) {
@@ -68,6 +73,7 @@ function tick(event) {
       } else if (solution < lower && miss_lower_counter == 0) {
         miss_lower = true;
       }
+      console.log(projectile.alpha);
     }
 
     //Also stop animations
@@ -106,6 +112,24 @@ function tick(event) {
         case 0:
           target_x = henchman_left_center.x;
           projectile_x_speed = 12;
+          break;
+        case 1:
+          target_x = henchman_right_center.x;
+          projectile_x_speed = 12;
+          break;
+        case 2:
+          target_x = boss.x;
+          projectile_x_speed = 0;
+          break;
+        default:
+      }
+      hit = false;
+      waiting_hit = true;
+    }
+
+    if (waiting_hit) {
+      switch (hit_counter) {
+        case 0:
           if (projectile_speed < 0 && projectile.y >= boss.y) {
             hide_archer1 = true;
             reload = true;
@@ -113,8 +137,6 @@ function tick(event) {
           }
           break;
         case 1:
-          target_x = henchman_right_center.x;
-          projectile_x_speed = 12;
           if (projectile_speed < 0 && projectile.y >= boss.y) {
             hide_archer2 = true;
             reload = true;
@@ -122,8 +144,6 @@ function tick(event) {
           }
           break;
         case 2:
-          target_x = boss.x;
-          projectile_x_speed = 0;
           if (projectile_speed < 0 && projectile.y >= boss.y) {
             hide_knight = true;
             reload = true;
@@ -132,32 +152,42 @@ function tick(event) {
           break;
         default:
       }
-      hit = false;
       hit_counter++;
+      waiting_hit = false;
     }
 
     if (miss_lower) {
       target_x = henchman_left.x;
       projectile_x_speed = 20;
-      if (projectile_speed < 0 && projectile.y >= boss.y) {
-        hide_archer3 = true;
-        reload = true;
-        structure_left.gotoAndPlay(0);
-      }
       miss_lower = false;
       miss_lower_counter++;
+      waiting_miss = true;
     }
 
     if (miss_upper) {
       target_x = henchman_right.x;
       projectile_x_speed = 20;
-      if (projectile_speed < 0 && projectile.y >= boss.y) {
-        hide_archer4 = true;
-        reload = true;
-        structure_right.gotoAndPlay(0);
-      }
       miss_upper = false;
       miss_upper_counter++;
+      waiting_miss = true;
+    }
+
+    if (waiting_miss) {
+      if (miss_lower) {
+        if (projectile_speed < 0 && projectile.y >= boss.y) {
+          hide_archer3 = true;
+          reload = true;
+          structure_left.gotoAndPlay(0);
+        }
+      }
+
+      if (miss_upper) {
+        if (projectile_speed < 0 && projectile.y >= boss.y) {
+          hide_archer4 = true;
+          reload = true;
+          structure_right.gotoAndPlay(0);
+        }
+      }
     }
 
     if (hit_counter == 3 && miss_upper && miss_lower) {
@@ -217,6 +247,7 @@ function tick(event) {
     }
 
     if (reload) {
+      console.log("reload");
       fired = false;
       projectile.alpha = 0;
       projectile.x = stage.canvas.width / 2;
