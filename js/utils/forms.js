@@ -214,9 +214,20 @@ function createSettingsForm() {
 
   // Creates username display text and input slider
   var volume_text = document.createTextNode("Volume:");
-  var volume_input = document.createElement("input");
+  var volume_input = document.createElement("input");  // document.getElementById("").value
+  
+  volume_input.id = "volumeSlider";
+  
   volume_input.setAttribute("type", "range");
   volume_input.setAttribute("name", "volume");
+  volume_input.setAttribute("min", "0");
+  volume_input.setAttribute("max", "1");
+  volume_input.setAttribute("step", "0.1");
+  volume_input.setAttribute("value", "50");
+  volume_input.setAttribute(oninput, "SetVolume(this.value)");
+  volume_input.setAttribute(onchange, "SetVolume(this.value)");
+  volume_input.addEventListener('change', setVolume);
+  volume_input.addEventListener('input', setVolume);
 
   // Creates username div to hold display text and input slider
   var settings_volume_div = document.createElement("div");
