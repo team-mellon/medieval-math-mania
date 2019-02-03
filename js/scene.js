@@ -385,8 +385,24 @@ function createGUI() {
 
 			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { changeScene(2); });
 
-			level1_indicator = createButton("res/map-indicator.png", "", indicatorX, indicatorY, function() { current_level = 1; changeScene(3); });
-			level2_indicator = createButton("res/map-indicator.png", "", indicatorX, indicatorY, function() { current_level = 2; changeScene(3); });
+			level1_indicator = createButton("res/map-indicator.png", "", indicatorX, indicatorY, function() {
+        current_level = 1;
+        hide_knight = false;
+        hide_archer1 = false;
+        hide_archer2 = false;
+        hide_archer3 = false;
+        hide_archer4 = false;
+        changeScene(3);
+      });
+			level2_indicator = createButton("res/map-indicator.png", "", indicatorX, indicatorY, function() {
+        current_level = 2;
+        hide_knight = false;
+        hide_archer1 = false;
+        hide_archer2 = false;
+        hide_archer3 = false;
+        hide_archer4 = false;
+        changeScene(3);
+      });
 
 			break;
 
