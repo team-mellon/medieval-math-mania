@@ -215,9 +215,9 @@ function createSettingsForm() {
   // Creates username display text and input slider
   var volume_text = document.createTextNode("Volume:");
   var volume_input = document.createElement("input");  // document.getElementById("").value
-  
+
   volume_input.id = "volumeSlider";
-  
+
   volume_input.setAttribute("type", "range");
   volume_input.setAttribute("name", "volume");
   volume_input.setAttribute("min", "0");
@@ -240,8 +240,15 @@ function createSettingsForm() {
   // Creates password display text and check box
   var time_text = document.createTextNode("Time:");
   var time_input = document.createElement("input");
+  time_input.id = "bossValue";
   time_input.setAttribute("type", "checkbox");
   time_input.setAttribute("name", "time");
+  if (boss_fight) {
+    time_input.checked = true;
+  } else {
+    time_input.checked = false;
+  }
+  time_input.addEventListener('change', setBoss);
 
   // Creates password div to hold display text and check box
   var settings_time_div = document.createElement("div");
@@ -344,6 +351,7 @@ function createGameForm() {
   // Creates username div to hold display text and input box
   var game_range_div = document.createElement("div");
   game_range_div.className = "login";
+  game_range_div.id = "rangeDiv"
   game_range_div.appendChild(left_paren);
   game_range_div.appendChild(lower_number);
   game_range_div.appendChild(middle_comma);
@@ -357,12 +365,22 @@ function createGameForm() {
   var sign_text = document.createTextNode(sign);
   var entry_input = document.createElement("input");
   entry_input.id = "entryInput";
-  entry_input.setAttribute("type", "text");
-  entry_input.setAttribute("maxlength", "4");
+  entry_input.setAttribute("type", "number");
+  entry_input.setAttribute("placeholder", "###");
+  entry_input.setAttribute("value", "");
+  entry_input.setAttribute("maxlength", "3");
   entry_input.setAttribute("size", "4");
+  entry_input.setAttribute("min", "-999");
+  entry_input.setAttribute("max", "999");
   entry_input.setAttribute("name", "entry");
+  entry_input.addEventListener('keypress', function(event) {
+      if (event.keyCode == 13) {
+          event.preventDefault();
+      }
+  });
   var equal_text = document.createTextNode(equal);
   var solution_text = document.createTextNode(solution);
+
 
   // Creates username div to hold display text and input box
   var game_entry_div = document.createElement("div");
@@ -379,6 +397,7 @@ function createGameForm() {
   var history_button = document.createElement("button");
   var history_div = document.createElement("div");
   history_button.className = "dropbtn";
+  history_button.addEventListener('click', myFunction);
   history_div.className = "dropdown-content";
   history_div.id = "myDropdown";
   history_button.appendChild(button_text);
@@ -386,14 +405,13 @@ function createGameForm() {
   history_dropdown.className = "dropdown";
   history_dropdown.appendChild(history_button);
   history_dropdown.appendChild(history_div);
-  
-  
+
+
 
 	// Does a thing
 	var game_history_div = document.createElement("div");
 	game_history_div.className = "login";
 	game_history_div.appendChild(history_dropdown);
-	
 
 
 

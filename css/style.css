@@ -80,7 +80,7 @@ html, body {
   font-family: "Arial";
   position: absolute;
   top: 62.5%;
-  left: 60%;
+  left: 68%;
 }
 
 .login {
@@ -104,6 +104,14 @@ input {
 
 #entryInput {
   font-family: "Arial";
+  width: 2.5em;
+  -moz-appearance:textfield !important;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none !important;;
+  margin: 0 !important;
 }
 
 .dropbtn {
@@ -112,7 +120,7 @@ input {
   letter-spacing: -10px;
   color: darkred;
   padding: 8px 18px 3px 3px;
-  font-size: 40px;
+  font-size: 4vh;
   border: none;
   cursor: pointer;
   border-radius: 30px;

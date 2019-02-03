@@ -117,8 +117,7 @@ function nextSound () {
 // Mutes the current song
 function muteSound () {
 
-  if (!sound_off) 
-  {
+  if (!sound_off) {
     current_song.muted = !current_song.muted;
   }
 
@@ -127,8 +126,7 @@ function muteSound () {
 
 
 // Sets the volume based on an incomimng value from 0-100
-function setVolume()
-{
-    volume = document.getElementById("volumeSlider").value;
-	current_song.volume = volume;
+function setVolume() {
+  volume = document.getElementById("volumeSlider").value;
+  current_song.volume = volume;
 }

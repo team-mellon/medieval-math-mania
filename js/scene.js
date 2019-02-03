@@ -246,7 +246,7 @@ function createGUI() {
       	}
       });
 			right_sword_button = createButton("res/sword-right.png", "Signup", buttonX, buttonY, function() {	changeScene(1); });
-			secret_button = createButton("res/secret_button.png", "shhhh...", backgroundX, backgroundY, function() {	changeScene(8); });
+			secret_button = createButton("res/secret_button.png", "", backgroundX, backgroundY, function() {	changeScene(8); });
 
 			break;
 

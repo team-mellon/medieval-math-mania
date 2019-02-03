@@ -162,18 +162,6 @@
 	range.zIndex = 1;
 	advTexture.addControl(range);
 
-  // lighting.play();
-  rand_num1 = Math.floor((Math.random() * 10) + 1);
-  rand_num2 = Math.floor((Math.random() * 100) + 1);
-  temp1 = rand_num1 * rand_num2;
-  temp2 = rand_num1 * (rand_num2 + 3);
-  text2.text = (rand_num1.toString()) + "  x  ";
-  range.text = "[" + (temp1.toString()) + " , " + (temp2.toString()) + "]";
-  output.text = "";
-  text1.text = "";
-  param = "";
-  input = parseInt(param);
-
 	var param = "";
 	var rand_num1;
 	var rand_num2;
@@ -181,17 +169,6 @@
 	var temp2;
 	var input;
 	var result;
-
-  var spriteManagerLCT = new BABYLON.SpriteManager("spriteManagerLCT", "res/left-center-tower.png", 1, {width: 5120, height: 2560}, scene);
-	var spriteManagerCT = new BABYLON.SpriteManager("spriteManagerCT", "res/center-tower.png", 1, {width: 5120, height: 2560}, scene);
-	var spriteManagerRCT = new BABYLON.SpriteManager("spriteManagerRCT", "res/right-center-tower.png", 1, {width: 5120, height: 2560}, scene);
-	var spriteManagerBadKnight = new BABYLON.SpriteManager("spriteManagerBadKnight", "res/bad-knight.png", 1, {width: 320, height: 320}, scene);
-	var spriteManagerBadArcher = new BABYLON.SpriteManager("spriteManagerBadArcher", "res/bad-archer.png", 4, {width: 320, height: 320}, scene);
-	var spriteManagerLT = new BABYLON.SpriteManager("spriteManagerLT", "res/left-tower.png", 1, {width: 5120, height: 2560}, scene);
-	var spriteManagerRT = new BABYLON.SpriteManager("spriteManagerRT", "res/right-tower.png", 1, {width: 5120, height: 2560}, scene);
-	var spriteManagerBody = new BABYLON.SpriteManager("spriteManagerBody", "res/body.png", 1, {width: 5120, height: 2560}, scene);
-	var spriteManagerFire = new BABYLON.SpriteManager("spriteManagerFire", "res/ammo.png", 5, {width: 320, height: 320}, scene);
-	var spriteManagerCatapult = new BABYLON.SpriteManager("spriteManagerCatapult", "res/catapult.png", 1, {width: 2560, height: 1280}, scene);
 
   var badArcher1 = new BABYLON.Sprite("badArcher1", spriteManagerBadArcher);
   var lt1 = new BABYLON.Sprite("lt1", spriteManagerLT);
@@ -282,7 +259,7 @@
 	//   fire.playAnimation(0, 11, true, 200);
 	//   // tree.isPickable = true;
 	// }
-  
+
   var hit_count = 0;
   var fire_switch = 0;
 	scene.actionManager = new BABYLON.ActionManager(scene);
@@ -387,26 +364,6 @@
       }
 
 			// fire1.position.y += 0.01;
-		}
-		else if (key == "a")
-		{
-			// lighting.play();
-			rand_num1 = Math.floor((Math.random() * 10) + 1);
-			rand_num2 = Math.floor((Math.random() * 100) + 1);
-			temp1 = rand_num1 * rand_num2;
-			temp2 = rand_num1 * (rand_num2 + 3);
-			text2.text = (rand_num1.toString()) + "  x  ";
-			range.text = "[" + (temp1.toString()) + " , " + (temp2.toString()) + "]";
-			output.text = "";
-			text1.text = "";
-			param = "";
-			input = parseInt(param);
-		}
-		else if (key == "Backspace")
-		{
-			param = param.substring(0, param.length - 1);
-			text1.text = param;
-			input = parseInt(param);
 		}
 		else if(key == "0" || key == "1" || key == "2" || key == "3" || key == "4" ||
 				key == "5" || key == "6" || key == "7" || key == "8" || key == "9" || key == ".")

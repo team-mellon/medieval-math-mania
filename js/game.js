@@ -1,5 +1,7 @@
 var frame_counter = 0;
 
+var entry_is_number;
+
 var hit = false;
 var miss_upper = false;
 var miss_lower = false;
@@ -26,6 +28,8 @@ var hide_archer2 = false;
 var hide_archer3 = false;
 var hide_archer4 = false;
 
+var boss_fight = false;
+
 var database = {
   users: {
     admin: {
@@ -42,7 +46,7 @@ var database = {
   }
 };
 
-var multiplicand = 7;
+var multiplicand = 5;
 var sign = " x "; //&#37
 var equal = " = ";
 var solution = 69;
@@ -52,72 +56,114 @@ function tick(event) {
   if (current_scene == 3) {
 
     //Key checks at the beginning of the update loop
-    if ((keys[32] || drag_up) && catapult.paused) {
-      catapult.gotoAndPlay(0);
-      fired = true;
+    if (keys[32]){ // Spacebar
+
+      // Generate new range
+      rand_num1 = Math.floor((Math.random() * 10) + 1);
+      rand_num2 = Math.floor((Math.random() * 100) + 1);
+      lower = rand_num1 * rand_num2;
+      upper = rand_num1 * (rand_num2 + 3);
+
+      // Clear the range banner
+      var range_div = document.getElementById("rangeDiv");
+      while (range_div.firstChild) {
+        range_div.removeChild(range_div.firstChild);
+      }
+
+      // Remake the display for the banner
+      var left_paren = document.createTextNode("[");
+      var lower_number = document.createTextNode(lower);
+      var middle_comma = document.createTextNode(", ");
+      var upper_number = document.createTextNode(upper);
+      var right_paren = document.createTextNode("]");
+
+      // Append the display
+      range_div.appendChild(left_paren);
+      range_div.appendChild(lower_number);
+      range_div.appendChild(middle_comma);
+      range_div.appendChild(upper_number);
+      range_div.appendChild(right_paren);
+
+    }
+
+    if ((keys[13] || drag_up) && catapult.paused) { // Enter or drag up swipe on mobile
+      // Reset drag_up bool;
       drag_up = false;
-      var multiplier = document.getElementById("entryInput").value;
-      console.log(multiplier);
-      solution = multiplier * multiplicand;
-      console.log(solution);
-      var scene_html = document.getElementById("sceneHTML");
-      while (scene_html.firstChild) {
-        scene_html.removeChild(scene_html.firstChild);
+
+      console.log("HIT: " + hit_counter);
+      console.log("MU" + miss_upper_counter);
+      console.log("ML" + miss_lower_counter);
+
+      // Need to check for input correctness here
+        // No letters or symbols only numbers
+      if (document.getElementById("entryInput").value)
+      entry_is_number = true;
+
+      // Animate the catapult
+      if (entry_is_number) {
+
+        // Add to history
+        var multiplier = document.getElementById("entryInput").value;
+        var dropdown = document.getElementById("myDropdown");
+        var history_entry = document.createTextNode(multiplier);
+        var line_break = document.createElement("br");
+        dropdown.appendChild(history_entry);
+        dropdown.appendChild(line_break);
+
+        // Actual math
+        solution = multiplier * multiplicand;
+
+        // var scene_html = document.getElementById("sceneHTML");
+        // while (scene_html.firstChild) {
+        //   scene_html.removeChild(scene_html.firstChild);
+        // }
+        // createGameForm();
+
+        document.getElementById("entryInput").value = "";
+
+        if (solution <= upper && solution >= lower && hit_counter < 3) {
+          hit = true;
+          console.log("hit");
+          catapult.gotoAndPlay(0);
+          // Triggering other fired events
+          fired = true;
+        } else if (solution > upper && miss_upper_counter == 0) {
+          miss_upper = true;
+          console.log("miss upper");
+          catapult.gotoAndPlay(0);
+          // Triggering other fired events
+          fired = true;
+        } else if (solution < lower && miss_lower_counter == 0) {
+          miss_lower = true;
+          console.log("miss lower");
+          catapult.gotoAndPlay(0);
+          // Triggering other fired events
+          fired = true;
+        }
+
       }
-      createGameForm();
-      document.getElementById("entryInput").value = 0;
-      if (solution <= upper && solution >= lower && hit_counter < 3) {
-        hit = true;
-      } else if (solution > upper && miss_upper_counter == 0) {
-        miss_upper = true;
-      } else if (solution < lower && miss_lower_counter == 0) {
-        miss_lower = true;
-      }
-      console.log(projectile.alpha);
+
+      // console.log(projectile.alpha);
+
     }
 
-    //Also stop animations
-    if (!catapult.paused && catapult.currentFrame == 23) {
-      catapult.stop();
-      reload = false;
-    }
-
-    //Also stop animations
-    if (!structure_center.paused && structure_center.currentFrame == 11) {
-      structure_center.stop();
-    }
-
-    //Also stop animations
-    if (!structure_left_center.paused && structure_left_center.currentFrame == 5) {
-      structure_left_center.stop();
-    }
-
-    //Also stop animations
-    if (!structure_right_center.paused && structure_right_center.currentFrame == 5) {
-      structure_right_center.stop();
-    }
-
-    //Also stop animations
-    if (!structure_left.paused && structure_left.currentFrame == 5) {
-      structure_left.stop();
-    }
-
-    //Also stop animations
-    if (!structure_right.paused && structure_right.currentFrame == 5) {
-      structure_right.stop();
-    }
+    // Stop animations that only play once if they are done // MAYBE DO WITH ANIMATION EVENT
+    updateSinglePlayAnimations();
 
     if (hit) {
       switch (hit_counter) {
         case 0:
+          console.log("henchmanLC");
           target_x = henchman_left_center.x;
           projectile_x_speed = 12;
           break;
         case 1:
+          console.log("henchmanRC");
           target_x = henchman_right_center.x;
           projectile_x_speed = 12;
           break;
         case 2:
+          console.log("bossC");
           target_x = boss.x;
           projectile_x_speed = 0;
           break;
@@ -128,47 +174,39 @@ function tick(event) {
     }
 
     if (waiting_hit) {
-      switch (hit_counter) {
-        case 0:
-          if (projectile_speed < 0 && projectile.y >= boss.y) {
+      if (projectile_speed < 0 && projectile.y >= boss.y) {
+        switch (hit_counter) {
+          case 0:
             hide_archer1 = true;
-            reload = true;
             structure_left_center.gotoAndPlay(0);
-          }
-          break;
-        case 1:
-          if (projectile_speed < 0 && projectile.y >= boss.y) {
+            break;
+          case 1:
             hide_archer2 = true;
-            reload = true;
             structure_right_center.gotoAndPlay(0);
-          }
-          break;
-        case 2:
-          if (projectile_speed < 0 && projectile.y >= boss.y) {
+            break;
+          case 2:
             hide_knight = true;
-            reload = true;
             structure_center.gotoAndPlay(0);
-          }
-          break;
-        default:
+            break;
+          default:
+        }
+        reload = true;
+        waiting_hit = false;
+        hit_counter++;
       }
-      hit_counter++;
-      waiting_hit = false;
     }
 
     if (miss_lower) {
       target_x = henchman_left.x;
       projectile_x_speed = 20;
-      miss_lower = false;
-      miss_lower_counter++;
+      // miss_lower = false;
       waiting_miss = true;
     }
 
     if (miss_upper) {
       target_x = henchman_right.x;
       projectile_x_speed = 20;
-      miss_upper = false;
-      miss_upper_counter++;
+      // miss_upper = false;
       waiting_miss = true;
     }
 
@@ -176,21 +214,25 @@ function tick(event) {
       if (miss_lower) {
         if (projectile_speed < 0 && projectile.y >= boss.y) {
           hide_archer3 = true;
-          reload = true;
           structure_left.gotoAndPlay(0);
+          reload = true;
+          miss_lower = false;
+          miss_lower_counter++;
         }
       }
 
       if (miss_upper) {
         if (projectile_speed < 0 && projectile.y >= boss.y) {
           hide_archer4 = true;
-          reload = true;
           structure_right.gotoAndPlay(0);
+          reload = true;
+          miss_upper = false;
+          miss_upper_counter++;
         }
       }
     }
 
-    if (hit_counter == 3 && miss_upper && miss_lower) {
+    if (hit_counter == 3 && miss_upper_counter == 1 && miss_lower_counter == 1 && reload == false && boss_fight) {
       big_boss = createSprite(big_bossS, structureX, structureY);
       scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
       target_x = 0;
@@ -201,6 +243,7 @@ function tick(event) {
       miss_upper_counter = 0;
       miss_lower_counter = 0;
       projectile_x_speed = 0;
+      console.log("boss");
     }
 
     if (hide_knight) {
@@ -269,6 +312,37 @@ function tick(event) {
 
   stage.update(event);
 
+}
+
+function updateSinglePlayAnimations() {
+
+  //Catapult or whatever it is in the scene
+  if (!catapult.paused && catapult.currentFrame == 11) {
+    catapult.stop();
+    reload = false;
+  }
+
+  // Structure in the scene
+  if (!structure_center.paused && structure_center.currentFrame == 11) {
+    structure_center.stop();
+  }
+  if (!structure_left_center.paused && structure_left_center.currentFrame == 5) {
+    structure_left_center.stop();
+  }
+  if (!structure_right_center.paused && structure_right_center.currentFrame == 5) {
+    structure_right_center.stop();
+  }
+  if (!structure_left.paused && structure_left.currentFrame == 5) {
+    structure_left.stop();
+  }
+  if (!structure_right.paused && structure_right.currentFrame == 5) {
+    structure_right.stop();
+  }
+
+}
+
+function setBoss() {
+  boss_fight = document.getElementById("bossValue").checked;
 }
 
 // function loadImage() {

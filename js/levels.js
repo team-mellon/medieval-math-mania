@@ -88,7 +88,7 @@ function loadLevel() {
 
   catapultS = {
     images: ["res/catapult.png"],
-    frames: {width:288, height:384, count:24, regX: 0, regY:0, spacing:0, margin:0},
+    frames: {width:288, height:384, count:12, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
   };
 
@@ -253,4 +253,9 @@ function scaleLevel() {
   if (fire_counter == 5)
     scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
 
+}
+
+function myFunction(e) {
+  e.preventDefault();
+  document.getElementById("myDropdown").classList.toggle("show");
 }
