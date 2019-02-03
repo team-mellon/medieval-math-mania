@@ -58,6 +58,17 @@ function createButton(location, text, width, height, handleClick) {
 
 }
 
+
+function createText(num, font, size, style, color, width, height) {
+
+    var text = new createjs.Text(num, style + " " + size + " " + font, color);
+	stage.addChild(text);
+  //text.regX = width/2;
+  //text.regY = height/2;
+  return text;
+
+}
+
 // function createLine(x_one, y_one, x_two, y_two, wid, col) {
 //
 //   var line = new BABYLON.GUI.Line();
