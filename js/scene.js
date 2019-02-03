@@ -392,6 +392,9 @@ function createGUI() {
         hide_archer2 = false;
         hide_archer3 = false;
         hide_archer4 = false;
+        hit_counter = 0;
+        miss_upper_counter = 0;
+        miss_lower_counter = 0;
         changeScene(3);
       });
 			level2_indicator = createButton("res/map-indicator.png", "", indicatorX, indicatorY, function() {
@@ -401,6 +404,9 @@ function createGUI() {
         hide_archer2 = false;
         hide_archer3 = false;
         hide_archer4 = false;
+        hit_counter = 0;
+        miss_upper_counter = 0;
+        miss_lower_counter = 0;
         changeScene(3);
       });
 
