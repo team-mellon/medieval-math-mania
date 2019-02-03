@@ -270,14 +270,16 @@ function scaleLevel() {
   scale_image(catapult, stage.canvas.width / 2, stage.canvas.height - (catapultY/2 - 57) * scene_scale_Y);
 
 
-    scale_image(numberline, stage.canvas.width / 2, stage.canvas.height / 2);
+  scale_image(numberline, stage.canvas.width / 2, stage.canvas.height / 2);
 
-    for(var i = 0; i < 33; i++){
-    	number_spacing -= 53;
-    	scale_image(number_text[i], stage.canvas.width / 2 - number_spacing, stage.canvas.height / 2 - 400);
-    }
-    if (fire_counter == 5)
-      scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
+  for(var i = 0; i < 33; i++){
+  	number_spacing -= 53;
+  	scale_image(number_text[i], stage.canvas.width / 2 - number_spacing, stage.canvas.height / 2 - 400);
+  }
+
+  if (fire_counter == 5) {
+    scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
+  }
 
 }
 
@@ -287,8 +289,8 @@ function myFunction(e) {
 }
 
 function createNumbers(){
-    for(var i = 30; i <= 62; i++){
-    	var temp = createText(i.toString(), "Arial", "16px", "bold", "black", structureX, structureY);
-    	number_text.push(temp);
-    }
+  for(var i = 30; i <= 62; i++){
+  	var temp = createText(i.toString(), "Arial", "16px", "bold", "black", structureX, structureY);
+  	number_text.push(temp);
+  }
 }
