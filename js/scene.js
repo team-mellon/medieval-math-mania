@@ -411,6 +411,13 @@ function createGUI() {
       });
 
 			break;
+    case 9:
+
+      background = createImage("res/login.png", backgroundX, backgroundY);
+      foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
+	login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { changeScene(3); });
+
+      break;
 
 		default:
 
