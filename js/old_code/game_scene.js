@@ -382,5 +382,4 @@
 	});
 
 	return scene;
-
 };
