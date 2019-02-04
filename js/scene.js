@@ -15,6 +15,8 @@ var indicatorY = 24;
 
 var buttonX = 216;
 var buttonY = 72;
+var small_buttonX = 72;
+var small_buttonY = 72;
 
 var left_sword_button;
 var right_sword_button;
@@ -78,7 +80,7 @@ function loadScene() {
 
     case 8:
       bg_color = "#fffcd8";
-      break;	  
+      break;
 
     case 9:
       bg_color = "#919191";
@@ -349,7 +351,7 @@ function createGUI() {
 		case 3:
 
 			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { changeScene(8); });
-      			hint_button = createButton("res/login-button.png", "Hint", buttonX, buttonY, function() {  changeScene(9); });
+      hint_button = createButton("res/hint-button.png", "Hint", small_buttonX, small_buttonY, function() {  changeScene(9); });
 
 			break;
 
@@ -498,7 +500,7 @@ function scaleGUI() {
 		case 3:
 
       scale_image(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
-      scale_image(hint_button, (buttonX/2 + 10) * scene_scale_Y, (buttonY/2 + 10) * scene_scale_Y);
+      scale_image(hint_button, stage.canvas.width - (small_buttonX/2 + 10) * scene_scale_Y, (small_buttonY/2 + 10) * scene_scale_Y);
 
 			break;
 
@@ -549,11 +551,11 @@ function scaleGUI() {
 			scale_image(level2_indicator, stage.canvas.width / 2 - (indicatorX/2 + 168) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 150) * scene_scale_Y);
 
 			break;
-			
+
 	    case 9:
 	    	scale_image(background, stage.canvas.width / 2, stage.canvas.height / 2);
 	    	scale_image(foreground, stage.canvas.width / 2, stage.canvas.height / 2);
-	   	scale_image(level1_indicator, stage.canvas.width / 2 - (indicatorX/2 + 72) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 285) * scene_scale_Y);
+        scale_image(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
 		break;
 
 		default:
