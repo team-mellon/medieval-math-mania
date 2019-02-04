@@ -393,7 +393,7 @@ function createGameForm() {
 
 
   // Creates username display text
-  var button_text = document.createTextNode("EB");
+  var button_text = document.createTextNode("H");
   var history_button = document.createElement("button");
   var history_div = document.createElement("div");
   history_button.className = "dropbtn";

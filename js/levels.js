@@ -3,6 +3,7 @@ var current_level = 1;
 
 var number_text;
 var number_spacing = 10;
+var number_spacer = 25;
 var numberline;
 var numberlineS;
 
@@ -249,7 +250,8 @@ function changeLevel(new_level) {
 
 function scaleLevel() {
 
-  number_spacing = 10;
+  // number_spacing = 10;
+  number_spacer = 25;
 
   // Level structure in background
   scale_image(structure_center, stage.canvas.width / 2, stage.canvas.height / 2);
@@ -273,12 +275,12 @@ function scaleLevel() {
   scale_image(projectile, stage.canvas.width / 2, stage.canvas.height - (projectileY/2 + 57) * scene_scale_Y);
   scale_image(catapult, stage.canvas.width / 2, stage.canvas.height - (catapultY/2 - 57) * scene_scale_Y);
 
-
   scale_image(numberline, stage.canvas.width / 2, stage.canvas.height / 2);
 
-  for(var i = 0; i < 33; i++){
-  	scale_image(number_text[i], number_spacing * scene_scale_Y, 30 * scene_scale_Y);
-    number_spacing += 48;
+  for(i = 0; i <= 50; i++){
+  	scale_image(number_text[i], stage.canvas.width / 2 - (((number_spacer * 48) + 5) * scene_scale_Y), 30 * scene_scale_Y);
+    number_spacer--
+    // number_spacing += 48;
   }
 
   if (fire_counter == 5) {
@@ -293,7 +295,7 @@ function myFunction(e) {
 }
 
 function createNumbers(){
-  for(var i = 30; i <= 62; i++){
+  for(i = -25; i <= 25; i++){
   	var temp = createText(i.toString(), "Arial", "16px", "bold", "black", structureX, structureY);
   	number_text.push(temp);
   }
