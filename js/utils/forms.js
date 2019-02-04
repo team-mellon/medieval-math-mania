@@ -439,3 +439,27 @@ function createGameForm() {
   scene_html.appendChild(game_entry_form);
   scene_html.appendChild(game_history_form);
 }
+
+function createHintForm() {
+
+  // Creates display label and text
+  var hint_label = document.createTextNode("Hint");
+  var hint_text = document.createTextNode( "This is a test hint and will be contextual based on what level sent you here");
+  var br = document.createElement("br");
+  // Creates hint div to hold display label and text
+  var hint_hint_div = document.createElement("div");
+  hint_hint_div.appendChild(hint_label);
+  hint_hint_div.appendChild(br);
+  hint_hint_div.appendChild(hint_text);
+
+  // Creates hint form to hold the hint div
+  var hint_form = document.createElement("form");
+  hint_form.id = "hintForm";
+  hint_form.className = "scrollMenu";
+  hint_form.appendChild(hint_hint_div);
+
+  // Injecting hint form into existing html
+  var scene_html = document.getElementById("sceneHTML");
+  scene_html.appendChild(hint_form);
+
+}
