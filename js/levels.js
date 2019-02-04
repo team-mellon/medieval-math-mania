@@ -2,7 +2,7 @@ var num_levels = 2;
 var current_level = 1;
 
 var number_text;
-var number_spacing = 878;
+var number_spacing = 10;
 var numberline;
 var numberlineS;
 
@@ -249,7 +249,7 @@ function changeLevel(new_level) {
 
 function scaleLevel() {
 
-  number_spacing = 878;
+  number_spacing = 10;
 
   // Level structure in background
   scale_image(structure_center, stage.canvas.width / 2, stage.canvas.height / 2);
@@ -277,8 +277,8 @@ function scaleLevel() {
   scale_image(numberline, stage.canvas.width / 2, stage.canvas.height / 2);
 
   for(var i = 0; i < 33; i++){
-  	number_spacing -= 53;
-  	scale_image(number_text[i], stage.canvas.width / 2 - number_spacing * scene_scale_Y, 20 * scene_scale_Y);
+  	scale_image(number_text[i], number_spacing * scene_scale_Y, 30 * scene_scale_Y);
+    number_spacing += 48;
   }
 
   if (fire_counter == 5) {
