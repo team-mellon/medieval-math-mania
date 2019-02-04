@@ -347,6 +347,7 @@ function createGUI() {
 		case 3:
 
 			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { changeScene(8); });
+      			hint_button = createButton("res/login-button.png", "Hint", buttonX, buttonY, function() {  changeScene(9); });
 
 			break;
 
@@ -423,7 +424,7 @@ function createGUI() {
 
       background = createImage("res/login.png", backgroundX, backgroundY);
       foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
-	login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { changeScene(3); });
+	login_button = createButton("res/login-button.png", "Back", buttonX, buttonY, function() { changeScene(3); });
 
       break;
 
