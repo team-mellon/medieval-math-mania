@@ -1,7 +1,7 @@
 var num_levels = 2;
 var current_level = 1;
 
-let number_text = [];
+var number_text;
 var number_spacing = 878;
 var numberline;
 var numberlineS;
@@ -150,6 +150,8 @@ function loadLevel() {
     frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
   };
+
+  number_text = [];
 
 }
 
