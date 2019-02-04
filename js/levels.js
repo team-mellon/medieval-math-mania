@@ -186,8 +186,8 @@ function createLevel() {
   projectile.gotoAndPlay(0);
   catapult = createSprite(catapultS, catapultX, catapultY);
 
-    numberline = createSprite(numberlineS, structureX, structureY);
-    createNumbers();
+  numberline = createSprite(numberlineS, structureX, structureY);
+  createNumbers();
 
 }
 
@@ -221,10 +221,10 @@ function destroyLevel() {
 
   stage.removeChild(big_boss);
 
-    stage.removeChild(numberline);
-    for(var i = 0; i < 33; i++){
-	stage.removeChild(number_text[i]);
-    }
+  stage.removeChild(numberline);
+  for(var i = 0; i < 50; i++) {
+     stage.removeChild(number_text[i]);
+  }
 }
 
 function changeLevel(new_level) {

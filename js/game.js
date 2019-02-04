@@ -31,17 +31,17 @@ var hide_archer4 = false;
 var boss_fight = false;
 
 var database = {
-  users: {
-    admin: {
-      firstname: "john",
-      lastname: "Doe",
-      password: "1234"
+  "users": {
+    "admin": {
+      "firstname": "Eric",
+      "lastname": "Bitikofer",
+      "password": "1234"
     }
   },
-  stats: {
-    admin: {
-      hits: "9001",
-      misses: "0"
+  "stats": {
+    "admin": {
+      "hits": "9001",
+      "misses": "0"
     }
   }
 };
@@ -49,7 +49,7 @@ var database = {
 var multiplicand = 5;
 var sign = " x "; //&#37
 var equal = " = ";
-var solution = 69;
+var solution = 0;
 
 function tick(event) {
 
@@ -61,6 +61,7 @@ function tick(event) {
       // Generate new range
       rand_num1 = Math.floor((Math.random() * 10) + 1);
       rand_num2 = Math.floor((Math.random() * 100) + 1);
+      multiplicand = Math.floor(Math.random() * 11);
       lower = rand_num1 * rand_num2;
       upper = rand_num1 * (rand_num2 + 3);
 
@@ -69,6 +70,14 @@ function tick(event) {
       while (range_div.firstChild) {
         range_div.removeChild(range_div.firstChild);
       }
+
+      var multip_div = document.getElementById("multiplicandText");
+      while (multip_div.firstChild) {
+        multip_div.removeChild(multip_div.firstChild);
+      }
+
+      var multip = document.createTextNode(multiplicand);
+      multip_div.appendChild( multip);
 
       // Remake the display for the banner
       var left_paren = document.createTextNode("[");
@@ -96,8 +105,44 @@ function tick(event) {
 
       // Need to check for input correctness here
         // No letters or symbols only numbers
-      if (document.getElementById("entryInput").value)
-      entry_is_number = true;
+
+      var entry_input = parseInt(document.getElementById("entryInput").value);
+
+      console.log();
+
+      console.log(typeof entry_input);
+      console.log(entry_input);
+
+      if ((typeof entry_input) == "number") {
+
+        if (Number.isNaN(entry_input)) {
+          entry_is_number = false;
+        } else {
+
+          if (current_level == 1) {
+            if (document.getElementById("entryInput").value % 1 == 0) {
+              entry_is_number = true;
+            } else {
+              entry_is_number = false;
+            }
+
+          } else if (current_level == 2) {
+
+            if (document.getElementById("entryInput").value % 1 != 0) {
+              entry_is_number = true;
+            } else {
+              entry_is_number = false;
+            }
+
+          }
+
+        }
+
+      } else {
+        entry_is_number = false;
+      }
+
+
 
       // Animate the catapult
       if (entry_is_number) {
@@ -112,6 +157,14 @@ function tick(event) {
 
         // Actual math
         solution = multiplier * multiplicand;
+
+        var solut_div = document.getElementById("solutionText");
+        while (solut_div.firstChild) {
+          solut_div.removeChild(solut_div.firstChild);
+        }
+
+        var solut = document.createTextNode(solution);
+        solut_div.appendChild(solut);
 
         // var scene_html = document.getElementById("sceneHTML");
         // while (scene_html.firstChild) {

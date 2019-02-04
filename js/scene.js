@@ -121,6 +121,7 @@ function createScene() {
       createGameForm();
 			createLevel();
       document.getElementById("entryInput").value = 0;
+      document.getElementById("myDropdown").classList.toggle("show");
       break;
 
     case 4:
@@ -350,7 +351,7 @@ function createGUI() {
 
 		case 3:
 
-			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { changeScene(8); });
+			login_button = createButton("res/login-button.png", "Map", buttonX, buttonY, function() { changeScene(8); });
       hint_button = createButton("res/hint-button.png", "Hint", small_buttonX, small_buttonY, function() {  changeScene(9); });
 
 			break;

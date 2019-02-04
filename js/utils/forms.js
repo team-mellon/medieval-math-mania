@@ -275,7 +275,7 @@ function createAccountForm() {
 
   // Creates username display label and text
   var username_label = document.createTextNode("Username:");
-  var username_text = document.createTextNode(fake_account.user);
+  var username_text = document.createTextNode("admin");
 
   // Creates username div to hold display text and input box
   var account_username_div = document.createElement("div");
@@ -286,8 +286,8 @@ function createAccountForm() {
 
 
   // Creates password display label and text
-  var password_label = document.createTextNode("Password:");
-  var password_text = document.createTextNode(fake_account.pass);
+  var password_label = document.createTextNode("Name:");
+  var password_text = document.createTextNode(database.users.admin.firstname + " " + database.users.admin.lastname);
 
   // Creates password div to hold display text and input box
   var account_password_div = document.createElement("div");
@@ -361,7 +361,10 @@ function createGameForm() {
 
 
   // Creates username display text
+  var multiplicand_div = document.createElement("div");
+  multiplicand_div.id = "multiplicandText";
   var multiplicand_text = document.createTextNode(multiplicand);
+  multiplicand_div.appendChild(multiplicand_text);
   var sign_text = document.createTextNode(sign);
   var entry_input = document.createElement("input");
   entry_input.id = "entryInput";
@@ -374,26 +377,28 @@ function createGameForm() {
   entry_input.setAttribute("max", "999");
   entry_input.setAttribute("name", "entry");
   entry_input.addEventListener('keypress', function(event) {
-      if (event.keyCode == 13) {
-          event.preventDefault();
-      }
+    if (event.keyCode == 13) {
+      event.preventDefault();
+    }
   });
   var equal_text = document.createTextNode(equal);
+  var solution_div = document.createElement("div");
+  solution_div.id = "solutionText";
   var solution_text = document.createTextNode(solution);
-
+  solution_div.appendChild(solution_text);
 
   // Creates username div to hold display text and input box
   var game_entry_div = document.createElement("div");
   game_entry_div.className = "login";
-  game_entry_div.appendChild(multiplicand_text);
+  game_entry_div.appendChild(multiplicand_div);
   game_entry_div.appendChild(sign_text);
   game_entry_div.appendChild(entry_input);
   game_entry_div.appendChild(equal_text);
-  game_entry_div.appendChild(solution_text);
+  game_entry_div.appendChild(solution_div);
 
 
   // Creates username display text
-  var button_text = document.createTextNode("H");
+  var button_text = document.createTextNode("History");
   var history_button = document.createElement("button");
   var history_div = document.createElement("div");
   history_button.className = "dropbtn";
@@ -438,6 +443,7 @@ function createGameForm() {
   scene_html.appendChild(game_range_form);
   scene_html.appendChild(game_entry_form);
   scene_html.appendChild(game_history_form);
+
 }
 
 function createHintForm() {
