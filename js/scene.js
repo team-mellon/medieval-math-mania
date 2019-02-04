@@ -530,6 +530,12 @@ function scaleGUI() {
 			scale_image(level2_indicator, stage.canvas.width / 2 - (indicatorX/2 + 168) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 150) * scene_scale_Y);
 
 			break;
+			
+	    case 9:
+	    	scale_image(background, stage.canvas.width / 2, stage.canvas.height / 2);
+	    	scale_image(foreground, stage.canvas.width / 2, stage.canvas.height / 2);
+	   	scale_image(level1_indicator, stage.canvas.width / 2 - (indicatorX/2 + 72) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 285) * scene_scale_Y);
+		break;
 
 		default:
 
