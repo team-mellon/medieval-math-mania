@@ -500,7 +500,7 @@ function scaleGUI() {
 		case 3:
 
       scale_image(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
-      scale_image(hint_button, stage.canvas.width - (small_buttonX/2 + 10) * scene_scale_Y, (small_buttonY/2 + 10) * scene_scale_Y);
+      scale_image(hint_button, stage.canvas.width - (small_buttonX/2 + 10) * scene_scale_Y, (small_buttonY/2 + 40) * scene_scale_Y);
 
 			break;
 

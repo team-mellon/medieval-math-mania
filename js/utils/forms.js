@@ -147,7 +147,7 @@ function createStatsForm() {
 
   // Creates username display label and text
   var hits_label = document.createTextNode("Hits: ");
-  var hits_text = document.createTextNode(fake_account.hits);
+  var hits_text = document.createTextNode(database.stats.admin.hits);
 
   // Creates username div to hold display text and input box
   var stats_hits_div = document.createElement("div");
@@ -159,7 +159,7 @@ function createStatsForm() {
 
   // Creates password display label and text
   var misses_label = document.createTextNode("Misses: ");
-  var misses_text = document.createTextNode(fake_account.misses);
+  var misses_text = document.createTextNode(database.stats.admin.misses);
 
   // Creates password div to hold display text and input box
   var stats_misses_div = document.createElement("div");
