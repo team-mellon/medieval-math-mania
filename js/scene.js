@@ -33,6 +33,8 @@ var account_button;
 
 var login_button;
 
+var hint_button;
+
 var level1_indicator;
 var level2_indicator;
 
@@ -496,6 +498,7 @@ function scaleGUI() {
 		case 3:
 
       scale_image(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
+      scale_image(hint_button, (buttonX/2 + 10) * scene_scale_Y, (buttonY/2 + 10) * scene_scale_Y);
 
 			break;
 
