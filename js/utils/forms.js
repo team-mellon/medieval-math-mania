@@ -450,7 +450,11 @@ function createHintForm() {
 
   // Creates display label and text
   var hint_label = document.createTextNode("Hint");
-  var hint_text = document.createTextNode( "This is a test hint and will be contextual based on what level sent you here");
+  if (current_level == 1) {
+    var hint_text = document.createTextNode("This is the placeholder text for the level 1 hint");
+  } else if (current_level == 2) {
+    var hint_text = document.createTextNode("This is the placeholder text for the level 2 hint");
+  }
   var br = document.createElement("br");
   // Creates hint div to hold display label and text
   var hint_hint_div = document.createElement("div");
