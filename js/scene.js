@@ -75,6 +75,10 @@ function loadScene() {
       break;
 
     case 8:
+      bg_color = "#fffcd8";
+      break;	  
+
+    case 9:
       bg_color = "#919191";
       break;
 
