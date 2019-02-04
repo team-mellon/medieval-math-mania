@@ -143,6 +143,10 @@ function createScene() {
       createMapForm();
       break;
 
+  case 9:
+      createHintForm();
+      break;
+
     default:
 
   }
