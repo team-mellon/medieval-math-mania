@@ -43,8 +43,8 @@ var level2_indicator;
 var phone_rotation;
 var phone_rotationS = {
   images: ["res/phone-rotation.png"],
-  frames: {width:288, height:288, count:1, regX: 0, regY:0, spacing:0, margin:0},
-  framerate: 6
+  frames: {width:288, height:288, count:2, regX: 0, regY:0, spacing:0, margin:0},
+  framerate: 1
 };
 
 function loadScene() {

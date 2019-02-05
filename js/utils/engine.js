@@ -69,6 +69,7 @@ function resize() {
     if(!added) {
       stage.addChild(landscape_warning);
       stage.addChild(phone_rotation);
+      phone_rotation.gotoAndPlay(0);
       var scene_html = document.getElementById("sceneHTML");
       scene_html.hidden = true;
       added = true;
