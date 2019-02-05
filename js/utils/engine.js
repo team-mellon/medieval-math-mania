@@ -41,6 +41,8 @@ var max_scale_X = 1920;
 var scene_scale_X;
 var scene_scale_Y;
 
+var gui_scale = 1;
+
 var scene_margin_X;
 
 var portrait = false;
@@ -55,6 +57,16 @@ function scale_image(image, x_loc, y_loc) {
   image.x = x_loc;
   image.y = y_loc;
 
+}
+
+// Scale the image-like assets
+function scale_gui(image, x_loc, y_loc) {
+
+  image.scaleX = scene_scale_X;
+  image.scaleY = scene_scale_Y;
+  image.scale = gui_scale;
+  image.x = x_loc;
+  image.y = y_loc;
 
 }
 
@@ -64,6 +76,14 @@ function resize() {
   // Resize the canvas element with new window size
   stage.canvas.width = window.innerWidth;
   stage.canvas.height = window.innerHeight;
+
+  if (window.innerWidth < 600) {
+    // gui_scale = 3;
+  } else if (window.innerWidth < 900) {
+    // gui_scale = 2;
+  } else {
+    // gui_scale = 1;
+  }
 
   if (window.innerHeight > window.innerWidth) {
     if(!added) {
