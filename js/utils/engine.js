@@ -45,8 +45,6 @@ var gui_scale = 1;
 
 var scene_margin_X;
 
-var portrait = false;
-
 var added = false;
 
 // Scale the image-like assets
@@ -64,7 +62,9 @@ function scale_gui(image, x_loc, y_loc) {
 
   image.scaleX = scene_scale_X;
   image.scaleY = scene_scale_Y;
-  image.scale = gui_scale;
+  if (window.innerWidth < 600) {
+    image.scale = gui_scale;
+  }
   image.x = x_loc;
   image.y = y_loc;
 
@@ -77,13 +77,13 @@ function resize() {
   stage.canvas.width = window.innerWidth;
   stage.canvas.height = window.innerHeight;
 
-  if (window.innerWidth < 600) {
-    // gui_scale = 3;
-  } else if (window.innerWidth < 900) {
-    // gui_scale = 2;
-  } else {
-    // gui_scale = 1;
-  }
+  // if (window.innerWidth < 600) {
+  //   // gui_scale = 3;
+  // } else if (window.innerWidth < 900) {
+  //   // gui_scale = 2;
+  // } else {
+  //   // gui_scale = 1;
+  // }
 
   if (window.innerHeight > window.innerWidth) {
     if(!added) {

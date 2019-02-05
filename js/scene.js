@@ -528,8 +528,13 @@ function scaleGUI() {
 
 			scale_image(login_button, (buttonX * gui_scale/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY * gui_scale/2 + 10) * scene_scale_Y);
 
-      scale_gui(level1_indicator, stage.canvas.width / 2 - (indicatorX * gui_scale/2 + 72) * scene_scale_Y, stage.canvas.height - (indicatorY * gui_scale/2 + 285) * scene_scale_Y);
-			scale_gui(level2_indicator, stage.canvas.width / 2 - (indicatorX * gui_scale/2 + 168) * scene_scale_Y, stage.canvas.height - (indicatorY * gui_scale/2 + 150) * scene_scale_Y);
+      if (window.innerWidth < 600) {
+        scale_gui(level1_indicator, stage.canvas.width / 2 - (indicatorX * gui_scale/2 + 72) * scene_scale_Y, stage.canvas.height - (indicatorY * gui_scale/2 + 285) * scene_scale_Y);
+			  scale_gui(level2_indicator, stage.canvas.width / 2 - (indicatorX * gui_scale/2 + 168) * scene_scale_Y, stage.canvas.height - (indicatorY * gui_scale/2 + 150) * scene_scale_Y);
+      } else {
+        scale_gui(level1_indicator, stage.canvas.width / 2 - (indicatorX * gui_scale/2 + 72) * scene_scale_Y, stage.canvas.height - (indicatorY * gui_scale/2 + 285) * scene_scale_Y);
+        scale_gui(level2_indicator, stage.canvas.width / 2 - (indicatorX * gui_scale/2 + 168) * scene_scale_Y, stage.canvas.height - (indicatorY * gui_scale/2 + 150) * scene_scale_Y);
+      }
 
 			break;
 
@@ -546,10 +551,17 @@ function scaleGUI() {
 	}
 
 	// GUI in front of everything
-	scale_image(previous_indicator, stage.canvas.width - (indicatorX * gui_scale/4 * 13) * scene_scale_Y, stage.canvas.height - (indicatorY * gui_scale/4 * 3) * scene_scale_Y);
-	scale_image(pause_indicator, stage.canvas.width - (indicatorX * gui_scale/4 * 8) * scene_scale_Y, stage.canvas.height - (indicatorY * gui_scale/4 * 3) * scene_scale_Y);
-	scale_image(next_indicator, stage.canvas.width - (indicatorX * gui_scale/4 * 3) * scene_scale_Y, stage.canvas.height - (indicatorY * gui_scale/4 * 3) * scene_scale_Y);
-	scale_image(lute, stage.canvas.width - (luteX/2) * scene_scale_Y, stage.canvas.height - (luteY/2 + 32) * scene_scale_Y);
+  if (window.innerWidth < 600) {
+  	scale_gui(previous_indicator, stage.canvas.width - (indicatorX * gui_scale/4 * 13) * gui_scale, stage.canvas.height - (indicatorY * gui_scale/4 * 3));
+  	scale_gui(pause_indicator, stage.canvas.width - (indicatorX * gui_scale/4 * 8) * gui_scale, stage.canvas.height - (indicatorY * gui_scale/4 * 3));
+  	scale_gui(next_indicator, stage.canvas.width - (indicatorX * gui_scale/4 * 3) * gui_scale, stage.canvas.height - (indicatorY * gui_scale/4 * 3));
+  	scale_gui(lute, stage.canvas.width - (luteX/2), stage.canvas.height - (luteY/2 + 32));
+  } else {
+  	scale_gui(previous_indicator, stage.canvas.width - (indicatorX * gui_scale/4 * 13) * scene_scale_Y, stage.canvas.height - (indicatorY * gui_scale/4 * 3) * scene_scale_Y);
+  	scale_gui(pause_indicator, stage.canvas.width - (indicatorX * gui_scale/4 * 8) * scene_scale_Y, stage.canvas.height - (indicatorY * gui_scale/4 * 3) * scene_scale_Y);
+  	scale_gui(next_indicator, stage.canvas.width - (indicatorX * gui_scale/4 * 3) * scene_scale_Y, stage.canvas.height - (indicatorY * gui_scale/4 * 3) * scene_scale_Y);
+  	scale_gui(lute, stage.canvas.width - (luteX/2) * scene_scale_Y, stage.canvas.height - (luteY/2 + 32) * scene_scale_Y);
+  }
 
   landscape_warning.graphics.clear()
   landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, stage.canvas.width, stage.canvas.height);
