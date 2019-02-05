@@ -43,7 +43,9 @@ var scene_scale_Y;
 
 var scene_margin_X;
 
+var portrait = false;
 
+var added = false;
 
 // Scale the image-like assets
 function scale_image(image, x_loc, y_loc) {
@@ -62,6 +64,24 @@ function resize() {
   // Resize the canvas element with new window size
   stage.canvas.width = window.innerWidth;
   stage.canvas.height = window.innerHeight;
+
+  if (window.innerHeight > window.innerWidth) {
+    if(!added) {
+      stage.addChild(landscape_warning);
+      stage.addChild(phone_rotation);
+      var scene_html = document.getElementById("sceneHTML");
+      scene_html.hidden = true;
+      added = true;
+    }
+  } else {
+    if(added){
+      stage.removeChild(landscape_warning);
+      stage.removeChild(phone_rotation);
+      var scene_html = document.getElementById("sceneHTML");
+      scene_html.hidden = false;
+      added = false;
+    }
+  }
 
   // Redraw background before everthing else for Z-axis reasons
   bg.graphics.clear()

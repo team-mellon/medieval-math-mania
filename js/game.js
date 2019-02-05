@@ -30,6 +30,8 @@ var hide_archer4 = false;
 
 var boss_fight = false;
 
+var landscape_warning;
+
 var database = {
   "users": {
     "admin": {

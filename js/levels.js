@@ -74,11 +74,11 @@ function loadLevel() {
 
   }
 
-    numberlineS = {
-	images: ["res/numberline.png"],
-	frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-    };
+  numberlineS = {
+    images: ["res/numberline.png"],
+    frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+  };
 
   bossS = {
     images: ["res/level" + current_level + "/boss.png"],

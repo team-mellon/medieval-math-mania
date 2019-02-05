@@ -40,6 +40,13 @@ var hint_button;
 var level1_indicator;
 var level2_indicator;
 
+var phone_rotation;
+var phone_rotationS = {
+  images: ["res/phone-rotation.png"],
+  frames: {width:288, height:288, count:1, regX: 0, regY:0, spacing:0, margin:0},
+  framerate: 6
+};
+
 function loadScene() {
 
   switch(current_scene) {
@@ -171,7 +178,6 @@ function changeScene(new_scene) {
 
   loadScene();
   destroyScene();
-  console.log("called");
   createScene();
   resize();
 	scaleGUI();
@@ -181,38 +187,9 @@ function changeScene(new_scene) {
 function destroyScene() {
 
 	switch(last_scene) {
-
 		case 0:
-
-      // var scene_html = document.getElementById("sceneHTML");
-      // while (scene_html.firstChild) {
-      //   scene_html.removeChild(scene_html.firstChild);
-      // }
-
 			break;
-
-    case 1:
-
-      // var scene_html = document.getElementById("sceneHTML");
-      // while (scene_html.firstChild) {
-      //   scene_html.removeChild(scene_html.firstChild);
-      // }
-
-      break;
-
-		case 3:
-
-      // var scene_html = document.getElementById("sceneHTML");
-      // while (scene_html.firstChild) {
-      //   scene_html.removeChild(scene_html.firstChild);
-      // }
-
-  		// destroyLevel();
-
-			break;
-
 		default:
-
 	}
 
   var scene_html = document.getElementById("sceneHTML");
@@ -221,8 +198,6 @@ function destroyScene() {
   }
 
   stage.removeAllChildren();
-
-  // stage.clear();
 
 }
 
@@ -429,7 +404,7 @@ function createGUI() {
 
       background = createImage("res/login.png", backgroundX, backgroundY);
       foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
-	login_button = createButton("res/login-button.png", "Back", buttonX, buttonY, function() { changeScene(3); });
+      login_button = createButton("res/login-button.png", "Back", buttonX, buttonY, function() { changeScene(3); });
 
       break;
 
@@ -457,6 +432,11 @@ function createGUI() {
   //   .to({alpha: 0, y: 125}, 100)
   //   .to({alpha: 1, y: 100}, 500, createjs.Ease.getPowInOut(2))
   //   .to({x: 100}, 800, createjs.Ease.getPowInOut(2));
+
+  landscape_warning = new createjs.Shape();
+
+  phone_rotation = createSprite(phone_rotationS, 288, 288);
+  stage.removeChild(phone_rotation);
 
 }
 
@@ -553,11 +533,13 @@ function scaleGUI() {
 
 			break;
 
-	    case 9:
-	    	scale_image(background, stage.canvas.width / 2, stage.canvas.height / 2);
-	    	scale_image(foreground, stage.canvas.width / 2, stage.canvas.height / 2);
-        scale_image(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
-		break;
+    case 9:
+
+    	scale_image(background, stage.canvas.width / 2, stage.canvas.height / 2);
+    	scale_image(foreground, stage.canvas.width / 2, stage.canvas.height / 2);
+      scale_image(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
+
+	    break;
 
 		default:
 
@@ -568,5 +550,10 @@ function scaleGUI() {
 	scale_image(pause_indicator, stage.canvas.width - (indicatorX/4 * 8) * scene_scale_Y, stage.canvas.height - (indicatorY/4 * 3) * scene_scale_Y);
 	scale_image(next_indicator, stage.canvas.width - (indicatorX/4 * 3) * scene_scale_Y, stage.canvas.height - (indicatorY/4 * 3) * scene_scale_Y);
 	scale_image(lute, stage.canvas.width - (luteX/2) * scene_scale_Y, stage.canvas.height - (luteY/2 + 32) * scene_scale_Y);
+
+  landscape_warning.graphics.clear()
+  landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, stage.canvas.width, stage.canvas.height);
+
+  scale_image(phone_rotation, stage.canvas.width / 2, stage.canvas.height / 2);
 
 }
