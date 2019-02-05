@@ -41,8 +41,6 @@ var max_scale_X = 1920;
 var scene_scale_X;
 var scene_scale_Y;
 
-var gui_scale = 1;
-
 var scene_margin_X;
 
 var added = false;
@@ -63,7 +61,7 @@ function scale_gui(image, x_loc, y_loc) {
   image.scaleX = scene_scale_X;
   image.scaleY = scene_scale_Y;
   if (window.innerWidth < 600) {
-    image.scale = gui_scale;
+    image.scale = 1;
   }
   image.x = x_loc;
   image.y = y_loc;
