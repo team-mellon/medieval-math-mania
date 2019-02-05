@@ -60,7 +60,7 @@ function scale_gui(image, x_loc, y_loc) {
 
   image.scaleX = scene_scale_X;
   image.scaleY = scene_scale_Y;
-  if (window.innerWidth < 600) {
+  if (stage.canvas.width < 900) {
     image.scale = 1;
   }
   image.x = x_loc;
