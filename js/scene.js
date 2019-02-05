@@ -528,7 +528,7 @@ function scaleGUI() {
 
 			scale_image(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
 
-      if (window.innerWidth < 600) {
+      if (window.innerWidth < 900) {
         scale_gui(level1_indicator, stage.canvas.width / 2 - (indicatorX/2 + 72), stage.canvas.height - (indicatorY/2 + 285));
 			  scale_gui(level2_indicator, stage.canvas.width / 2 - (indicatorX/2 + 168), stage.canvas.height - (indicatorY/2 + 150));
       } else {
@@ -551,7 +551,7 @@ function scaleGUI() {
 	}
 
 	// GUI in front of everything
-  if (window.innerWidth < 600) {
+  if (window.innerWidth < 900) {
   	scale_gui(previous_indicator, stage.canvas.width - (indicatorX/4 * 13), stage.canvas.height - (indicatorY/4 * 3));
   	scale_gui(pause_indicator, stage.canvas.width - (indicatorX/4 * 8), stage.canvas.height - (indicatorY/4 * 3));
   	scale_gui(next_indicator, stage.canvas.width - (indicatorX/4 * 3), stage.canvas.height - (indicatorY/4 * 3));
