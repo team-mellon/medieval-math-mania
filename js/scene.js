@@ -451,6 +451,14 @@ function scaleGUI() {
 
 			scale_image(left_sword_button, stage.canvas.width/2 - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height/2 + (buttonY/2 + 140) * scene_scale_Y);
 			scale_image(right_sword_button, stage.canvas.width/2 + (buttonX/2 + 50) * scene_scale_Y, stage.canvas.height/2 + (buttonY/2 + 140) * scene_scale_Y);
+
+      if (stage.canvas.width < 900) {
+  			scale_gui(left_sword_button, stage.canvas.width/2 - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height/2 + (buttonY/2 + 140) * scene_scale_Y);
+  			scale_gui(right_sword_button, stage.canvas.width/2 + (buttonX/2 + 50) * scene_scale_Y, stage.canvas.height/2 + (buttonY/2 + 140) * scene_scale_Y);
+      } else {
+  			scale_gui(left_sword_button, stage.canvas.width/2 - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height/2 + (buttonY/2 + 140) * scene_scale_Y);
+  			scale_gui(right_sword_button, stage.canvas.width/2 + (buttonX/2 + 50) * scene_scale_Y, stage.canvas.height/2 + (buttonY/2 + 140) * scene_scale_Y);
+      }
 			scale_image(secret_button, stage.canvas.width/2, stage.canvas.height/2);
 
 			break;
@@ -460,8 +468,13 @@ function scaleGUI() {
 			scale_image(background, stage.canvas.width / 2, stage.canvas.height / 2);
 			scale_image(foreground, stage.canvas.width / 2, stage.canvas.height / 2);
 
-			scale_image(left_sword_button, stage.canvas.width/2 - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height/2 + (buttonY/2 + 140) * scene_scale_Y);
-			scale_image(right_sword_button, stage.canvas.width/2 + (buttonX/2 + 50) * scene_scale_Y, stage.canvas.height/2 + (buttonY/2 + 140) * scene_scale_Y);
+      if (stage.canvas.width < 900) {
+  			scale_gui(left_sword_button, stage.canvas.width/2 - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height/2 + (buttonY/2 + 140) * scene_scale_Y);
+  			scale_gui(right_sword_button, stage.canvas.width/2 + (buttonX/2 + 50) * scene_scale_Y, stage.canvas.height/2 + (buttonY/2 + 140) * scene_scale_Y);
+      } else {
+  			scale_gui(left_sword_button, stage.canvas.width/2 - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height/2 + (buttonY/2 + 140) * scene_scale_Y);
+  			scale_gui(right_sword_button, stage.canvas.width/2 + (buttonX/2 + 50) * scene_scale_Y, stage.canvas.height/2 + (buttonY/2 + 140) * scene_scale_Y);
+      }
 
 			break;
 
@@ -469,19 +482,33 @@ function scaleGUI() {
 
 			scale_image(background, stage.canvas.width / 2, stage.canvas.height / 2);
 
-			scale_image(play_button, stage.canvas.width/2, stage.canvas.height/2 - 200 * scene_scale_Y);
-			scale_image(stats_button, stage.canvas.width/2, stage.canvas.height/2 - 100 * scene_scale_Y);
-			scale_image(h2p_button, stage.canvas.width/2, stage.canvas.height/2 - 0 * scene_scale_Y);
-			scale_image(settings_button, stage.canvas.width/2, stage.canvas.height/2 + 100 * scene_scale_Y);
-			scale_image(logout_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height/2 - 300 * scene_scale_Y);
-			scale_image(account_button, stage.canvas.width - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height/2 - 300 * scene_scale_Y);
+      if (stage.canvas.width < 900) {
+  			scale_gui(play_button, stage.canvas.width/2, stage.canvas.height/2 - 105);
+  			scale_gui(stats_button, stage.canvas.width/2, stage.canvas.height/2 - 20);
+  			scale_gui(h2p_button, stage.canvas.width/2, stage.canvas.height/2 + 65);
+  			scale_gui(settings_button, stage.canvas.width/2, stage.canvas.height/2 + 150);
+  			scale_gui(logout_button, (buttonX/2 + 10), (buttonY/2 + 10));
+  			scale_gui(account_button, stage.canvas.width - (buttonX/2 + 10), (buttonY/2 + 10));
+      } else {
+  			scale_gui(play_button, stage.canvas.width/2, stage.canvas.height/2 - 200 * scene_scale_Y);
+  			scale_gui(stats_button, stage.canvas.width/2, stage.canvas.height/2 - 100 * scene_scale_Y);
+  			scale_gui(h2p_button, stage.canvas.width/2, stage.canvas.height/2 - 0 * scene_scale_Y);
+  			scale_gui(settings_button, stage.canvas.width/2, stage.canvas.height/2 + 100 * scene_scale_Y);
+  			scale_gui(logout_button, (buttonX/2 + 10) * scene_scale_Y,  (buttonY/2 + 10) * scene_scale_Y);
+  			scale_gui(account_button, stage.canvas.width - (buttonX/2 + 10) * scene_scale_Y,  (buttonY/2 + 10) * scene_scale_Y);
+      }
 
 			break;
 
 		case 3:
 
-      scale_image(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
-      scale_image(hint_button, stage.canvas.width - (small_buttonX/2 + 116) * scene_scale_Y, stage.canvas.height - (small_buttonY/2 + 10) * scene_scale_Y);
+      if (stage.canvas.width < 900) {
+        scale_gui(login_button, (buttonX/2 + 10), stage.canvas.height - (buttonY/2 + 10));
+        scale_gui(hint_button, stage.canvas.width - (small_buttonX/2 + 116), stage.canvas.height - (small_buttonY/2 + 10));
+      } else {
+        scale_gui(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
+        scale_gui(hint_button, stage.canvas.width - (small_buttonX/2 + 116) * scene_scale_Y, stage.canvas.height - (small_buttonY/2 + 10) * scene_scale_Y);
+      }
 
 			break;
 
@@ -490,7 +517,11 @@ function scaleGUI() {
 			scale_image(background, stage.canvas.width / 2, stage.canvas.height / 2);
 			scale_image(foreground, stage.canvas.width / 2, stage.canvas.height / 2);
 
-			scale_image(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
+      if (stage.canvas.width < 900) {
+        scale_gui(login_button, (buttonX/2 + 10), stage.canvas.height - (buttonY/2 + 10));
+      } else {
+        scale_gui(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
+      }
 
 			break;
 
@@ -499,7 +530,11 @@ function scaleGUI() {
 			scale_image(background, stage.canvas.width / 2, stage.canvas.height / 2);
 			scale_image(foreground, stage.canvas.width / 2, stage.canvas.height / 2);
 
-			scale_image(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
+      if (stage.canvas.width < 900) {
+        scale_gui(login_button, (buttonX/2 + 10), stage.canvas.height - (buttonY/2 + 10));
+      } else {
+        scale_gui(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
+      }
 
 			break;
 
@@ -508,7 +543,11 @@ function scaleGUI() {
 			scale_image(background, stage.canvas.width / 2, stage.canvas.height / 2);
 			scale_image(foreground, stage.canvas.width / 2, stage.canvas.height / 2);
 
-			scale_image(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
+      if (stage.canvas.width < 900) {
+        scale_gui(login_button, (buttonX/2 + 10), stage.canvas.height - (buttonY/2 + 10));
+      } else {
+        scale_gui(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
+      }
 
 			break;
 
@@ -517,7 +556,11 @@ function scaleGUI() {
 			scale_image(background, stage.canvas.width / 2, stage.canvas.height / 2);
 			scale_image(foreground, stage.canvas.width / 2, stage.canvas.height / 2);
 
-			scale_image(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
+      if (stage.canvas.width < 900) {
+        scale_gui(login_button, (buttonX/2 + 10), stage.canvas.height - (buttonY/2 + 10));
+      } else {
+        scale_gui(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
+      }
 
 			break;
 
@@ -529,9 +572,11 @@ function scaleGUI() {
 			scale_image(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
 
       if (stage.canvas.width < 900) {
+        scale_gui(login_button, (buttonX/2 + 10), stage.canvas.height - (buttonY/2 + 10));
         scale_gui(level1_indicator, stage.canvas.width / 2 - (indicatorX/2 + 72) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 285) * scene_scale_Y);
 			  scale_gui(level2_indicator, stage.canvas.width / 2 - (indicatorX/2 + 168) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 150) * scene_scale_Y);
       } else {
+        scale_gui(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
         scale_gui(level1_indicator, stage.canvas.width / 2 - (indicatorX/2 + 72) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 285) * scene_scale_Y);
         scale_gui(level2_indicator, stage.canvas.width / 2 - (indicatorX/2 + 168) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 150) * scene_scale_Y);
       }
@@ -542,7 +587,12 @@ function scaleGUI() {
 
     	scale_image(background, stage.canvas.width / 2, stage.canvas.height / 2);
     	scale_image(foreground, stage.canvas.width / 2, stage.canvas.height / 2);
-      scale_image(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
+
+      if (stage.canvas.width < 900) {
+        scale_gui(login_button, (buttonX/2 + 10), stage.canvas.height - (buttonY/2 + 10));
+      } else {
+        scale_gui(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
+      }
 
 	    break;
 
