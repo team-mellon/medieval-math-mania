@@ -45,6 +45,13 @@ var scene_margin_X;
 
 var added = false;
 
+var phone_rotation;
+var phone_rotationS = {
+  images: ["res/phone-rotation.png"],
+  frames: {width:288, height:288, count:2, regX: 0, regY:0, spacing:0, margin:0},
+  framerate: 1
+};
+
 // Scale the image-like assets
 function scale_image(image, x_loc, y_loc) {
 

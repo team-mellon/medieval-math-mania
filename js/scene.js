@@ -1,13 +1,6 @@
-var num_scenes = 7;
+var num_scenes = 10;
 var current_scene = 0;
 var last_scene = 0;
-
-var phone_rotation;
-var phone_rotationS = {
-  images: ["res/phone-rotation.png"],
-  frames: {width:288, height:288, count:2, regX: 0, regY:0, spacing:0, margin:0},
-  framerate: 1
-};
 
 function loadScene() {
 
@@ -62,10 +55,6 @@ function loadScene() {
 }
 
 function createScene() {
-
-  stage.addChild(bg);
-  bg.graphics.clear()
-  bg.graphics.beginFill(bg_color).drawRect(0, 0, stage.canvas.width, stage.canvas.height);
 
   switch(current_scene) {
 
@@ -129,17 +118,21 @@ function createScene() {
 
   }
 
+  stage.addChild(bg);
+  bg.graphics.clear()
+  bg.graphics.beginFill(bg_color).drawRect(0, 0, stage.canvas.width, stage.canvas.height);
+
 	createGUI();
 
 }
 
 function destroyScene() {
 
-	switch(last_scene) {
-		case 0:
-			break;
-		default:
-	}
+	// switch(last_scene) {
+	// 	case 0:
+	// 		break;
+	// 	default:
+	// }
 
   var scene_html = document.getElementById("sceneHTML");
   while (scene_html.firstChild) {
