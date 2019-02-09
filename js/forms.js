@@ -1,7 +1,9 @@
 function createLoginForm() {
 
   // Creates username display label and input box
-  var username_text = document.createTextNode("Username:");
+  var username_text = document.createTextNode("Username");
+  // Creates line break for form div spacing
+  var br = document.createElement("br");
   var username_input = document.createElement("input");
   username_input.id = "usernameInput";
   username_input.setAttribute("type", "text");
@@ -11,12 +13,15 @@ function createLoginForm() {
   var login_username_div = document.createElement("div");
   login_username_div.className = "login";
   login_username_div.appendChild(username_text);
+  login_username_div.appendChild(br);
   login_username_div.appendChild(username_input);
 
-
+  var br3 = document.createElement("br");
 
   // Creates password display label and input box
-  var password_text = document.createTextNode("Password:");
+  var password_text = document.createTextNode("Password");
+  // Creates line break for form div spacing
+  var br2 = document.createElement("br");
   var password_input = document.createElement("input");
   password_input.id = "passwordInput";
   password_input.setAttribute("type", "password");
@@ -26,6 +31,7 @@ function createLoginForm() {
   var login_password_div = document.createElement("div");
   login_password_div.className = "login";
   login_password_div.appendChild(password_text);
+  login_password_div.appendChild(br2);
   login_password_div.appendChild(password_input);
 
 
@@ -35,6 +41,7 @@ function createLoginForm() {
   login_form.id = "loginForm";
   login_form.className = "scrollMenu";
   login_form.appendChild(login_username_div);
+  login_form.appendChild(br3);
   login_form.appendChild(login_password_div);
 
   // Injecting login form into existing html
