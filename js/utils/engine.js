@@ -31,6 +31,13 @@ function init() {
 
 }
 
+//////////////////////
+// Scene Management //
+//////////////////////
+
+var current_scene = 0;
+var last_scene = 0;
+
 ////////////////////
 // Engine scaling //
 ////////////////////

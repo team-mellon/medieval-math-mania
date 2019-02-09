@@ -150,6 +150,10 @@ function createSignupForm() {
 
 }
 
+function createMenuForm() {
+  
+}
+
 function createStatsForm() {
 
   // Creates username display label and text

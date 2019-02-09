@@ -1,54 +1,54 @@
 var num_scenes = 10;
-var current_scene = 0;
-var last_scene = 0;
+
+var scene_bg_colors = [
+    "#919191",
+    "#919191",
+    "#8ac5dc",
+    "#000000",
+    "#919191",
+    "#919191",
+    "#919191",
+    "#919191",
+    "#fffcd8",
+    "#919191"
+];
+
+var scene_forms = [
+    function() {createLoginForm();},
+    function() {createSignupForm();},
+    // firstname_text.text = "First Name";
+    // lastname_text.text = "Last Name";
+    // username_text.text = "Create User Name";
+    // password_text.text = "Create Password";
+    // re_password_text.text = "Re-Enter Password";
+    function() {createMenuForm();},
+    function() {createGameForm();},
+    // This was in stats scene, may need this structure
+    // var key = message.current_user;
+    // stats1_text.text = "Hits: " + database["stats"][key]["hits"];
+    // stats2_text.text = "Misses: " + database["stats"][key]["misses"];
+    function() {createStatsForm();},
+    function() {createHow2PlayForm();},
+    function() {createSettingsForm();},
+    // This was in account scene, may need this structure
+    // var key = message.current_user;
+    // username_text.text = "Fullname: " + database["users"][key]["firstname"] + " " + database["users"][key]["lastname"];
+    // password_text.text = "Password: " + database["users"][key]["password"];
+    function() {createAccountForm();},
+    function() {createMapForm();},
+    function() {createHintForm();}
+];
 
 function loadScene() {
 
+  bg_color = scene_bg_colors[current_scene];
+
   switch(current_scene) {
 
-    case 0:
-      bg_color = "#919191";
-      break;
-
-    case 1:
-      bg_color = "#919191";
-      break;
-
-    case 2:
-      bg_color = "#8ac5dc";
-			//loadGUI();
-      break;
-
     case 3:
-			loadLevel();
-			//loadGUI();
+  		loadLevel();
+  		//loadGUI();
       break;
-
-    case 4:
-      bg_color = "#919191";
-      break;
-
-    case 5:
-      bg_color = "#919191";
-      break;
-
-    case 6:
-      bg_color = "#919191";
-      break;
-
-    case 7:
-      bg_color = "#919191";
-      break;
-
-    case 8:
-      bg_color = "#fffcd8";
-      break;
-
-    case 9:
-      bg_color = "#919191";
-      break;
-
-    default:
 
   }
 
@@ -56,71 +56,24 @@ function loadScene() {
 
 function createScene() {
 
+  scene_forms[current_scene]();
+
+  stage.addChild(bg);
+  bg.graphics.clear()
+  bg.graphics.beginFill(bg_color).drawRect(0, 0, stage.canvas.width, stage.canvas.height);
+
   switch(current_scene) {
 
-    case 0:
-      createLoginForm();
-      break;
-
-    case 1:
-      createSignupForm();
-      // firstname_text.text = "First Name";
-      // lastname_text.text = "Last Name";
-      // username_text.text = "Create User Name";
-      // password_text.text = "Create Password";
-      // re_password_text.text = "Re-Enter Password";
-      break;
-
-    case 2:
-      // createMenuForm();
-      break;
-
     case 3:
-      createGameForm();
+      // createGameForm();
 			createLevel();
       document.getElementById("entryInput").value = 0;
       document.getElementById("myDropdown").classList.toggle("show");
       break;
 
-    case 4:
-      // This was in stats scene, may need this structure
-      // var key = message.current_user;
-      // stats1_text.text = "Hits: " + database["stats"][key]["hits"];
-      // stats2_text.text = "Misses: " + database["stats"][key]["misses"];
-      createStatsForm();
-      break;
-
-    case 5:
-      createHow2PlayForm();
-      break;
-
-    case 6:
-      createSettingsForm(); // Make volume slider affect volume and checkbox control time in scene
-      break;
-
-    case 7:
-      // This was in account scene, may need this structure
-      // var key = message.current_user;
-      // username_text.text = "Fullname: " + database["users"][key]["firstname"] + " " + database["users"][key]["lastname"];
-      // password_text.text = "Password: " + database["users"][key]["password"];
-      createAccountForm();
-      break;
-
-  case 8:
-      createMapForm();
-      break;
-
-  case 9:
-      createHintForm();
-      break;
-
     default:
 
   }
-
-  stage.addChild(bg);
-  bg.graphics.clear()
-  bg.graphics.beginFill(bg_color).drawRect(0, 0, stage.canvas.width, stage.canvas.height);
 
 	createGUI();
 
