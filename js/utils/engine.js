@@ -38,6 +38,25 @@ function init() {
 var current_scene = 0;
 var last_scene = 0;
 
+
+
+function destroyScene() {
+
+	// switch(last_scene) {
+	// 	case 0:
+	// 		break;
+	// 	default:
+	// }
+
+  var scene_html = document.getElementById("sceneHTML");
+  while (scene_html.firstChild) {
+    scene_html.removeChild(scene_html.firstChild);
+  }
+
+  stage.removeAllChildren();
+
+}
+
 ////////////////////
 // Engine scaling //
 ////////////////////
@@ -76,6 +95,19 @@ function scale_gui(image, x_loc, y_loc) {
   image.scaleY = scene_scale_Y;
   if (stage.canvas.width < 900) {
     image.scale = 1;
+  }
+  image.x = x_loc;
+  image.y = y_loc;
+
+}
+
+// Scale the image-like assets
+function scale_gui2(image, x_loc, y_loc) {
+
+  image.scaleX = scene_scale_X;
+  image.scaleY = scene_scale_Y;
+  if (stage.canvas.width < 900) {
+    image.scale = 0.5;
   }
   image.x = x_loc;
   image.y = y_loc;

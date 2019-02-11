@@ -22,7 +22,12 @@ var scene_forms = [
     // password_text.text = "Create Password";
     // re_password_text.text = "Re-Enter Password";
     function() {createMenuForm();},
-    function() {createGameForm();},
+    function() {
+      createGameForm();
+      createLevel();
+      document.getElementById("entryInput").value = 0;
+      document.getElementById("myDropdown").classList.toggle("show");
+    },
     // This was in stats scene, may need this structure
     // var key = message.current_user;
     // stats1_text.text = "Hits: " + database["stats"][key]["hits"];
@@ -56,43 +61,13 @@ function loadScene() {
 
 function createScene() {
 
-  scene_forms[current_scene]();
-
   stage.addChild(bg);
   bg.graphics.clear()
   bg.graphics.beginFill(bg_color).drawRect(0, 0, stage.canvas.width, stage.canvas.height);
 
-  switch(current_scene) {
-
-    case 3:
-      // createGameForm();
-			createLevel();
-      document.getElementById("entryInput").value = 0;
-      document.getElementById("myDropdown").classList.toggle("show");
-      break;
-
-    default:
-
-  }
+  scene_forms[current_scene]();
 
 	createGUI();
-
-}
-
-function destroyScene() {
-
-	// switch(last_scene) {
-	// 	case 0:
-	// 		break;
-	// 	default:
-	// }
-
-  var scene_html = document.getElementById("sceneHTML");
-  while (scene_html.firstChild) {
-    scene_html.removeChild(scene_html.firstChild);
-  }
-
-  stage.removeAllChildren();
 
 }
 
