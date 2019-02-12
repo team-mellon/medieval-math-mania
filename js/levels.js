@@ -5,13 +5,17 @@ var number_text;
 var number_spacing = 10;
 var number_spacer = 25;
 var numberline;
+
 var numberlineS;
 
 var big_boss;
+
 var big_bossS;
 
 var boss;
+
 var bossS;
+
 var bossX = 96;
 var bossY = 96;
 
@@ -19,7 +23,9 @@ var henchman_left,
     henchman_left_center,
     henchman_right_center,
     henchman_right;
+
 var henchmanS;
+
 var henchmanX = 96;
 var henchmanY = 96;
 
@@ -37,6 +43,7 @@ var center,
     left,
     right,
     facade;
+
 var centerS,
     left_centerS,
     right_centerS,
@@ -44,16 +51,21 @@ var centerS,
     leftS,
     rightS,
     facadeS;
+
 var structureX = 1920;
 var structureY = 768;
 
 var projectile;
+
 var projectileS;
+
 var projectileX = 96;
 var projectileY = 96;
 
 var catapult;
+
 var catapultS;
+
 var catapultX = 288;
 var catapultY = 384;
 

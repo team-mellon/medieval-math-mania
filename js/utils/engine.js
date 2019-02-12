@@ -1,33 +1,34 @@
-// Initialize the engine
+////////////
+// Engine //
+////////////
 
-// Stage for drawing pictures and shapes
-var stage;
+var stage; // Stage for drawing pictures and shapes
 
-var bg;
-var bg_color;
+var bg; // Background rectangle to clear screen
+var bg_color; // Background color
 
 function init() {
 
-  stage = new createjs.Stage("demoCanvas");
-  createjs.Touch.enable(stage);
+  stage = new createjs.Stage("demoCanvas"); // Create the stage and attach it to canvas
+  createjs.Touch.enable(stage); // Enable touch interaction for mobile
 
-  bg = new createjs.Shape();
-  stage.addChild(bg);
+  bg = new createjs.Shape(); // Create a rectangle for clearing the screen
+  stage.addChild(bg); // Add rectangle to the stage
 
-  loadSound();
+  loadSound(); // Load sounds from file
   console.log(playlist);
 
-  loadScene();
-  createScene();
+  loadScene(); // Load background color and level assets if ingame
+  createScene(); // Create scene assets
 
-  createjs.Ticker.setFPS(60);
-  createjs.Ticker.addEventListener("tick", tick);
+  createjs.Ticker.setFPS(60); // Set FPS (could be depricated?)
+  createjs.Ticker.addEventListener("tick", tick); // Set tisk listener for use as game loop
 
-  this.document.onkeydown = keydown;
-  this.document.onkeyup = keyup;
+  this.document.onkeydown = keydown; // Add keydown listener
+  this.document.onkeyup = keyup; // Add keyup listener
 
-  resize();
-  scaleGUI();
+  resize(); // Resize to set initial scale
+  scaleGUI(); // Scale scene appropriately
 
 }
 
@@ -37,8 +38,6 @@ function init() {
 
 var current_scene = 0;
 var last_scene = 0;
-
-
 
 function destroyScene() {
 

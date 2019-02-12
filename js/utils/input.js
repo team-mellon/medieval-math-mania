@@ -5,8 +5,6 @@
 // Holds the states of all the keys
 var keys = {};
 
-
-
 // Check all the keys to see if they are pressed
 function keydown(event) {
 
@@ -18,7 +16,7 @@ function keydown(event) {
 function keyup(event) {
 
     delete keys[event.keyCode];
-    
+
 }
 
 
@@ -38,12 +36,10 @@ var drag_down = false;
 var start_touch = 0;
 var end_touch = 0;
 
-
-
 // Touch start handler
 function handleStart(evt) {
 
-  // ???
+  // Prevent the default behavior of the event
   evt.preventDefault();
 
   // Logs the touch start location for drag calculations
@@ -58,7 +54,7 @@ function handleStart(evt) {
 // Touch end handler
 function handleEnd(evt) {
 
-  // ???
+  // Prevent the default behavior of the event
   evt.preventDefault();
 
   // Logs the touch end location for drag calculations
