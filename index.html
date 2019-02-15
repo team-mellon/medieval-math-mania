@@ -1,96 +1,54 @@
 <!DOCTYPE html>
 <html>
   <head>
+
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
     <title>Hit Target Math Game</title>
-    <script src="js/libs/babylon.custom.js"></script>                           <!-- babylon.js  -->
-    <script src="js/login_scene.js"></script>
-    <script src="js/menu_scene.js"></script>
-    <script src="js/game_scene.js"></script>
-    <script src="js/stats_scene.js"></script>
-    <script src="js/h2p_scene.js"></script>
-    <script src="js/settings_scene.js"></script>
-    <script src="js/account_scene.js"></script>
-    <script src="js/create_acc_scene.js"></script>
-    <script src="db/db.js"></script>                                            <!-- database  -->
-    <style>
-      html, body {
-          overflow: hidden;
-          width   : 100%;
-          height  : 100%;
-          margin  : 0;
-          padding : 0;
-      }
-      #renderCanvas {
-          width   : 100%;
-          height  : 100%;
-          touch-action: none;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
+
+    <script src="js/libs/createjs.min.js"></script>
+    <script src="js/utils/engine.js"></script>
+    <script src="js/utils/input.js"></script>
+    <script src="js/utils/music.js"></script>
+    <script src="js/utils/user_interface.js"></script>
+    <script src="js/scene.js"></script>
+    <script src="js/gui.js"></script>
+    <script src="js/forms.js"></script>
+    <script src="js/levels.js"></script>
+    <script src="js/game.js"></script>
+
+    <!-- <script src="js/login_scene.js"></script> -->
+    <!-- <script src="js/game_scene.js"></script> -->
+    <!-- <script src="js/create_acc_scene.js"></script> -->
+
   </head>
-  <body>
-    <canvas id="renderCanvas"></canvas>                                         <!-- canvas for rendering webgl and babylon -->
+  <body onload="init();">
+
+    <!-- <canvas id="renderCanvas"></canvas>                                          canvas for rendering webgl and babylon -->
+
+    <canvas id="demoCanvas">alternate content</canvas>
+
+    <div id="sceneHTML"><div/>
+
     <script type="text/javascript">
 
-      window.addEventListener('DOMContentLoaded', function() {                  // start game when DOM loads
+      window.addEventListener('resize', resize, false);
 
-        var canvas = document.getElementById('renderCanvas');                   // get the canvas DOM element context
-        var engine = new BABYLON.Engine(canvas, true);                          // load the babylon.js engine
-        var database = db;                                                      // database object
+      var el = document.getElementById("demoCanvas");
+      el.addEventListener("touchstart", handleStart, false);
+      el.addEventListener('touchend', handleEnd, false);
+      // el.addEventListener("touchcancel", handleCancel, false);
+      // el.addEventListener("touchmove", handleMove, false);
+      console.log("initialized.");
 
-        var current = null;
-        var message = {
-          render: 0
-        };                                                                      // possible message passing system???
+      // init();
 
-        var current_scene = createLogin(engine, canvas, message, database);
+      // window.addEventListener('DOMContentLoaded', function() {                  // start game when DOM loads
+      //   runGame('renderCanvas');
+      // });
 
-        engine.runRenderLoop( function() {                                      // run the render loop function
-          console.log("loop");
-          if (current != message.render) {
-            console.log(message.render + " : " + current)
-            current = message.render;
-            switch(current) {                                                   // scene rendering switcher
-              case 0:
-                current_scene = createLogin(engine, canvas, message, database);
-                break;
-              case 1:
-                current_scene = createMenu(engine, canvas, message, database);
-                break;
-              case 2:
-                current_scene = createGame(engine, canvas, message, database);
-                break;
-              case 3:
-                current_scene = createHow2Play(engine, canvas, message, database);
-                break;
-              case 4:
-                current_scene = createStats(engine, canvas, message, database);
-                break;
-              case 5:
-                current_scene = createSettings(engine, canvas, message, database);
-                break;
-              case 6:
-                current_scene = createAccount(engine, canvas, message, database);
-                break;
-              case 7:
-                current_scene = createCreateAcc(engine, canvas, message, database);
-                break;
-              default:
-                current_scene = createLogin(engine, canvas, message, database);
-                break;
-            }
-            console.log(message.render + " :: " + current)
-          }
-
-          current_scene.render();
-
-        });
-
-        window.addEventListener('resize', function() {
-            engine.resize();
-        });                                                                     // the canvas/window resize event handler
-
-      });
     </script>
+
   </body>
 </html>
