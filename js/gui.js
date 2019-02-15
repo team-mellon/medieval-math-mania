@@ -168,7 +168,14 @@ function createGUI() {
 
 		case 3:
 
-			login_button = createButton("res/login-button.png", "Map", buttonX, buttonY, function() { changeScene(8); });
+	    login_button = createButton("res/login-button.png", "Map", buttonX, buttonY, function() {
+		henchman_left.paused = true;
+		henchman_left_center.paused = true;
+		boss.paused = true;
+		henchman_right.paused = true;
+		henchman_right_center.paused = true;
+		projectile.paused = true;});
+	    
       hint_button = createButton("res/hint-button.png", "Hint", small_buttonX, small_buttonY, function() {  changeScene(9); });
 
 			break;
