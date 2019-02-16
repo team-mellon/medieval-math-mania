@@ -24,6 +24,8 @@ var foreground;
 var backgroundX = 1920;
 var backgroundY = 768;
 
+var exit_level_button;
+var main_menu_button;
 var close_button;
 var play_button;
 var stats_button;
@@ -180,9 +182,19 @@ function createGUI() {
 		henchman_right_center.paused = false;
 		projectile.paused = false;
 		pause_menu.visible = false;
-		close_button.visible = false;});
+		close_button.visible = false;
+		main_menu_button.visible = false;
+		if(pause_menu.visible == false)
+		{
+		    var scene_html = document.getElementById("sceneHTML");
+		    scene_html.hidden = false;
+		}
+	    });
 
-	     close_button.visible = false;
+	    close_button.visible = false;
+
+	    main_menu_button = createButton("res/hit-target-pause-button.png", "Main Menu", buttonX, buttonY, function() { changeScene(2);});
+	    main_menu_button.visible = false;
 	    
 	    login_button = createButton("res/login-button.png", "Pause", buttonX, buttonY, function() {
 		henchman_left.paused = true;
@@ -192,7 +204,14 @@ function createGUI() {
 		henchman_right_center.paused = true;
 		projectile.paused = true;
 		pause_menu.visible = true;
-		close_button.visible = true;});
+		close_button.visible = true;
+		main_menu_button.visible = true;
+		if(pause_menu.visible == true)
+		{
+		    var scene_html = document.getElementById("sceneHTML");
+		    scene_html.hidden = true;
+		}
+	    });
 	    
       hint_button = createButton("res/hint-button.png", "Hint", small_buttonX, small_buttonY, function() {  changeScene(9); });
 
@@ -394,6 +413,8 @@ function scaleGUI() {
 	    } else {
 		scale_image(pause_menu, stage.canvas.width / 2, stage.canvas.height / 2);
 		scale_gui(close_button, stage.canvas.width / 2 + 412, stage.canvas.height / 2 -350);
+		scale_gui(main_menu_button, stage.canvas.width / 2, stage.canvas.height / 2 -180);
+		
         scale_gui(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
         scale_gui(hint_button, stage.canvas.width - (small_buttonX/2 + 116) * scene_scale_Y, stage.canvas.height - (small_buttonY/2 + 10) * scene_scale_Y);
       }
