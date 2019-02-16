@@ -172,7 +172,7 @@ function createGUI() {
 	    pause_menu = createImage("res/hit-target-pause-menu.png", backgroundX, backgroundY);
 	    pause_menu.visible = false;	   
 
-	    close_button = createButton("res/hit-target-pause-close-button.png", "", 30, 30, function() {
+	    close_button = createButton("res/hit-target-pause-close-button.png", "", small_buttonX, small_buttonY, function() {
 		henchman_left.paused = false;
 		henchman_left_center.paused = false;
 		boss.paused = false;
