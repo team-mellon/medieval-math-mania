@@ -484,3 +484,15 @@ function createHintForm() {
   scene_html.appendChild(hint_form);
 
 }
+
+function invisableForm() {
+    var scene_html = document.getElementById("sceneHTML");
+    scene_html.hidden = true;
+}
+
+function visableForm() {
+    var scene_html = document.getElementById("sceneHTML");
+    scene_html.hidden = false;
+}
+
+

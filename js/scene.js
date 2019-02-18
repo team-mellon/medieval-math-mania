@@ -83,3 +83,15 @@ function changeScene(new_scene) {
 	scaleGUI();
 
 }
+
+function oneWayScene() {
+    var temp = current_scene;
+    current_scene = last_scene;
+    last_scene = temp;
+
+    loadScene();
+    destroyScene();
+    createScene();
+    resize();
+    scaleGUI();
+}
