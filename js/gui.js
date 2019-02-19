@@ -175,57 +175,29 @@ function createGUI() {
 	    pause_menu.visible = false;	   
 
 	    close_button = createButton("res/hit-target-pause-close-button.png", "", buttonX, buttonY, function() {
-		henchman_left.paused = false;
-		henchman_left_center.paused = false;
-		boss.paused = false;
-		henchman_right.paused = false;
-		henchman_right_center.paused = false;
-		projectile.paused = false;
-		pause_menu.visible = false;
-		close_button.visible = false;
-		main_menu_button.visible = false;
-		exit_level_button.visible = false;
-		settings_button.visible = false;
-		previous_indicator.visible = false;
-		pause_indicator.visible = false;
-		next_indicator.visible = false;
-		lute.visible = false;
-		hint_button.visible = false;
-		visableForm(pause_menu);
+		pauseAnimation(false);
+		visibleButton(false);
+		visibleForm(true);
 	    });
 
 	    close_button.visible = false;
 
-	    main_menu_button = createButton("res/hit-target-pause-button.png", "Main Menu", buttonX, buttonY, function() { changeScene(2);  visableForm();});
+	    main_menu_button = createButton("res/hit-target-pause-button.png", "Main Menu", buttonX, buttonY, function() { changeScene(2);  visibleForm(true);});
 	    main_menu_button.visible = false;
 
-	    exit_level_button = createButton("res/hit-target-pause-button.png", "Exit Level", buttonX, buttonY, function() { changeScene(8);  visableForm();});
+	    exit_level_button = createButton("res/hit-target-pause-button.png", "Exit Level", buttonX, buttonY, function() { changeScene(8);  visibleForm(true);});
 	    exit_level_button.visible = false;
 
-	    settings_button = createButton("res/hit-target-pause-button.png", "Settings", buttonX, buttonY, function() { changeScene(6);  visableForm();});
+	    settings_button = createButton("res/hit-target-pause-button.png", "Settings", buttonX, buttonY, function() { changeScene(6);  visibleForm(true);});
 	    settings_button.visible = false;
 	    
 	    login_button = createButton("res/login-button.png", "Pause", buttonX, buttonY, function() {
-		henchman_left.paused = true;
-		henchman_left_center.paused = true;
-		boss.paused = true;
-		henchman_right.paused = true;
-		henchman_right_center.paused = true;
-		projectile.paused = true;
-		pause_menu.visible = true;
-		close_button.visible = true;
-		main_menu_button.visible = true;
-		exit_level_button.visible = true;
-		settings_button.visible = true;
-		previous_indicator.visible = true;
-		pause_indicator.visible = true;
-		next_indicator.visible = true;
-		lute.visible = true;
-		hint_button.visible = true;
-		invisableForm(pause_menu);
+		pauseAnimation(true);
+		visibleButton(true);
+		visibleForm(false);
 	    });
 	    
-	    hint_button = createButton("res/hint-button.png", "Hint", small_buttonX, small_buttonY, function() {  changeScene(9); visableForm(); });
+	    hint_button = createButton("res/hint-button.png", "Hint", small_buttonX, small_buttonY, function() {  changeScene(9); visibleForm(true); });
 	    hint_button.visible = false;
 
 			break;
@@ -259,7 +231,7 @@ function createGUI() {
 			background_right = createImage("res/login.png", backgroundX, backgroundY);
 			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
 
-			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { oneWayScene(); });
+	    login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { oneWayScene(); });
 
 			break;
 
@@ -313,7 +285,7 @@ function createGUI() {
 			background_left = createImage("res/login.png", backgroundX, backgroundY);
 			background_right = createImage("res/login.png", backgroundX, backgroundY);
       foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
-      login_button = createButton("res/login-button.png", "Back", buttonX, buttonY, function() { changeScene(3); });
+	    login_button = createButton("res/login-button.png", "Back", buttonX, buttonY, function() { changeScene(3); pauseAnimation(true); visibleButton(true); visibleForm(false);});
 
       break;
 
@@ -556,4 +528,52 @@ function scaleGUI() {
 
   scale_image(phone_rotation, stage.canvas.width / 2, stage.canvas.height / 2);
 
+}
+
+
+function pauseAnimation(paused) {
+    if(paused){
+	henchman_left.paused = true;
+	henchman_left_center.paused = true;
+	boss.paused = true;
+	henchman_right.paused = true;
+	henchman_right_center.paused = true;
+	projectile.paused = true;
+    }
+    else {
+	henchman_left.paused = false;
+	henchman_left_center.paused = false;
+	boss.paused = false;
+	henchman_right.paused = false;
+	henchman_right_center.paused = false;
+	projectile.paused = false;
+    }
+}
+	
+function visibleButton(visible) {
+    if(visible) {
+	pause_menu.visible = true;
+	close_button.visible = true;
+	main_menu_button.visible = true;
+	exit_level_button.visible = true;
+	settings_button.visible = true;
+	previous_indicator.visible = true;
+	pause_indicator.visible = true;
+	next_indicator.visible = true;
+	lute.visible = true;
+	hint_button.visible = true;
+
+    }
+    else {
+	pause_menu.visible = false;
+	close_button.visible = false;
+	main_menu_button.visible = false;
+	exit_level_button.visible = false;
+	settings_button.visible = false;
+	previous_indicator.visible = false;
+	pause_indicator.visible = false;
+	next_indicator.visible = false;
+	lute.visible = false;
+	hint_button.visible = false;
+    }
 }

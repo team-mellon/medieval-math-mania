@@ -485,14 +485,15 @@ function createHintForm() {
 
 }
 
-function invisableForm() {
-    var scene_html = document.getElementById("sceneHTML");
-    scene_html.hidden = true;
-}
-
-function visableForm() {
-    var scene_html = document.getElementById("sceneHTML");
-    scene_html.hidden = false;
+function visibleForm(visible) {
+    if(visible) {
+	var scene_html = document.getElementById("sceneHTML");
+	scene_html.hidden = false;
+    }
+    else {
+	var scene_html = document.getElementById("sceneHTML");
+	scene_html.hidden = true;
+    }
 }
 
 

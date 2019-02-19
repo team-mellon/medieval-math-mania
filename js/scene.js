@@ -85,13 +85,29 @@ function changeScene(new_scene) {
 }
 
 function oneWayScene() {
-    var temp = current_scene;
-    current_scene = last_scene;
-    last_scene = temp;
+    if(last_scene != 3){
+	var temp = current_scene;
+	current_scene = last_scene;
+	last_scene = temp;
 
-    loadScene();
-    destroyScene();
-    createScene();
-    resize();
-    scaleGUI();
+	loadScene();
+	destroyScene();
+	createScene();
+	resize();
+	scaleGUI();
+    }
+    else{
+	var temp = current_scene;
+	current_scene = last_scene;
+	last_scene = temp;
+
+	loadScene();
+	destroyScene();
+	createScene();
+	resize();
+	scaleGUI();
+	pauseAnimation(true);
+	visibleButton(true);
+	visibleForm(false);
+    }
 }
