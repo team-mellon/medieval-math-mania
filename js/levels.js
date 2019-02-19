@@ -73,13 +73,53 @@ function loadLevel() {
 
   switch(current_level) {
 
-    case 1:
-      bg_color = "#89a7a0";
+    case 1: // City
+      bg_color = "#c9e6ff";
       break;
 
-    case 2:
-      bg_color = "#460a14";
+    // case 2: // Grasslands
+    //   bg_color = "#c9f9ff";
+    //   break;
+
+    // case 3: // Volcano
+    //   bg_color = "#3b0a0a";
+    //   break;
+
+    case 2: // Sea
+      bg_color = "#c2ffe6";
       break;
+
+    // case 5: // Mountains
+    //   bg_color = "#b3b3b3";
+    //   break;
+
+    // case 6: // Summit
+    //   bg_color = "#effffe";
+    //   break;
+
+    // case 7: // Cave
+    //   bg_color = "#010027";
+    //   break;
+
+    // case 8: // Forest
+    //   bg_color = "#2f3b25";
+    //   break;
+
+    // case 9: // Alpine
+    //   bg_color = "#cae3e9";
+    //   break;
+
+    // case 7: // Woods
+    //   bg_color = "#3f2900";
+    //   break;
+
+    // case 8: // Swamp
+    //   bg_color = "#292c2b";
+    //   break;
+
+    // case 9: // Deadlands
+    //   bg_color = "#231e25";
+    //   break;
 
     default:
       // code block

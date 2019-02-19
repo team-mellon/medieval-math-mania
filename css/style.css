@@ -8,7 +8,7 @@ html, body {
 
 @font-face {
   font-family: Blackadder;
-  src: url(../res/fonts/Blackadder.ttf) format('truetype');
+  src: url(../res/fonts/Blackadder.TTF) format('truetype');
 }
 
 /* #renderCanvas {
@@ -122,6 +122,10 @@ input {
   font-family: "Arial";
   width: 2.5em;
   -moz-appearance:textfield !important;
+}
+
+#errorText {
+  color: red;
 }
 
 input::-webkit-inner-spin-button,

@@ -16,7 +16,7 @@ function createLoginForm() {
   login_username_div.appendChild(br);
   login_username_div.appendChild(username_input);
 
-  var br3 = document.createElement("br");
+  var br = document.createElement("br");
 
   // Creates password display label and input box
   var password_text = document.createTextNode("Password");
@@ -36,13 +36,29 @@ function createLoginForm() {
 
 
 
+  // Creates line break for form div spacing
+  var br3 = document.createElement("br");
+
+
+
+  // Creates password display text and input box
+  var error_text = document.createTextNode("");
+
+  var error_div = document.createElement("div");
+  error_div.id = "errorText";
+  error_div.appendChild(error_text);
+
+
+
   // Creates login form to hold username and password divs
   var login_form = document.createElement("form");
   login_form.id = "loginForm";
   login_form.className = "scrollMenu";
   login_form.appendChild(login_username_div);
-  login_form.appendChild(br3);
+  login_form.appendChild(br);
   login_form.appendChild(login_password_div);
+  login_form.appendChild(br3);
+  login_form.appendChild(error_div);
 
   // Injecting login form into existing html
   var scene_html = document.getElementById("sceneHTML");
@@ -55,6 +71,7 @@ function createSignupForm() {
   // Creates firstname display label and input box
   var firstname_text = document.createTextNode("Firstname:");
   var firstname_input = document.createElement("input");
+  firstname_input.id = "firstnameInput";
   firstname_input.setAttribute("type", "text");
   firstname_input.setAttribute("name", "firstname");
 
@@ -69,6 +86,7 @@ function createSignupForm() {
   // Creates lastname display text and input box
   var lastname_text = document.createTextNode("Lastname:");
   var lastname_input = document.createElement("input");
+  lastname_input.id = "lastnameInput";
   lastname_input.setAttribute("type", "text");
   lastname_input.setAttribute("name", "lastname");
 
@@ -88,6 +106,7 @@ function createSignupForm() {
   // Creates username display text and input box
   var username_text = document.createTextNode("Username:");
   var username_input = document.createElement("input");
+  username_input.id = "usernameInput";
   username_input.setAttribute("type", "text");
   username_input.setAttribute("name", "username");
 
@@ -107,6 +126,7 @@ function createSignupForm() {
   // Creates password display text and input box
   var password_text = document.createTextNode("Password:");
   var password_input = document.createElement("input");
+  password_input.id = "passwordInput";
   password_input.setAttribute("type", "password");
   password_input.setAttribute("name", "password");
 
@@ -121,6 +141,7 @@ function createSignupForm() {
   // Creates confirm display text and input box
   var confirm_text = document.createTextNode("Confirm:");
   var confirm_input = document.createElement("input");
+  confirm_input.id = "confirmInput";
   confirm_input.setAttribute("type", "password");
   confirm_input.setAttribute("name", "confirm");
 
@@ -129,6 +150,20 @@ function createSignupForm() {
   signup_confirm_div.className = "signup";
   signup_confirm_div.appendChild(confirm_text);
   signup_confirm_div.appendChild(confirm_input);
+
+
+
+  // Creates line break for form div spacing
+  var br3 = document.createElement("br");
+
+
+
+  // Creates password display text and input box
+  var error_text = document.createTextNode("");
+
+  var error_div = document.createElement("div");
+  error_div.id = "errorText";
+  error_div.appendChild(error_text);
 
 
 
@@ -143,6 +178,8 @@ function createSignupForm() {
   signup_form.appendChild(br2);
   signup_form.appendChild(signup_password_div);
   signup_form.appendChild(signup_confirm_div);
+  signup_form.appendChild(br3);
+  signup_form.appendChild(error_div);
 
   //Injecting signup form into existing html
   var scene_html = document.getElementById("sceneHTML");
@@ -151,7 +188,7 @@ function createSignupForm() {
 }
 
 function createMenuForm() {
-  
+
 }
 
 function createStatsForm() {

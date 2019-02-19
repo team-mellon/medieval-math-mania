@@ -62,17 +62,19 @@ function createGUI() {
     	    } else {
             document.getElementById('usernameInput').value = "";
             document.getElementById('passwordInput').value = "";
-        		password_input.text = "";
+	          document.getElementById('errorText').textContent = "Invalid password";
+        		// password_input.text = "";
         		// login_error.alpha = 1;
     	    }
       	}	else {
           document.getElementById('usernameInput').value = "";
           document.getElementById('passwordInput').value = "";
+          document.getElementById('errorText').textContent = "Invalid username";
     	    // login_error.alpha = 1;
       	}
       });
 			right_sword_button = createButton("res/sword-right.png", "Signup", buttonX, buttonY, function() {	changeScene(1); });
-			secret_button = createButton("res/secret_button.png", "", backgroundX, backgroundY, function() {	changeScene(8); });
+			secret_button = createButton("res/secret_button.png", "", backgroundX, backgroundY, function() { changeScene(8); });
 
 			break;
 
@@ -88,6 +90,34 @@ function createGUI() {
 			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
 
 			left_sword_button = createButton("res/sword-left.png", "Create", buttonX, buttonY, function() {
+				var key = document.getElementById('usernameInput').value;
+				if(key in database.users || key == "") {
+					// document.getElementById('firstnameInput').value = "";
+					// document.getElementById('lastnameInput').value = "";
+					// document.getElementById('usernameInput').value = "";
+					// document.getElementById('passwordInput').value = "";
+					// document.getElementById('confirmInput').value = "";
+					document.getElementById('errorText').textContent = "Invalid username";
+				}	else {
+					if(document.getElementById('firstnameInput').value == "") {
+						document.getElementById('errorText').textContent = "Invalid firstname";
+					} else {
+						if(document.getElementById('lastnameInput').value == "") {
+							document.getElementById('errorText').textContent = "Invalid lastname";
+						} else {
+							if(document.getElementById('passwordInput').value == "") {
+								document.getElementById('errorText').textContent = "Invalid password";
+							} else {
+								if(document.getElementById('passwordInput').value != document.getElementById('confirmInput').value) {
+									document.getElementById('errorText').textContent = "Passwords do not match";
+								} else {
+					        changeScene(2);
+								}
+							}
+						}
+					}
+				}
+			});
         // if(firstname_input.text == "" || lastname_input.text == "" || username_input.text == "" || password_input.text == "" || re_password_input.text == "") {
         //
       	//     fieldInput_error.alpha = 1;
@@ -133,8 +163,7 @@ function createGUI() {
         //
         //   }
       	// }
-        changeScene(2);
-      });
+      // });
 			right_sword_button = createButton("res/sword-right.png", "Cancel", buttonX, buttonY, function() {
 
       	// firstname_input.text = "";
