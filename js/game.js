@@ -37,6 +37,10 @@ var digit = 2;
 var last_digit = 0;
 var adder = 1;
 
+var history_list = [];
+
+var valid = true;
+
 var database = {
   "users": {
     "admin": {
@@ -114,149 +118,172 @@ function tick(event) {
       // Need to check for input correctness here
       // No letters or symbols only numbers
 
-      if (stage.canvas.width < 900) {
+      valid = true;
 
-        // Add to history
-        var dropdown = document.getElementById("myDropdown");
-        var history_entry = document.createTextNode(multiplier);
-        var line_break = document.createElement("br");
-        dropdown.appendChild(history_entry);
-        dropdown.appendChild(line_break);
+        if (stage.canvas.width < 900) {
 
-        // Actual math
-        solution = multiplier * multiplicand;
-
-        var solut_div = document.getElementById("solutionText");
-        while (solut_div.firstChild) {
-          solut_div.removeChild(solut_div.firstChild);
-        }
-
-        var solut = document.createTextNode(solution);
-        solut_div.appendChild(solut);
-
-        // var scene_html = document.getElementById("sceneHTML");
-        // while (scene_html.firstChild) {
-        //   scene_html.removeChild(scene_html.firstChild);
-        // }
-        // createGameForm();
-
-        if (solution <= upper && solution >= lower && hit_counter < 3) {
-          hit = true;
-          console.log("hit");
-          catapult.gotoAndPlay(0);
-          // Triggering other fired events
-          fired = true;
-        } else if (solution > upper && miss_upper_counter == 0) {
-          miss_upper = true;
-          console.log("miss upper");
-          catapult.gotoAndPlay(0);
-          // Triggering other fired events
-          fired = true;
-        } else if (solution < lower && miss_lower_counter == 0) {
-          miss_lower = true;
-          console.log("miss lower");
-          catapult.gotoAndPlay(0);
-          // Triggering other fired events
-          fired = true;
-        }
-
-        multiplier = 0;
-        document.getElementById("hundredsPlace").textContent = Math.floor(multiplier/100 % 10);
-        document.getElementById("tensPlace").textContent = Math.abs(Math.floor(multiplier/10 % 10));
-        document.getElementById("onesPlace").textContent = Math.abs(Math.floor(multiplier % 10));
-
-      } else {
-
-        // Parse entry
-        var entry = parseInt(document.getElementById("entryInput").value);
-        console.log("Entry type: " + typeof entry);
-        console.log("Entry: " + entry);
-
-        if ((typeof entry) == "number") {
-
-          if (Number.isNaN(entry)) {
-            entry_is_correct = false;
-          } else {
-
-            if (current_level == 1) {
-
-              if (document.getElementById("entryInput").value % 1 == 0) {
-                entry_is_correct = true;
-              } else {
-                entry_is_correct = false;
-              }
-
-            } else if (current_level == 2) {
-
-              if (document.getElementById("entryInput").value % 1 != 0) {
-                entry_is_correct = true;
-              } else {
-                entry_is_correct = false;
-              }
-
+          for (x in history_list) {
+            if (multiplier == x) {
+              valid = false;
             }
+          }
+
+          if (valid) {
+
+            // Add to history
+            console.log(history_list);
+            history_list.push(multiplier);
+            var dropdown = document.getElementById("myDropdown");
+            var history_entry = document.createTextNode(multiplier);
+            var line_break = document.createElement("br");
+            dropdown.appendChild(history_entry);
+            dropdown.appendChild(line_break);
+
+            // Actual math
+            solution = multiplier * multiplicand;
+
+            var solut_div = document.getElementById("solutionText");
+            while (solut_div.firstChild) {
+              solut_div.removeChild(solut_div.firstChild);
+            }
+
+            var solut = document.createTextNode(solution);
+            solut_div.appendChild(solut);
+
+            // var scene_html = document.getElementById("sceneHTML");
+            // while (scene_html.firstChild) {
+            //   scene_html.removeChild(scene_html.firstChild);
+            // }
+            // createGameForm();
+
+            if (solution <= upper && solution >= lower && hit_counter < 3) {
+              hit = true;
+              console.log("hit");
+              catapult.gotoAndPlay(0);
+              // Triggering other fired events
+              fired = true;
+            } else if (solution > upper && miss_upper_counter == 0) {
+              miss_upper = true;
+              console.log("miss upper");
+              catapult.gotoAndPlay(0);
+              // Triggering other fired events
+              fired = true;
+            } else if (solution < lower && miss_lower_counter == 0) {
+              miss_lower = true;
+              console.log("miss lower");
+              catapult.gotoAndPlay(0);
+              // Triggering other fired events
+              fired = true;
+            }
+
+            multiplier = 0;
+            document.getElementById("hundredsPlace").textContent = Math.floor(multiplier/100 % 10);
+            document.getElementById("tensPlace").textContent = Math.abs(Math.floor(multiplier/10 % 10));
+            document.getElementById("onesPlace").textContent = Math.abs(Math.floor(multiplier % 10));
 
           }
 
         } else {
-          entry_is_correct = false;
-        }
 
+          // Parse entry
+          var entry = parseInt(document.getElementById("entryInput").value);
+          console.log("Entry type: " + typeof entry);
+          console.log("Entry: " + entry);
 
-        // Animate the catapult
-        if (entry_is_correct) {
+          if ((typeof entry) == "number") {
 
-          multiplier = document.getElementById("entryInput").value;
+            if (Number.isNaN(entry)) {
+              entry_is_correct = false;
+            } else {
 
-          // Add to history
-          var dropdown = document.getElementById("myDropdown");
-          var history_entry = document.createTextNode(multiplier);
-          var line_break = document.createElement("br");
-          dropdown.appendChild(history_entry);
-          dropdown.appendChild(line_break);
+              if (current_level == 1) {
 
-          // Actual math
-          solution = multiplier * multiplicand;
+                if (document.getElementById("entryInput").value % 1 == 0) {
+                  entry_is_correct = true;
+                } else {
+                  entry_is_correct = false;
+                }
 
-          var solut_div = document.getElementById("solutionText");
-          while (solut_div.firstChild) {
-            solut_div.removeChild(solut_div.firstChild);
+              } else if (current_level == 2) {
+
+                if (document.getElementById("entryInput").value % 1 != 0) {
+                  entry_is_correct = true;
+                } else {
+                  entry_is_correct = false;
+                }
+
+              }
+
+            }
+
+          } else {
+            entry_is_correct = false;
           }
 
-          var solut = document.createTextNode(solution);
-          solut_div.appendChild(solut);
+          for (var x in history_list) {
+            console.log(history_list[x]);
+            console.log(entry);
+            if (entry == history_list[x]) {
+              valid = false;
+            }
+          }
 
-          // var scene_html = document.getElementById("sceneHTML");
-          // while (scene_html.firstChild) {
-          //   scene_html.removeChild(scene_html.firstChild);
-          // }
-          // createGameForm();
+          // Animate the catapult
+          if (entry_is_correct && valid) {
 
-          document.getElementById("entryInput").value = "";
+            multiplier = document.getElementById("entryInput").value;
 
-          if (solution <= upper && solution >= lower && hit_counter < 3) {
-            hit = true;
-            console.log("hit");
-            catapult.gotoAndPlay(0);
-            // Triggering other fired events
-            fired = true;
-          } else if (solution > upper && miss_upper_counter == 0) {
-            miss_upper = true;
-            console.log("miss upper");
-            catapult.gotoAndPlay(0);
-            // Triggering other fired events
-            fired = true;
-          } else if (solution < lower && miss_lower_counter == 0) {
-            miss_lower = true;
-            console.log("miss lower");
-            catapult.gotoAndPlay(0);
-            // Triggering other fired events
-            fired = true;
+            // Add to history
+            history_list.push(multiplier);
+            console.log(history_list);
+            var dropdown = document.getElementById("myDropdown");
+            var history_entry = document.createTextNode(multiplier);
+            var line_break = document.createElement("br");
+            dropdown.appendChild(history_entry);
+            dropdown.appendChild(line_break);
+
+            // Actual math
+            solution = multiplier * multiplicand;
+
+            var solut_div = document.getElementById("solutionText");
+            while (solut_div.firstChild) {
+              solut_div.removeChild(solut_div.firstChild);
+            }
+
+            var solut = document.createTextNode(solution);
+            solut_div.appendChild(solut);
+
+            // var scene_html = document.getElementById("sceneHTML");
+            // while (scene_html.firstChild) {
+            //   scene_html.removeChild(scene_html.firstChild);
+            // }
+            // createGameForm();
+
+            document.getElementById("entryInput").value = "";
+
+            if (solution <= upper && solution >= lower && hit_counter < 3) {
+              hit = true;
+              console.log("hit");
+              catapult.gotoAndPlay(0);
+              // Triggering other fired events
+              fired = true;
+            } else if (solution > upper && miss_upper_counter == 0) {
+              miss_upper = true;
+              console.log("miss upper");
+              catapult.gotoAndPlay(0);
+              // Triggering other fired events
+              fired = true;
+            } else if (solution < lower && miss_lower_counter == 0) {
+              miss_lower = true;
+              console.log("miss lower");
+              catapult.gotoAndPlay(0);
+              // Triggering other fired events
+              fired = true;
+            }
+
           }
 
         }
-
-      }
 
       // console.log(projectile.alpha);
 
