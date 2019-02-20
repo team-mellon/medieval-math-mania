@@ -122,8 +122,10 @@ function tick(event) {
 
         if (stage.canvas.width < 900) {
 
-          for (x in history_list) {
-            if (multiplier == x) {
+          for (var x in history_list) {
+            console.log(history_list[x]);
+            console.log(entry);
+            if (multiplier == history_list[x]) {
               valid = false;
             }
           }
