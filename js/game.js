@@ -379,19 +379,19 @@ function tick(event) {
       }
     }
 
-    if (miss_lower_counter != 1) {
-      document.getElementById("tutorialText").textContent = "Try finding a multiplier that produces a solution below the range";
-    } else {
-      if (miss_upper_counter != 1) {
-        document.getElementById("tutorialText").textContent = "Try finding a multiplier that produces a solution above the range";
-      } else {
-        if (hit_counter != 3) {
-          document.getElementById("tutorialText").textContent = "Try finding 3 multipliers that produce solutions within the range";
-        } else {
-
-        }
-      }
-    }
+    // if (miss_lower_counter != 1) {
+    //   document.getElementById("tutorialText").textContent = "Try finding a multiplier that produces a solution below the range";
+    // } else {
+    //   if (miss_upper_counter != 1) {
+    //     document.getElementById("tutorialText").textContent = "Try finding a multiplier that produces a solution above the range";
+    //   } else {
+    //     if (hit_counter != 3) {
+    //       document.getElementById("tutorialText").textContent = "Try finding 3 multipliers that produce solutions within the range";
+    //     } else {
+    //
+    //     }
+    //   }
+    // }
 
     if (hit_counter == 3 && miss_upper_counter == 1 && miss_lower_counter == 1 && reload == false) {
 

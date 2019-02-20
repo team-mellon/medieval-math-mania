@@ -205,7 +205,7 @@ function createGUI() {
 			login_button = createButton("res/login-button.png", "Map", buttonX, buttonY, function() { changeScene(8); });
       hint_button = createButton("res/hint-button.png", "Hint", small_buttonX, small_buttonY, function() {  changeScene(9); });
 			if (stage.canvas.width < 900) {
-				ll_number_button = createButton("res/number-button-ll.png", "<", backgroundX, backgroundY, function() {
+				ll_number_button = createButton("res/number-button-ll.png", "", backgroundX, 288, function() {
 					if(digit > 0)
 						digit--;
 					if(digit < 0)
@@ -213,7 +213,7 @@ function createGUI() {
 
 					console.log(digit);
 				});
-				lr_number_button = createButton("res/number-button-lr.png", ">", backgroundX, backgroundY, function() {
+				lr_number_button = createButton("res/number-button-lr.png", "", backgroundX, 288, function() {
 					if(digit < 2)
 						digit++;
 					if(digit > 2)
@@ -221,13 +221,13 @@ function createGUI() {
 
 					console.log(digit);
 				});
-				rl_number_button = createButton("res/number-button-rl.png", "-", backgroundX, backgroundY, function() {
+				rl_number_button = createButton("res/number-button-rl.png", "", backgroundX, 288, function() {
 					multiplier -= adder;
 					document.getElementById("hundredsPlace").textContent = Math.floor(multiplier/100 % 10);
 					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(multiplier/10 % 10));
 					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(multiplier % 10));
 				});
-				rr_number_button = createButton("res/number-button-rr.png", "+", backgroundX, backgroundY, function() {
+				rr_number_button = createButton("res/number-button-rr.png", "", backgroundX, 288, function() {
 					multiplier += adder;
 					document.getElementById("hundredsPlace").textContent = Math.floor(multiplier/100 % 10);
 					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(multiplier/10 % 10));
@@ -434,10 +434,10 @@ function scaleGUI() {
       }
 
 			if (stage.canvas.width < 900) {
-				scale_image(ll_number_button, stage.canvas.width / 2, stage.canvas.height / 2);
-				scale_image(lr_number_button, stage.canvas.width / 2, stage.canvas.height / 2);
-				scale_image(rl_number_button, stage.canvas.width / 2, stage.canvas.height / 2);
-				scale_image(rr_number_button, stage.canvas.width / 2, stage.canvas.height / 2);
+				scale_image(ll_number_button, stage.canvas.width / 2, stage.canvas.height - (288/2) * scene_scale_Y);
+				scale_image(lr_number_button, stage.canvas.width / 2, stage.canvas.height - (288/2) * scene_scale_Y);
+				scale_image(rl_number_button, stage.canvas.width / 2, stage.canvas.height - (288/2) * scene_scale_Y);
+				scale_image(rr_number_button, stage.canvas.width / 2, stage.canvas.height - (288/2) * scene_scale_Y);
 			}
 
 			break;
