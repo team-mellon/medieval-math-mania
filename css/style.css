@@ -1,3 +1,8 @@
+@font-face {
+  font-family: Blackadder;
+  src: url(../res/fonts/Blackadder.TTF) format('truetype');
+}
+
 html, body {
   overflow: hidden;
   width   : 100%;
@@ -6,9 +11,8 @@ html, body {
   padding : 0;
 }
 
-@font-face {
-  font-family: Blackadder;
-  src: url(../res/fonts/Blackadder.TTF) format('truetype');
+#entryDisplay {
+  display: inline;
 }
 
 /* #renderCanvas {
@@ -106,6 +110,19 @@ html, body {
   align-content: center;
 }
 
+.tutorial {
+  /* font-family: "Blackadder"; */
+  color: saddlebrown;
+  position: absolute;
+  width: 20vw;
+  top: 20%;
+  left: 12.5%;
+  transform: translate(-50%, -50%);
+  margin: 5px;
+  font-size: 4vh;
+  /* line-height: 0.7; */
+}
+
 input {
   width: 100%;
   max-width: 200px;
@@ -162,7 +179,9 @@ input::-webkit-outer-spin-button {
   border-bottom: 1px solid #ddd;
 }
 
-#myInput:focus {outline: 3px solid #ddd;}
+#myInput:focus {
+  outline: 3px solid #ddd;
+}
 
 .dropdown {
   position: relative;

@@ -232,17 +232,29 @@ function createStatsForm() {
 
 function createHow2PlayForm() {
 
-  var instructions = "It's just math";
+  var instructions1 = "The goal of the game is to get one hit anywhere above the range,";
+  var instructions2 = "one hit anywhere below the range,";
+  var instructions3 = "and three hits within the range";
 
   // Creates username display label and text
   var h2p_label = document.createTextNode("How 2 Play: ");
-  var h2p_text = document.createTextNode(instructions);
+  var br1 = document.createElement("br");
+  var h2p_text1 = document.createTextNode(instructions1);
+  var br2 = document.createElement("br");
+  var h2p_text2 = document.createTextNode(instructions2);
+  var br3 = document.createElement("br");
+  var h2p_text3 = document.createTextNode(instructions3);
 
   // Creates username div to hold display text and input box
   var h2p_h2p_div = document.createElement("div");
   h2p_h2p_div.className = "login";
   h2p_h2p_div.appendChild(h2p_label);
-  h2p_h2p_div.appendChild(h2p_text);
+  h2p_h2p_div.appendChild(br1);
+  h2p_h2p_div.appendChild(h2p_text1);
+  h2p_h2p_div.appendChild(br2);
+  h2p_h2p_div.appendChild(h2p_text2);
+  h2p_h2p_div.appendChild(br3);
+  h2p_h2p_div.appendChild(h2p_text3);
 
 
 
@@ -390,6 +402,8 @@ function createMapForm() {
 function createGameForm() {
 
   // Creates username display text
+  var range_label = document.createTextNode("Range");
+  var br = document.createElement("br");
   var left_paren = document.createTextNode("[");
   var lower_number = document.createTextNode(lower);
   var middle_comma = document.createTextNode(", ");
@@ -400,6 +414,8 @@ function createGameForm() {
   var game_range_div = document.createElement("div");
   game_range_div.className = "login";
   game_range_div.id = "rangeDiv"
+  game_range_div.appendChild(range_label);
+  game_range_div.appendChild(br);
   game_range_div.appendChild(left_paren);
   game_range_div.appendChild(lower_number);
   game_range_div.appendChild(middle_comma);
@@ -414,21 +430,42 @@ function createGameForm() {
   var multiplicand_text = document.createTextNode(multiplicand);
   multiplicand_div.appendChild(multiplicand_text);
   var sign_text = document.createTextNode(sign);
-  var entry_input = document.createElement("input");
-  entry_input.id = "entryInput";
-  entry_input.setAttribute("type", "number");
-  entry_input.setAttribute("placeholder", "###");
-  entry_input.setAttribute("value", "");
-  entry_input.setAttribute("maxlength", "3");
-  entry_input.setAttribute("size", "4");
-  entry_input.setAttribute("min", "-999");
-  entry_input.setAttribute("max", "999");
-  entry_input.setAttribute("name", "entry");
-  entry_input.addEventListener('keypress', function(event) {
-    if (event.keyCode == 13) {
-      event.preventDefault();
-    }
-  });
+  var entry_input;
+  if (stage.canvas.width < 900) {
+    entry_input = document.createElement("div");
+    entry_input.id = "entryDisplay";
+    var hundreds = document.createElement("span");
+    hundreds.id = "hundredsPlace";
+    var hundreds_place = document.createTextNode("0");
+    hundreds.appendChild(hundreds_place);
+    var tens = document.createElement("span");
+    tens.id = "tensPlace";
+    var tens_place = document.createTextNode("0");
+    tens.appendChild(tens_place);
+    var ones = document.createElement("span");
+    ones.id = "onesPlace";
+    var ones_place = document.createTextNode("0");
+    ones.appendChild(ones_place);
+    entry_input.appendChild(hundreds);
+    entry_input.appendChild(tens);
+    entry_input.appendChild(ones);
+  } else {
+    entry_input = document.createElement("input");
+    entry_input.id = "entryInput";
+    entry_input.setAttribute("type", "number");
+    entry_input.setAttribute("placeholder", "###");
+    entry_input.setAttribute("value", "");
+    entry_input.setAttribute("maxlength", "3");
+    entry_input.setAttribute("size", "4");
+    entry_input.setAttribute("min", "-999");
+    entry_input.setAttribute("max", "999");
+    entry_input.setAttribute("name", "entry");
+    entry_input.addEventListener('keypress', function(event) {
+      if (event.keyCode == 13) {
+        event.preventDefault();
+      }
+    });
+  }
   var equal_text = document.createTextNode(equal);
   var solution_div = document.createElement("div");
   solution_div.id = "solutionText";
@@ -468,6 +505,23 @@ function createGameForm() {
 
 
 
+  // Creates username display text
+  var tutorial_label = document.createTextNode("Tutorial");
+  var br1 = document.createElement("br");
+  var tutorial_text = document.createElement("span");
+  tutorial_text.id = "tutorialText";
+  var tutorial_words = document.createTextNode("The tutorial is broken");
+  tutorial_text.appendChild(tutorial_words);
+
+  // Creates username div to hold display text and input box
+  var tutorial_div = document.createElement("div");
+  tutorial_div.className = "tutorial";
+  tutorial_div.id = "tutorialDiv"
+  tutorial_div.appendChild(tutorial_label);
+  tutorial_div.appendChild(br1);
+  tutorial_div.appendChild(tutorial_text);
+
+
   // Creates login form to hold username and password divs
   var game_range_form = document.createElement("form");
   game_range_form.id = "rangeBanner";
@@ -491,6 +545,7 @@ function createGameForm() {
   scene_html.appendChild(game_range_form);
   scene_html.appendChild(game_entry_form);
   scene_html.appendChild(game_history_form);
+  scene_html.appendChild(tutorial_div);
 
 }
 

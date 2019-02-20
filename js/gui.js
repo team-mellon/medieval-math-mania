@@ -16,6 +16,11 @@ var small_buttonY = 72;
 var left_sword_button;
 var right_sword_button;
 
+var ll_number_button;
+var lr_number_button;
+var rl_number_button;
+var rr_number_button;
+
 var background;
 var background_left;
 var background_right;
@@ -199,6 +204,37 @@ function createGUI() {
 
 			login_button = createButton("res/login-button.png", "Map", buttonX, buttonY, function() { changeScene(8); });
       hint_button = createButton("res/hint-button.png", "Hint", small_buttonX, small_buttonY, function() {  changeScene(9); });
+			if (stage.canvas.width < 900) {
+				ll_number_button = createButton("res/number-button-ll.png", "<", backgroundX, backgroundY, function() {
+					if(digit > 0)
+						digit--;
+					if(digit < 0)
+						digit = 0;
+
+					console.log(digit);
+				});
+				lr_number_button = createButton("res/number-button-lr.png", ">", backgroundX, backgroundY, function() {
+					if(digit < 2)
+						digit++;
+					if(digit > 2)
+						digit = 2;
+
+					console.log(digit);
+				});
+				rl_number_button = createButton("res/number-button-rl.png", "-", backgroundX, backgroundY, function() {
+					multiplier -= adder;
+					document.getElementById("hundredsPlace").textContent = Math.floor(multiplier/100 % 10);
+					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(multiplier/10 % 10));
+					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(multiplier % 10));
+				});
+				rr_number_button = createButton("res/number-button-rr.png", "+", backgroundX, backgroundY, function() {
+					multiplier += adder;
+					document.getElementById("hundredsPlace").textContent = Math.floor(multiplier/100 % 10);
+					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(multiplier/10 % 10));
+					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(multiplier % 10));
+				});
+			}
+
 
 			break;
 
@@ -249,7 +285,7 @@ function createGUI() {
 		case 8:
 
 			background = createImage("res/map.png", backgroundX, backgroundY);
-			// foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
+			foreground = createButton("res/map-banner.png", "Select a level", backgroundX, 231, function() {});
 
 			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { changeScene(2); });
 
@@ -397,6 +433,13 @@ function scaleGUI() {
         scale_gui(hint_button, stage.canvas.width - (small_buttonX/2 + 116) * scene_scale_Y, stage.canvas.height - (small_buttonY/2 + 10) * scene_scale_Y);
       }
 
+			if (stage.canvas.width < 900) {
+				scale_image(ll_number_button, stage.canvas.width / 2, stage.canvas.height / 2);
+				scale_image(lr_number_button, stage.canvas.width / 2, stage.canvas.height / 2);
+				scale_image(rl_number_button, stage.canvas.width / 2, stage.canvas.height / 2);
+				scale_image(rr_number_button, stage.canvas.width / 2, stage.canvas.height / 2);
+			}
+
 			break;
 
 		case 4:
@@ -462,7 +505,7 @@ function scaleGUI() {
 		case 8:
 
 			scale_image(background, stage.canvas.width / 2, stage.canvas.height / 2);
-			// scale_image(foreground, stage.canvas.width / 2, stage.canvas.height / 2);
+			scale_image(foreground, stage.canvas.width / 2, 0 + (231/2) * scene_scale_Y);
 
 			scale_image(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
 
