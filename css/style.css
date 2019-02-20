@@ -3,6 +3,11 @@
   src: url(../res/fonts/Blackadder.TTF) format('truetype');
 }
 
+@font-face {
+  font-family: Oldstyle;
+  src: url(../res/fonts/Oldstyle.TTF) format('truetype');
+}
+
 html, body {
   overflow: hidden;
   width   : 100%;
@@ -72,14 +77,14 @@ html, body {
 }
 
 #rangeBanner {
-  font-family: "Arial";
+  font-family: "Oldstyle";
   position: absolute;
   top: 62.5%;
   left: 32%;
 }
 
 #equationBanner {
-  font-family: "Arial";
+  font-family: "Oldstyle";
   position: absolute;
   top: 62.5%;
   left: 50%;
@@ -94,7 +99,7 @@ html, body {
 }
 
 #historyBanner {
-  font-family: "Arial";
+  font-family: "Oldstyle";
   position: absolute;
   top: 60%;
   left: 68%;
@@ -124,7 +129,7 @@ html, body {
 }
 
 .tutorial {
-  font-family: "Arial";
+  font-family: "Oldstyle";
   color: saddlebrown;
   position: absolute;
   width: 20vw;
@@ -145,7 +150,7 @@ input {
 }
 
 #entryInput {
-  font-family: "Arial";
+  font-family: "Oldstyle";
   width: 2.5em;
   -moz-appearance:textfield !important;
 }
