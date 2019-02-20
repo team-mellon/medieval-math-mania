@@ -408,16 +408,34 @@ function tick(event) {
       }
     }
 
-    if (miss_lower_counter != 1) {
-      document.getElementById("tutorialText").textContent = "Try finding a multiplier that produces a solution below the range";
-    } else {
-      if (miss_upper_counter != 1) {
-        document.getElementById("tutorialText").textContent = "Try finding a multiplier that produces a solution above the range";
+    if (current_level == 1) {
+      if (miss_lower_counter != 1) {
+        document.getElementById("tutorialText").textContent = "Try finding an INTEGER multiplier that produces a solution below the range";
       } else {
-        if (hit_counter != 3) {
-          document.getElementById("tutorialText").textContent = "Try finding 3 multipliers that produce solutions within the range";
+        if (miss_upper_counter != 1) {
+          document.getElementById("tutorialText").textContent = "Try finding an INTEGER multiplier that produces a solution above the range";
         } else {
+          if (hit_counter != 3) {
+            document.getElementById("tutorialText").textContent = "Try finding 3 INTEGER multipliers that produce solutions within the range";
+          } else {
 
+          }
+        }
+      }
+    }
+
+    if (current_level == 2) {
+      if (miss_lower_counter != 1) {
+        document.getElementById("tutorialText").textContent = "Try finding a DECIMAL multiplier that produces a solution below the range and does not end in '.0'";
+      } else {
+        if (miss_upper_counter != 1) {
+          document.getElementById("tutorialText").textContent = "Try finding a DECIMAL multiplier that produces a solution above the range and does not end in '.0'";
+        } else {
+          if (hit_counter != 3) {
+            document.getElementById("tutorialText").textContent = "Try finding 3 DECIMAL multipliers that produce solutions within the range and does not end in '.0'";
+          } else {
+
+          }
         }
       }
     }
