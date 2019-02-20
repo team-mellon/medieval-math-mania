@@ -509,13 +509,14 @@ function createGameForm() {
   var tutorial_label = document.createTextNode("Tutorial");
   var br1 = document.createElement("br");
   var tutorial_text = document.createElement("span");
+  tutorial_text.className = "tutorial";
   tutorial_text.id = "tutorialText";
   var tutorial_words = document.createTextNode("The tutorial is broken");
   tutorial_text.appendChild(tutorial_words);
 
   // Creates username div to hold display text and input box
   var tutorial_div = document.createElement("div");
-  tutorial_div.className = "tutorial";
+  tutorial_div.className = "tutorial_title";
   tutorial_div.id = "tutorialDiv"
   tutorial_div.appendChild(tutorial_label);
   tutorial_div.appendChild(br1);

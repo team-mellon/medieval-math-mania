@@ -110,16 +110,25 @@ html, body {
   align-content: center;
 }
 
-.tutorial {
-  /* font-family: "Blackadder"; */
+.tutorial_title {
+  font-family: "Blackadder";
   color: saddlebrown;
   position: absolute;
   width: 20vw;
-  top: 20%;
+  top: 15%;
   left: 12.5%;
   transform: translate(-50%, -50%);
   margin: 5px;
-  font-size: 4vh;
+  font-size: 6vh;
+  /* line-height: 0.7; */
+}
+
+.tutorial {
+  font-family: "Arial";
+  color: saddlebrown;
+  position: absolute;
+  width: 20vw;
+  font-size: 3vh;
   /* line-height: 0.7; */
 }
 
