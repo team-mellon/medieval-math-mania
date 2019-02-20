@@ -34,6 +34,7 @@ var landscape_warning;
 
 var multiplier = 0;
 var digit = 2;
+var last_digit = 0;
 var adder = 1;
 
 var database = {
@@ -263,26 +264,32 @@ function tick(event) {
 
     if (stage.canvas.width < 900) {
 
-      switch(digit) {
+      if (digit != last_digit) {
 
-        case 0:
-          adder = 100;
-          document.getElementById("hundredsPlace").style.color = "red";
-          document.getElementById("tensPlace").style.color = "black";
-          document.getElementById("onesPlace").style.color = "black";
-          break;
-        case 1:
-          adder = 10;
-          document.getElementById("hundredsPlace").style.color = "black";
-          document.getElementById("tensPlace").style.color = "red";
-          document.getElementById("onesPlace").style.color = "black";
-          break;
-        case 2:
-          adder = 1;
-          document.getElementById("hundredsPlace").style.color = "black";
-          document.getElementById("tensPlace").style.color = "black";
-          document.getElementById("onesPlace").style.color = "red";
-          break;
+        switch(digit) {
+
+          case 0:
+            adder = 100;
+            document.getElementById("hundredsPlace").style.color = "red";
+            document.getElementById("tensPlace").style.color = "black";
+            document.getElementById("onesPlace").style.color = "black";
+            break;
+          case 1:
+            adder = 10;
+            document.getElementById("hundredsPlace").style.color = "black";
+            document.getElementById("tensPlace").style.color = "red";
+            document.getElementById("onesPlace").style.color = "black";
+            break;
+          case 2:
+            adder = 1;
+            document.getElementById("hundredsPlace").style.color = "black";
+            document.getElementById("tensPlace").style.color = "black";
+            document.getElementById("onesPlace").style.color = "red";
+            break;
+
+        }
+
+        last_digit = digit;
 
       }
 
