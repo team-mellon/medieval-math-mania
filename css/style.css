@@ -1,3 +1,13 @@
+@font-face {
+  font-family: Blackadder;
+  src: url(../res/fonts/Blackadder.TTF) format('truetype');
+}
+
+@font-face {
+  font-family: Oldstyle;
+  src: url(../res/fonts/Oldstyle.TTF) format('truetype');
+}
+
 html, body {
   overflow: hidden;
   width   : 100%;
@@ -6,9 +16,8 @@ html, body {
   padding : 0;
 }
 
-@font-face {
-  font-family: Blackadder;
-  src: url(../res/fonts/Blackadder.ttf) format('truetype');
+#entryDisplay {
+  display: inline;
 }
 
 /* #renderCanvas {
@@ -68,14 +77,14 @@ html, body {
 }
 
 #rangeBanner {
-  font-family: "Arial";
+  font-family: "Oldstyle";
   position: absolute;
   top: 62.5%;
   left: 32%;
 }
 
 #equationBanner {
-  font-family: "Arial";
+  font-family: "Oldstyle";
   position: absolute;
   top: 62.5%;
   left: 50%;
@@ -90,7 +99,7 @@ html, body {
 }
 
 #historyBanner {
-  font-family: "Arial";
+  font-family: "Oldstyle";
   position: absolute;
   top: 60%;
   left: 68%;
@@ -106,6 +115,28 @@ html, body {
   align-content: center;
 }
 
+.tutorial_title {
+  font-family: "Blackadder";
+  color: saddlebrown;
+  position: absolute;
+  width: 20vw;
+  top: 15%;
+  left: 12.5%;
+  transform: translate(-50%, -50%);
+  margin: 5px;
+  font-size: 6vh;
+  /* line-height: 0.7; */
+}
+
+.tutorial {
+  font-family: "Oldstyle";
+  color: saddlebrown;
+  position: absolute;
+  width: 20vw;
+  font-size: 3vh;
+  /* line-height: 0.7; */
+}
+
 input {
   width: 100%;
   max-width: 200px;
@@ -119,9 +150,13 @@ input {
 }
 
 #entryInput {
-  font-family: "Arial";
+  font-family: "Oldstyle";
   width: 2.5em;
   -moz-appearance:textfield !important;
+}
+
+#errorText {
+  color: red;
 }
 
 input::-webkit-inner-spin-button,
@@ -158,7 +193,9 @@ input::-webkit-outer-spin-button {
   border-bottom: 1px solid #ddd;
 }
 
-#myInput:focus {outline: 3px solid #ddd;}
+#myInput:focus {
+  outline: 3px solid #ddd;
+}
 
 .dropdown {
   position: relative;

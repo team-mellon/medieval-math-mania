@@ -25,7 +25,11 @@ var scene_forms = [
     function() {
       createGameForm();
       createLevel();
-      document.getElementById("entryInput").value = 0;
+      if (stage.canvas.width < 900) {
+        
+      } else {
+        document.getElementById("entryInput").value = 0;
+      }
       document.getElementById("myDropdown").classList.toggle("show");
     },
     // This was in stats scene, may need this structure
