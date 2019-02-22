@@ -206,14 +206,13 @@ function createGUI() {
 			break;
 
 		case 3:
-<<<<<<< HEAD
 	    pause_menu = createImage("res/hit-target-pause-menu.png", backgroundX, backgroundY);
 	    pause_menu.visible = false;
 
 	    close_button = createButton("res/hit-target-pause-close-button.png", "", buttonX, buttonY, function() {
-		pauseAnimation(false);
-		visibleButton(false);
-		visibleForm(true);
+				pauseAnimation(false);
+				visibleButton(false);
+				visibleForm(true);
 	    });
 
 	    close_button.visible = false;
@@ -228,17 +227,14 @@ function createGUI() {
 	    settings_button.visible = false;
 
 	    login_button = createButton("res/login-button.png", "Pause", buttonX, buttonY, function() {
-		pauseAnimation(true);
-		visibleButton(true);
-		visibleForm(false);
+				pauseAnimation(true);
+				visibleButton(true);
+				visibleForm(false);
 	    });
 
 	    hint_button = createButton("res/hint-button.png", "Hint", small_buttonX, small_buttonY, function() {  changeScene(9); visibleForm(true); });
 	    hint_button.visible = false;
-=======
 
-			login_button = createButton("res/login-button.png", "Map", buttonX, buttonY, function() { changeScene(8); });
-      hint_button = createButton("res/hint-button.png", "Hint", small_buttonX, small_buttonY, function() {  changeScene(9); });
 			if (stage.canvas.width < 900) {
 				ll_number_button = createButton("res/number-button-ll.png", "", backgroundX, 288, function() {
 					if(digit > 0)
@@ -269,8 +265,6 @@ function createGUI() {
 					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(multiplier % 10));
 				});
 			}
-
->>>>>>> deploy
 
 			break;
 
@@ -466,20 +460,20 @@ function scaleGUI() {
 		case 3:
 
 	    if (stage.canvas.width < 900) {
-		scale_image(pause_menu, stage.canvas.width / 2, stage.canvas.height / 2);
-		scale_gui(close_button, stage.canvas.width / 2 + 412, stage.canvas.height / 2 -350);
+				scale_image(pause_menu, stage.canvas.width / 2, stage.canvas.height / 2);
+				scale_gui(close_button, stage.canvas.width / 2 + 412, stage.canvas.height / 2 -350);
 
         scale_gui(login_button, (buttonX/2 + 10), stage.canvas.height - (buttonY/2 + 10));
         scale_gui(hint_button, stage.canvas.width - (small_buttonX/2 + 116), stage.canvas.height - (small_buttonY/2 + 10));
 	    } else {
-		scale_image(pause_menu, stage.canvas.width / 2, stage.canvas.height / 2);
-		scale_gui(close_button, stage.canvas.width / 2 + 517, stage.canvas.height / 2 -325);
-		scale_gui(main_menu_button, stage.canvas.width / 2, stage.canvas.height / 2 -180);
-		scale_gui(exit_level_button, stage.canvas.width / 2, stage.canvas.height / 2 -110);
-		scale_gui(settings_button, stage.canvas.width / 2, stage.canvas.height / 2 -40);
+				scale_image(pause_menu, stage.canvas.width / 2, stage.canvas.height / 2);
+				scale_gui(close_button, stage.canvas.width / 2 + 517 * scene_scale_Y, stage.canvas.height / 2 -325 * scene_scale_Y);
+				scale_gui(main_menu_button, stage.canvas.width / 2, stage.canvas.height / 2 -180 * scene_scale_Y);
+				scale_gui(exit_level_button, stage.canvas.width / 2, stage.canvas.height / 2 -110 * scene_scale_Y);
+				scale_gui(settings_button, stage.canvas.width / 2, stage.canvas.height / 2 -40 * scene_scale_Y);
 
         scale_gui(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
-        scale_gui(hint_button, stage.canvas.width / 2 - 350, stage.canvas.height / 2 + 232);
+        scale_gui(hint_button, stage.canvas.width / 2 - 350 * scene_scale_Y, stage.canvas.height / 2 + 232 * scene_scale_Y);
       }
 
 			if (stage.canvas.width < 900) {
