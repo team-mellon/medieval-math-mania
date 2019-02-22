@@ -16,7 +16,13 @@ var small_buttonY = 72;
 var left_sword_button;
 var right_sword_button;
 
+var ll_number_button;
+var lr_number_button;
+var rl_number_button;
+var rr_number_button;
+
 var pause_menu;
+
 var background;
 var background_left;
 var background_right;
@@ -66,17 +72,19 @@ function createGUI() {
     	    } else {
             document.getElementById('usernameInput').value = "";
             document.getElementById('passwordInput').value = "";
-        		password_input.text = "";
+	          document.getElementById('errorText').textContent = "Invalid password";
+        		// password_input.text = "";
         		// login_error.alpha = 1;
     	    }
       	}	else {
           document.getElementById('usernameInput').value = "";
           document.getElementById('passwordInput').value = "";
+          document.getElementById('errorText').textContent = "Invalid username";
     	    // login_error.alpha = 1;
       	}
       });
 			right_sword_button = createButton("res/sword-right.png", "Signup", buttonX, buttonY, function() {	changeScene(1); });
-			secret_button = createButton("res/secret_button.png", "", backgroundX, backgroundY, function() {	changeScene(8); });
+			secret_button = createButton("res/secret_button.png", "", backgroundX, backgroundY, function() { changeScene(8); });
 
 			break;
 
@@ -92,6 +100,34 @@ function createGUI() {
 			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
 
 			left_sword_button = createButton("res/sword-left.png", "Create", buttonX, buttonY, function() {
+				var key = document.getElementById('usernameInput').value;
+				if(key in database.users || key == "") {
+					// document.getElementById('firstnameInput').value = "";
+					// document.getElementById('lastnameInput').value = "";
+					// document.getElementById('usernameInput').value = "";
+					// document.getElementById('passwordInput').value = "";
+					// document.getElementById('confirmInput').value = "";
+					document.getElementById('errorText').textContent = "Invalid username";
+				}	else {
+					if(document.getElementById('firstnameInput').value == "") {
+						document.getElementById('errorText').textContent = "Invalid firstname";
+					} else {
+						if(document.getElementById('lastnameInput').value == "") {
+							document.getElementById('errorText').textContent = "Invalid lastname";
+						} else {
+							if(document.getElementById('passwordInput').value == "") {
+								document.getElementById('errorText').textContent = "Invalid password";
+							} else {
+								if(document.getElementById('passwordInput').value != document.getElementById('confirmInput').value) {
+									document.getElementById('errorText').textContent = "Passwords do not match";
+								} else {
+					        changeScene(2);
+								}
+							}
+						}
+					}
+				}
+			});
         // if(firstname_input.text == "" || lastname_input.text == "" || username_input.text == "" || password_input.text == "" || re_password_input.text == "") {
         //
       	//     fieldInput_error.alpha = 1;
@@ -137,8 +173,7 @@ function createGUI() {
         //
         //   }
       	// }
-        changeScene(2);
-      });
+      // });
 			right_sword_button = createButton("res/sword-right.png", "Cancel", buttonX, buttonY, function() {
 
       	// firstname_input.text = "";
@@ -171,8 +206,9 @@ function createGUI() {
 			break;
 
 		case 3:
+<<<<<<< HEAD
 	    pause_menu = createImage("res/hit-target-pause-menu.png", backgroundX, backgroundY);
-	    pause_menu.visible = false;	   
+	    pause_menu.visible = false;
 
 	    close_button = createButton("res/hit-target-pause-close-button.png", "", buttonX, buttonY, function() {
 		pauseAnimation(false);
@@ -190,15 +226,51 @@ function createGUI() {
 
 	    settings_button = createButton("res/hit-target-pause-button.png", "Settings", buttonX, buttonY, function() { changeScene(6);  visibleForm(true);});
 	    settings_button.visible = false;
-	    
+
 	    login_button = createButton("res/login-button.png", "Pause", buttonX, buttonY, function() {
 		pauseAnimation(true);
 		visibleButton(true);
 		visibleForm(false);
 	    });
-	    
+
 	    hint_button = createButton("res/hint-button.png", "Hint", small_buttonX, small_buttonY, function() {  changeScene(9); visibleForm(true); });
 	    hint_button.visible = false;
+=======
+
+			login_button = createButton("res/login-button.png", "Map", buttonX, buttonY, function() { changeScene(8); });
+      hint_button = createButton("res/hint-button.png", "Hint", small_buttonX, small_buttonY, function() {  changeScene(9); });
+			if (stage.canvas.width < 900) {
+				ll_number_button = createButton("res/number-button-ll.png", "", backgroundX, 288, function() {
+					if(digit > 0)
+						digit--;
+					if(digit < 0)
+						digit = 0;
+
+					console.log(digit);
+				});
+				lr_number_button = createButton("res/number-button-lr.png", "", backgroundX, 288, function() {
+					if(digit < 2)
+						digit++;
+					if(digit > 2)
+						digit = 2;
+
+					console.log(digit);
+				});
+				rl_number_button = createButton("res/number-button-rl.png", "", backgroundX, 288, function() {
+					multiplier -= adder;
+					document.getElementById("hundredsPlace").textContent = Math.floor(multiplier/100 % 10);
+					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(multiplier/10 % 10));
+					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(multiplier % 10));
+				});
+				rr_number_button = createButton("res/number-button-rr.png", "", backgroundX, 288, function() {
+					multiplier += adder;
+					document.getElementById("hundredsPlace").textContent = Math.floor(multiplier/100 % 10);
+					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(multiplier/10 % 10));
+					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(multiplier % 10));
+				});
+			}
+
+>>>>>>> deploy
 
 			break;
 
@@ -249,7 +321,7 @@ function createGUI() {
 		case 8:
 
 			background = createImage("res/map.png", backgroundX, backgroundY);
-			// foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
+			foreground = createButton("res/map-banner.png", "Select a level", backgroundX, 231, function() {});
 
 			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { changeScene(2); });
 
@@ -396,7 +468,7 @@ function scaleGUI() {
 	    if (stage.canvas.width < 900) {
 		scale_image(pause_menu, stage.canvas.width / 2, stage.canvas.height / 2);
 		scale_gui(close_button, stage.canvas.width / 2 + 412, stage.canvas.height / 2 -350);
-		
+
         scale_gui(login_button, (buttonX/2 + 10), stage.canvas.height - (buttonY/2 + 10));
         scale_gui(hint_button, stage.canvas.width - (small_buttonX/2 + 116), stage.canvas.height - (small_buttonY/2 + 10));
 	    } else {
@@ -405,10 +477,17 @@ function scaleGUI() {
 		scale_gui(main_menu_button, stage.canvas.width / 2, stage.canvas.height / 2 -180);
 		scale_gui(exit_level_button, stage.canvas.width / 2, stage.canvas.height / 2 -110);
 		scale_gui(settings_button, stage.canvas.width / 2, stage.canvas.height / 2 -40);
-		
+
         scale_gui(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
         scale_gui(hint_button, stage.canvas.width / 2 - 350, stage.canvas.height / 2 + 232);
       }
+
+			if (stage.canvas.width < 900) {
+				scale_image(ll_number_button, stage.canvas.width / 2, stage.canvas.height - (288/2) * scene_scale_Y);
+				scale_image(lr_number_button, stage.canvas.width / 2, stage.canvas.height - (288/2) * scene_scale_Y);
+				scale_image(rl_number_button, stage.canvas.width / 2, stage.canvas.height - (288/2) * scene_scale_Y);
+				scale_image(rr_number_button, stage.canvas.width / 2, stage.canvas.height - (288/2) * scene_scale_Y);
+			}
 
 			break;
 
@@ -475,7 +554,7 @@ function scaleGUI() {
 		case 8:
 
 			scale_image(background, stage.canvas.width / 2, stage.canvas.height / 2);
-			// scale_image(foreground, stage.canvas.width / 2, stage.canvas.height / 2);
+			scale_image(foreground, stage.canvas.width / 2, 0 + (231/2) * scene_scale_Y);
 
 			scale_image(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
 
@@ -549,7 +628,7 @@ function pauseAnimation(paused) {
 	projectile.paused = false;
     }
 }
-	
+
 function visibleButton(visible) {
     if(visible) {
 	pause_menu.visible = true;

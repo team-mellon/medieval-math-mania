@@ -70,6 +70,8 @@ var scene_margin_X;
 
 var added = false;
 
+var mobile = false;
+
 var phone_rotation;
 var phone_rotationS = {
   images: ["res/phone-rotation.png"],
@@ -115,6 +117,10 @@ function scale_gui2(image, x_loc, y_loc) {
 
 // Scale the stage
 function resize() {
+
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    mobile = true;
+  }
 
   // Resize the canvas element with new window size
   stage.canvas.width = window.innerWidth;

@@ -1,6 +1,6 @@
 var frame_counter = 0;
 
-var entry_is_number;
+var entry_is_correct;
 
 var hit = false;
 var miss_upper = false;
@@ -32,6 +32,15 @@ var boss_fight = false;
 
 var landscape_warning;
 
+var multiplier = 0;
+var digit = 2;
+var last_digit = 0;
+var adder = 1;
+
+var history_list = [];
+
+var valid = true;
+
 var database = {
   "users": {
     "admin": {
@@ -58,7 +67,7 @@ function tick(event) {
   if (current_scene == 3) {
 
     //Key checks at the beginning of the update loop
-    if (keys[32]){ // Spacebar
+    if (keys[32]){ // Spacebar to randomize the range
 
       // Generate new range
       rand_num1 = Math.floor((Math.random() * 10) + 1);
@@ -98,6 +107,7 @@ function tick(event) {
     }
 
     if ((keys[13] || drag_up) && catapult.paused) { // Enter or drag up swipe on mobile
+
       // Reset drag_up bool;
       drag_up = false;
 
@@ -106,103 +116,214 @@ function tick(event) {
       console.log("ML" + miss_lower_counter);
 
       // Need to check for input correctness here
-        // No letters or symbols only numbers
+      // No letters or symbols only numbers
 
-      var entry_input = parseInt(document.getElementById("entryInput").value);
+      valid = true;
 
-      console.log();
+        if (stage.canvas.width < 900) {
 
-      console.log(typeof entry_input);
-      console.log(entry_input);
+          for (var x in history_list) {
+            console.log(history_list[x]);
+            console.log(entry);
+            if (multiplier == history_list[x]) {
+              valid = false;
+            }
+          }
 
-      if ((typeof entry_input) == "number") {
+          if (valid) {
 
-        if (Number.isNaN(entry_input)) {
-          entry_is_number = false;
-        } else {
+            // Add to history
+            console.log(history_list);
+            history_list.push(multiplier);
+            var dropdown = document.getElementById("myDropdown");
+            var history_entry = document.createTextNode(multiplier);
+            var line_break = document.createElement("br");
+            dropdown.appendChild(history_entry);
+            dropdown.appendChild(line_break);
 
-          if (current_level == 1) {
-            if (document.getElementById("entryInput").value % 1 == 0) {
-              entry_is_number = true;
-            } else {
-              entry_is_number = false;
+            // Actual math
+            solution = multiplier * multiplicand;
+
+            var solut_div = document.getElementById("solutionText");
+            while (solut_div.firstChild) {
+              solut_div.removeChild(solut_div.firstChild);
             }
 
-          } else if (current_level == 2) {
+            var solut = document.createTextNode(solution);
+            solut_div.appendChild(solut);
 
-            if (document.getElementById("entryInput").value % 1 != 0) {
-              entry_is_number = true;
+            // var scene_html = document.getElementById("sceneHTML");
+            // while (scene_html.firstChild) {
+            //   scene_html.removeChild(scene_html.firstChild);
+            // }
+            // createGameForm();
+
+            if (solution <= upper && solution >= lower && hit_counter < 3) {
+              hit = true;
+              console.log("hit");
+              catapult.gotoAndPlay(0);
+              // Triggering other fired events
+              fired = true;
+            } else if (solution > upper && miss_upper_counter == 0) {
+              miss_upper = true;
+              console.log("miss upper");
+              catapult.gotoAndPlay(0);
+              // Triggering other fired events
+              fired = true;
+            } else if (solution < lower && miss_lower_counter == 0) {
+              miss_lower = true;
+              console.log("miss lower");
+              catapult.gotoAndPlay(0);
+              // Triggering other fired events
+              fired = true;
+            }
+
+            multiplier = 0;
+            document.getElementById("hundredsPlace").textContent = Math.floor(multiplier/100 % 10);
+            document.getElementById("tensPlace").textContent = Math.abs(Math.floor(multiplier/10 % 10));
+            document.getElementById("onesPlace").textContent = Math.abs(Math.floor(multiplier % 10));
+
+          }
+
+        } else {
+
+          // Parse entry
+          var entry = parseInt(document.getElementById("entryInput").value);
+          console.log("Entry type: " + typeof entry);
+          console.log("Entry: " + entry);
+
+          if ((typeof entry) == "number") {
+
+            if (Number.isNaN(entry)) {
+              entry_is_correct = false;
             } else {
-              entry_is_number = false;
+
+              if (current_level == 1) {
+
+                if (document.getElementById("entryInput").value % 1 == 0) {
+                  entry_is_correct = true;
+                } else {
+                  entry_is_correct = false;
+                }
+
+              } else if (current_level == 2) {
+
+                if (document.getElementById("entryInput").value % 1 != 0) {
+                  entry_is_correct = true;
+                } else {
+                  entry_is_correct = false;
+                }
+
+              }
+
+            }
+
+          } else {
+            entry_is_correct = false;
+          }
+
+          for (var x in history_list) {
+            console.log(history_list[x]);
+            console.log(entry);
+            if (entry == history_list[x]) {
+              valid = false;
+            }
+          }
+
+          // Animate the catapult
+          if (entry_is_correct && valid) {
+
+            multiplier = document.getElementById("entryInput").value;
+
+            // Add to history
+            history_list.push(multiplier);
+            console.log(history_list);
+            var dropdown = document.getElementById("myDropdown");
+            var history_entry = document.createTextNode(multiplier);
+            var line_break = document.createElement("br");
+            dropdown.appendChild(history_entry);
+            dropdown.appendChild(line_break);
+
+            // Actual math
+            solution = multiplier * multiplicand;
+
+            var solut_div = document.getElementById("solutionText");
+            while (solut_div.firstChild) {
+              solut_div.removeChild(solut_div.firstChild);
+            }
+
+            var solut = document.createTextNode(solution);
+            solut_div.appendChild(solut);
+
+            // var scene_html = document.getElementById("sceneHTML");
+            // while (scene_html.firstChild) {
+            //   scene_html.removeChild(scene_html.firstChild);
+            // }
+            // createGameForm();
+
+            document.getElementById("entryInput").value = "";
+
+            if (solution <= upper && solution >= lower && hit_counter < 3) {
+              hit = true;
+              console.log("hit");
+              catapult.gotoAndPlay(0);
+              // Triggering other fired events
+              fired = true;
+            } else if (solution > upper && miss_upper_counter == 0) {
+              miss_upper = true;
+              console.log("miss upper");
+              catapult.gotoAndPlay(0);
+              // Triggering other fired events
+              fired = true;
+            } else if (solution < lower && miss_lower_counter == 0) {
+              miss_lower = true;
+              console.log("miss lower");
+              catapult.gotoAndPlay(0);
+              // Triggering other fired events
+              fired = true;
             }
 
           }
 
         }
 
-      } else {
-        entry_is_number = false;
-      }
-
-
-
-      // Animate the catapult
-      if (entry_is_number) {
-
-        // Add to history
-        var multiplier = document.getElementById("entryInput").value;
-        var dropdown = document.getElementById("myDropdown");
-        var history_entry = document.createTextNode(multiplier);
-        var line_break = document.createElement("br");
-        dropdown.appendChild(history_entry);
-        dropdown.appendChild(line_break);
-
-        // Actual math
-        solution = multiplier * multiplicand;
-
-        var solut_div = document.getElementById("solutionText");
-        while (solut_div.firstChild) {
-          solut_div.removeChild(solut_div.firstChild);
-        }
-
-        var solut = document.createTextNode(solution);
-        solut_div.appendChild(solut);
-
-        // var scene_html = document.getElementById("sceneHTML");
-        // while (scene_html.firstChild) {
-        //   scene_html.removeChild(scene_html.firstChild);
-        // }
-        // createGameForm();
-
-        document.getElementById("entryInput").value = "";
-
-        if (solution <= upper && solution >= lower && hit_counter < 3) {
-          hit = true;
-          console.log("hit");
-          catapult.gotoAndPlay(0);
-          // Triggering other fired events
-          fired = true;
-        } else if (solution > upper && miss_upper_counter == 0) {
-          miss_upper = true;
-          console.log("miss upper");
-          catapult.gotoAndPlay(0);
-          // Triggering other fired events
-          fired = true;
-        } else if (solution < lower && miss_lower_counter == 0) {
-          miss_lower = true;
-          console.log("miss lower");
-          catapult.gotoAndPlay(0);
-          // Triggering other fired events
-          fired = true;
-        }
-
-      }
-
       // console.log(projectile.alpha);
 
     }
 
-    // Stop animations that only play once if they are done // MAYBE DO WITH ANIMATION EVENT
+    if (stage.canvas.width < 900) {
+
+      if (digit != last_digit) {
+
+        switch(digit) {
+
+          case 0:
+            adder = 100;
+            document.getElementById("hundredsPlace").style.color = "red";
+            document.getElementById("tensPlace").style.color = "black";
+            document.getElementById("onesPlace").style.color = "black";
+            break;
+          case 1:
+            adder = 10;
+            document.getElementById("hundredsPlace").style.color = "black";
+            document.getElementById("tensPlace").style.color = "red";
+            document.getElementById("onesPlace").style.color = "black";
+            break;
+          case 2:
+            adder = 1;
+            document.getElementById("hundredsPlace").style.color = "black";
+            document.getElementById("tensPlace").style.color = "black";
+            document.getElementById("onesPlace").style.color = "red";
+            break;
+
+        }
+
+        last_digit = digit;
+
+      }
+
+    }
+
     updateSinglePlayAnimations();
 
     if (hit) {
@@ -287,9 +408,40 @@ function tick(event) {
       }
     }
 
-    if (hit_counter == 3 && miss_upper_counter == 1 && miss_lower_counter == 1 && reload == false && boss_fight) {
-      big_boss = createSprite(big_bossS, structureX, structureY);
-      scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
+    if (current_level == 1) {
+      if (miss_lower_counter != 1) {
+        document.getElementById("tutorialText").textContent = "Try finding an INTEGER multiplier that produces a solution below the range";
+      } else {
+        if (miss_upper_counter != 1) {
+          document.getElementById("tutorialText").textContent = "Try finding an INTEGER multiplier that produces a solution above the range";
+        } else {
+          if (hit_counter != 3) {
+            document.getElementById("tutorialText").textContent = "Try finding 3 INTEGER multipliers that produce solutions within the range";
+          } else {
+
+          }
+        }
+      }
+    }
+
+    if (current_level == 2) {
+      if (miss_lower_counter != 1) {
+        document.getElementById("tutorialText").textContent = "Try finding a DECIMAL multiplier that produces a solution below the range and does not end in '.0'";
+      } else {
+        if (miss_upper_counter != 1) {
+          document.getElementById("tutorialText").textContent = "Try finding a DECIMAL multiplier that produces a solution above the range and does not end in '.0'";
+        } else {
+          if (hit_counter != 3) {
+            document.getElementById("tutorialText").textContent = "Try finding 3 DECIMAL multipliers that produce solutions within the range and does not end in '.0'";
+          } else {
+
+          }
+        }
+      }
+    }
+
+    if (hit_counter == 3 && miss_upper_counter == 1 && miss_lower_counter == 1 && reload == false) {
+
       target_x = 0;
       hit = false;
       miss_upper = false;
@@ -298,7 +450,16 @@ function tick(event) {
       miss_upper_counter = 0;
       miss_lower_counter = 0;
       projectile_x_speed = 0;
-      console.log("boss");
+
+      if (boss_fight) {
+        big_boss = createSprite(big_bossS, structureX, structureY);
+        scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
+        console.log("boss");
+      } else {
+        changeLevel();
+        console.log("next level");
+      }
+
     }
 
     if (hide_knight) {
@@ -342,6 +503,10 @@ function tick(event) {
         }
         projectile_speed -= 3;
       // }
+    }
+
+    if (catapult.currentFrame == 11){
+      reload = false;
     }
 
     if (reload) {

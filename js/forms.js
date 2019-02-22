@@ -16,7 +16,7 @@ function createLoginForm() {
   login_username_div.appendChild(br);
   login_username_div.appendChild(username_input);
 
-  var br3 = document.createElement("br");
+  var br = document.createElement("br");
 
   // Creates password display label and input box
   var password_text = document.createTextNode("Password");
@@ -36,13 +36,29 @@ function createLoginForm() {
 
 
 
+  // Creates line break for form div spacing
+  var br3 = document.createElement("br");
+
+
+
+  // Creates password display text and input box
+  var error_text = document.createTextNode("");
+
+  var error_div = document.createElement("div");
+  error_div.id = "errorText";
+  error_div.appendChild(error_text);
+
+
+
   // Creates login form to hold username and password divs
   var login_form = document.createElement("form");
   login_form.id = "loginForm";
   login_form.className = "scrollMenu";
   login_form.appendChild(login_username_div);
-  login_form.appendChild(br3);
+  login_form.appendChild(br);
   login_form.appendChild(login_password_div);
+  login_form.appendChild(br3);
+  login_form.appendChild(error_div);
 
   // Injecting login form into existing html
   var scene_html = document.getElementById("sceneHTML");
@@ -55,6 +71,7 @@ function createSignupForm() {
   // Creates firstname display label and input box
   var firstname_text = document.createTextNode("Firstname:");
   var firstname_input = document.createElement("input");
+  firstname_input.id = "firstnameInput";
   firstname_input.setAttribute("type", "text");
   firstname_input.setAttribute("name", "firstname");
 
@@ -69,6 +86,7 @@ function createSignupForm() {
   // Creates lastname display text and input box
   var lastname_text = document.createTextNode("Lastname:");
   var lastname_input = document.createElement("input");
+  lastname_input.id = "lastnameInput";
   lastname_input.setAttribute("type", "text");
   lastname_input.setAttribute("name", "lastname");
 
@@ -88,6 +106,7 @@ function createSignupForm() {
   // Creates username display text and input box
   var username_text = document.createTextNode("Username:");
   var username_input = document.createElement("input");
+  username_input.id = "usernameInput";
   username_input.setAttribute("type", "text");
   username_input.setAttribute("name", "username");
 
@@ -107,6 +126,7 @@ function createSignupForm() {
   // Creates password display text and input box
   var password_text = document.createTextNode("Password:");
   var password_input = document.createElement("input");
+  password_input.id = "passwordInput";
   password_input.setAttribute("type", "password");
   password_input.setAttribute("name", "password");
 
@@ -121,6 +141,7 @@ function createSignupForm() {
   // Creates confirm display text and input box
   var confirm_text = document.createTextNode("Confirm:");
   var confirm_input = document.createElement("input");
+  confirm_input.id = "confirmInput";
   confirm_input.setAttribute("type", "password");
   confirm_input.setAttribute("name", "confirm");
 
@@ -129,6 +150,20 @@ function createSignupForm() {
   signup_confirm_div.className = "signup";
   signup_confirm_div.appendChild(confirm_text);
   signup_confirm_div.appendChild(confirm_input);
+
+
+
+  // Creates line break for form div spacing
+  var br3 = document.createElement("br");
+
+
+
+  // Creates password display text and input box
+  var error_text = document.createTextNode("");
+
+  var error_div = document.createElement("div");
+  error_div.id = "errorText";
+  error_div.appendChild(error_text);
 
 
 
@@ -143,6 +178,8 @@ function createSignupForm() {
   signup_form.appendChild(br2);
   signup_form.appendChild(signup_password_div);
   signup_form.appendChild(signup_confirm_div);
+  signup_form.appendChild(br3);
+  signup_form.appendChild(error_div);
 
   //Injecting signup form into existing html
   var scene_html = document.getElementById("sceneHTML");
@@ -151,7 +188,7 @@ function createSignupForm() {
 }
 
 function createMenuForm() {
-  
+
 }
 
 function createStatsForm() {
@@ -195,17 +232,29 @@ function createStatsForm() {
 
 function createHow2PlayForm() {
 
-  var instructions = "It's just math";
+  var instructions1 = "The goal of the game is to get one hit anywhere above the range,";
+  var instructions2 = "one hit anywhere below the range,";
+  var instructions3 = "and three hits within the range";
 
   // Creates username display label and text
   var h2p_label = document.createTextNode("How 2 Play: ");
-  var h2p_text = document.createTextNode(instructions);
+  var br1 = document.createElement("br");
+  var h2p_text1 = document.createTextNode(instructions1);
+  var br2 = document.createElement("br");
+  var h2p_text2 = document.createTextNode(instructions2);
+  var br3 = document.createElement("br");
+  var h2p_text3 = document.createTextNode(instructions3);
 
   // Creates username div to hold display text and input box
   var h2p_h2p_div = document.createElement("div");
   h2p_h2p_div.className = "login";
   h2p_h2p_div.appendChild(h2p_label);
-  h2p_h2p_div.appendChild(h2p_text);
+  h2p_h2p_div.appendChild(br1);
+  h2p_h2p_div.appendChild(h2p_text1);
+  h2p_h2p_div.appendChild(br2);
+  h2p_h2p_div.appendChild(h2p_text2);
+  h2p_h2p_div.appendChild(br3);
+  h2p_h2p_div.appendChild(h2p_text3);
 
 
 
@@ -353,6 +402,8 @@ function createMapForm() {
 function createGameForm() {
 
   // Creates username display text
+  var range_label = document.createTextNode("Range");
+  var br = document.createElement("br");
   var left_paren = document.createTextNode("[");
   var lower_number = document.createTextNode(lower);
   var middle_comma = document.createTextNode(", ");
@@ -363,6 +414,8 @@ function createGameForm() {
   var game_range_div = document.createElement("div");
   game_range_div.className = "login";
   game_range_div.id = "rangeDiv"
+  game_range_div.appendChild(range_label);
+  game_range_div.appendChild(br);
   game_range_div.appendChild(left_paren);
   game_range_div.appendChild(lower_number);
   game_range_div.appendChild(middle_comma);
@@ -377,21 +430,42 @@ function createGameForm() {
   var multiplicand_text = document.createTextNode(multiplicand);
   multiplicand_div.appendChild(multiplicand_text);
   var sign_text = document.createTextNode(sign);
-  var entry_input = document.createElement("input");
-  entry_input.id = "entryInput";
-  entry_input.setAttribute("type", "number");
-  entry_input.setAttribute("placeholder", "###");
-  entry_input.setAttribute("value", "");
-  entry_input.setAttribute("maxlength", "3");
-  entry_input.setAttribute("size", "4");
-  entry_input.setAttribute("min", "-999");
-  entry_input.setAttribute("max", "999");
-  entry_input.setAttribute("name", "entry");
-  entry_input.addEventListener('keypress', function(event) {
-    if (event.keyCode == 13) {
-      event.preventDefault();
-    }
-  });
+  var entry_input;
+  if (stage.canvas.width < 900) {
+    entry_input = document.createElement("div");
+    entry_input.id = "entryDisplay";
+    var hundreds = document.createElement("span");
+    hundreds.id = "hundredsPlace";
+    var hundreds_place = document.createTextNode("0");
+    hundreds.appendChild(hundreds_place);
+    var tens = document.createElement("span");
+    tens.id = "tensPlace";
+    var tens_place = document.createTextNode("0");
+    tens.appendChild(tens_place);
+    var ones = document.createElement("span");
+    ones.id = "onesPlace";
+    var ones_place = document.createTextNode("0");
+    ones.appendChild(ones_place);
+    entry_input.appendChild(hundreds);
+    entry_input.appendChild(tens);
+    entry_input.appendChild(ones);
+  } else {
+    entry_input = document.createElement("input");
+    entry_input.id = "entryInput";
+    entry_input.setAttribute("type", "number");
+    entry_input.setAttribute("placeholder", "###");
+    entry_input.setAttribute("value", "");
+    entry_input.setAttribute("maxlength", "3");
+    entry_input.setAttribute("size", "4");
+    entry_input.setAttribute("min", "-999");
+    entry_input.setAttribute("max", "999");
+    entry_input.setAttribute("name", "entry");
+    entry_input.addEventListener('keypress', function(event) {
+      if (event.keyCode == 13) {
+        event.preventDefault();
+      }
+    });
+  }
   var equal_text = document.createTextNode(equal);
   var solution_div = document.createElement("div");
   solution_div.id = "solutionText";
@@ -431,6 +505,24 @@ function createGameForm() {
 
 
 
+  // Creates username display text
+  var tutorial_label = document.createTextNode("Tutorial");
+  var br1 = document.createElement("br");
+  var tutorial_text = document.createElement("span");
+  tutorial_text.className = "tutorial";
+  tutorial_text.id = "tutorialText";
+  var tutorial_words = document.createTextNode("The tutorial is broken");
+  tutorial_text.appendChild(tutorial_words);
+
+  // Creates username div to hold display text and input box
+  var tutorial_div = document.createElement("div");
+  tutorial_div.className = "tutorial_title";
+  tutorial_div.id = "tutorialDiv"
+  tutorial_div.appendChild(tutorial_label);
+  tutorial_div.appendChild(br1);
+  tutorial_div.appendChild(tutorial_text);
+
+
   // Creates login form to hold username and password divs
   var game_range_form = document.createElement("form");
   game_range_form.id = "rangeBanner";
@@ -454,6 +546,7 @@ function createGameForm() {
   scene_html.appendChild(game_range_form);
   scene_html.appendChild(game_entry_form);
   scene_html.appendChild(game_history_form);
+  scene_html.appendChild(tutorial_div);
 
 }
 

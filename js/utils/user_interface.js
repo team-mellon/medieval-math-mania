@@ -28,6 +28,8 @@ function createButton(location, text, width, height, handleClick) {
   image.regY = height/2;
 
   var color = "#DAA520";
+  var size = "24";
+  var font = "Blackadder";
 
   if (
     text == "Login" || text == "Signup" ||
@@ -36,7 +38,12 @@ function createButton(location, text, width, height, handleClick) {
     color = "#646464";
   }
 
-  var label = new createjs.Text(text, "normal 24px Blackadder", color);
+  if (text == "Select a level") {
+    size = "120";
+    font = "Oldstyle";
+  }
+
+  var label = new createjs.Text(text, "normal " + size + "px " + font, color);
   // label.name = "label";
   label.textAlign = "center";
   label.textBaseline = "middle";
