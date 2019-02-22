@@ -406,7 +406,7 @@ function scaleGUI() {
 		scale_gui(exit_level_button, stage.canvas.width / 2, stage.canvas.height / 2 -110);
 		scale_gui(settings_button, stage.canvas.width / 2, stage.canvas.height / 2 -40);
 		
-        scale_gui(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
+        scale_gui(login_button, stage.canvas.width - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
         scale_gui(hint_button, stage.canvas.width / 2 - 350, stage.canvas.height / 2 + 232);
       }
 
@@ -539,6 +539,32 @@ function pauseAnimation(paused) {
 	henchman_right.paused = true;
 	henchman_right_center.paused = true;
 	projectile.paused = true;
+/*
+	if(structure_center.currentAnimationFrame != 0 && structure_center.currentAnimationFrame != 11)
+	    structure_center.paused = true;
+
+	if(structure_left_center.currentAnimationFrame != 0 && structure_left_center.currentAnimationFrame != 11)
+	    structure_left_center.paused = true;
+
+	if(structure_right_center.currentAnimationFrame != 0 && structure_right_center.currentAnimationFrame != 11)
+	    structure_right_center.paused = true;
+
+	if(structure_left.currentAnimationFrame != 0 && structure_left.currentAnimationFrame != 11)
+	    structure_left.paused = true;
+
+	if(structure_right.currentAnimationFrame != 0 && structure_right.currentAnimationFrame != 11)
+	    structure_right.paused = true;
+
+	if(catapult.currentAnimationFrame != 0 && catapult.currentAnimationFrame != 11)
+	    catapult.paused = true;
+
+*/	
+	/*structure_center.paused = true;
+	structure_left_center.paused = true;
+	structure_right_center.paused = true;
+	structure_left.paused = true;
+	structure_right.paused = true;
+	catapult.paused = true;*/
     }
     else {
 	henchman_left.paused = false;
@@ -547,6 +573,31 @@ function pauseAnimation(paused) {
 	henchman_right.paused = false;
 	henchman_right_center.paused = false;
 	projectile.paused = false;
+/*
+	if(structure_center.currentAnimationFrame != 0 && structure_center.currentAnimationFrame != 11)
+	    structure_center.paused = false;
+
+	if(structure_left_center.currentAnimationFrame != 0 && structure_left_center.currentAnimationFrame != 11)
+	    structure_left_center.paused = false;
+
+	if(structure_right_center.currentAnimationFrame != 0 && structure_right_center.currentAnimationFrame != 11)
+	    structure_right_center.paused = false;
+
+	if(structure_left.currentAnimationFrame != 0 && structure_left.currentAnimationFrame != 11)
+	    structure_left.paused = false;
+
+	if(structure_right.currentAnimationFrame != 0 && structure_right.currentAnimationFrame != 11)
+	    structure_right.paused = false;
+
+	if(catapult.currentAnimationFrame != 0 && catapult.currentAnimationFrame != 11)
+	    catapult.paused = false;
+*/	
+	/*structure_center.paused = false;
+	structure_left_center.paused = false;
+	structure_right_center.paused = false;
+	structure_left.paused = false;
+	structure_right.paused = false;
+	catapult.paused = false;*/
     }
 }
 	
