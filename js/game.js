@@ -56,6 +56,8 @@ var solution = 0;
 function tick(event) {
 
   if (current_scene == 3) {
+	
+	//console.log("Loading: " + preload.progress);
 
     //Key checks at the beginning of the update loop
     if (keys[32]){ // Spacebar

@@ -1,4 +1,5 @@
-function createLoginForm() {
+function createLoginForm()
+{
 
   // Creates username display label and input box
   var username_text = document.createTextNode("Username");
@@ -49,9 +50,8 @@ function createLoginForm() {
   scene_html.appendChild(login_form);
 
 }
-
-function createSignupForm() {
-
+function createSignupForm()
+{
   // Creates firstname display label and input box
   var firstname_text = document.createTextNode("Firstname:");
   var firstname_input = document.createElement("input");
@@ -482,8 +482,9 @@ function createHintForm() {
   // Injecting hint form into existing html
   var scene_html = document.getElementById("sceneHTML");
   scene_html.appendChild(hint_form);
-
 }
+
+
 
 function visibleForm(visible) {
     if(visible) {
@@ -496,4 +497,8 @@ function visibleForm(visible) {
     }
 }
 
-
+function loading(evt){
+  var progbar = document.getElementById("progressBar");
+  progbar.style.width = preload.progress * 100 + '%'; 
+  //prgbar.innerHTML = width * 1 + '%';
+}
