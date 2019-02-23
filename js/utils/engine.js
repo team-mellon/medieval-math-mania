@@ -84,8 +84,8 @@ function scale_image(image, x_loc, y_loc) {
 
   image.scaleX = scene_scale_X;
   image.scaleY = scene_scale_Y;
-  image.x = x_loc;
-  image.y = y_loc;
+  image.x = ( stage.canvas.width / 2 ) - x_loc;
+  image.y = ( stage.canvas.height / 2 ) - y_loc;
 
 }
 
@@ -97,8 +97,8 @@ function scale_gui(image, x_loc, y_loc) {
   if (stage.canvas.width < 900) {
     image.scale = 1;
   }
-  image.x = x_loc;
-  image.y = y_loc;
+  image.x = ( stage.canvas.width / 2 ) - x_loc;
+  image.y = ( stage.canvas.height / 2 ) - y_loc;
 
 }
 
@@ -110,8 +110,8 @@ function scale_gui2(image, x_loc, y_loc) {
   if (stage.canvas.width < 900) {
     image.scale = 0.5;
   }
-  image.x = x_loc;
-  image.y = y_loc;
+  image.x = ( stage.canvas.width / 2 ) - x_loc;
+  image.y = ( stage.canvas.height / 2 ) - y_loc;
 
 }
 

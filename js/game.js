@@ -64,7 +64,7 @@ var solution = 0;
 
 function tick(event) {
 
-  if (current_scene == 3) {
+  if (current_scene == 3 && pause_menu.visible == false) {
 
     //Key checks at the beginning of the update loop
     if (keys[32]){ // Spacebar to randomize the range
