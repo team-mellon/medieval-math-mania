@@ -451,14 +451,22 @@ function tick(event) {
       miss_lower_counter = 0;
       projectile_x_speed = 0;
 
-      if (boss_fight) {
+	visibleForm(false);
+	end_level_scene.visible = true;
+	end_level_button.visible = true;
+	end_text.visible = true;
+	login_button.visible = false;
+	console.log("next level");
+	
+     /* if (boss_fight) {
         big_boss = createSprite(big_bossS, structureX, structureY);
         scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
         console.log("boss");
       } else {
         changeLevel();
-        console.log("next level");
-      }
+        
+      }*/
+	
 
     }
 
