@@ -210,7 +210,7 @@ function createGUI() {
 			break;
 
 		case 3:
-	    	    
+
 	    end_level_scene = createImage("res/login_scroll.png", backgroundX, backgroundY);
 	    end_level_scene.visible = false;
 
@@ -221,7 +221,7 @@ function createGUI() {
 	    end_text.visible = false;
 	    //end_text.skewX = -5;
 	    end_text.skewY = -15;
-	    
+
 	    pause_menu = createImage("res/hit-target-pause-menu.png", backgroundX, backgroundY);
 	    pause_menu.visible = false;
 
@@ -494,7 +494,7 @@ function scaleGUI() {
 		scale_image(end_level_scene, stage.canvas.width / 2, stage.canvas.height / 2);
 		scale_gui(end_level_button, stage.canvas.width / 2, stage.canvas.height / 2 + 250);
 		scale_image(end_text, stage.canvas.width / 2 - 170, stage.canvas.height / 2 - 100);
-		
+
         scale_gui(login_button, stage.canvas.width - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
 
         scale_gui(hint_button, stage.canvas.width / 2 - 350, stage.canvas.height / 2 + 232);
@@ -655,7 +655,7 @@ function pauseAnimation(paused) {
 	if(catapult.currentAnimationFrame != 0 && catapult.currentAnimationFrame != 11)
 	    catapult.paused = true;
 
-*/	
+*/
 	/*structure_center.paused = true;
 	structure_left_center.paused = true;
 	structure_right_center.paused = true;
@@ -688,7 +688,7 @@ function pauseAnimation(paused) {
 
 	if(catapult.currentAnimationFrame != 0 && catapult.currentAnimationFrame != 11)
 	    catapult.paused = false;
-*/	
+*/
 	/*structure_center.paused = false;
 	structure_left_center.paused = false;
 	structure_right_center.paused = false;

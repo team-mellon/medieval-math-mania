@@ -583,23 +583,25 @@ function createHintForm() {
 
 
 function visibleForm(visible) {
-    if(visible) {
-	var scene_html = document.getElementById("sceneHTML");
-	scene_html.hidden = false;
-    }
-    else {
-	var scene_html = document.getElementById("sceneHTML");
-	scene_html.hidden = true;
-    }
+
+  if(visible) {
+		var scene_html = document.getElementById("sceneHTML");
+		scene_html.hidden = false;
+  } else {
+		var scene_html = document.getElementById("sceneHTML");
+		scene_html.hidden = true;
+  }
+	
 }
 //Loadbar for loading screen
 function loading(evt){
   var progbar = document.getElementById("progressBar");
+  var perctext = document.getElementById("percentText");
   progressBar.hidden= false;
   progressBackground.hidden = false;
   ldBg.hidden = false;
   progbar.style.width = preload.progress * 100 + '%';
-  progbar.innerHTML = (Math.floor(preload.progress * 100)).toString() + '%';
+  perctext.innerHTML = (Math.floor(preload.progress * 100)).toString() + '%';
   if(preload.progress * 100  >= 100)
   {
 	  progressBar.hidden = true;
