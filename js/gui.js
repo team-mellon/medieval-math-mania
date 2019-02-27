@@ -47,6 +47,10 @@ var hint_button;
 var level1_indicator;
 var level2_indicator;
 
+var end_level_scene;
+var end_level_button;
+var end_text;
+
 function createGUI() {
 
 	switch(current_scene) {
@@ -206,7 +210,18 @@ function createGUI() {
 			break;
 
 		case 3:
+	    	    
+	    end_level_scene = createImage("res/login_scroll.png", backgroundX, backgroundY);
+	    end_level_scene.visible = false;
 
+	    end_level_button = createButton("res/login-button.png", "Next Level", buttonX, buttonY, function() { changeScene(8); visibleForm(true);});
+	    end_level_button.visible = false;
+
+	    end_text = createText("Good Job!!", "Oldstyle", "65px", "bold", "saddlebrown", 10, 10);
+	    end_text.visible = false;
+	    //end_text.skewX = -5;
+	    end_text.skewY = -15;
+	    
 	    pause_menu = createImage("res/hit-target-pause-menu.png", backgroundX, backgroundY);
 	    pause_menu.visible = false;
 
@@ -476,6 +491,9 @@ function scaleGUI() {
 		scale_gui(exit_level_button, stage.canvas.width / 2, stage.canvas.height / 2 -110);
 		scale_gui(settings_button, stage.canvas.width / 2, stage.canvas.height / 2 -40);
 
+		scale_image(end_level_scene, stage.canvas.width / 2, stage.canvas.height / 2);
+		scale_gui(end_level_button, stage.canvas.width / 2, stage.canvas.height / 2 + 250);
+		scale_image(end_text, stage.canvas.width / 2 - 170, stage.canvas.height / 2 - 100);
 		
         scale_gui(login_button, stage.canvas.width - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
 
