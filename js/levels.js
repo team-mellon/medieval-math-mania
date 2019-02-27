@@ -171,9 +171,10 @@ function loadLevel() {
   number_text = [];
 }
 
-function loadImage(){
+function loadImage()
+{
 	preload = new createjs.LoadQueue();
-	//preload.addEventListener("fileload", handleFileComplete);
+	preload.on("progress", loading);
 	preload.loadFile("res/numberline.png");
 	preload.loadFile("res/level" + current_level + "/boss.png");
 	preload.loadFile("res/level" + current_level + "/henchman.png");
@@ -187,7 +188,6 @@ function loadImage(){
 	preload.loadFile("res/level" + current_level + "/right-tower.png");
 	preload.loadFile("res/level" + current_level + "/facade.png");
 	preload.loadFile("res/level" + current_level + "/big-boss.png");
-	preload.on("progress", loading);
 }
 
 function createLevel() {

@@ -505,6 +505,7 @@ function loading(evt){
   progressBar.hidden= false;
   progressBackground.hidden = false;
   ldBg.hidden = false;
+  console.log("ldBg");
   progbar.style.width = preload.progress * 100 + '%';
   if(preload.progress * 100  >= 100)
   {
@@ -512,5 +513,4 @@ function loading(evt){
 	  progressBackground.hidden = true;
 	  ldBg.hidden = true;
   }
-  //prgbar.innerHTML = width * 1 + '%';
 }
