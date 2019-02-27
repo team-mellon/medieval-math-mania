@@ -1,51 +1,85 @@
 var num_scenes = 10;
 
+var scene_name_enum = Object.freeze({
+    "login": 0,
+    "signup": 1,
+    "menu": 2,
+    "game": 3,
+    "stats": 4,
+    "how2play": 5,
+    "settings": 6,
+    "account": 7,
+    "map": 8,
+    "hint": 9
+});
+
 var scene_bg_colors = [
-    "#919191",
-    "#919191",
-    "#8ac5dc",
-    "#000000",
-    "#919191",
-    "#919191",
-    "#919191",
-    "#919191",
-    "#fffcd8",
-    "#919191"
+
+  "#919191",
+  "#919191",
+  "#8ac5dc",
+  "#000000",
+  "#919191",
+  "#919191",
+  "#919191",
+  "#919191",
+  "#919191",
+  "#919191"
+
 ];
 
+var scene_bg_imgs = [
+
+  "res/login.png",
+  "res/login.png",
+  "res/level.png",
+  "res/level.png",
+  "res/login.png",
+  "res/login.png",
+  "res/login.png",
+  "res/login.png",
+  "res/login.png",
+  "res/login.png"
+
+];
+
+
+
 var scene_forms = [
-    function() {createLoginForm();},
-    function() {createSignupForm();},
-    // firstname_text.text = "First Name";
-    // lastname_text.text = "Last Name";
-    // username_text.text = "Create User Name";
-    // password_text.text = "Create Password";
-    // re_password_text.text = "Re-Enter Password";
-    function() {createMenuForm();},
-    function() {
-      createGameForm();
-      createLevel();
-      if (stage.canvas.width < 900) {
-        
-      } else {
-        document.getElementById("entryInput").value = 0;
-      }
-      document.getElementById("myDropdown").classList.toggle("show");
-    },
-    // This was in stats scene, may need this structure
-    // var key = message.current_user;
-    // stats1_text.text = "Hits: " + database["stats"][key]["hits"];
-    // stats2_text.text = "Misses: " + database["stats"][key]["misses"];
-    function() {createStatsForm();},
-    function() {createHow2PlayForm();},
-    function() {createSettingsForm();},
-    // This was in account scene, may need this structure
-    // var key = message.current_user;
-    // username_text.text = "Fullname: " + database["users"][key]["firstname"] + " " + database["users"][key]["lastname"];
-    // password_text.text = "Password: " + database["users"][key]["password"];
-    function() {createAccountForm();},
-    function() {createMapForm();},
-    function() {createHintForm();}
+
+  function() {createLoginForm();},
+  function() {createSignupForm();},
+  // firstname_text.text = "First Name";
+  // lastname_text.text = "Last Name";
+  // username_text.text = "Create User Name";
+  // password_text.text = "Create Password";
+  // re_password_text.text = "Re-Enter Password";
+  function() {createMenuForm();},
+  function() {
+    createGameForm();
+    createLevel();
+    if (stage.canvas.width < 900) {
+
+    } else {
+      document.getElementById("entryInput").value = 0;
+    }
+    document.getElementById("myDropdown").classList.toggle("show");
+  },
+  // This was in stats scene, may need this structure
+  // var key = message.current_user;
+  // stats1_text.text = "Hits: " + database["stats"][key]["hits"];
+  // stats2_text.text = "Misses: " + database["stats"][key]["misses"];
+  function() {createStatsForm();},
+  function() {createHow2PlayForm();},
+  function() {createSettingsForm();},
+  // This was in account scene, may need this structure
+  // var key = message.current_user;
+  // username_text.text = "Fullname: " + database["users"][key]["firstname"] + " " + database["users"][key]["lastname"];
+  // password_text.text = "Password: " + database["users"][key]["password"];
+  function() {createAccountForm();},
+  function() {createMapForm();},
+  function() {createHintForm();}
+
 ];
 
 function loadScene() {
@@ -89,29 +123,34 @@ function changeScene(new_scene) {
 }
 
 function oneWayScene() {
-    if(last_scene != 3){
-	var temp = current_scene;
-	current_scene = last_scene;
-	last_scene = temp;
 
-	loadScene();
-	destroyScene();
-	createScene();
-	resize();
-	scaleGUI();
-    }
-    else{
-	var temp = current_scene;
-	current_scene = last_scene;
-	last_scene = temp;
+  if (last_scene != 3) {
 
-	loadScene();
-	destroyScene();
-	createScene();
-	resize();
-	scaleGUI();
-	pauseAnimation(true);
-	visibleButton(true);
-	visibleForm(false);
-    }
+  	var temp = current_scene;
+  	current_scene = last_scene;
+  	last_scene = temp;
+
+  	loadScene();
+  	destroyScene();
+  	createScene();
+  	resize();
+  	scaleGUI();
+
+  } else {
+
+    var temp = current_scene;
+    current_scene = last_scene;
+    last_scene = temp;
+
+    loadScene();
+    destroyScene();
+    createScene();
+    resize();
+    scaleGUI();
+    pauseAnimation(true);
+    visibleButton(true);
+    visibleForm(false);
+
+  }
+
 }

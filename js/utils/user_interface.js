@@ -1,3 +1,14 @@
+// function gameImage(location, width, height, x_coord, y_coord) {
+//
+//   this.location = location;
+//   this.width = width;
+//   this.height = height;
+//   this.x_coord = x_coord;
+//   this.y_coord = y_coord;
+//
+// }
+
+
 // Creating and staging assets
 
 function createImage(location, width, height) {
@@ -68,7 +79,7 @@ function createButton(location, text, width, height, handleClick) {
 
 function createText(num, font, size, style, color, width, height) {
 
-    var text = new createjs.Text(num, style + " " + size + " " + font, color);
+  var text = new createjs.Text(num, style + " " + size + " " + font, color);
 	stage.addChild(text);
   //text.regX = width/2;
   //text.regY = height/2;

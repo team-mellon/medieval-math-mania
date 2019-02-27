@@ -12,6 +12,8 @@ function init() {
   stage = new createjs.Stage("demoCanvas"); // Create the stage and attach it to canvas
   createjs.Touch.enable(stage); // Enable touch interaction for mobile
 
+  // stage.snapToPixelEnabled = true;
+
   bg = new createjs.Shape(); // Create a rectangle for clearing the screen
   stage.addChild(bg); // Add rectangle to the stage
 
@@ -80,25 +82,88 @@ var phone_rotationS = {
 };
 
 // Scale the image-like assets
-function scale_image(image, x_loc, y_loc) {
+function scale_image(image, x_loc, y_loc, x_lock, y_lock) {
+
+  x_origin = stage.canvas.width / 2;
+  y_origin = stage.canvas.height / 2;
+
+  switch (x_lock) {
+    case "left":
+      x_origin = 0;
+      console.log("left");
+      break;
+    case "center":
+      x_origin = stage.canvas.width / 2;
+      break;
+    case "right":
+      x_origin = stage.canvas.width;
+      break;
+  }
+
+  switch (y_lock) {
+    case "top":
+      y_origin = 0;
+      console.log("top");
+      break;
+    case "center":
+      y_origin = stage.canvas.height / 2;
+      break;
+    case "bottom":
+      y_origin = stage.canvas.height;
+      console.log("bottom");
+      break;
+  }
 
   image.scaleX = scene_scale_X;
   image.scaleY = scene_scale_Y;
-  image.x = ( stage.canvas.width / 2 ) - x_loc;
-  image.y = ( stage.canvas.height / 2 ) - y_loc;
+  image.x = ( x_origin ) - ( x_loc * scene_scale_Y );
+  image.y = ( y_origin ) - ( y_loc * scene_scale_Y );
 
 }
 
 // Scale the image-like assets
-function scale_gui(image, x_loc, y_loc) {
+function scale_gui(image, x_loc, y_loc, x_lock, y_lock) {
 
-  image.scaleX = scene_scale_X;
-  image.scaleY = scene_scale_Y;
+  x_origin = stage.canvas.width / 2;
+  y_origin = stage.canvas.height / 2;
+
+  switch (x_lock) {
+    case "left":
+      x_origin = 0;
+      console.log("left");
+      break;
+    case "center":
+      x_origin = stage.canvas.width / 2;
+      break;
+    case "right":
+      x_origin = stage.canvas.width;
+      break;
+  }
+
+  switch (y_lock) {
+    case "top":
+      y_origin = 0;
+      console.log("top");
+      break;
+    case "center":
+      y_origin = stage.canvas.height / 2;
+      break;
+    case "bottom":
+      y_origin = stage.canvas.height;
+      console.log("bottom");
+      break;
+  }
+
   if (stage.canvas.width < 900) {
     image.scale = 1;
+    image.x = ( x_origin ) - x_loc;
+    image.y = ( y_origin ) - y_loc;
+  } else {
+    image.scaleX = scene_scale_X;
+    image.scaleY = scene_scale_Y;
+    image.x = ( x_origin ) - ( x_loc * scene_scale_Y );
+    image.y = ( y_origin ) - ( y_loc * scene_scale_Y );
   }
-  image.x = ( stage.canvas.width / 2 ) - x_loc;
-  image.y = ( stage.canvas.height / 2 ) - y_loc;
 
 }
 
@@ -157,9 +222,14 @@ function resize() {
   bg.graphics.clear()
   bg.graphics.beginFill(bg_color).drawRect(0, 0, stage.canvas.width, stage.canvas.height);
 
+  var scaler = 1;
+  // var scaler = 8.5;
+
   // Calculate the scene scaling
-  scene_scale_X = ( max_scale_Y - ( max_scale_Y - stage.canvas.height ) ) / max_scale_Y;
-  scene_scale_Y = ( max_scale_Y - ( max_scale_Y - stage.canvas.height ) ) / max_scale_Y;
+  scene_scale_X = scaler * ( max_scale_Y - ( max_scale_Y - stage.canvas.height ) ) / max_scale_Y;
+  scene_scale_Y = scaler * ( max_scale_Y - ( max_scale_Y - stage.canvas.height ) ) / max_scale_Y;
+
+  // subtract scaler from all xs and ys
 
   // Calculate the scene margin in a given direction
   scene_margin_X = ( stage.canvas.width - max_scale_X ) / 2;

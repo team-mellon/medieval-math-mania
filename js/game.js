@@ -104,6 +104,13 @@ function tick(event) {
       range_div.appendChild(upper_number);
       range_div.appendChild(right_paren);
 
+      // number_spacer = 25;
+
+      removeNumbers();
+      createNumbers();
+      resize();
+      // scaleNumbers();
+
     }
 
     if ((keys[13] || drag_up) && catapult.paused) { // Enter or drag up swipe on mobile
@@ -366,6 +373,7 @@ function tick(event) {
             break;
           default:
         }
+        firework_hit.gotoAndPlay(0);
         reload = true;
         waiting_hit = false;
         hit_counter++;
@@ -391,6 +399,7 @@ function tick(event) {
         if (projectile_speed < 0 && projectile.y >= boss.y) {
           hide_archer3 = true;
           structure_left.gotoAndPlay(0);
+          firework_high.gotoAndPlay(0);
           reload = true;
           miss_lower = false;
           miss_lower_counter++;
@@ -401,6 +410,7 @@ function tick(event) {
         if (projectile_speed < 0 && projectile.y >= boss.y) {
           hide_archer4 = true;
           structure_right.gotoAndPlay(0);
+          firework_low.gotoAndPlay(0);
           reload = true;
           miss_upper = false;
           miss_upper_counter++;
@@ -540,6 +550,17 @@ function updateSinglePlayAnimations() {
   if (!catapult.paused && catapult.currentFrame == 11) {
     catapult.stop();
     reload = false;
+  }
+
+  // Structure in the scene
+  if (!firework_high.paused && firework_high.currentFrame == 11) {
+    firework_high.gotoAndStop(0);
+  }
+  if (!firework_hit.paused && firework_hit.currentFrame == 11) {
+    firework_hit.gotoAndStop(0);
+  }
+  if (!firework_low.paused && firework_low.currentFrame == 11) {
+    firework_low.gotoAndStop(0);
   }
 
   // Structure in the scene

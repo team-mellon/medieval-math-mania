@@ -1,10 +1,11 @@
 var num_levels = 2;
 var current_level = 1;
 
-var number_text;
+var number_text = [];
 var number_spacing = 10;
 var number_spacer = 25;
 var numberline;
+var number_arr = [];
 
 var numberlineS;
 
@@ -68,6 +69,14 @@ var catapultS;
 
 var catapultX = 288;
 var catapultY = 384;
+
+var firework_high;
+var firework_hit;
+var firework_low;
+
+var firework_highS;
+var firework_hitS;
+var firework_lowS;
 
 function loadLevel() {
 
@@ -204,6 +213,24 @@ function loadLevel() {
     framerate: 6
   };
 
+  firework_highS = {
+    images: ["res/firework-high.png"],
+    frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+  };
+
+  firework_hitS = {
+    images: ["res/firework-hit.png"],
+    frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+  };
+
+  firework_lowS = {
+    images: ["res/firework-low.png"],
+    frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+  };
+
   number_text = [];
 
 }
@@ -237,6 +264,10 @@ function createLevel() {
   projectile = createSprite(projectileS, projectileX, projectileY);
   projectile.gotoAndPlay(0);
   catapult = createSprite(catapultS, catapultX, catapultY);
+
+  firework_high = createSprite(firework_highS, structureX, structureY);
+  firework_hit = createSprite(firework_hitS, structureX, structureY);
+  firework_low = createSprite(firework_lowS, structureX, structureY);
 
   numberline = createSprite(numberlineS, structureX, structureY);
   createNumbers();
@@ -306,37 +337,37 @@ function scaleLevel() {
   number_spacer = 25;
 
   // Level structure in background
-  scale_image(structure_center, stage.canvas.width / 2, stage.canvas.height / 2);
-  scale_image(structure_left_center, stage.canvas.width / 2, stage.canvas.height / 2);
-  scale_image(structure_right_center, stage.canvas.width / 2, stage.canvas.height / 2);
+  scale_image(structure_center, 0,  0);
+  scale_image(structure_left_center, 0,  0);
+  scale_image(structure_right_center, 0,  0);
 
   // Bad guys in midground
-  scale_image(henchman_left, stage.canvas.width / 2 - (henchmanX/2 + 625) * scene_scale_Y, stage.canvas.height / 2 + (24) * scene_scale_Y);
-  scale_image(henchman_left_center, stage.canvas.width / 2 - (henchmanX/2 + 375) * scene_scale_Y, stage.canvas.height / 2);
-  scale_image(boss, stage.canvas.width / 2, stage.canvas.height / 2);
-  scale_image(henchman_right_center, stage.canvas.width / 2 + (henchmanX/2 + 375) * scene_scale_Y, stage.canvas.height / 2);
-  scale_image(henchman_right, stage.canvas.width / 2 + (henchmanX/2 + 625 ) * scene_scale_Y, stage.canvas.height / 2 + (24) * scene_scale_Y);
+  scale_image(henchman_left, -(henchmanX/2 + 625),  24);
+  scale_image(henchman_left_center, -(henchmanX/2 + 375),  0);
+  scale_image(boss, 0,  0);
+  scale_image(henchman_right_center, henchmanX/2 + 375,  0);
+  scale_image(henchman_right, henchmanX/2 + 625, 24);
 
   // Level structure in foreground
-  scale_image(structure_body, stage.canvas.width / 2, stage.canvas.height / 2);
-  scale_image(structure_left, stage.canvas.width / 2, stage.canvas.height / 2);
-  scale_image(structure_right, stage.canvas.width / 2, stage.canvas.height / 2);
-  scale_image(structure_facade, stage.canvas.width / 2, stage.canvas.height / 2);
+  scale_image(structure_body, 0,  0);
+  scale_image(structure_left, 0,  0);
+  scale_image(structure_right, 0,  0);
+  scale_image(structure_facade, 0,  0);
+
+  scale_image(firework_high, 0,  0);
+  scale_image(firework_hit, 0,  0);
+  scale_image(firework_low, 0,  0);
 
   // Main character in foreground
-  scale_image(projectile, stage.canvas.width / 2, stage.canvas.height - (projectileY/2 + 57) * scene_scale_Y);
-  scale_image(catapult, stage.canvas.width / 2, stage.canvas.height - (catapultY/2 - 57) * scene_scale_Y);
+  scale_image(projectile, 0, stage.canvas.height - (projectileY/2 + 57));
+  scale_image(catapult, 0, stage.canvas.height - (catapultY/2 - 57));
 
-  scale_image(numberline, stage.canvas.width / 2, stage.canvas.height / 2);
+  scale_image(numberline, 0,  0);
 
-  for(i = 0; i <= 50; i++){
-  	scale_image(number_text[i], stage.canvas.width / 2 - (((number_spacer * 48) + 5) * scene_scale_Y), 30 * scene_scale_Y);
-    number_spacer--
-    // number_spacing += 48;
-  }
+  scaleNumbers();
 
   if (fire_counter == 5) {
-    scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
+    scale_image(big_boss, 0,  0);
   }
 
 }
@@ -346,9 +377,30 @@ function myFunction(e) {
   document.getElementById("myDropdown").classList.toggle("show");
 }
 
+function scaleNumbers() {
+  for(i = 0; i <= 50; i++){
+    scale_image(number_text[i], (((number_spacer * 48) + 5)), -30, "center", "top");
+    number_spacer--
+    // number_spacing += 48;
+  }
+}
+
 function createNumbers(){
-  for(i = -25; i <= 25; i++){
-  	var temp = createText(i.toString(), "Arial", "16px", "bold", "black", structureX, structureY);
+  number_text = [];
+  var range_size = upper - lower;
+  console.log(range_size);
+  var unit_size = range_size / 17;
+  console.log(unit_size);
+  var start_spot = lower - (unit_size * 17)
+  console.log(start_spot);
+  for(i = 0; i <= 50; i++){
+  	var temp = createText((Math.floor(start_spot + (i*unit_size))).toString(), "Arial", "16px", "bold", "black", structureX, structureY);
   	number_text.push(temp);
+  }
+}
+
+function removeNumbers() {
+  for(i = 0; i <= 50; i++){
+  	stage.removeChild(number_text[i]);
   }
 }

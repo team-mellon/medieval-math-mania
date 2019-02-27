@@ -579,14 +579,11 @@ function createHintForm() {
 }
 
 function visibleForm(visible) {
-    if(visible) {
-	var scene_html = document.getElementById("sceneHTML");
-	scene_html.hidden = false;
-    }
-    else {
-	var scene_html = document.getElementById("sceneHTML");
-	scene_html.hidden = true;
-    }
+  if(visible) {
+  	var scene_html = document.getElementById("sceneHTML");
+  	scene_html.hidden = false;
+  } else {
+	  var scene_html = document.getElementById("sceneHTML");
+	  scene_html.hidden = true;
+  }
 }
-
-
