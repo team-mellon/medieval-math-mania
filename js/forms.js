@@ -1,5 +1,9 @@
-function createLoginForm() {
-
+function createLoginForm()
+{
+	//putting this here because I dont know how else to initialize this as hidden
+	progressBar.hidden = true;
+	progressBackground.hidden = true;
+	ldBg.hidden = true;
   // Creates username display label and input box
   var username_text = document.createTextNode("Username");
   // Creates line break for form div spacing
@@ -65,9 +69,8 @@ function createLoginForm() {
   scene_html.appendChild(login_form);
 
 }
-
-function createSignupForm() {
-
+function createSignupForm()
+{
   // Creates firstname display label and input box
   var firstname_text = document.createTextNode("Firstname:");
   var firstname_input = document.createElement("input");
@@ -575,8 +578,9 @@ function createHintForm() {
   // Injecting hint form into existing html
   var scene_html = document.getElementById("sceneHTML");
   scene_html.appendChild(hint_form);
-
 }
+
+
 
 function visibleForm(visible) {
     if(visible) {
@@ -588,5 +592,18 @@ function visibleForm(visible) {
 	scene_html.hidden = true;
     }
 }
-
-
+//Loadbar for loading screen
+function loading(evt){
+  var progbar = document.getElementById("progressBar");
+  progressBar.hidden= false;
+  progressBackground.hidden = false;
+  ldBg.hidden = false;
+  progbar.style.width = preload.progress * 100 + '%';
+  progbar.innerHTML = (Math.floor(preload.progress * 100)).toString() + '%';
+  if(preload.progress * 100  >= 100)
+  {
+	  progressBar.hidden = true;
+	  progressBackground.hidden = true;
+	  ldBg.hidden = true;
+  }
+}

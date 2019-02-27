@@ -165,8 +165,8 @@ function resize() {
   scene_margin_X = ( stage.canvas.width - max_scale_X ) / 2;
 
   // Log screen scaling for debugging purposes
-  console.log(scene_scale_X);
-  console.log(scene_scale_Y);
+  //console.log(scene_scale_X);
+  //console.log(scene_scale_Y);
 
   //***********************
   //Somehow get ECS in here

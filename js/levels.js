@@ -69,6 +69,8 @@ var catapultS;
 var catapultX = 288;
 var catapultY = 384;
 
+var preload;
+
 function loadLevel() {
 
   switch(current_level) {
@@ -125,7 +127,9 @@ function loadLevel() {
       // code block
 
   }
-
+  
+  loadImage();
+  
   numberlineS = {
     images: ["res/numberline.png"],
     frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
@@ -205,7 +209,25 @@ function loadLevel() {
   };
 
   number_text = [];
+}
 
+function loadImage()
+{
+	preload = new createjs.LoadQueue();
+	preload.on("progress", loading);
+	preload.loadFile("res/numberline.png");
+	preload.loadFile("res/level" + current_level + "/boss.png");
+	preload.loadFile("res/level" + current_level + "/henchman.png");
+	preload.loadFile("res/ammo.png");
+	preload.loadFile("res/catapult.png");
+	preload.loadFile("res/level" + current_level + "/center-tower.png");
+	preload.loadFile("res/level" + current_level + "/left-center-tower.png");
+	preload.loadFile("res/level" + current_level + "/right-center-tower.png");
+	preload.loadFile("res/level" + current_level + "/body.png");
+	preload.loadFile("res/level" + current_level + "/left-tower.png");
+	preload.loadFile("res/level" + current_level + "/right-tower.png");
+	preload.loadFile("res/level" + current_level + "/facade.png");
+	preload.loadFile("res/level" + current_level + "/big-boss.png");
 }
 
 function createLevel() {

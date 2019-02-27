@@ -32,6 +32,37 @@ html, body {
   touch-action: none;
 }
 
+.ldscreen {
+  position: absolute;
+  transform: translate(0%, -100%);
+  background-color: Green;
+  height: 100%;
+  width: 100%;
+	z-index: 2;
+}
+
+.bgbar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: White;
+  height: 50px;
+  width: 1000px;
+	z-index: 2;
+}
+
+.pgbar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: Gold;
+  height: 100%;
+  width: 100%;
+	z-index: 2;
+}
+
 .scrollMenu {
   position: absolute;
   top: 50%;
