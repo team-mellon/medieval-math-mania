@@ -441,6 +441,20 @@ function tick(event) {
     }
 
     if (hit_counter == 3 && miss_upper_counter == 1 && miss_lower_counter == 1 && reload == false) {
+	hit_text.text += hit_counter.toString();
+	low_text.text += miss_lower_counter.toString();
+	high_text.text += miss_upper_counter.toString();
+
+	visibleForm(false);
+	pauseAnimation(true);
+	end_level_scene.visible = true;
+	end_level_button.visible = true;
+	end_text.visible = true;
+	hit_text.visible = true;
+	low_text.visible = true;
+	high_text.visible = true;	
+	login_button.visible = false;
+	console.log("next level");
 
       target_x = 0;
       hit = false;
@@ -451,12 +465,7 @@ function tick(event) {
       miss_lower_counter = 0;
       projectile_x_speed = 0;
 
-	visibleForm(false);
-	end_level_scene.visible = true;
-	end_level_button.visible = true;
-	end_text.visible = true;
-	login_button.visible = false;
-	console.log("next level");
+	
 	
      /* if (boss_fight) {
         big_boss = createSprite(big_bossS, structureX, structureY);
