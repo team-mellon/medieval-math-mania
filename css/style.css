@@ -24,11 +24,12 @@ html, body {
 }
 
 .ldscreen {
-	position: absolute;
-  background-color: Black;
+  position: absolute;
+  transform: translate(0%, -100%);
+  background-color: Green;
   height: 100%;
   width: 100%;
-	z-index: 3;
+	z-index: 2;
 }
 
 .bgbar {
@@ -37,8 +38,8 @@ html, body {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: White;
-  height: 30px;
-  width: 100px;
+  height: 50px;
+  width: 1000px;
 	z-index: 2;
 }
 
@@ -48,7 +49,7 @@ html, body {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: Gold;
-  height: 30px;
+  height: 100%;
   width: 100%;
 	z-index: 2;
 }
