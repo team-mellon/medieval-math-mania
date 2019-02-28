@@ -558,9 +558,9 @@ function createHintForm() {
   // Creates display label and text
   var hint_label = document.createTextNode("Hint");
   if (current_level == 1) {
-    var hint_text = document.createTextNode("This is the placeholder text for the level 1 hint");
+    var hint_text = document.createTextNode("If the student got the one whole number hit, and got the high, and the low, prompt them to think about money. For example, if they tried 8 × 7 = 56 and also tried 8 × 6 = 48 and 8 × 8 = 64, prompt them to try a value between 6 and 7 or between 7 and 8. Is there an amount of money between $6 and $7 or between $7 and $8? Try that value next!");
   } else if (current_level == 2) {
-    var hint_text = document.createTextNode("This is the placeholder text for the level 2 hint");
+    var hint_text = document.createTextNode("If the student got the whole number high and the low right above and below the target range, prompt them to think about money. For example, if they tried 7 × 7 = 49 and also tried 7 × 8 = 56, prompt them to try a value between 7 and 8. Think about money — is there an amount of money between $7 and $8? Try that value next!");
   }
   var br = document.createElement("br");
   // Creates hint div to hold display label and text
