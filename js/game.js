@@ -366,6 +366,7 @@ function tick(event) {
             break;
           default:
         }
+        firework_hit.gotoAndPlay(0);
         reload = true;
         waiting_hit = false;
         hit_counter++;
@@ -391,6 +392,7 @@ function tick(event) {
         if (projectile_speed < 0 && projectile.y >= boss.y) {
           hide_archer3 = true;
           structure_left.gotoAndPlay(0);
+          firework_low.gotoAndPlay(0);
           reload = true;
           miss_lower = false;
           miss_lower_counter++;
@@ -401,6 +403,7 @@ function tick(event) {
         if (projectile_speed < 0 && projectile.y >= boss.y) {
           hide_archer4 = true;
           structure_right.gotoAndPlay(0);
+          firework_high.gotoAndPlay(0);
           reload = true;
           miss_upper = false;
           miss_upper_counter++;
@@ -445,14 +448,14 @@ function tick(event) {
 	low_text.text += miss_lower_counter.toString();
 	high_text.text += miss_upper_counter.toString();
 
-	
-	
+
+
 	visibleForm(false);
 	pauseAnimation(true);
 	end_level_scene.visible = true;
 	end_level_button.visible = true;
 
-	
+
 	end_text.visible = true;
 	var tempX = scene_scale_X;
 	var tempY = scene_scale_Y;
@@ -461,13 +464,13 @@ function tick(event) {
 	createjs.Tween.get(end_text).wait(500).to({scaleX:tempX ,scaleY:tempY, rotation:360}, 1000);
 	hit_text.visible = true;
 	createjs.Tween.get(hit_text).wait(2000).to({alpha:1}, 1000);
-	
+
 	low_text.visible = true;
 	createjs.Tween.get(low_text).wait(3500).to({alpha:1}, 1000);
-	
+
 	high_text.visible = true;
 	createjs.Tween.get(high_text).wait(5000).to({alpha:1}, 1000);
-	
+
 	login_button.visible = false;
 	console.log("next level");
 
@@ -480,17 +483,17 @@ function tick(event) {
       miss_lower_counter = 0;
       projectile_x_speed = 0;
 
-	
-	
+
+
      /* if (boss_fight) {
         big_boss = createSprite(big_bossS, structureX, structureY);
         scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
         console.log("boss");
       } else {
         changeLevel();
-        
+
       }*/
-	
+
 
     }
 
@@ -589,6 +592,17 @@ function updateSinglePlayAnimations() {
   }
   if (!structure_right.paused && structure_right.currentFrame == 5) {
     structure_right.stop();
+  }
+
+  // Structure in the scene
+  if (!firework_low.paused && firework_low.currentFrame == 11) {
+    firework_low.gotoAndStop(0);
+  }
+  if (!firework_hit.paused && firework_hit.currentFrame == 11) {
+    firework_hit.gotoAndStop(0);
+  }
+  if (!firework_high.paused && firework_high.currentFrame == 11) {
+    firework_high.gotoAndStop(0);
   }
 
 }

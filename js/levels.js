@@ -55,6 +55,14 @@ var centerS,
 var structureX = 1920;
 var structureY = 768;
 
+var firework_low,
+    firework_hit,
+    firework_high;
+
+var firework_lowS,
+    firework_hitS,
+    firework_highS;
+
 var projectile;
 
 var projectileS;
@@ -83,11 +91,11 @@ function loadLevel() {
       bg_color = "#c9f9ff";
       break;
 
-    // case 3: // Volcano
-    //   bg_color = "#3b0a0a";
-    //   break;
+    case 3: // Volcano
+      bg_color = "#3b0a0a";
+      break;
 
-    case 3: // Sea
+    case 4: // Sea
       bg_color = "#c2ffe6";
       break;
 
@@ -103,11 +111,11 @@ function loadLevel() {
     //   bg_color = "#010027";
     //   break;
 
-    case 4: // Forest
+    case 5: // Forest
       bg_color = "#2f3b25";
       break;
 
-    case 5: // Alpine
+    case 6: // Alpine
       bg_color = "#cae3e9";
       break;
 
@@ -115,7 +123,7 @@ function loadLevel() {
     //   bg_color = "#3f2900";
     //   break;
 
-    case 6: // Swamp
+    case 7: // Swamp
       bg_color = "#292c2b";
       break;
 
@@ -208,6 +216,24 @@ function loadLevel() {
     framerate: 6
   };
 
+  firework_lowS = {
+    images: ["res/firework-high.png"],
+    frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+  };
+
+  firework_hitS = {
+    images: ["res/firework-hit.png"],
+    frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+  };
+
+  firework_highS = {
+    images: ["res/firework-low.png"],
+    frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+  };
+
   number_text = [];
 }
 
@@ -256,6 +282,10 @@ function createLevel() {
   structure_right = createSprite(rightS, structureX, structureY);
   structure_facade = createSprite(facadeS, structureX, structureY);
 
+  firework_low = createSprite(firework_lowS, structureX, structureY);
+  firework_hit = createSprite(firework_hitS, structureX, structureY);
+  firework_high = createSprite(firework_highS, structureX, structureY);
+
   // Main character in foreground
   projectile = createSprite(projectileS, projectileX, projectileY);
   projectile.gotoAndPlay(0);
@@ -285,6 +315,10 @@ function destroyLevel() {
   stage.removeChild(structure_left);
   stage.removeChild(structure_right);
   stage.removeChild(structure_facade);
+
+  stage.removeChild(firework_low);
+  stage.removeChild(firework_hit);
+  stage.removeChild(firework_high);
 
   // Main character in foreground
   stage.removeChild(projectile);
@@ -345,6 +379,11 @@ function scaleLevel() {
   scale_image(structure_left, stage.canvas.width / 2, stage.canvas.height / 2);
   scale_image(structure_right, stage.canvas.width / 2, stage.canvas.height / 2);
   scale_image(structure_facade, stage.canvas.width / 2, stage.canvas.height / 2);
+
+
+  scale_image(firework_low, stage.canvas.width / 2, stage.canvas.height / 2);
+  scale_image(firework_hit, stage.canvas.width / 2, stage.canvas.height / 2);
+  scale_image(firework_high, stage.canvas.width / 2, stage.canvas.height / 2);
 
   // Main character in foreground
   scale_image(projectile, stage.canvas.width / 2, stage.canvas.height - (projectileY/2 + 57) * scene_scale_Y);
