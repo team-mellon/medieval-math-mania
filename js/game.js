@@ -370,6 +370,8 @@ function tick(event) {
         reload = true;
         waiting_hit = false;
         hit_counter++;
+            hit_text_counter.text = "Total Hits: "+hit_counter.toString();
+
       }
     }
 
@@ -396,6 +398,7 @@ function tick(event) {
           reload = true;
           miss_lower = false;
           miss_lower_counter++;
+  low_text_counter.text ="Total Lows: "+ miss_lower_counter.toString();
         }
       }
 
@@ -407,6 +410,7 @@ function tick(event) {
           reload = true;
           miss_upper = false;
           miss_upper_counter++;
+  high_text_counter.text ="Total Highs: "+ miss_upper_counter.toString();
         }
       }
     }
@@ -443,10 +447,12 @@ function tick(event) {
       }
     }
 
+
     if (hit_counter == 3 && miss_upper_counter == 1 && miss_lower_counter == 1 && reload == false) {
 	hit_text.text += hit_counter.toString();
 	low_text.text += miss_lower_counter.toString();
 	high_text.text += miss_upper_counter.toString();
+
 
 
 
