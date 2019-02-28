@@ -591,8 +591,9 @@ function visibleForm(visible) {
 		var scene_html = document.getElementById("sceneHTML");
 		scene_html.hidden = true;
   }
-	
+
 }
+
 //Loadbar for loading screen
 function loading(evt){
   var progbar = document.getElementById("progressBar");

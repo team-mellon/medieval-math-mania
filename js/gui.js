@@ -338,7 +338,7 @@ function createGUI() {
 
 			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { changeScene(2); });
 
-			level1_indicator = createButton("res/map-indicator.png", "", indicatorX, indicatorY, function() {
+			level1_indicator = createButton("res/map-indicator.png", "1", indicatorX, indicatorY, function() {
         current_level = 1;
         hide_knight = false;
         hide_archer1 = false;
@@ -350,7 +350,7 @@ function createGUI() {
         miss_lower_counter = 0;
         changeScene(3);
       });
-			level2_indicator = createButton("res/map-indicator.png", "", indicatorX, indicatorY, function() {
+			level2_indicator = createButton("res/map-indicator.png", "2", indicatorX, indicatorY, function() {
         current_level = 2;
         hide_knight = false;
         hide_archer1 = false;
@@ -479,25 +479,28 @@ function scaleGUI() {
 		case 3:
 
 	    if (stage.canvas.width < 900) {
-		scale_image(pause_menu, stage.canvas.width / 2, stage.canvas.height / 2);
-		scale_gui(close_button, stage.canvas.width / 2 + 412, stage.canvas.height / 2 -350);
+
+				scale_image(pause_menu, stage.canvas.width / 2, stage.canvas.height / 2);
+				scale_gui(close_button, stage.canvas.width / 2 + 412, stage.canvas.height / 2 -350);
 
         scale_gui(login_button, (buttonX/2 + 10), stage.canvas.height - (buttonY/2 + 10));
         scale_gui(hint_button, stage.canvas.width - (small_buttonX/2 + 116), stage.canvas.height - (small_buttonY/2 + 10));
-	    } else {
-		scale_image(pause_menu, stage.canvas.width / 2, stage.canvas.height / 2);
-		scale_gui(close_button, stage.canvas.width / 2 + 517, stage.canvas.height / 2 -325);
-		scale_gui(main_menu_button, stage.canvas.width / 2, stage.canvas.height / 2 -180);
-		scale_gui(exit_level_button, stage.canvas.width / 2, stage.canvas.height / 2 -110);
-		scale_gui(settings_button, stage.canvas.width / 2, stage.canvas.height / 2 -40);
 
-		scale_image(end_level_scene, stage.canvas.width / 2, stage.canvas.height / 2);
-		scale_gui(end_level_button, stage.canvas.width / 2, stage.canvas.height / 2 + 250);
-		scale_image(end_text, stage.canvas.width / 2 - 170, stage.canvas.height / 2 - 100);
+	    } else {
+
+				scale_image(pause_menu, stage.canvas.width / 2, stage.canvas.height / 2);
+				scale_gui(close_button, stage.canvas.width / 2 + 445, stage.canvas.height / 2 - 281);
+				scale_gui(main_menu_button, stage.canvas.width / 2, stage.canvas.height / 2 -180);
+				scale_gui(exit_level_button, stage.canvas.width / 2, stage.canvas.height / 2 -110);
+				scale_gui(settings_button, stage.canvas.width / 2, stage.canvas.height / 2 -40);
+
+				scale_image(end_level_scene, stage.canvas.width / 2, stage.canvas.height / 2);
+				scale_gui(end_level_button, stage.canvas.width / 2, stage.canvas.height / 2 + 250);
+				scale_image(end_text, stage.canvas.width / 2 - 170, stage.canvas.height / 2 - 100);
 
         scale_gui(login_button, stage.canvas.width - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
+        scale_gui(hint_button, stage.canvas.width / 2 - 313, stage.canvas.height / 2 + 194);
 
-        scale_gui(hint_button, stage.canvas.width / 2 - 350, stage.canvas.height / 2 + 232);
       }
 
 			if (stage.canvas.width < 900) {
@@ -614,10 +617,10 @@ function scaleGUI() {
   	scale_gui(next_indicator, stage.canvas.width - (indicatorX/4 * 3), stage.canvas.height - (indicatorY/4 * 3));
   	scale_gui(lute, stage.canvas.width - (luteX/2), stage.canvas.height - (luteY/2 + 32));
   } else {
-  	scale_gui(previous_indicator, stage.canvas.width / 2 - 50, stage.canvas.height / 2 + 232);
-  	scale_gui(pause_indicator, stage.canvas.width / 2, stage.canvas.height / 2 + 232);
-  	scale_gui(next_indicator, stage.canvas.width / 2 + 50, stage.canvas.height / 2 + 232);
-  	scale_gui(lute, stage.canvas.width / 2 + 350, stage.canvas.height / 2 + 232);
+  	scale_gui(previous_indicator, stage.canvas.width / 2 - 50, stage.canvas.height / 2 + 194);
+  	scale_gui(pause_indicator, stage.canvas.width / 2, stage.canvas.height / 2 + 194);
+  	scale_gui(next_indicator, stage.canvas.width / 2 + 50, stage.canvas.height / 2 + 194);
+  	scale_gui(lute, stage.canvas.width / 2 + 313, stage.canvas.height / 2 + 194);
   }
 
   landscape_warning.graphics.clear()
@@ -699,29 +702,35 @@ function pauseAnimation(paused) {
 }
 
 function visibleButton(visible) {
+
     if(visible) {
-	pause_menu.visible = true;
-	close_button.visible = true;
-	main_menu_button.visible = true;
-	exit_level_button.visible = true;
-	settings_button.visible = true;
-	previous_indicator.visible = true;
-	pause_indicator.visible = true;
-	next_indicator.visible = true;
-	lute.visible = true;
-	hint_button.visible = true;
+
+			login_button.visible = false;
+			pause_menu.visible = true;
+			close_button.visible = true;
+			main_menu_button.visible = true;
+			exit_level_button.visible = true;
+			settings_button.visible = true;
+			previous_indicator.visible = true;
+			pause_indicator.visible = true;
+			next_indicator.visible = true;
+			lute.visible = true;
+			hint_button.visible = true;
+
+    } else {
+
+			login_button.visible = true;
+			pause_menu.visible = false;
+			close_button.visible = false;
+			main_menu_button.visible = false;
+			exit_level_button.visible = false;
+			settings_button.visible = false;
+			previous_indicator.visible = false;
+			pause_indicator.visible = false;
+			next_indicator.visible = false;
+			lute.visible = false;
+			hint_button.visible = false;
 
     }
-    else {
-	pause_menu.visible = false;
-	close_button.visible = false;
-	main_menu_button.visible = false;
-	exit_level_button.visible = false;
-	settings_button.visible = false;
-	previous_indicator.visible = false;
-	pause_indicator.visible = false;
-	next_indicator.visible = false;
-	lute.visible = false;
-	hint_button.visible = false;
-    }
+
 }
