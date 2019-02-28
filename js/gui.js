@@ -516,25 +516,35 @@ function scaleGUI() {
 	    if (stage.canvas.width < 900) {
 
 				scale_image(pause_menu, stage.canvas.width / 2, stage.canvas.height / 2);
-				scale_gui(close_button, stage.canvas.width / 2 + 412, stage.canvas.height / 2 -350);
+				scale_gui(close_button, stage.canvas.width / 2 + 445 * scene_scale_Y, stage.canvas.height / 2 - 281 * scene_scale_Y);
+				scale_gui(main_menu_button, stage.canvas.width / 2, stage.canvas.height / 2 - 180 * scene_scale_Y);
+				scale_gui(exit_level_button, stage.canvas.width / 2, stage.canvas.height / 2 - 110 * scene_scale_Y);
+				scale_gui(settings_button, stage.canvas.width / 2, stage.canvas.height / 2 - 40 * scene_scale_Y);
 
-        scale_gui(login_button, (buttonX/2 + 10), stage.canvas.height - (buttonY/2 + 10));
-        scale_gui(hint_button, stage.canvas.width - (small_buttonX/2 + 116), stage.canvas.height - (small_buttonY/2 + 10));
+				scale_image(end_level_scene, stage.canvas.width / 2, stage.canvas.height / 2);
+				scale_gui(end_level_button, stage.canvas.width / 2, stage.canvas.height / 2 + 250 * scene_scale_Y);
+				scale_image(end_text, stage.canvas.width / 2, stage.canvas.height / 2 - 140 * scene_scale_Y);
+				scale_image(hit_text, stage.canvas.width / 2 - 120 * scene_scale_Y, stage.canvas.height / 2);
+				scale_image(low_text, stage.canvas.width / 2 - 120 * scene_scale_Y, stage.canvas.height / 2 + 40 * scene_scale_Y);
+				scale_image(high_text, stage.canvas.width / 2 - 120 * scene_scale_Y, stage.canvas.height / 2 + 80 * scene_scale_Y);
+
+				scale_gui(login_button, stage.canvas.width - (buttonX/2 + 10), stage.canvas.height - (buttonY/2 + 10));
+				scale_gui(hint_button, stage.canvas.width / 2 - 313, stage.canvas.height / 2 + 194);
 
 	    } else {
 
 				scale_image(pause_menu, stage.canvas.width / 2, stage.canvas.height / 2);
-				scale_gui(close_button, stage.canvas.width / 2 + 445, stage.canvas.height / 2 - 281);
-				scale_gui(main_menu_button, stage.canvas.width / 2, stage.canvas.height / 2 -180);
-				scale_gui(exit_level_button, stage.canvas.width / 2, stage.canvas.height / 2 -110);
-				scale_gui(settings_button, stage.canvas.width / 2, stage.canvas.height / 2 -40);
+				scale_gui(close_button, stage.canvas.width / 2 + 445 * scene_scale_Y, stage.canvas.height / 2 - 281 * scene_scale_Y);
+				scale_gui(main_menu_button, stage.canvas.width / 2, stage.canvas.height / 2 - 180 * scene_scale_Y);
+				scale_gui(exit_level_button, stage.canvas.width / 2, stage.canvas.height / 2 - 110 * scene_scale_Y);
+				scale_gui(settings_button, stage.canvas.width / 2, stage.canvas.height / 2 - 40 * scene_scale_Y);
 
 				scale_image(end_level_scene, stage.canvas.width / 2, stage.canvas.height / 2);
-				scale_gui(end_level_button, stage.canvas.width / 2, stage.canvas.height / 2 + 250);
-				scale_image(end_text, stage.canvas.width / 2, stage.canvas.height / 2 - 140);
-				scale_image(hit_text, stage.canvas.width / 2 - 120, stage.canvas.height / 2);
-				scale_image(low_text, stage.canvas.width / 2 - 120, stage.canvas.height / 2 + 40);
-				scale_image(high_text, stage.canvas.width / 2 - 120, stage.canvas.height / 2 + 80);
+				scale_gui(end_level_button, stage.canvas.width / 2, stage.canvas.height / 2 + 250 * scene_scale_Y);
+				scale_image(end_text, stage.canvas.width / 2, stage.canvas.height / 2 - 140 * scene_scale_Y);
+				scale_image(hit_text, stage.canvas.width / 2 - 120 * scene_scale_Y, stage.canvas.height / 2);
+				scale_image(low_text, stage.canvas.width / 2 - 120 * scene_scale_Y, stage.canvas.height / 2 + 40 * scene_scale_Y);
+				scale_image(high_text, stage.canvas.width / 2 - 120 * scene_scale_Y, stage.canvas.height / 2 + 80 * scene_scale_Y);
 
         scale_gui(login_button, stage.canvas.width - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
         scale_gui(hint_button, stage.canvas.width / 2 - 313, stage.canvas.height / 2 + 194);
@@ -663,10 +673,10 @@ function scaleGUI() {
 
 	// GUI in front of everything
   if (stage.canvas.width < 900) {
-  	scale_gui(previous_indicator, stage.canvas.width - (indicatorX/4 * 13), stage.canvas.height - (indicatorY/4 * 3));
-  	scale_gui(pause_indicator, stage.canvas.width - (indicatorX/4 * 8), stage.canvas.height - (indicatorY/4 * 3));
-  	scale_gui(next_indicator, stage.canvas.width - (indicatorX/4 * 3), stage.canvas.height - (indicatorY/4 * 3));
-  	scale_gui(lute, stage.canvas.width - (luteX/2), stage.canvas.height - (luteY/2 + 32));
+		scale_gui(previous_indicator, stage.canvas.width / 2 - 50 * scene_scale_Y, stage.canvas.height / 2 + 194 * scene_scale_Y);
+  	scale_gui(pause_indicator, stage.canvas.width / 2, stage.canvas.height / 2 + 194 * scene_scale_Y);
+  	scale_gui(next_indicator, stage.canvas.width / 2 + 50 * scene_scale_Y, stage.canvas.height / 2 + 194 * scene_scale_Y);
+  	scale_gui(lute, stage.canvas.width / 2 + 313 * scene_scale_Y, stage.canvas.height / 2 + 194 * scene_scale_Y);
   } else {
   	scale_gui(previous_indicator, stage.canvas.width / 2 - 50, stage.canvas.height / 2 + 194);
   	scale_gui(pause_indicator, stage.canvas.width / 2, stage.canvas.height / 2 + 194);
