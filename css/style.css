@@ -265,6 +265,8 @@ input::-webkit-outer-spin-button {
   overflow: auto;
   border: 0px solid #ddd;
   z-index: 1;
+  overflow-y: auto;
+  height: 100px;
 }
 
 .dropdown-content a {
