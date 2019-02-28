@@ -221,6 +221,19 @@ function createGUI() {
 	    end_text.visible = false;
 	    //end_text.skewX = -5;
 	    end_text.skewY = -15;
+	    end_text.textAlign = "center";
+
+	    hit_text = createText("Total Hits:      ", "Oldstyle", "25px", "", "saddlebrown", 10, 10);
+	    hit_text.visible = false;
+	    hit_text.alpha = 0;
+
+	    low_text = createText("Total Lows:     ", "Oldstyle", "25px", "", "saddlebrown", 10, 10);
+	    low_text.visible = false;
+	    low_text.alpha = 0;
+
+	    high_text = createText("Total Highs:    ", "Oldstyle", "25px", "", "saddlebrown", 10, 10);
+	    high_text.visible = false;
+	    high_text.alpha = 0;
 
 	    pause_menu = createImage("res/hit-target-pause-menu.png", backgroundX, backgroundY);
 	    pause_menu.visible = false;
@@ -496,7 +509,10 @@ function scaleGUI() {
 
 				scale_image(end_level_scene, stage.canvas.width / 2, stage.canvas.height / 2);
 				scale_gui(end_level_button, stage.canvas.width / 2, stage.canvas.height / 2 + 250);
-				scale_image(end_text, stage.canvas.width / 2 - 170, stage.canvas.height / 2 - 100);
+				scale_image(end_text, stage.canvas.width / 2, stage.canvas.height / 2 - 140);
+				scale_image(hit_text, stage.canvas.width / 2 - 120, stage.canvas.height / 2);
+				scale_image(low_text, stage.canvas.width / 2 - 120, stage.canvas.height / 2 + 40);
+				scale_image(high_text, stage.canvas.width / 2 - 120, stage.canvas.height / 2 + 80);
 
         scale_gui(login_button, stage.canvas.width - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
         scale_gui(hint_button, stage.canvas.width / 2 - 313, stage.canvas.height / 2 + 194);

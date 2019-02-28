@@ -441,6 +441,35 @@ function tick(event) {
     }
 
     if (hit_counter == 3 && miss_upper_counter == 1 && miss_lower_counter == 1 && reload == false) {
+	hit_text.text += hit_counter.toString();
+	low_text.text += miss_lower_counter.toString();
+	high_text.text += miss_upper_counter.toString();
+
+	
+	
+	visibleForm(false);
+	pauseAnimation(true);
+	end_level_scene.visible = true;
+	end_level_button.visible = true;
+
+	
+	end_text.visible = true;
+	var tempX = scene_scale_X;
+	var tempY = scene_scale_Y;
+	end_text.scaleX = 0;
+	end_text.scaleY = 0;
+	createjs.Tween.get(end_text).wait(500).to({scaleX:tempX ,scaleY:tempY, rotation:360}, 1000);
+	hit_text.visible = true;
+	createjs.Tween.get(hit_text).wait(2000).to({alpha:1}, 1000);
+	
+	low_text.visible = true;
+	createjs.Tween.get(low_text).wait(3500).to({alpha:1}, 1000);
+	
+	high_text.visible = true;
+	createjs.Tween.get(high_text).wait(5000).to({alpha:1}, 1000);
+	
+	login_button.visible = false;
+	console.log("next level");
 
       target_x = 0;
       hit = false;
@@ -451,12 +480,7 @@ function tick(event) {
       miss_lower_counter = 0;
       projectile_x_speed = 0;
 
-	visibleForm(false);
-	end_level_scene.visible = true;
-	end_level_button.visible = true;
-	end_text.visible = true;
-	login_button.visible = false;
-	console.log("next level");
+	
 	
      /* if (boss_fight) {
         big_boss = createSprite(big_bossS, structureX, structureY);
