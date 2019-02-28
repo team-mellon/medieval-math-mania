@@ -96,6 +96,7 @@ html, body {
   font-family: "Blackadder";
   font-size: 3vh;
   color: saddlebrown;
+  width: 500px;
 }
 
 #loginForm {
