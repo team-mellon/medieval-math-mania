@@ -529,7 +529,7 @@ function scaleGUI() {
 				scale_image(high_text, stage.canvas.width / 2 - 120 * scene_scale_Y, stage.canvas.height / 2 + 80 * scene_scale_Y);
 
 				scale_gui(login_button, stage.canvas.width - (buttonX/2 + 10), stage.canvas.height - (buttonY/2 + 10));
-				scale_gui(hint_button, stage.canvas.width / 2 - 313, stage.canvas.height / 2 + 194);
+				scale_gui(hint_button, stage.canvas.width / 2 - 313 * scene_scale_Y, stage.canvas.height / 2 + 194 * scene_scale_Y);
 
 	    } else {
 
@@ -547,7 +547,7 @@ function scaleGUI() {
 				scale_image(high_text, stage.canvas.width / 2 - 120 * scene_scale_Y, stage.canvas.height / 2 + 80 * scene_scale_Y);
 
         scale_gui(login_button, stage.canvas.width - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
-        scale_gui(hint_button, stage.canvas.width / 2 - 313, stage.canvas.height / 2 + 194);
+        scale_gui(hint_button, stage.canvas.width / 2 - 313 * scene_scale_Y, stage.canvas.height / 2 + 194 * scene_scale_Y);
 
       }
 
