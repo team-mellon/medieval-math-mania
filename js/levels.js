@@ -79,15 +79,15 @@ function loadLevel() {
       bg_color = "#c9e6ff";
       break;
 
-    // case 2: // Grasslands
-    //   bg_color = "#c9f9ff";
-    //   break;
+    case 2: // Grasslands
+      bg_color = "#c9f9ff";
+      break;
 
     // case 3: // Volcano
     //   bg_color = "#3b0a0a";
     //   break;
 
-    case 2: // Sea
+    case 3: // Sea
       bg_color = "#c2ffe6";
       break;
 
@@ -103,21 +103,21 @@ function loadLevel() {
     //   bg_color = "#010027";
     //   break;
 
-    // case 8: // Forest
-    //   bg_color = "#2f3b25";
-    //   break;
+    case 4: // Forest
+      bg_color = "#2f3b25";
+      break;
 
-    // case 9: // Alpine
-    //   bg_color = "#cae3e9";
-    //   break;
+    case 5: // Alpine
+      bg_color = "#cae3e9";
+      break;
 
     // case 7: // Woods
     //   bg_color = "#3f2900";
     //   break;
 
-    // case 8: // Swamp
-    //   bg_color = "#292c2b";
-    //   break;
+    case 6: // Swamp
+      bg_color = "#292c2b";
+      break;
 
     // case 9: // Deadlands
     //   bg_color = "#231e25";
@@ -127,9 +127,9 @@ function loadLevel() {
       // code block
 
   }
-  
+
   loadImage();
-  
+
   numberlineS = {
     images: ["res/numberline.png"],
     frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
@@ -211,8 +211,8 @@ function loadLevel() {
   number_text = [];
 }
 
-function loadImage()
-{
+function loadImage() {
+
 	preload = new createjs.LoadQueue();
 	preload.on("progress", loading);
 	preload.loadFile("res/numberline.png");
@@ -228,6 +228,7 @@ function loadImage()
 	preload.loadFile("res/level" + current_level + "/right-tower.png");
 	preload.loadFile("res/level" + current_level + "/facade.png");
 	preload.loadFile("res/level" + current_level + "/big-boss.png");
+
 }
 
 function createLevel() {

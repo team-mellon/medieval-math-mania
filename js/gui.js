@@ -26,6 +26,9 @@ var pause_menu;
 var background;
 var background_left;
 var background_right;
+
+var midground;
+
 var foreground;
 var backgroundX = 1920;
 var backgroundY = 768;
@@ -46,6 +49,11 @@ var hint_button;
 
 var level1_indicator;
 var level2_indicator;
+var level3_indicator;
+var level4_indicator;
+var level5_indicator;
+var level6_indicator;
+var level7_indicator;
 
 var end_level_scene;
 var end_level_button;
@@ -346,33 +354,47 @@ function createGUI() {
 
 		case 8:
 
-			background = createImage("res/map.png", backgroundX, backgroundY);
-			foreground = createButton("res/map-banner.png", "Select a level", backgroundX, 231, function() {});
+			background = createImage("res/login.png", backgroundX, backgroundY);
+			background_left = createImage("res/login.png", backgroundX, backgroundY);
+			background_right = createImage("res/login.png", backgroundX, backgroundY);
+			midground = createImage("res/map.png", backgroundX, backgroundY);
+			foreground = createButton("res/map-banner.png", "Select a level", backgroundX, 144, function() {});
 
 			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { changeScene(2); });
 
 			level1_indicator = createButton("res/map-indicator.png", "1", indicatorX, indicatorY, function() {
         current_level = 1;
-        hide_knight = false;
-        hide_archer1 = false;
-        hide_archer2 = false;
-        hide_archer3 = false;
-        hide_archer4 = false;
-        hit_counter = 0;
-        miss_upper_counter = 0;
-        miss_lower_counter = 0;
+				resetLevel();
         changeScene(3);
       });
 			level2_indicator = createButton("res/map-indicator.png", "2", indicatorX, indicatorY, function() {
         current_level = 2;
-        hide_knight = false;
-        hide_archer1 = false;
-        hide_archer2 = false;
-        hide_archer3 = false;
-        hide_archer4 = false;
-        hit_counter = 0;
-        miss_upper_counter = 0;
-        miss_lower_counter = 0;
+				resetLevel();
+        changeScene(3);
+      });
+			level3_indicator = createButton("res/map-indicator.png", "3", indicatorX, indicatorY, function() {
+        current_level = 3;
+				resetLevel();
+        changeScene(3);
+      });
+			level4_indicator = createButton("res/map-indicator.png", "4", indicatorX, indicatorY, function() {
+        current_level = 4;
+				resetLevel();
+        changeScene(3);
+      });
+			level5_indicator = createButton("res/map-indicator.png", "5", indicatorX, indicatorY, function() {
+        current_level = 5;
+				resetLevel();
+        changeScene(3);
+      });
+			level6_indicator = createButton("res/map-indicator.png", "6", indicatorX, indicatorY, function() {
+        current_level = 6;
+				resetLevel();
+        changeScene(3);
+      });
+			level7_indicator = createButton("res/map-indicator.png", "7", indicatorX, indicatorY, function() {
+        current_level = 7;
+				resetLevel();
         changeScene(3);
       });
 
@@ -591,18 +613,31 @@ function scaleGUI() {
 		case 8:
 
 			scale_image(background, stage.canvas.width / 2, stage.canvas.height / 2);
-			scale_image(foreground, stage.canvas.width / 2, 0 + (231/2) * scene_scale_Y);
+			scale_image(background_left, stage.canvas.width / 2 - (backgroundX) * scene_scale_Y, stage.canvas.height / 2);
+			scale_image(background_right, stage.canvas.width / 2 + (backgroundX) * scene_scale_Y, stage.canvas.height / 2);
+			scale_image(midground, stage.canvas.width / 2, stage.canvas.height / 2);
+			scale_image(foreground, stage.canvas.width / 2, 0 + (144/2) * scene_scale_Y);
 
 			scale_image(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
 
       if (stage.canvas.width < 900) {
         scale_gui(login_button, (buttonX/2 + 10), stage.canvas.height - (buttonY/2 + 10));
         scale_gui(level1_indicator, stage.canvas.width / 2 - (indicatorX/2 + 72) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 285) * scene_scale_Y);
-			  scale_gui(level2_indicator, stage.canvas.width / 2 - (indicatorX/2 + 168) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 150) * scene_scale_Y);
+			  scale_gui(level2_indicator, stage.canvas.width / 2 - (indicatorX/2 + 285) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 384) * scene_scale_Y);
+			  scale_gui(level3_indicator, stage.canvas.width / 2 - (indicatorX/2 + 168) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 150) * scene_scale_Y);
+			  scale_gui(level4_indicator, stage.canvas.width / 2 - (indicatorX/2 + 72) * scene_scale_Y, 0 + (indicatorY/2 + 297) * scene_scale_Y);
+			  scale_gui(level5_indicator, stage.canvas.width / 2 + (indicatorX/2 + 522) * scene_scale_Y, 0 + (indicatorY/2 + 150) * scene_scale_Y);
+			  scale_gui(level6_indicator, stage.canvas.width / 2 + (indicatorX/2 + 285) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 384) * scene_scale_Y);
+			  scale_gui(level7_indicator, stage.canvas.width / 2 - (indicatorX/2 + 582) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 174) * scene_scale_Y);
       } else {
         scale_gui(login_button, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height - (buttonY/2 + 10) * scene_scale_Y);
         scale_gui(level1_indicator, stage.canvas.width / 2 - (indicatorX/2 + 72) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 285) * scene_scale_Y);
-        scale_gui(level2_indicator, stage.canvas.width / 2 - (indicatorX/2 + 168) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 150) * scene_scale_Y);
+			  scale_gui(level2_indicator, stage.canvas.width / 2 - (indicatorX/2 + 285) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 384) * scene_scale_Y);
+			  scale_gui(level3_indicator, stage.canvas.width / 2 - (indicatorX/2 + 168) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 150) * scene_scale_Y);
+			  scale_gui(level4_indicator, stage.canvas.width / 2 - (indicatorX/2 + 72) * scene_scale_Y, 0 + (indicatorY/2 + 297) * scene_scale_Y);
+			  scale_gui(level5_indicator, stage.canvas.width / 2 + (indicatorX/2 + 522) * scene_scale_Y, 0 + (indicatorY/2 + 150) * scene_scale_Y);
+			  scale_gui(level6_indicator, stage.canvas.width / 2 + (indicatorX/2 + 285) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 384) * scene_scale_Y);
+			  scale_gui(level7_indicator, stage.canvas.width / 2 - (indicatorX/2 + 582) * scene_scale_Y, stage.canvas.height - (indicatorY/2 + 174) * scene_scale_Y);
       }
 
 			break;
@@ -748,5 +783,20 @@ function visibleButton(visible) {
 			hint_button.visible = false;
 
     }
+
+}
+
+function resetLevel() {
+
+	history_list = [];
+	hide_knight = false;
+	hide_archer1 = false;
+	hide_archer2 = false;
+	hide_archer3 = false;
+	hide_archer4 = false;
+	hit_counter = 0;
+	miss_upper_counter = 0;
+	miss_lower_counter = 0;
+	history_list = [];
 
 }

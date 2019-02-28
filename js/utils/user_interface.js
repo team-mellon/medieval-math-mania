@@ -39,8 +39,35 @@ function createButton(location, text, width, height, handleClick) {
   }
 
   if (text == "Select a level") {
-    size = "120";
+    size = "60";
     font = "Oldstyle";
+  }
+
+  if (
+    text == "1" ||
+    text == "2" ||
+    text == "3" ||
+    text == "4" ||
+    text == "5" ||
+    text == "6" ||
+    text == "7" ||
+    text == "8" ||
+    text == "9" ||
+    text == "10" ||
+    text == "11" ||
+    text == "12" ||
+    text == "13" ||
+    text == "14" ||
+    text == "15" ||
+    text == "16" ||
+    text == "17" ||
+    text == "18" ||
+    text == "19" ||
+    text == "20"
+  ) {
+    size = "16";
+    font = "Oldstyle";
+    color = "#FFFFFF"
   }
 
   var label = new createjs.Text(text, "normal " + size + "px " + font, color);
