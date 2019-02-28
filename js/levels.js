@@ -217,7 +217,7 @@ function loadLevel() {
   };
 
   firework_lowS = {
-    images: ["res/firework-high.png"],
+    images: ["res/firework-low.png"],
     frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
   };
@@ -229,7 +229,7 @@ function loadLevel() {
   };
 
   firework_highS = {
-    images: ["res/firework-low.png"],
+    images: ["res/firework-high.png"],
     frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
   };

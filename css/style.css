@@ -308,6 +308,10 @@ input::-webkit-outer-spin-button {
     font-size: 5vh;
   }
 
+  #historyText {
+    font-size: 5vh;
+  }
+
   #historyBanner {
     font-size: 5vh;
   }
