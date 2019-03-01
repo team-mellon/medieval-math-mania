@@ -263,19 +263,19 @@ function tick(event) {
 
             document.getElementById("entryInput").value = "";
 
-            if (solution <= upper && solution >= lower && hit_counter < 3) {
+            if (solution <= upper && solution) {
               hit = true;
               console.log("hit");
               catapult.gotoAndPlay(0);
               // Triggering other fired events
               fired = true;
-            } else if (solution > upper && miss_upper_counter == 0) {
+            } else if (solution > upper) {
               miss_upper = true;
               console.log("miss upper");
               catapult.gotoAndPlay(0);
               // Triggering other fired events
               fired = true;
-            } else if (solution < lower && miss_lower_counter == 0) {
+            } else if (solution < lower) {
               miss_lower = true;
               console.log("miss lower");
               catapult.gotoAndPlay(0);
@@ -416,13 +416,13 @@ function tick(event) {
     }
 
     if (current_level == 1) {
-      if (miss_lower_counter != 1) {
+      if (miss_lower_counter < 1) {
         document.getElementById("tutorialText").textContent = "Try finding an INTEGER multiplier that produces a solution below the range";
       } else {
-        if (miss_upper_counter != 1) {
+        if (miss_upper_counter < 1) {
           document.getElementById("tutorialText").textContent = "Try finding an INTEGER multiplier that produces a solution above the range";
         } else {
-          if (hit_counter != 3) {
+          if (hit_counter < 3) {
             document.getElementById("tutorialText").textContent = "Try finding 3 INTEGER multipliers that produce solutions within the range";
           } else {
 
@@ -448,7 +448,7 @@ function tick(event) {
     }
 
 
-    if (hit_counter == 3 && miss_upper_counter == 1 && miss_lower_counter == 1 && reload == false) {
+    if (hit_counter >= 3 && miss_upper_counter >= 1 && miss_lower_counter >= 1 && reload == false) {
 	hit_text.text += hit_counter.toString();
 	low_text.text += miss_lower_counter.toString();
 	high_text.text += miss_upper_counter.toString();
@@ -458,24 +458,29 @@ function tick(event) {
 
 	visibleForm(false);
 	pauseAnimation(true);
-	end_level_scene.visible = true;
+
 	end_level_button.visible = true;
 
+	createjs.Tween.get(end_level_flag).wait(2250).to({visible:true}).call(flagAnimation);
 
 	end_text.visible = true;
 	var tempX = scene_scale_X;
 	var tempY = scene_scale_Y;
 	end_text.scaleX = 0;
 	end_text.scaleY = 0;
-	createjs.Tween.get(end_text).wait(500).to({scaleX:tempX ,scaleY:tempY, rotation:360}, 1000);
+	createjs.Tween.get(end_text).wait(4250).to({scaleX:tempX ,scaleY:tempY}, 1000, createjs.Ease.quintIn);
+	createjs.Tween.get(end_text).wait(4250).to({rotation:360}, 1000);
 	hit_text.visible = true;
-	createjs.Tween.get(hit_text).wait(2000).to({alpha:1}, 1000);
+	createjs.Tween.get(hit_text).wait(5750).to({alpha:1}, 500);
 
 	low_text.visible = true;
-	createjs.Tween.get(low_text).wait(3500).to({alpha:1}, 1000);
+	createjs.Tween.get(low_text).wait(6750).to({alpha:1}, 500);
 
 	high_text.visible = true;
-	createjs.Tween.get(high_text).wait(5000).to({alpha:1}, 1000);
+	createjs.Tween.get(high_text).wait(7750).to({alpha:1}, 500);
+
+	end_level_button.visible = true;
+	createjs.Tween.get(end_level_button).wait(8375).to({alpha:1}, 125);
 
 	login_button.visible = false;
 	console.log("next level");
@@ -583,6 +588,10 @@ function updateSinglePlayAnimations() {
     reload = false;
   }
 
+  if (!end_level_flag.paused && end_level_flag.currentFrame == 11) {
+      end_level_flag.stop();
+  }
+
   // Structure in the scene
   if (!structure_center.paused && structure_center.currentFrame == 11) {
     structure_center.stop();
@@ -615,6 +624,10 @@ function updateSinglePlayAnimations() {
 
 function setBoss() {
   boss_fight = document.getElementById("bossValue").checked;
+}
+
+function flagAnimation(){
+    end_level_flag.gotoAndPlay(0);
 }
 
 // function loadImage() {
