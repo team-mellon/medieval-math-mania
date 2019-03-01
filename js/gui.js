@@ -211,27 +211,25 @@ function createGUI() {
 
 		case 3:
 	    	    
-	    end_level_scene = createImage("res/login_scroll.png", backgroundX, backgroundY);
-	    end_level_scene.visible = false;
-
 	    end_level_button = createButton("res/login-button.png", "Next Level", buttonX, buttonY, function() { changeScene(8); visibleForm(true);});
 	    end_level_button.visible = false;
+	    end_level_button.alpha = 0;
 
-	    end_text = createText("Good Job!!", "Oldstyle", "65px", "bold", "saddlebrown", 10, 10);
+	    end_text = createText("Good Job!!", "Oldstyle", "65px", "bold", "gold", 10, 10);
 	    end_text.visible = false;
 	    //end_text.skewX = -5;
 	    end_text.skewY = -15;
 	    end_text.textAlign = "center";
 
-	    hit_text = createText("Total Hits:      ", "Oldstyle", "25px", "", "saddlebrown", 10, 10);
+	    hit_text = createText("Total Hits:      ", "Oldstyle", "25px", "", "gold", 10, 10);
 	    hit_text.visible = false;
 	    hit_text.alpha = 0;
 
-	    low_text = createText("Total Lows:     ", "Oldstyle", "25px", "", "saddlebrown", 10, 10);
+	    low_text = createText("Total Lows:     ", "Oldstyle", "25px", "", "gold", 10, 10);
 	    low_text.visible = false;
 	    low_text.alpha = 0;
 
-	    high_text = createText("Total Highs:    ", "Oldstyle", "25px", "", "saddlebrown", 10, 10);
+	    high_text = createText("Total Highs:    ", "Oldstyle", "25px", "", "gold", 10, 10);
 	    high_text.visible = false;
 	    high_text.alpha = 0;
 	    
@@ -504,7 +502,6 @@ function scaleGUI() {
 		scale_gui(exit_level_button, stage.canvas.width / 2, stage.canvas.height / 2 -110);
 		scale_gui(settings_button, stage.canvas.width / 2, stage.canvas.height / 2 -40);
 
-		scale_image(end_level_scene, stage.canvas.width / 2, stage.canvas.height / 2);
 		scale_gui(end_level_button, stage.canvas.width / 2, stage.canvas.height / 2 + 250);
 		scale_image(end_text, stage.canvas.width / 2, stage.canvas.height / 2 - 140);
 		scale_image(hit_text, stage.canvas.width / 2 - 120, stage.canvas.height / 2);

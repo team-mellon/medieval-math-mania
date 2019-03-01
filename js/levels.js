@@ -29,6 +29,9 @@ var henchmanS;
 var henchmanX = 96;
 var henchmanY = 96;
 
+var end_level_flag;
+var end_level_flagS;
+
 var structure_center,
     structure_left_center,
     structure_right_center,
@@ -126,6 +129,12 @@ function loadLevel() {
 
   }
 
+    end_level_flagS = {
+    images: ["res/endgame-flag.png"],
+    frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+  };
+    
   numberlineS = {
     images: ["res/numberline.png"],
     frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
@@ -241,10 +250,13 @@ function createLevel() {
   numberline = createSprite(numberlineS, structureX, structureY);
   createNumbers();
 
+    end_level_flag = createSprite(end_level_flagS, structureX, structureY);
+    end_level_flag.visible = false;
 }
 
 function destroyLevel() {
 
+    stage.removeChild(end_level_flag);
   // Level structure in background
   stage.removeChild(structure_center);
   stage.removeChild(structure_left_center);
@@ -305,6 +317,7 @@ function scaleLevel() {
   // number_spacing = 10;
   number_spacer = 25;
 
+    scale_image(end_level_flag, stage.canvas.width / 2, stage.canvas.height / 2);
   // Level structure in background
   scale_image(structure_center, stage.canvas.width / 2, stage.canvas.height / 2);
   scale_image(structure_left_center, stage.canvas.width / 2, stage.canvas.height / 2);
