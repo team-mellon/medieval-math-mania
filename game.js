@@ -107,6 +107,7 @@ function tick(event) {
     }
 
     if ((keys[13] || drag_up) && catapult.paused) { // Enter or drag up swipe on mobile
+
       // Reset drag_up bool;
       drag_up = false;
 
@@ -116,7 +117,6 @@ function tick(event) {
 
       // Need to check for input correctness here
       // No letters or symbols only numbers
-
 
       valid = true;
 
@@ -129,6 +129,7 @@ function tick(event) {
               valid = false;
             }
           }
+
           if (valid) {
 
             // Add to history
@@ -212,11 +213,15 @@ function tick(event) {
                 } else {
                   entry_is_correct = false;
                 }
+
               }
+
             }
+
           } else {
             entry_is_correct = false;
           }
+
           for (var x in history_list) {
             console.log(history_list[x]);
             console.log(entry);
@@ -224,11 +229,12 @@ function tick(event) {
               valid = false;
             }
           }
+
           // Animate the catapult
           if (entry_is_correct && valid) {
-			//Plays reload sfx
-			createjs.Sound.play("reload");
+
             multiplier = document.getElementById("entryInput").value;
+
             // Add to history
             history_list.push(multiplier);
             console.log(history_list);
@@ -256,8 +262,8 @@ function tick(event) {
             // createGameForm();
 
             document.getElementById("entryInput").value = "";
-
-            if (solution <= upper && solution) {
+            // this is website version
+            if (solution <= upper && solution >= lower) {
               hit = true;
               console.log("hit");
               catapult.gotoAndPlay(0);
@@ -276,9 +282,9 @@ function tick(event) {
               // Triggering other fired events
               fired = true;
             }
-			//plays sound for lighting fireball
-			createjs.Sound.play("light");
+
           }
+
         }
 
       // console.log(projectile.alpha);
@@ -349,17 +355,14 @@ function tick(event) {
           case 0:
             hide_archer1 = true;
             structure_left_center.gotoAndPlay(0);
-			createjs.Sound.play("crumble.wav");
             break;
           case 1:
             hide_archer2 = true;
             structure_right_center.gotoAndPlay(0);
-			createjs.Sound.play("crumble.wav");
             break;
           case 2:
             hide_knight = true;
             structure_center.gotoAndPlay(0);
-			createjs.Sound.play("crumble.wav");
             break;
           default:
         }
@@ -395,8 +398,7 @@ function tick(event) {
           reload = true;
           miss_lower = false;
           miss_lower_counter++;
-		  low_text_counter.text ="Total Lows: "+ miss_lower_counter.toString();
-		  createjs.Sound.play("crumble.wav");
+  low_text_counter.text ="Total Lows: "+ miss_lower_counter.toString();
         }
       }
 
@@ -408,8 +410,7 @@ function tick(event) {
           reload = true;
           miss_upper = false;
           miss_upper_counter++;
-		  high_text_counter.text ="Total Highs: "+ miss_upper_counter.toString();
-		  createjs.Sound.play("crumble.wav");
+  high_text_counter.text ="Total Highs: "+ miss_upper_counter.toString();
         }
       }
     }
@@ -431,25 +432,26 @@ function tick(event) {
     }
 
     if (current_level == 2) {
-      if (miss_lower_counter != 1) {
+      if (miss_lower_counter < 1) {
         document.getElementById("tutorialText").textContent = "Try finding a DECIMAL multiplier that produces a solution below the range and does not end in '.0'";
       } else {
-        if (miss_upper_counter != 1) {
+        if (miss_upper_counter < 1) {
           document.getElementById("tutorialText").textContent = "Try finding a DECIMAL multiplier that produces a solution above the range and does not end in '.0'";
         } else {
-          if (hit_counter != 3) {
+          if (hit_counter < 3) {
             document.getElementById("tutorialText").textContent = "Try finding 3 DECIMAL multipliers that produce solutions within the range and does not end in '.0'";
           } else {
 
           }
         }
       }
-    }    if (hit_counter >= 3 && miss_upper_counter >= 1 && miss_lower_counter >= 1 && reload == false) {
+    }
 
-  	hit_text.text += hit_counter.toString();
-  	low_text.text += miss_lower_counter.toString();
-  	high_text.text += miss_upper_counter.toString();
 
+    if (hit_counter >= 3 && miss_upper_counter >= 1 && miss_lower_counter >= 1 && reload == false) {
+	hit_text.text += hit_counter.toString();
+	low_text.text += miss_lower_counter.toString();
+	high_text.text += miss_upper_counter.toString();
 
 
 
@@ -491,8 +493,6 @@ function tick(event) {
       miss_lower_counter = 0;
       projectile_x_speed = 0;
 
-      //plays victory tune
-  		createjs.Sound.play("win");
 
 
      /* if (boss_fight) {
