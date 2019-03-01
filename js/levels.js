@@ -266,6 +266,7 @@ function loadImage() {
 	createjs.Sound.registerSound("res/sound_effects/catapult_firing.wav", "firing");
 	createjs.Sound.registerSound("res/sound_effects/victory.wav", "win");
 	createjs.Sound.registerSound("res/sound_effects/fire_lighting.wav", "light");
+	createjs.Sound.registerSound("res/sound_effects/crumbling.wav", "crumble");
 }
 
 function createLevel() {

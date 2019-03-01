@@ -349,14 +349,17 @@ function tick(event) {
           case 0:
             hide_archer1 = true;
             structure_left_center.gotoAndPlay(0);
+			createjs.Sound.play("crumble.wav");
             break;
           case 1:
             hide_archer2 = true;
             structure_right_center.gotoAndPlay(0);
+			createjs.Sound.play("crumble.wav");
             break;
           case 2:
             hide_knight = true;
             structure_center.gotoAndPlay(0);
+			createjs.Sound.play("crumble.wav");
             break;
           default:
         }
@@ -392,7 +395,8 @@ function tick(event) {
           reload = true;
           miss_lower = false;
           miss_lower_counter++;
-  low_text_counter.text ="Total Lows: "+ miss_lower_counter.toString();
+		  low_text_counter.text ="Total Lows: "+ miss_lower_counter.toString();
+		  createjs.Sound.play("crumble.wav");
         }
       }
 
@@ -405,6 +409,7 @@ function tick(event) {
           miss_upper = false;
           miss_upper_counter++;
 		  high_text_counter.text ="Total Highs: "+ miss_upper_counter.toString();
+		  createjs.Sound.play("crumble.wav");
         }
       }
     }
@@ -447,9 +452,6 @@ function tick(event) {
 		hit_text.text += hit_counter.toString();
 		low_text.text += miss_lower_counter.toString();
 		high_text.text += miss_upper_counter.toString();
-
-
-
 
 		visibleForm(false);
 		pauseAnimation(true);
