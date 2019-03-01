@@ -107,7 +107,6 @@ function tick(event) {
     }
 
     if ((keys[13] || drag_up) && catapult.paused) { // Enter or drag up swipe on mobile
-
       // Reset drag_up bool;
       drag_up = false;
 
@@ -117,6 +116,7 @@ function tick(event) {
 
       // Need to check for input correctness here
       // No letters or symbols only numbers
+	  
 
       valid = true;
 
@@ -129,9 +129,8 @@ function tick(event) {
               valid = false;
             }
           }
-
           if (valid) {
-
+			
             // Add to history
             console.log(history_list);
             history_list.push(multiplier);
@@ -213,15 +212,11 @@ function tick(event) {
                 } else {
                   entry_is_correct = false;
                 }
-
               }
-
             }
-
           } else {
             entry_is_correct = false;
           }
-
           for (var x in history_list) {
             console.log(history_list[x]);
             console.log(entry);
@@ -229,12 +224,11 @@ function tick(event) {
               valid = false;
             }
           }
-
           // Animate the catapult
           if (entry_is_correct && valid) {
-
+			//Plays reload sfx
+			createjs.Sound.play("reload");
             multiplier = document.getElementById("entryInput").value;
-
             // Add to history
             history_list.push(multiplier);
             console.log(history_list);
@@ -282,9 +276,9 @@ function tick(event) {
               // Triggering other fired events
               fired = true;
             }
-
+			//plays sound for lighting fireball
+			createjs.Sound.play("light");
           }
-
         }
 
       // console.log(projectile.alpha);
@@ -410,7 +404,7 @@ function tick(event) {
           reload = true;
           miss_upper = false;
           miss_upper_counter++;
-  high_text_counter.text ="Total Highs: "+ miss_upper_counter.toString();
+		  high_text_counter.text ="Total Highs: "+ miss_upper_counter.toString();
         }
       }
     }
@@ -449,61 +443,63 @@ function tick(event) {
 
 
     if (hit_counter == 3 && miss_upper_counter == 1 && miss_lower_counter == 1 && reload == false) {
-	hit_text.text += hit_counter.toString();
-	low_text.text += miss_lower_counter.toString();
-	high_text.text += miss_upper_counter.toString();
+		
+		hit_text.text += hit_counter.toString();
+		low_text.text += miss_lower_counter.toString();
+		high_text.text += miss_upper_counter.toString();
 
 
 
 
-	visibleForm(false);
-	pauseAnimation(true);
+		visibleForm(false);
+		pauseAnimation(true);
 
-	end_level_button.visible = true;
+		end_level_button.visible = true;
 
-	createjs.Tween.get(end_level_flag).wait(2250).to({visible:true}).call(flagAnimation);
+		createjs.Tween.get(end_level_flag).wait(2250).to({visible:true}).call(flagAnimation);
 
-	end_text.visible = true;
-	var tempX = scene_scale_X;
-	var tempY = scene_scale_Y;
-	end_text.scaleX = 0;
-	end_text.scaleY = 0;
-	createjs.Tween.get(end_text).wait(4250).to({scaleX:tempX ,scaleY:tempY}, 1000, createjs.Ease.quintIn);
-	createjs.Tween.get(end_text).wait(4250).to({rotation:360}, 1000);
-	hit_text.visible = true;
-	createjs.Tween.get(hit_text).wait(5750).to({alpha:1}, 500);
+		end_text.visible = true;
+		var tempX = scene_scale_X;
+		var tempY = scene_scale_Y;
+		end_text.scaleX = 0;
+		end_text.scaleY = 0;
+		createjs.Tween.get(end_text).wait(4250).to({scaleX:tempX ,scaleY:tempY}, 1000, createjs.Ease.quintIn);
+		createjs.Tween.get(end_text).wait(4250).to({rotation:360}, 1000);
+		hit_text.visible = true;
+		createjs.Tween.get(hit_text).wait(5750).to({alpha:1}, 500);
 
-	low_text.visible = true;
-	createjs.Tween.get(low_text).wait(6750).to({alpha:1}, 500);
+		low_text.visible = true;
+		createjs.Tween.get(low_text).wait(6750).to({alpha:1}, 500);
 
-	high_text.visible = true;
-	createjs.Tween.get(high_text).wait(7750).to({alpha:1}, 500);
+		high_text.visible = true;
+		createjs.Tween.get(high_text).wait(7750).to({alpha:1}, 500);
 
-	end_level_button.visible = true;
-	createjs.Tween.get(end_level_button).wait(8375).to({alpha:1}, 125);
+		end_level_button.visible = true;
+		createjs.Tween.get(end_level_button).wait(8375).to({alpha:1}, 125);
 
-	login_button.visible = false;
-	console.log("next level");
+		login_button.visible = false;
+		console.log("next level");
 
-      target_x = 0;
-      hit = false;
-      miss_upper = false;
-      miss_lower = false;
-      hit_counter = 0;
-      miss_upper_counter = 0;
-      miss_lower_counter = 0;
-      projectile_x_speed = 0;
+		target_x = 0;
+		hit = false;
+		miss_upper = false;
+		miss_lower = false;
+		hit_counter = 0;
+		miss_upper_counter = 0;
+		miss_lower_counter = 0;
+		projectile_x_speed = 0;
+		
+		//plays victory tune
+		createjs.Sound.play("win");
 
+		 /* if (boss_fight) {
+			big_boss = createSprite(big_bossS, structureX, structureY);
+			scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
+			console.log("boss");
+		  } else {
+			changeLevel();
 
-
-     /* if (boss_fight) {
-        big_boss = createSprite(big_bossS, structureX, structureY);
-        scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
-        console.log("boss");
-      } else {
-        changeLevel();
-
-      }*/
+		  }*/
 
 
     }

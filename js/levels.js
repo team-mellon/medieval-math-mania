@@ -262,7 +262,10 @@ function loadImage() {
 	preload.loadFile("res/level" + current_level + "/right-tower.png");
 	preload.loadFile("res/level" + current_level + "/facade.png");
 	preload.loadFile("res/level" + current_level + "/big-boss.png");
-
+	createjs.Sound.registerSound("res/sound_effects/catapult_cocking.wav", "reload");
+	createjs.Sound.registerSound("res/sound_effects/catapult_firing.wav", "firing");
+	createjs.Sound.registerSound("res/sound_effects/victory.wav", "win");
+	createjs.Sound.registerSound("res/sound_effects/fire_lighting.wav", "light");
 }
 
 function createLevel() {
