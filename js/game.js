@@ -41,6 +41,11 @@ var history_list = [];
 
 var valid = true;
 
+//Setting properties for delays for sounds
+var delayIn = new createjs.PlayPropsConfig().set({delay : 500});
+var delayOut = new createjs.PlayPropsConfig().set({delay : 750});
+var delayWin = new createjs.PlayPropsConfig().set({delay : 2000});
+
 var database = {
   "users": {
     "admin": {
@@ -227,7 +232,7 @@ function tick(event) {
           // Animate the catapult
           if (entry_is_correct && valid) {
 			//Plays reload sfx
-			createjs.Sound.play("reload");
+			//createjs.Sound.play("reload");
             multiplier = document.getElementById("entryInput").value;
             // Add to history
             history_list.push(multiplier);
@@ -258,26 +263,39 @@ function tick(event) {
             document.getElementById("entryInput").value = "";
 
             if (solution <= upper && solution >= lower && hit_counter < 3) {
+			  //Plays reload sfx
+			  createjs.Sound.play("reload");
               hit = true;
               console.log("hit");
               catapult.gotoAndPlay(0);
               // Triggering other fired events
               fired = true;
+			  //plays sound for lighting fireball and hitting castle
+			  createjs.Sound.play("light");
+			  createjs.Sound.play("crumble", delayIn);
             } else if (solution > upper && miss_upper_counter == 0) {
+			  //Plays reload sfx
+			  createjs.Sound.play("reload");
               miss_upper = true;
               console.log("miss upper");
               catapult.gotoAndPlay(0);
               // Triggering other fired events
               fired = true;
+			  //plays sound for lighting fireball and hitting castle
+			  createjs.Sound.play("light");
+			  createjs.Sound.play("crumble", delayOut);
             } else if (solution < lower && miss_lower_counter == 0) {
+			  //Plays reload sfx
+			  createjs.Sound.play("reload");
               miss_lower = true;
               console.log("miss lower");
               catapult.gotoAndPlay(0);
               // Triggering other fired events
               fired = true;
+			  //plays sound for lighting fireball and hitting castle
+			  createjs.Sound.play("light");
+			  createjs.Sound.play("crumble", delayOut);
             }
-			//plays sound for lighting fireball
-			createjs.Sound.play("light");
           }
         }
 
@@ -349,17 +367,14 @@ function tick(event) {
           case 0:
             hide_archer1 = true;
             structure_left_center.gotoAndPlay(0);
-			createjs.Sound.play("crumble.wav");
             break;
           case 1:
             hide_archer2 = true;
             structure_right_center.gotoAndPlay(0);
-			createjs.Sound.play("crumble.wav");
             break;
           case 2:
             hide_knight = true;
             structure_center.gotoAndPlay(0);
-			createjs.Sound.play("crumble.wav");
             break;
           default:
         }
@@ -396,7 +411,6 @@ function tick(event) {
           miss_lower = false;
           miss_lower_counter++;
 		  low_text_counter.text ="Total Lows: "+ miss_lower_counter.toString();
-		  createjs.Sound.play("crumble.wav");
         }
       }
 
@@ -409,7 +423,6 @@ function tick(event) {
           miss_upper = false;
           miss_upper_counter++;
 		  high_text_counter.text ="Total Highs: "+ miss_upper_counter.toString();
-		  createjs.Sound.play("crumble.wav");
         }
       }
     }
@@ -492,7 +505,7 @@ function tick(event) {
 		projectile_x_speed = 0;
 		
 		//plays victory tune
-		createjs.Sound.play("win");
+		createjs.Sound.play("win", delayWin);
 
 		 /* if (boss_fight) {
 			big_boss = createSprite(big_bossS, structureX, structureY);

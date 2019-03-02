@@ -262,11 +262,12 @@ function loadImage() {
 	preload.loadFile("res/level" + current_level + "/right-tower.png");
 	preload.loadFile("res/level" + current_level + "/facade.png");
 	preload.loadFile("res/level" + current_level + "/big-boss.png");
-	createjs.Sound.registerSound("res/sound_effects/catapult_cocking.wav", "reload");
-	createjs.Sound.registerSound("res/sound_effects/catapult_firing.wav", "firing");
-	createjs.Sound.registerSound("res/sound_effects/victory.wav", "win");
-	createjs.Sound.registerSound("res/sound_effects/fire_lighting.wav", "light");
-	createjs.Sound.registerSound("res/sound_effects/crumbling.wav", "crumble");
+	//The 1 at the end on these makes it so only one instance can play at once
+	createjs.Sound.registerSound("res/sound_effects/catapult_cocking.wav", "reload", 1);
+	createjs.Sound.registerSound("res/sound_effects/catapult_firing.wav", "firing", 1);
+	createjs.Sound.registerSound("res/sound_effects/victory.wav", "win", 1);
+	createjs.Sound.registerSound("res/sound_effects/fire_lighting.wav", "light", 1);
+	createjs.Sound.registerSound("res/sound_effects/crumbling.wav", "crumble", 1);
 }
 
 function createLevel() {
