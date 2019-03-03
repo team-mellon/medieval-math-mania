@@ -1,4 +1,5 @@
 var lute;
+//var antiLute;
 var luteX = 96;
 var luteY = 96;
 
@@ -450,8 +451,11 @@ function createGUI() {
     next_indicator.visible = false;
 
 	lute = createImage("res/lute.png", luteX, luteY);
+	//antiLute = createImage("res/antiLute.png", luteX, luteY, 2);
     lute.addEventListener("click", muteSound);
     lute.visible = false;
+	//antiLute.visible = false;
+	//antiLute.hidden = true;
 
   // lute.regX = 160;
   // lute.regY = 160;
@@ -820,6 +824,7 @@ function visibleButton(visible) {
 			pause_indicator.visible = true;
 			next_indicator.visible = true;
 			lute.visible = true;
+			//antiLute.visible = true;
 			hint_button.visible = true;
 
     } else {
@@ -834,6 +839,7 @@ function visibleButton(visible) {
 			pause_indicator.visible = false;
 			next_indicator.visible = false;
 			lute.visible = false;
+			//antiLute.visible = false;
 			hint_button.visible = false;
 
     }

@@ -1,3 +1,4 @@
+var muted = false;
 var playlistSources = [
   "res/music/one-eyed_maestro.wav",
   "res/music/achaidh_cheide.wav",
@@ -91,6 +92,7 @@ function previousSound () {
     current_song.destroy();
     current_song = createjs.Sound.play(playlist.ids[playlist.current]);
 	current_song.volume = volume;
+	current_song.muted = muted;
   }
 
 }
@@ -108,6 +110,7 @@ function nextSound () {
     current_song.destroy();
     current_song = createjs.Sound.play(playlist.ids[playlist.current]);
 	current_song.volume = volume;
+	current_song.muted = muted;
   }
 
 }
@@ -118,9 +121,24 @@ function nextSound () {
 function muteSound () {
 
   if (!sound_off) {
+	  console.log(lute.src);
+	if(!muted)
+	{
+		stage.removeChild(lute);
+		lute = new createImage("res/antiLute.png", luteX, luteY);
+		lute.addEventListener("click", muteSound);
+		scaleGUI();
+	}
+	else
+	{
+		stage.removeChild(lute);
+		lute = new createImage("res/lute.png", luteX, luteY);
+		lute.addEventListener("click", muteSound);
+		scaleGUI();
+	}
     current_song.muted = !current_song.muted;
+	muted = !muted;
   }
-
 }
 
 

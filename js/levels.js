@@ -343,7 +343,6 @@ function destroyLevel() {
 
   // REMOVE THIS!!!!! BUT ALSO THE REST OF IT
   stage.removeChild(lute);
-
   stage.removeChild(big_boss);
 
   stage.removeChild(numberline);
