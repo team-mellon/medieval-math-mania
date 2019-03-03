@@ -71,32 +71,33 @@ function createGUI() {
 			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
 
 			left_sword_button = createButton("res/sword-left.png", "Login", buttonX, buttonY, function() {
-        var key = document.getElementById('usernameInput').value;
-      	if(key in database.users) {
-    	    if(database["users"][key]["password"] == document.getElementById('passwordInput').value) {
-            document.getElementById('usernameInput').value = "";
-            document.getElementById('passwordInput').value = "";
-        		// login_error.alpha = 0;
-            // var login_error = createTextBlock("0px", "200px", "200px", "600px", "darkred", 30, "normal", "Username and/or Password did not match.\n Please try again.", 0, enable);
-        		// message.render = 1;
-        		// message.current_user = key;
-            changeScene(2);
-    	    } else {
-            document.getElementById('usernameInput').value = "";
-            document.getElementById('passwordInput').value = "";
-	          document.getElementById('errorText').textContent = "Invalid password";
-        		// password_input.text = "";
-        		// login_error.alpha = 1;
-    	    }
-      	}	else {
-          document.getElementById('usernameInput').value = "";
-          document.getElementById('passwordInput').value = "";
-          document.getElementById('errorText').textContent = "Invalid username";
-    	    // login_error.alpha = 1;
-      	}
-      });
-			right_sword_button = createButton("res/sword-right.png", "Signup", buttonX, buttonY, function() {	changeScene(1); });
-			secret_button = createButton("res/secret_button.png", "", backgroundX, backgroundY, function() { changeScene(8); });
+				createjs.Sound.play("sword");
+				var key = document.getElementById('usernameInput').value;
+				if(key in database.users) {
+					if(database["users"][key]["password"] == document.getElementById('passwordInput').value) {
+						document.getElementById('usernameInput').value = "";
+						document.getElementById('passwordInput').value = "";
+						// login_error.alpha = 0;
+						// var login_error = createTextBlock("0px", "200px", "200px", "600px", "darkred", 30, "normal", "Username and/or Password did not match.\n Please try again.", 0, enable);
+						// message.render = 1;
+						// message.current_user = key;
+						changeScene(2);
+					} else {
+						document.getElementById('usernameInput').value = "";
+						document.getElementById('passwordInput').value = "";
+						document.getElementById('errorText').textContent = "Invalid password";
+						// password_input.text = "";
+						// login_error.alpha = 1;
+					}
+				}else {
+					document.getElementById('usernameInput').value = "";
+					document.getElementById('passwordInput').value = "";
+					document.getElementById('errorText').textContent = "Invalid username";
+					// login_error.alpha = 1;
+				}
+			});
+			right_sword_button = createButton("res/sword-right.png", "Signup", buttonX, buttonY, function() {createjs.Sound.play("sword"); changeScene(1); });
+			secret_button = createButton("res/secret_button.png", "", backgroundX, backgroundY, function() {createjs.Sound.play("sword"); changeScene(8); });
 
 			break;
 
@@ -112,6 +113,7 @@ function createGUI() {
 			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
 
 			left_sword_button = createButton("res/sword-left.png", "Create", buttonX, buttonY, function() {
+				createjs.Sound.play("sword"); 
 				var key = document.getElementById('usernameInput').value;
 				if(key in database.users || key == "") {
 					// document.getElementById('firstnameInput').value = "";
@@ -132,8 +134,8 @@ function createGUI() {
 							} else {
 								if(document.getElementById('passwordInput').value != document.getElementById('confirmInput').value) {
 									document.getElementById('errorText').textContent = "Passwords do not match";
-								} else {
-					        changeScene(2);
+								} else { 
+									changeScene(2);
 								}
 							}
 						}
@@ -186,21 +188,21 @@ function createGUI() {
         //   }
       	// }
       // });
-			right_sword_button = createButton("res/sword-right.png", "Cancel", buttonX, buttonY, function() {
+		right_sword_button = createButton("res/sword-right.png", "Cancel", buttonX, buttonY, function() {
 
-      	// firstname_input.text = "";
-      	// lastname_input.text = "";
-      	// username_input.text = "";
-      	// password_input.text = "";
-      	// re_password_input.text = "";
-      	// fieldInput_error.alpha = 0;
-      	// password_error.alpha = 0;
-      	// message.render = 0;
+			// firstname_input.text = "";
+			// lastname_input.text = "";
+			// username_input.text = "";
+			// password_input.text = "";
+			// re_password_input.text = "";
+			// fieldInput_error.alpha = 0;
+			// password_error.alpha = 0;
+			// message.render = 0;
+			createjs.Sound.play("sword");
+			changeScene(0);
+		});
 
-        changeScene(0);
-      });
-
-			break;
+		break;
 
 		case 2:
 
@@ -208,12 +210,12 @@ function createGUI() {
 			background_left = createImage("res/menu-left.png", backgroundX, backgroundY);
 			background_right = createImage("res/menu-right.png", backgroundX, backgroundY);
 
-			play_button = createButton("res/menu-button.png", "Play", buttonX, buttonY, function() { changeScene(8); });
-			stats_button = createButton("res/menu-button.png", "Stats", buttonX, buttonY, function() { changeScene(4); });
-			h2p_button = createButton("res/menu-button.png", "How To Play", buttonX, buttonY, function() { changeScene(5); });
-			settings_button = createButton("res/menu-button.png", "Settings", buttonX, buttonY, function() { changeScene(6); });
-			logout_button = createButton("res/menu-button.png", "Logout", buttonX, buttonY, function() { changeScene(0); });
-			account_button = createButton("res/menu-button.png", "Account", buttonX, buttonY, function() { changeScene(7); });
+			play_button = createButton("res/menu-button.png", "Play", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(8); });
+			stats_button = createButton("res/menu-button.png", "Stats", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(4); });
+			h2p_button = createButton("res/menu-button.png", "How To Play", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(5); });
+			settings_button = createButton("res/menu-button.png", "Settings", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(6); });
+			logout_button = createButton("res/menu-button.png", "Logout", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(0); });
+			account_button = createButton("res/menu-button.png", "Account", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(7); });
 
 			break;
 
@@ -222,7 +224,7 @@ function createGUI() {
 	    end_level_scene = createImage("res/login_scroll.png", backgroundX, backgroundY);
 	    end_level_scene.visible = false;
 
-	    end_level_button = createButton("res/login-button.png", "Next Level", buttonX, buttonY, function() { changeScene(8); visibleForm(true);});
+	    end_level_button = createButton("res/login-button.png", "Next Level", buttonX, buttonY, function() { createjs.Sound.play("select"); changeScene(8); visibleForm(true);});
 	    end_level_button.visible = false;
 	    end_level_button.alpha = 0;
 
@@ -260,29 +262,31 @@ function createGUI() {
 	    pause_menu.visible = false;
 
 	    close_button = createButton("res/hit-target-pause-close-button.png", "", buttonX, buttonY, function() {
-		pauseAnimation(false);
-		visibleButton(false);
-		visibleForm(true);
+			createjs.Sound.play("menu");
+			pauseAnimation(false);
+			visibleButton(false);
+			visibleForm(true);
 	    });
 
 	    close_button.visible = false;
 
-	    main_menu_button = createButton("res/hit-target-pause-button.png", "Main Menu", buttonX, buttonY, function() { changeScene(2);  visibleForm(true);});
+	    main_menu_button = createButton("res/hit-target-pause-button.png", "Main Menu", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(2);  visibleForm(true);});
 	    main_menu_button.visible = false;
 
-	    exit_level_button = createButton("res/hit-target-pause-button.png", "Exit Level", buttonX, buttonY, function() { changeScene(8);  visibleForm(true);});
+	    exit_level_button = createButton("res/hit-target-pause-button.png", "Exit Level", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(8);  visibleForm(true);});
 	    exit_level_button.visible = false;
 
-	    settings_button = createButton("res/hit-target-pause-button.png", "Settings", buttonX, buttonY, function() { changeScene(6);  visibleForm(true);});
+	    settings_button = createButton("res/hit-target-pause-button.png", "Settings", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(6);  visibleForm(true);});
 	    settings_button.visible = false;
 
 	    login_button = createButton("res/login-button.png", "Pause", buttonX, buttonY, function() {
-		pauseAnimation(true);
-		visibleButton(true);
-		visibleForm(false);
+			createjs.Sound.play("menu");
+			pauseAnimation(true);
+			visibleButton(true);
+			visibleForm(false);
 	    });
 
-	    hint_button = createButton("res/hint-button.png", "Hint", small_buttonX, small_buttonY, function() {  changeScene(9); visibleForm(true); });
+	    hint_button = createButton("res/hint-button.png", "Hint", small_buttonX, small_buttonY, function() { createjs.Sound.play("sword"); changeScene(9); visibleForm(true); });
 	    hint_button.visible = false;
 
 
@@ -328,7 +332,7 @@ function createGUI() {
 			background_right = createImage("res/login.png", backgroundX, backgroundY);
 			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
 
-			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { changeScene(2); });
+			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(2); });
 
 			break;
 
@@ -339,7 +343,7 @@ function createGUI() {
 			background_right = createImage("res/login.png", backgroundX, backgroundY);
 			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
 
-			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { changeScene(2); });
+			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(2); });
 
 			break;
 
@@ -350,7 +354,7 @@ function createGUI() {
 			background_right = createImage("res/login.png", backgroundX, backgroundY);
 			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
 
-	    login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { oneWayScene(); });
+	    login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { createjs.Sound.play("menu"); oneWayScene(); });
 
 			break;
 
@@ -361,7 +365,7 @@ function createGUI() {
 			background_right = createImage("res/login.png", backgroundX, backgroundY);
 			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
 
-			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { changeScene(2); });
+			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(2); });
 
 			break;
 
@@ -373,43 +377,50 @@ function createGUI() {
 			midground = createImage("res/map.png", backgroundX, backgroundY);
 			foreground = createButton("res/map-banner.png", "Select a level", backgroundX, 144, function() {});
 
-			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { changeScene(2); });
+			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(2); });
 
 			level1_indicator = createButton("res/map-indicator.png", "1", indicatorX, indicatorY, function() {
-        current_level = 1;
+				createjs.Sound.play("select");
+				current_level = 1;
 				resetLevel();
-        changeScene(3);
-      });
+				changeScene(3);
+			});
 			level2_indicator = createButton("res/map-indicator.png", "2", indicatorX, indicatorY, function() {
-        current_level = 2;
+				createjs.Sound.play("select");
+				current_level = 2;
 				resetLevel();
-        changeScene(3);
-      });
+				changeScene(3);
+			});
 			level3_indicator = createButton("res/map-indicator.png", "3", indicatorX, indicatorY, function() {
-        current_level = 3;
+				createjs.Sound.play("select");
+				current_level = 3;
 				resetLevel();
-        changeScene(3);
-      });
+				changeScene(3);
+			});
 			level4_indicator = createButton("res/map-indicator.png", "4", indicatorX, indicatorY, function() {
-        current_level = 4;
+				createjs.Sound.play("select");
+				current_level = 4;
 				resetLevel();
-        changeScene(3);
-      });
+				changeScene(3);
+			});
 			level5_indicator = createButton("res/map-indicator.png", "5", indicatorX, indicatorY, function() {
-        current_level = 5;
+				createjs.Sound.play("select");
+				current_level = 5;
 				resetLevel();
-        changeScene(3);
-      });
+				changeScene(3);
+			});
 			level6_indicator = createButton("res/map-indicator.png", "6", indicatorX, indicatorY, function() {
-        current_level = 6;
+				createjs.Sound.play("select");
+				current_level = 6;
 				resetLevel();
-        changeScene(3);
-      });
+				changeScene(3);
+			});
 			level7_indicator = createButton("res/map-indicator.png", "7", indicatorX, indicatorY, function() {
-        current_level = 7;
+				createjs.Sound.play("select");
+				current_level = 7;
 				resetLevel();
-        changeScene(3);
-      });
+				changeScene(3);
+			});
 
 			break;
     case 9:
@@ -418,7 +429,7 @@ function createGUI() {
 			background_left = createImage("res/login.png", backgroundX, backgroundY);
 			background_right = createImage("res/login.png", backgroundX, backgroundY);
       foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
-	    login_button = createButton("res/login-button.png", "Back", buttonX, buttonY, function() { changeScene(3); pauseAnimation(true); visibleButton(true); visibleForm(false);});
+	    login_button = createButton("res/login-button.png", "Back", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(3); pauseAnimation(true); visibleButton(true); visibleForm(false);});
 
       break;
 

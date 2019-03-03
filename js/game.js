@@ -42,6 +42,7 @@ var history_list = [];
 var valid = true;
 
 //Setting properties for delays for sounds
+var delayRe = new createjs.PlayPropsConfig().set({delay : 250});
 var delayIn = new createjs.PlayPropsConfig().set({delay : 500});
 var delayOut = new createjs.PlayPropsConfig().set({delay : 750});
 var delayWin = new createjs.PlayPropsConfig().set({delay : 2000});
@@ -231,8 +232,6 @@ function tick(event) {
           }
           // Animate the catapult
           if (entry_is_correct && valid) {
-			//Plays reload sfx
-			//createjs.Sound.play("reload");
             multiplier = document.getElementById("entryInput").value;
             // Add to history
             history_list.push(multiplier);
@@ -264,7 +263,8 @@ function tick(event) {
 
             if (solution <= upper && solution >= lower && hit_counter < 3) {
 			  //Plays reload sfx
-			  createjs.Sound.play("reload");
+			  createjs.Sound.play("firing");
+			  createjs.Sound.play("reload", delayRe);
               hit = true;
               console.log("hit");
               catapult.gotoAndPlay(0);
@@ -275,7 +275,8 @@ function tick(event) {
 			  createjs.Sound.play("crumble", delayIn);
             } else if (solution > upper && miss_upper_counter == 0) {
 			  //Plays reload sfx
-			  createjs.Sound.play("reload");
+			  createjs.Sound.play("firing");
+			  createjs.Sound.play("reload", delayRe);
               miss_upper = true;
               console.log("miss upper");
               catapult.gotoAndPlay(0);
@@ -286,7 +287,8 @@ function tick(event) {
 			  createjs.Sound.play("crumble", delayOut);
             } else if (solution < lower && miss_lower_counter == 0) {
 			  //Plays reload sfx
-			  createjs.Sound.play("reload");
+			  createjs.Sound.play("firing");
+			  createjs.Sound.play("reload", delayRe);
               miss_lower = true;
               console.log("miss lower");
               catapult.gotoAndPlay(0);

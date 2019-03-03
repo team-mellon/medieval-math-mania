@@ -4,6 +4,12 @@ function createLoginForm()
 	progressBar.hidden = true;
 	progressBackground.hidden = true;
 	ldBg.hidden = true;
+	
+	//registers Menu sounds
+	createjs.Sound.registerSound("res/sound_effects/menu.wav", "menu");
+	createjs.Sound.registerSound("res/sound_effects/select.wav", "select");
+	createjs.Sound.registerSound("res/sound_effects/sword.wav", "sword");
+	
   // Creates username display label and input box
   var username_text = document.createTextNode("Username");
   // Creates line break for form div spacing
@@ -286,12 +292,11 @@ function createSettingsForm() {
   volume_input.setAttribute("min", "0");
   volume_input.setAttribute("max", "1");
   volume_input.setAttribute("step", "0.1");
-  volume_input.setAttribute("value", "50");
+  volume_input.setAttribute("value", "0.5");
   volume_input.setAttribute(oninput, "SetVolume(this.value)");
   volume_input.setAttribute(onchange, "SetVolume(this.value)");
   volume_input.addEventListener('change', setVolume);
   volume_input.addEventListener('input', setVolume);
-
   // Creates username div to hold display text and input slider
   var settings_volume_div = document.createElement("div");
   settings_volume_div.className = "login";
