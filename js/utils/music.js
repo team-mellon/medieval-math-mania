@@ -35,7 +35,7 @@ var current_song;
 var sound_off = true;
 
 // Volume for
-var volume = 50;
+var volume = 0.5;
 
 // Loads sounds when game starts
 function loadSound () {
@@ -129,4 +129,5 @@ function muteSound () {
 function setVolume() {
   volume = document.getElementById("volumeSlider").value;
   current_song.volume = volume;
+  console.log(volume);
 }
