@@ -4,12 +4,12 @@ function createLoginForm()
 	progressBar.hidden = true;
 	progressBackground.hidden = true;
 	ldBg.hidden = true;
-	
+
 	//registers Menu sounds
 	createjs.Sound.registerSound("res/sound_effects/menu.wav", "menu");
 	createjs.Sound.registerSound("res/sound_effects/select.wav", "select");
 	createjs.Sound.registerSound("res/sound_effects/sword.wav", "sword");
-	
+
   // Creates username display label and input box
   var username_text = document.createTextNode("Username");
   // Creates line break for form div spacing
@@ -512,22 +512,23 @@ function createGameForm() {
 
 
   // Creates Tutorial display text
-  if(current_level == 1)
-  {
-	  var tutorial_label = document.createTextNode("Tutorial");
-	  var br1 = document.createElement("br");
-	  var tutorial_text = document.createElement("span");
-	  tutorial_text.className = "tutorial";
-	  tutorial_text.id = "tutorialText";
-	  var tutorial_words = document.createTextNode("The tutorial is broken");
-	  tutorial_text.appendChild(tutorial_words);
-	  var tutorial_div = document.createElement("div");
-	  tutorial_div.className = "tutorial_title";
-	  tutorial_div.id = "tutorialDiv"
-	  tutorial_div.appendChild(tutorial_label);
-	  tutorial_div.appendChild(br1);
-	  tutorial_div.appendChild(tutorial_text);
-  }
+	// if(current_level == 1)
+  // if(true)
+  // {
+  var tutorial_label = document.createTextNode("Tutorial");
+  var br1 = document.createElement("br");
+  var tutorial_text = document.createElement("span");
+  tutorial_text.className = "tutorial";
+  tutorial_text.id = "tutorialText";
+  var tutorial_words = document.createTextNode("The tutorial is broken");
+  tutorial_text.appendChild(tutorial_words);
+  var tutorial_div = document.createElement("div");
+  tutorial_div.className = "tutorial_title";
+  tutorial_div.id = "tutorialDiv"
+  tutorial_div.appendChild(tutorial_label);
+  tutorial_div.appendChild(br1);
+  tutorial_div.appendChild(tutorial_text);
+  // }
 
 
   // Creates login form to hold username and password divs
@@ -553,10 +554,10 @@ function createGameForm() {
   scene_html.appendChild(game_range_form);
   scene_html.appendChild(game_entry_form);
   scene_html.appendChild(game_history_form);
-  if(current_level == 1)
-  {
+  // if(current_level == 1)
+  // {
 	scene_html.appendChild(tutorial_div);
-  }
+  // }
 }
 
 function createHintForm() {

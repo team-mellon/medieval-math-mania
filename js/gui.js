@@ -60,6 +60,10 @@ var end_level_scene;
 var end_level_button;
 var end_text;
 
+var hit_text_counter;
+var low_text_counter;
+var high_text_counter;
+
 function createGUI() {
 
 	switch(current_scene) {
@@ -114,7 +118,7 @@ function createGUI() {
 			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
 
 			left_sword_button = createButton("res/sword-left.png", "Create", buttonX, buttonY, function() {
-				createjs.Sound.play("sword"); 
+				createjs.Sound.play("sword");
 				var key = document.getElementById('usernameInput').value;
 				if(key in database.users || key == "") {
 					// document.getElementById('firstnameInput').value = "";
@@ -135,7 +139,7 @@ function createGUI() {
 							} else {
 								if(document.getElementById('passwordInput').value != document.getElementById('confirmInput').value) {
 									document.getElementById('errorText').textContent = "Passwords do not match";
-								} else { 
+								} else {
 									changeScene(2);
 								}
 							}
@@ -249,14 +253,10 @@ function createGUI() {
 
 	    //low counter
 	    low_text_counter = createText("Total Lows: 0", "Oldstyle", "25px", "", "saddlebrown", 10, 10);
-	    low_text_counter.visible = true;
-
 	    //high counter
 	    high_text_counter = createText("Total High: 0", "Oldstyle", "25px", "", "saddlebrown", 10, 10);
-		high_text_counter.visible = true;
-	    //hit counter
-	     hit_text_counter = createText("Total Hits: 0", "Oldstyle", "25px", "", "saddlebrown", 10, 10);
-	     hit_text_counter.visible = true;
+			//hit counter
+	    hit_text_counter = createText("Total Hits: 0", "Oldstyle", "25px", "", "saddlebrown", 10, 10);
 
 
 	    pause_menu = createImage("res/hit-target-pause-menu.png", backgroundX, backgroundY);
@@ -563,9 +563,9 @@ function scaleGUI() {
 				scale_image(low_text, stage.canvas.width / 2 - 120 * scene_scale_Y, stage.canvas.height / 2 + 40 * scene_scale_Y);
 				scale_image(high_text, stage.canvas.width / 2 - 120 * scene_scale_Y, stage.canvas.height / 2 + 80 * scene_scale_Y);
 
-				scale_image(hit_text_counter, stage.canvas.width / 2 - 120 * scene_scale_Y, stage.canvas.height / 2);
-				scale_image(low_text_counter, stage.canvas.width / 2 - 120 * scene_scale_Y, stage.canvas.height / 2 + 40 * scene_scale_Y);
-				scale_image(high_text_counter, stage.canvas.width / 2 - 120 * scene_scale_Y, stage.canvas.height / 2 + 80 * scene_scale_Y);
+				scale_image(hit_text_counter,30, stage.canvas.height / 2 + 225 * scene_scale_Y);
+				scale_image(low_text_counter, 30, stage.canvas.height / 2 + 280 * scene_scale_Y);
+				scale_image(high_text_counter,30, stage.canvas.height / 2 + 300 * scene_scale_Y);
 
 				scale_gui(login_button, stage.canvas.width - (buttonX/2 + 10), stage.canvas.height - (buttonY/2 + 10));
 				scale_gui(hint_button, stage.canvas.width / 2 - 313 * scene_scale_Y, stage.canvas.height / 2 + 194 * scene_scale_Y);
@@ -585,7 +585,7 @@ function scaleGUI() {
 			scale_image(low_text, stage.canvas.width / 2 - 120 * scene_scale_Y, stage.canvas.height / 2 + 40 * scene_scale_Y);
 			scale_image(high_text, stage.canvas.width / 2 - 120 * scene_scale_Y, stage.canvas.height / 2 + 80 * scene_scale_Y);
 
-			scale_image(hit_text_counter,30, stage.canvas.height / 2+225);
+			scale_image(hit_text_counter,30, stage.canvas.height / 2 + 225 * scene_scale_Y);
 			scale_image(low_text_counter, 30, stage.canvas.height / 2 + 280 * scene_scale_Y);
 			scale_image(high_text_counter,30, stage.canvas.height / 2 + 300 * scene_scale_Y);
 
