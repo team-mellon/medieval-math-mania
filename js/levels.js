@@ -38,14 +38,16 @@ var structure_center,
     structure_body,
     structure_left,
     structure_right,
-    structure_facade;
+    structure_facade,
+    structure_banner;
 var center,
     left_center,
     right_center,
     body,
     left,
     right,
-    facade;
+    facade,
+    banner;
 
 var centerS,
     left_centerS,
@@ -53,7 +55,8 @@ var centerS,
     bodyS,
     leftS,
     rightS,
-    facadeS;
+    facadeS,
+    bannerS;
 
 var structureX = 1920;
 var structureY = 768;
@@ -194,6 +197,12 @@ function loadLevel() {
     framerate: 6
   };
 
+  bannerS = {
+    images: ["res/banners.png"],
+    frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+  };
+
   bodyS = {
     images: ["res/level" + current_level + "/body.png"],
     frames: {width:1920, height:768, count:6, regX: 0, regY:0, spacing:0, margin:0},
@@ -293,6 +302,7 @@ function createLevel() {
   structure_body = createSprite(bodyS, structureX, structureY);
   structure_left = createSprite(leftS, structureX, structureY);
   structure_right = createSprite(rightS, structureX, structureY);
+  structure_banner = createSprite(bannerS, structureX, structureY);
   structure_facade = createSprite(facadeS, structureX, structureY);
 
   firework_low = createSprite(firework_lowS, structureX, structureY);
@@ -330,6 +340,7 @@ function destroyLevel() {
   stage.removeChild(structure_body);
   stage.removeChild(structure_left);
   stage.removeChild(structure_right);
+  stage.removeChild(structure_banner);
   stage.removeChild(structure_facade);
 
   stage.removeChild(firework_low);
@@ -394,8 +405,8 @@ function scaleLevel() {
   scale_image(structure_body, stage.canvas.width / 2, stage.canvas.height / 2);
   scale_image(structure_left, stage.canvas.width / 2, stage.canvas.height / 2);
   scale_image(structure_right, stage.canvas.width / 2, stage.canvas.height / 2);
+  scale_image(structure_banner, stage.canvas.width / 2, stage.canvas.height / 2);
   scale_image(structure_facade, stage.canvas.width / 2, stage.canvas.height / 2);
-
 
   scale_image(firework_low, stage.canvas.width / 2, stage.canvas.height / 2);
   scale_image(firework_hit, stage.canvas.width / 2, stage.canvas.height / 2);
