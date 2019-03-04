@@ -262,20 +262,20 @@ function tick(event) {
             // createGameForm();
 
             document.getElementById("entryInput").value = "";
-
-            if (solution <= upper && solution >= lower && hit_counter < 3) {
+            // this is website version
+            if (solution <= upper && solution >= lower) {
               hit = true;
               console.log("hit");
               catapult.gotoAndPlay(0);
               // Triggering other fired events
               fired = true;
-            } else if (solution > upper && miss_upper_counter == 0) {
+            } else if (solution > upper) {
               miss_upper = true;
               console.log("miss upper");
               catapult.gotoAndPlay(0);
               // Triggering other fired events
               fired = true;
-            } else if (solution < lower && miss_lower_counter == 0) {
+            } else if (solution < lower) {
               miss_lower = true;
               console.log("miss lower");
               catapult.gotoAndPlay(0);
@@ -416,13 +416,13 @@ function tick(event) {
     }
 
     if (current_level == 1) {
-      if (miss_lower_counter != 1) {
+      if (miss_lower_counter < 1) {
         document.getElementById("tutorialText").textContent = "Try finding an INTEGER multiplier that produces a solution below the range";
       } else {
-        if (miss_upper_counter != 1) {
+        if (miss_upper_counter < 1) {
           document.getElementById("tutorialText").textContent = "Try finding an INTEGER multiplier that produces a solution above the range";
         } else {
-          if (hit_counter != 3) {
+          if (hit_counter < 3) {
             document.getElementById("tutorialText").textContent = "Try finding 3 INTEGER multipliers that produce solutions within the range";
           } else {
 
@@ -432,13 +432,13 @@ function tick(event) {
     }
 
     if (current_level == 2) {
-      if (miss_lower_counter != 1) {
+      if (miss_lower_counter < 1) {
         document.getElementById("tutorialText").textContent = "Try finding a DECIMAL multiplier that produces a solution below the range and does not end in '.0'";
       } else {
-        if (miss_upper_counter != 1) {
+        if (miss_upper_counter < 1) {
           document.getElementById("tutorialText").textContent = "Try finding a DECIMAL multiplier that produces a solution above the range and does not end in '.0'";
         } else {
-          if (hit_counter != 3) {
+          if (hit_counter < 3) {
             document.getElementById("tutorialText").textContent = "Try finding 3 DECIMAL multipliers that produce solutions within the range and does not end in '.0'";
           } else {
 
@@ -448,11 +448,10 @@ function tick(event) {
     }
 
 
-    if (hit_counter == 3 && miss_upper_counter == 1 && miss_lower_counter == 1 && reload == false) {
+    if (hit_counter >= 3 && miss_upper_counter >= 1 && miss_lower_counter >= 1 && reload == false) {
 	hit_text.text += hit_counter.toString();
 	low_text.text += miss_lower_counter.toString();
 	high_text.text += miss_upper_counter.toString();
-
 
 
 
