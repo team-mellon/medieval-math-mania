@@ -12,6 +12,8 @@ var lower = 35;
 var waiting_hit = false;
 var waiting_miss = false;
 
+var generated = false;
+
 var fired = false;
 var fire_counter = 0;
 var hit_counter = 0;
@@ -32,6 +34,9 @@ var boss_fight = false;
 
 var landscape_warning;
 
+var storage = 0;
+var factor = 0;
+var multiple = 0;
 var multiplier = 0;
 var digit = 2;
 var last_digit = 0;
@@ -69,11 +74,17 @@ var equal = " = ";
 var solution = 0;
 
 function tick(event) {
-
+  //Calls external function to generate ranges for each level, this is reset when each level is selected on level select
   if (current_scene == 3 && pause_menu.visible == false) {
-
+	if(!generated)
+	{
+		genRange();
+		generated = true;
+	}
+	
     //Key checks at the beginning of the update loop
-    if (keys[32]){ // Spacebar to randomize the range
+	// made the level generate this instead of spacebar since thats the game will work anyway
+    /*if (keys[32]){ // Spacebar to randomize the range
 
       // Generate new range
       rand_num1 = Math.floor((Math.random() * 10) + 1);
@@ -110,7 +121,7 @@ function tick(event) {
       range_div.appendChild(upper_number);
       range_div.appendChild(right_paren);
 
-    }
+    }*/
 
     if ((keys[13] || drag_up) && catapult.paused) { // Enter or drag up swipe on mobile
       // Reset drag_up bool;
@@ -148,7 +159,7 @@ function tick(event) {
 
             // Actual math
             solution = multiplier * multiplicand;
-
+			solution = Math.floor10(solution, -1);
             var solut_div = document.getElementById("solutionText");
             while (solut_div.firstChild) {
               solut_div.removeChild(solut_div.firstChild);
@@ -201,24 +212,10 @@ function tick(event) {
 
             if (Number.isNaN(entry)) {
               entry_is_correct = false;
+			  
             } else {
-
-              if (current_level == 1) {
-
-                if (document.getElementById("entryInput").value % 1 == 0) {
+				  //this is where to add level specific rules should they prove neccesary, at the moment they are not
                   entry_is_correct = true;
-                } else {
-                  entry_is_correct = false;
-                }
-
-              } else if (current_level == 2) {
-
-                if (document.getElementById("entryInput").value % 1 != 0) {
-                  entry_is_correct = true;
-                } else {
-                  entry_is_correct = false;
-                }
-              }
             }
           } else {
             entry_is_correct = false;
@@ -428,16 +425,16 @@ function tick(event) {
         }
       }
     }
-
+	// Tutorial
     if (current_level == 1) {
       if (miss_lower_counter != 1) {
-        document.getElementById("tutorialText").textContent = "Try finding an INTEGER multiplier that produces a solution below the range";
+        document.getElementById("tutorialText").textContent = "Try finding any multiplier that produces a solution below the range";
       } else {
         if (miss_upper_counter != 1) {
-          document.getElementById("tutorialText").textContent = "Try finding an INTEGER multiplier that produces a solution above the range";
+          document.getElementById("tutorialText").textContent = "Try finding any multiplier that produces a solution above the range";
         } else {
           if (hit_counter != 3) {
-            document.getElementById("tutorialText").textContent = "Try finding 3 INTEGER multipliers that produce solutions within the range";
+            document.getElementById("tutorialText").textContent = "Try finding 3 multipliers that produce solutions within the range";
           } else {
 
           }
@@ -445,23 +442,7 @@ function tick(event) {
       }
     }
 
-    if (current_level == 2) {
-      if (miss_lower_counter != 1) {
-        document.getElementById("tutorialText").textContent = "Try finding a DECIMAL multiplier that produces a solution below the range and does not end in '.0'";
-      } else {
-        if (miss_upper_counter != 1) {
-          document.getElementById("tutorialText").textContent = "Try finding a DECIMAL multiplier that produces a solution above the range and does not end in '.0'";
-        } else {
-          if (hit_counter != 3) {
-            document.getElementById("tutorialText").textContent = "Try finding 3 DECIMAL multipliers that produce solutions within the range and does not end in '.0'";
-          } else {
-
-          }
-        }
-      }
-    }
-
-
+	//Victory Banner
     if (hit_counter == 3 && miss_upper_counter == 1 && miss_lower_counter == 1 && reload == false) {
 		
 		hit_text.text += hit_counter.toString();
@@ -520,7 +501,7 @@ function tick(event) {
 
 
     }
-
+	//Mors omnibus tyrannis
     if (hide_knight) {
       boss.alpha = 0;
     } else {
@@ -591,6 +572,101 @@ function tick(event) {
 
   stage.update(event);
 
+}
+//generates range for each level
+function genRange() {
+	//exactly one multiple of multiplicand in range, single digit multiplicand
+	if (current_level == 1) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 7) + 2;
+		multiple = Math.floor(Math.random() * 7) + 2;
+		lower = (multiple * multiplicand) - Math.floor(multiplicand/2);
+		upper = (multiple * multiplicand) + Math.floor(multiplicand/2);
+	}
+	//No multiples of multiplicand in range, single digit multiplicand
+	if (current_level == 2) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 7) + 2;
+		multiple = Math.floor(Math.random() * 7) + 2;
+		lower = (multiple * multiplicand) + 1;
+		upper = (multiple * (multiplicand+1)) - 1;
+	}
+	//Starting number is a two-digit number, target range includes the value which is one tenth of the number, and is bounded by positive single-digit integers. 
+	if (current_level == 3) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 90)+ 10;
+		factor = (0.1) * multiplicand;
+		lower = Math.floor(factor);
+		upper = Math.ceil(factor);
+		if(lower == upper)
+		{
+			upper++;
+		}
+	}
+	//Starting number is a two-digit number, target range goes from 0 to a single-digit positive integer. 
+	if (current_level == 4) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 90) + 10;
+		lower = 0;
+		upper = Math.floor(Math.random() * 7) + 2;
+	}
+	/*Starting number is a single-digit number. For target range, choose another single-digit number,
+	multiply it by 10 times the starting number, and make sure that the target range contains that number. 
+	The lower boundary is an integer at least 10 below the product and the upper boundary is an integer 
+	at least 10 above the product.*/
+	if (current_level == 5) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 7) + 2;
+		multiple = Math.floor(Math.random() * 7) + 2;
+		storage = multiplicand * multiple * 10;
+		lower = storage - 10;
+		upper = storage + 10;
+	}
+	/*Starting number is a single-digit number n, target range contains 100n, 
+	and the range makes it so there is only one integer answer 
+	(i.e. the lower bound is above 100n − n and the upper bound is below 100n + n.*/
+	if (current_level == 6) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 7) + 2;
+		multiple = 100 * multiplicand;
+		lower = multiple - multiplicand;
+		upper = multiple + multiplicand;
+	}
+	//Starting number is a two-digit number, target range contains 0 (flanked by single-digit integers)
+	if (current_level == 7) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 90) + 10;
+		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
+		upper = Math.floor(Math.random() * 7) + 2;
+	}
+
+	// Clear the range banner
+	var range_div = document.getElementById("rangeDiv");
+	while (range_div.firstChild) {
+		range_div.removeChild(range_div.firstChild);
+	}
+
+	var multip_div = document.getElementById("multiplicandText");
+	while (multip_div.firstChild) {
+	multip_div.removeChild(multip_div.firstChild);
+	}
+
+	var multip = document.createTextNode(multiplicand);
+	multip_div.appendChild( multip);
+
+	// Remake the display for the banner
+	var left_paren = document.createTextNode("[");
+	var lower_number = document.createTextNode(lower);
+	var middle_comma = document.createTextNode(", ");
+	var upper_number = document.createTextNode(upper);
+	var right_paren = document.createTextNode("]");
+
+	// Append the display
+	range_div.appendChild(left_paren);
+	range_div.appendChild(lower_number);
+	range_div.appendChild(middle_comma);
+	range_div.appendChild(upper_number);
+	range_div.appendChild(right_paren);
 }
 
 function updateSinglePlayAnimations() {

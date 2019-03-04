@@ -381,42 +381,49 @@ function createGUI() {
 			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(2); });
 
 			level1_indicator = createButton("res/map-indicator.png", "1", indicatorX, indicatorY, function() {
+				generated = false;
 				createjs.Sound.play("select");
 				current_level = 1;
 				resetLevel();
 				changeScene(3);
 			});
 			level2_indicator = createButton("res/map-indicator.png", "2", indicatorX, indicatorY, function() {
+				generated = false;
 				createjs.Sound.play("select");
 				current_level = 2;
 				resetLevel();
 				changeScene(3);
 			});
 			level3_indicator = createButton("res/map-indicator.png", "3", indicatorX, indicatorY, function() {
+				generated = false;
 				createjs.Sound.play("select");
 				current_level = 3;
 				resetLevel();
 				changeScene(3);
 			});
 			level4_indicator = createButton("res/map-indicator.png", "4", indicatorX, indicatorY, function() {
+				generated = false;
 				createjs.Sound.play("select");
 				current_level = 4;
 				resetLevel();
 				changeScene(3);
 			});
 			level5_indicator = createButton("res/map-indicator.png", "5", indicatorX, indicatorY, function() {
+				generated = false;
 				createjs.Sound.play("select");
 				current_level = 5;
 				resetLevel();
 				changeScene(3);
 			});
 			level6_indicator = createButton("res/map-indicator.png", "6", indicatorX, indicatorY, function() {
+				generated = false;
 				createjs.Sound.play("select");
 				current_level = 6;
 				resetLevel();
 				changeScene(3);
 			});
 			level7_indicator = createButton("res/map-indicator.png", "7", indicatorX, indicatorY, function() {
+				generated = false;
 				createjs.Sound.play("select");
 				current_level = 7;
 				resetLevel();
