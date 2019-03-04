@@ -9,7 +9,10 @@ var playlistSources = [
   "res/music/fiddles_mcGinty.wav",
   "res/music/galway.wav",
   "res/music/hidden_past.wav",
-  "res/music/parisian.wav"
+  "res/music/parisian.wav",
+  "res/music/bobbin_beeps.wav",
+  "res/music/whirlwind.wav",
+  "res/music/drums_in_the_deep.wav"
 ];
 
 var playlistIDs = [
@@ -22,7 +25,10 @@ var playlistIDs = [
   "FiddlesMcGinty",
   "Galway",
   "HiddenPast",
-  "Parisian"
+  "Parisian",
+  "BoppinBeeps",
+  "whirlwind",
+  "DrumsInTheDeep"
 ];
 
 // Player to play playlist music
