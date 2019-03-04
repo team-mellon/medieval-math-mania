@@ -72,6 +72,7 @@ var multiplicand = 5;
 var sign = " x "; //&#37
 var equal = " = ";
 var solution = 0;
+var solution2 = 0;
 
 function tick(event) {
   //Calls external function to generate ranges for each level, this is reset when each level is selected on level select
@@ -127,13 +128,13 @@ function tick(event) {
       // Reset drag_up bool;
       drag_up = false;
 
+	  
       console.log("HIT: " + hit_counter);
       console.log("MU" + miss_upper_counter);
       console.log("ML" + miss_lower_counter);
 
       // Need to check for input correctness here
       // No letters or symbols only numbers
-	  
 
       valid = true;
 
@@ -142,13 +143,13 @@ function tick(event) {
           for (var x in history_list) {
             console.log(history_list[x]);
             console.log(entry);
-            if (multiplier == history_list[x]) {
+			/*
+            if (multiplier == history_list[x]){
               valid = false;
-            }
+            }*/
           }
           if (valid) {
-			
-            // Add to history
+			// Add to history
             console.log(history_list);
             history_list.push(multiplier);
             var dropdown = document.getElementById("myDropdown");
@@ -173,20 +174,22 @@ function tick(event) {
             //   scene_html.removeChild(scene_html.firstChild);
             // }
             // createGameForm();
-
+	
             if (solution <= upper && solution >= lower && hit_counter < 3) {
               hit = true;
               console.log("hit");
               catapult.gotoAndPlay(0);
               // Triggering other fired events
               fired = true;
-            } else if (solution > upper && miss_upper_counter == 0) {
+			}
+			else if (solution > upper && miss_upper_counter < 1) {
               miss_upper = true;
               console.log("miss upper");
               catapult.gotoAndPlay(0);
               // Triggering other fired events
               fired = true;
-            } else if (solution < lower && miss_lower_counter == 0) {
+            }
+			else if (solution < lower && miss_lower_counter < 1) {
               miss_lower = true;
               console.log("miss lower");
               catapult.gotoAndPlay(0);
@@ -223,14 +226,31 @@ function tick(event) {
           for (var x in history_list) {
             console.log(history_list[x]);
             console.log(entry);
-            if (entry == history_list[x]) {
+			//Commented out for sake of sprint
+            /*if (entry == history_list[x]) {
               valid = false;
-            }
+            }*/
           }
           // Animate the catapult
           if (entry_is_correct && valid) {
             multiplier = document.getElementById("entryInput").value;
-            // Add to history
+
+			//Counts input for already completed highs lows and hits
+			solution2 = multiplier * multiplicand;
+			console.log("Solution 2" + solution2);
+			if (solution2 <= upper && solution2 >= lower && hit_counter >= 3){
+				hit_counter++;
+				hit_text_counter.text = "Total Hits: "+hit_counter.toString();
+			}
+			else if (solution2 > upper && miss_upper_counter >= 1){
+				miss_upper_counter++;
+				miss_upper_counter.text = "Total Hits: "+hit_counter.toString();
+			}
+			else if(solution2 < lower && miss_lower_counter >= 1){
+				miss_lower_counter++;
+				miss_lower_counter.text = "Total Hits: "+hit_counter.toString();
+			}
+			// Add to history
             history_list.push(multiplier);
             console.log(history_list);
             var dropdown = document.getElementById("myDropdown");
@@ -238,6 +258,7 @@ function tick(event) {
             var line_break = document.createElement("br");
             dropdown.appendChild(history_entry);
             dropdown.appendChild(line_break);
+			
 
             // Actual math
             solution = multiplier * multiplicand;
@@ -376,6 +397,7 @@ function tick(event) {
             structure_center.gotoAndPlay(0);
             break;
           default:
+			break;
         }
         firework_hit.gotoAndPlay(0);
         reload = true;
@@ -443,7 +465,7 @@ function tick(event) {
     }
 
 	//Victory Banner
-    if (hit_counter == 3 && miss_upper_counter == 1 && miss_lower_counter == 1 && reload == false) {
+    if (hit_counter >= 3 && miss_upper_counter >= 1 && miss_lower_counter >= 1 && reload == false) {
 		
 		hit_text.text += hit_counter.toString();
 		low_text.text += miss_lower_counter.toString();

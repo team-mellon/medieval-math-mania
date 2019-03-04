@@ -253,10 +253,10 @@ function createGUI() {
 
 	    //high counter
 	    high_text_counter = createText("Total High: 0", "Oldstyle", "25px", "", "saddlebrown", 10, 10);
-	    	    high_text_counter.visible = true;
+		high_text_counter.visible = true;
 	    //hit counter
 	     hit_text_counter = createText("Total Hits: 0", "Oldstyle", "25px", "", "saddlebrown", 10, 10);
-	     	    hit_text_counter.visible = true;
+	     hit_text_counter.visible = true;
 
 
 	    pause_menu = createImage("res/hit-target-pause-menu.png", backgroundX, backgroundY);
