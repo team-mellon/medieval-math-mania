@@ -673,6 +673,85 @@ function genRange() {
 		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
 		upper = Math.floor(Math.random() * 7) + 2;
 	}
+	//Starting number is a two-digit number, target range numbers are both 3-digit, with no integer 
+	if (current_level == 8) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 90) + 10;
+		lower = Math.random() * 7) + 2;
+		upper = Math.floor(Math.random() * 7) + 2;
+	}
+	if (current_level == 9) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 90) + 10;
+		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
+		upper = Math.floor(Math.random() * 7) + 2;
+	}
+	if (current_level == 10) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 90) + 10;
+		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
+		upper = Math.floor(Math.random() * 7) + 2;
+	}
+	if (current_level == 11) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 90) + 10;
+		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
+		upper = Math.floor(Math.random() * 7) + 2;
+	}
+	if (current_level == 12) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 90) + 10;
+		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
+		upper = Math.floor(Math.random() * 7) + 2;
+	}
+	if (current_level == 13) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 90) + 10;
+		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
+		upper = Math.floor(Math.random() * 7) + 2;
+	}
+	if (current_level == 14) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 90) + 10;
+		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
+		upper = Math.floor(Math.random() * 7) + 2;
+	}
+	if (current_level == 15) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 90) + 10;
+		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
+		upper = Math.floor(Math.random() * 7) + 2;
+	}
+	if (current_level == 16) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 90) + 10;
+		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
+		upper = Math.floor(Math.random() * 7) + 2;
+	}
+	if (current_level == 17) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 90) + 10;
+		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
+		upper = Math.floor(Math.random() * 7) + 2;
+	}
+	if (current_level == 18) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 90) + 10;
+		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
+		upper = Math.floor(Math.random() * 7) + 2;
+	}
+	if (current_level == 19) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 90) + 10;
+		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
+		upper = Math.floor(Math.random() * 7) + 2;
+	}
+	if (current_level == 20) {
+		// Generate new range
+		multiplicand = Math.floor(Math.random() * 90) + 10;
+		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
+		upper = Math.floor(Math.random() * 7) + 2;
+	}
 
 	// Clear the range banner
 	var range_div = document.getElementById("rangeDiv");

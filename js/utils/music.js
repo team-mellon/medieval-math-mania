@@ -12,7 +12,8 @@ var playlistSources = [
   "res/music/parisian.wav",
   "res/music/bobbin_beeps.wav",
   "res/music/whirlwind.wav",
-  "res/music/drums_in_the_deep.wav"
+  "res/music/drums_in_the_deep.wav",
+  "res/music/fortress.wav"
 ];
 
 var playlistIDs = [
@@ -28,7 +29,8 @@ var playlistIDs = [
   "Parisian",
   "BoppinBeeps",
   "whirlwind",
-  "DrumsInTheDeep"
+  "DrumsInTheDeep",
+  "Fortress"
 ];
 
 // Player to play playlist music

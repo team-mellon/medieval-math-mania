@@ -7,7 +7,7 @@
 	"loopBars": 16,
 	"beatsPerBar": 8,
 	"ticksPerBeat": 4,
-	"beatsPerMinute": 151,
+	"beatsPerMinute": 120,
 	"reverb": 0,
 	"channels": [
 		{
@@ -1194,7 +1194,7 @@
 			"instruments": [
 				{
 					"type": "noise",
-					"volume": 100,
+					"volume": 40,
 					"wave": "hollow",
 					"transition": "sudden"
 				}
