@@ -287,41 +287,41 @@ function tick(event) {
             document.getElementById("entryInput").value = "";
 
             if (solution <= upper && solution >= lower) {
-			  //Plays reload sfx
-			  createjs.Sound.play("firing");
-			  createjs.Sound.play("reload", delayRe);
+      			  //Plays reload sfx
+      			  createjs.Sound.play("firing");
+      			  createjs.Sound.play("reload", delayRe);
               hit = true;
               console.log("hit");
               catapult.gotoAndPlay(0);
               // Triggering other fired events
               fired = true;
-			  //plays sound for lighting fireball and hitting castle
-			  createjs.Sound.play("light");
-			  createjs.Sound.play("crumble", delayIn);
+      			  //plays sound for lighting fireball and hitting castle
+      			  createjs.Sound.play("light");
+      			  createjs.Sound.play("crumble", delayIn);
             } else if (solution > upper) {
-			  //Plays reload sfx
-			  createjs.Sound.play("firing");
-			  createjs.Sound.play("reload", delayRe);
+      			  //Plays reload sfx
+      			  createjs.Sound.play("firing");
+      			  createjs.Sound.play("reload", delayRe);
               miss_upper = true;
               console.log("miss upper");
               catapult.gotoAndPlay(0);
               // Triggering other fired events
               fired = true;
-			  //plays sound for lighting fireball and hitting castle
-			  createjs.Sound.play("light");
-			  createjs.Sound.play("crumble", delayOut);
+      			  //plays sound for lighting fireball and hitting castle
+      			  createjs.Sound.play("light");
+      			  createjs.Sound.play("crumble", delayOut);
             } else if (solution < lower) {
-			  //Plays reload sfx
-			  createjs.Sound.play("firing");
-			  createjs.Sound.play("reload", delayRe);
+      			  //Plays reload sfx
+      			  createjs.Sound.play("firing");
+      			  createjs.Sound.play("reload", delayRe);
               miss_lower = true;
               console.log("miss lower");
               catapult.gotoAndPlay(0);
               // Triggering other fired events
               fired = true;
-			  //plays sound for lighting fireball and hitting castle
-			  createjs.Sound.play("light");
-			  createjs.Sound.play("crumble", delayOut);
+      			  //plays sound for lighting fireball and hitting castle
+      			  createjs.Sound.play("light");
+      			  createjs.Sound.play("crumble", delayOut);
             }
           }
         }
