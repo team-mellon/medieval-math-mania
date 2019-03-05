@@ -80,7 +80,7 @@ var phone_rotationS = {
 };
 
 // Scale the image-like assets
-function scale_to_canvas(image, x_loc, y_loc, type) {
+function scale_to_canvas(image, x_lock, x_location, y_lock, y_location, type) {
 
   image.scaleX = scene_scale_X;
   image.scaleY = scene_scale_Y;
@@ -100,8 +100,8 @@ function scale_to_canvas(image, x_loc, y_loc, type) {
 
   }
 
-  image.x = x_loc;
-  image.y = y_loc;
+  image.x = x_lock + x_location;
+  image.y = y_lock + y_location;
 
 }
 
