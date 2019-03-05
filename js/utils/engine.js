@@ -7,6 +7,8 @@ var stage; // Stage for drawing pictures and shapes
 var bg; // Background rectangle to clear screen
 var bg_color; // Background color
 
+var entity_component_system = []; // For scaling and eventually object storage
+
 function init() {
 
   stage = new createjs.Stage("demoCanvas"); // Create the stage and attach it to canvas

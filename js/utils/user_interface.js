@@ -6,6 +6,20 @@ function createImage(location, width, height) {
 	stage.addChild(image);
   image.regX = width/2;
   image.regY = height/2;
+
+  var entity_object = {
+    object: image,
+    width: width,
+    height: height,
+    x_lock: 0,
+    x_location: 0,
+    y_lock: 0,
+    y_location: 0,
+    type: "image"
+  };
+
+  entity_component_system.push(entity_object);
+
   return image;
 
 }
@@ -17,6 +31,20 @@ function createSprite(animation, width, height) {
   stage.addChild(sprite);
   sprite.regX = width/2;
   sprite.regY = height/2;
+
+  var entity_object = {
+    object: animation,
+    width: width,
+    height: height,
+    x_lock: 0,
+    x_location: 0,
+    y_lock: 0,
+    y_location: 0,
+    type: "image"
+  };
+
+  entity_component_system.push(entity_object);
+
   return sprite;
 
 }
@@ -88,6 +116,19 @@ function createButton(location, text, width, height, handleClick) {
   // label.on("click", handleClick);
   button.on("click", handleClick);
 
+  var entity_object = {
+    object: image,
+    width: width,
+    height: height,
+    x_lock: 0,
+    x_location: 0,
+    y_lock: 0,
+    y_location: 0,
+    type: "gui"
+  };
+
+  entity_component_system.push(entity_object);
+
   return button;
 
 }
@@ -95,10 +136,24 @@ function createButton(location, text, width, height, handleClick) {
 
 function createText(num, font, size, style, color, width, height) {
 
-    var text = new createjs.Text(num, style + " " + size + " " + font, color);
+  var text = new createjs.Text(num, style + " " + size + " " + font, color);
 	stage.addChild(text);
   //text.regX = width/2;
   //text.regY = height/2;
+
+  var entity_object = {
+    object: text,
+    width: width,
+    height: height,
+    x_lock: 0,
+    x_location: 0,
+    y_lock: 0,
+    y_location: 0,
+    type: "image"
+  };
+
+  entity_component_system.push(entity_object);
+
   return text;
 
 }

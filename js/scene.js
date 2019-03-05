@@ -72,6 +72,8 @@ function createScene() {
 
 	createGUI();
 
+  console.log(entity_component_system);
+
 }
 
 function changeScene(new_scene) {
