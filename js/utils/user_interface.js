@@ -1,30 +1,30 @@
 // Creating and staging assets
 
-function createImage(location, width, height) {
+function createImage(location, width, height, x_lock, x_location, y_lock, y_location, type) {
 
   var image = new createjs.Bitmap(location);
 	stage.addChild(image);
   image.regX = width/2;
   image.regY = height/2;
 
-  var entity_object = {
-    object: image,
-    width: width,
-    height: height,
-    x_lock: 0,
-    x_location: 0,
-    y_lock: 0,
-    y_location: 0,
-    type: "image"
-  };
-
-  entity_component_system.push(entity_object);
+  // var entity_object = {
+  //   object: image,
+  //   width: width,
+  //   height: height,
+  //   x_lock: x_lock,
+  //   x_location: x_location,
+  //   y_lock: y_lock,
+  //   y_location: y_location,
+  //   type: type
+  // };
+  //
+  // entity_component_system.push(entity_object);
 
   return image;
 
 }
 
-function createSprite(animation, width, height) {
+function createSprite(animation, width, height, x_lock, x_location, y_lock, y_location, type) {
 
   var spriteSheet = new createjs.SpriteSheet(animation);
   var sprite = new createjs.Sprite(spriteSheet);
@@ -32,24 +32,24 @@ function createSprite(animation, width, height) {
   sprite.regX = width/2;
   sprite.regY = height/2;
 
-  var entity_object = {
-    object: animation,
-    width: width,
-    height: height,
-    x_lock: 0,
-    x_location: 0,
-    y_lock: 0,
-    y_location: 0,
-    type: "image"
-  };
-
-  entity_component_system.push(entity_object);
+  // var entity_object = {
+  //   object: sprite,
+  //   width: width,
+  //   height: height,
+  //   x_lock: x_lock,
+  //   x_location: x_location,
+  //   y_lock: y_lock,
+  //   y_location: y_location,
+  //   type: type
+  // };
+  //
+  // entity_component_system.push(entity_object);
 
   return sprite;
 
 }
 
-function createButton(location, text, width, height, handleClick) {
+function createButton(location, text, width, height, /* x_lock, x_location, y_lock, y_location, type, */ handleClick) {
 
   var image = new createjs.Bitmap(location);
   image.regX = width/2;
@@ -116,43 +116,43 @@ function createButton(location, text, width, height, handleClick) {
   // label.on("click", handleClick);
   button.on("click", handleClick);
 
-  var entity_object = {
-    object: image,
-    width: width,
-    height: height,
-    x_lock: 0,
-    x_location: 0,
-    y_lock: 0,
-    y_location: 0,
-    type: "gui"
-  };
-
-  entity_component_system.push(entity_object);
+  // var entity_object = {
+  //   object: button,
+  //   width: width,
+  //   height: height,
+  //   x_lock: x_lock,
+  //   x_location: x_location,
+  //   y_lock: y_lock,
+  //   y_location: y_location,
+  //   type: type
+  // };
+  //
+  // entity_component_system.push(entity_object);
 
   return button;
 
 }
 
 
-function createText(num, font, size, style, color, width, height) {
+function createText(num, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type) {
 
   var text = new createjs.Text(num, style + " " + size + " " + font, color);
 	stage.addChild(text);
   //text.regX = width/2;
   //text.regY = height/2;
 
-  var entity_object = {
-    object: text,
-    width: width,
-    height: height,
-    x_lock: 0,
-    x_location: 0,
-    y_lock: 0,
-    y_location: 0,
-    type: "image"
-  };
-
-  entity_component_system.push(entity_object);
+  // var entity_object = {
+  //   object: text,
+  //   width: width,
+  //   height: height,
+  //   x_lock: x_lock,
+  //   x_location: x_location,
+  //   y_lock: y_lock,
+  //   y_location: y_location,
+  //   type: type
+  // };
+  //
+  // entity_component_system.push(entity_object);
 
   return text;
 

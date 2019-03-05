@@ -84,17 +84,23 @@ var phone_rotationS = {
 // Scale the image-like assets
 function scale_to_canvas(image, x_lock, x_location, y_lock, y_location, type) {
 
+  var x_start = stage.canvas.width / 2;
+  var y_start = stage.canvas.height / 2;
+
   image.scaleX = scene_scale_X;
   image.scaleY = scene_scale_Y;
 
   if (stage.canvas.width < 900) {
 
     switch (type) {
+
       case "image":
         break;
+
       case "gui":
         image.scale = 1.0;
         break;
+
       case "smallgui":
         image.scale = 0.5;
         break;
@@ -102,10 +108,72 @@ function scale_to_canvas(image, x_lock, x_location, y_lock, y_location, type) {
 
   }
 
-  image.x = x_lock + x_location;
-  image.y = y_lock + y_location;
+  switch (x_lock) {
+
+    case "left":
+      var x_start = 0;
+      break;
+
+    case "center":
+      var x_start = stage.canvas.width / 2;
+      break;
+
+    case "right":
+      var x_start = stage.canvas.width;
+      break;
+
+  }
+
+  switch (y_lock) {
+
+    case "top":
+      var y_start = 0;
+      break;
+
+    case "center":
+      var y_start = stage.canvas.height / 2;
+      break;
+
+    case "bottom":
+      var y_start = stage.canvas.height;
+      break;
+
+  }
+
+  image.x = x_start + x_location;
+  image.y = y_start + y_location;
 
 }
+
+// // Scale the image-like assets
+// function scale_to_canvas(image, x_lock, x_location, y_lock, y_location, type) {
+//
+//   for (var i = 0; i < entity_component_system.length; i++) {
+//
+//     entity_component_system[i].object.scaleX = scene_scale_X;
+//     entity_component_system[i].object.scaleY = scene_scale_Y;
+//
+//     if (stage.canvas.width < 900) {
+//
+//       switch (type) {
+//         case "image":
+//           break;
+//         case "gui":
+//           entity_component_system[i].object.scale = 1.0;
+//           break;
+//         case "smallgui":
+//           entity_component_system[i].object.scale = 0.5;
+//           break;
+//       }
+//
+//     }
+//
+//     entity_component_system[i].object.x = entity_component_system[i].x_lock + entity_component_system[i].x_location;
+//     entity_component_system[i].object.y = entity_component_system[i].y_lock + entity_component_system[i].y_location;
+//
+//   }
+//
+// }
 
 // Scale the stage
 function resize() {

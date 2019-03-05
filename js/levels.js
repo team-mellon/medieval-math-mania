@@ -388,44 +388,44 @@ function scaleLevel() {
   // number_spacing = 10;
   number_spacer = 25;
 
-  scale_to_canvas(end_level_flag, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
+  scale_to_canvas(end_level_flag, "center", 0, "center", 0, "image");
   // Level structure in background
-  scale_to_canvas(structure_center, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-  scale_to_canvas(structure_left_center, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-  scale_to_canvas(structure_right_center, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
+  scale_to_canvas(structure_center, "center", 0, "center", 0, "image");
+  scale_to_canvas(structure_left_center, "center", 0, "center", 0, "image");
+  scale_to_canvas(structure_right_center, "center", 0, "center", 0, "image");
 
   // Bad guys in midground
-  scale_to_canvas(henchman_left, stage.canvas.width / 2, 0 - (henchmanX/2 + 625) * scene_scale_Y, stage.canvas.height / 2, 0 + (24) * scene_scale_Y, "image");
-  scale_to_canvas(henchman_left_center, stage.canvas.width / 2, 0 - (henchmanX/2 + 375) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-  scale_to_canvas(boss, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-  scale_to_canvas(henchman_right_center, stage.canvas.width / 2, 0 + (henchmanX/2 + 375) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-  scale_to_canvas(henchman_right, stage.canvas.width / 2, 0 + (henchmanX/2 + 625 ) * scene_scale_Y, stage.canvas.height / 2, 0 + (24) * scene_scale_Y, "image");
+  scale_to_canvas(henchman_left, "center", 0 - (henchmanX/2 + 625) * scene_scale_Y, "center", 0 + (24) * scene_scale_Y, "image");
+  scale_to_canvas(henchman_left_center, "center", 0 - (henchmanX/2 + 375) * scene_scale_Y, "center", 0, "image");
+  scale_to_canvas(boss, "center", 0, "center", 0, "image");
+  scale_to_canvas(henchman_right_center, "center", 0 + (henchmanX/2 + 375) * scene_scale_Y, "center", 0, "image");
+  scale_to_canvas(henchman_right, "center", 0 + (henchmanX/2 + 625 ) * scene_scale_Y, "center", 0 + (24) * scene_scale_Y, "image");
 
   // Level structure in foreground
-  scale_to_canvas(structure_body, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-  scale_to_canvas(structure_left, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-  scale_to_canvas(structure_right, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-  scale_to_canvas(structure_banner, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-  scale_to_canvas(structure_facade, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
+  scale_to_canvas(structure_body, "center", 0, "center", 0, "image");
+  scale_to_canvas(structure_left, "center", 0, "center", 0, "image");
+  scale_to_canvas(structure_right, "center", 0, "center", 0, "image");
+  scale_to_canvas(structure_banner, "center", 0, "center", 0, "image");
+  scale_to_canvas(structure_facade, "center", 0, "center", 0, "image");
 
-  scale_to_canvas(firework_low, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-  scale_to_canvas(firework_hit, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-  scale_to_canvas(firework_high, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
+  scale_to_canvas(firework_low, "center", 0, "center", 0, "image");
+  scale_to_canvas(firework_hit, "center", 0, "center", 0, "image");
+  scale_to_canvas(firework_high, "center", 0, "center", 0, "image");
 
   // Main character in foreground
-  scale_to_canvas(projectile, stage.canvas.width / 2, 0, stage.canvas.height, 0 - (projectileY/2 + 57) * scene_scale_Y, "image");
-  scale_to_canvas(catapult, stage.canvas.width / 2, 0, stage.canvas.height, 0 - (catapultY/2 - 57) * scene_scale_Y, "image");
+  scale_to_canvas(projectile, "center", 0, "bottom", 0 - (projectileY/2 + 57) * scene_scale_Y, "image");
+  scale_to_canvas(catapult, "center", 0, "bottom", 0 - (catapultY/2 - 57) * scene_scale_Y, "image");
 
-  scale_to_canvas(numberline, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
+  scale_to_canvas(numberline, "center", 0, "center", 0, "image");
 
   for(i = 0; i <= 50; i++){
-  	scale_to_canvas(number_text[i], stage.canvas.width / 2, 0 - (((number_spacer * 48) + 5) * scene_scale_Y), 0, 30 * scene_scale_Y, "image");
+  	scale_to_canvas(number_text[i], "center", 0 - (((number_spacer * 48) + 5) * scene_scale_Y), "top", 30 * scene_scale_Y, "image");
     number_spacer--
     // number_spacing += 48;
   }
 
   if (fire_counter == 5) {
-    scale_to_canvas(big_boss, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
+    scale_to_canvas(big_boss, "center", 0, "center", 0, "image");
   }
 
 }

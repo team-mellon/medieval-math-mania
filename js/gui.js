@@ -486,62 +486,62 @@ function scaleGUI() {
 
 		case 0:
 
-			scale_to_canvas(background, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_left, stage.canvas.width / 2, 0 - (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_right, stage.canvas.width / 2, 0 + (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(foreground, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
+			scale_to_canvas(background, "center", 0, "center", 0, "image");
+			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
+			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
+			scale_to_canvas(foreground, "center", 0, "center", 0, "image");
 
-			// scale_to_canvas(left_sword_button, stage.canvas.width / 2, 0 - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height / 2, 0 + (buttonY/2 + 140) * scene_scale_Y, "image");
-			// scale_to_canvas(right_sword_button, stage.canvas.width / 2, 0 + (buttonX/2 + 50) * scene_scale_Y, stage.canvas.height / 2, 0 + (buttonY/2 + 140) * scene_scale_Y, "image");
+			// scale_to_canvas(left_sword_button, "center", 0 - (buttonX/2 + 10) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "image");
+			// scale_to_canvas(right_sword_button, "center", 0 + (buttonX/2 + 50) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "image");
 
       if (stage.canvas.width < 900) {
-  			scale_to_canvas(left_sword_button, stage.canvas.width / 2, 0 - (buttonX/2 + 30) * scene_scale_Y, stage.canvas.height / 2, 0 + (buttonY/2 + 200) * scene_scale_Y, "smallgui");
-  			scale_to_canvas(right_sword_button, stage.canvas.width / 2, 0 + (buttonX/2 + 65) * scene_scale_Y, stage.canvas.height / 2, 0 + (buttonY/2 + 200) * scene_scale_Y, "smallgui");
+  			scale_to_canvas(left_sword_button, "center", 0 - (buttonX/2 + 30) * scene_scale_Y, "center", 0 + (buttonY/2 + 200) * scene_scale_Y, "smallgui");
+  			scale_to_canvas(right_sword_button, "center", 0 + (buttonX/2 + 65) * scene_scale_Y, "center", 0 + (buttonY/2 + 200) * scene_scale_Y, "smallgui");
       } else {
-  			scale_to_canvas(left_sword_button, stage.canvas.width / 2, 0 - (buttonX/2 + 30) * scene_scale_Y, stage.canvas.height / 2, 0 + (buttonY/2 + 200) * scene_scale_Y, "image");
-  			scale_to_canvas(right_sword_button, stage.canvas.width / 2, 0 + (buttonX/2 + 65) * scene_scale_Y, stage.canvas.height / 2, 0 + (buttonY/2 + 200) * scene_scale_Y, "image");
+  			scale_to_canvas(left_sword_button, "center", 0 - (buttonX/2 + 30) * scene_scale_Y, "center", 0 + (buttonY/2 + 200) * scene_scale_Y, "image");
+  			scale_to_canvas(right_sword_button, "center", 0 + (buttonX/2 + 65) * scene_scale_Y, "center", 0 + (buttonY/2 + 200) * scene_scale_Y, "image");
       }
-			scale_to_canvas(secret_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
+			scale_to_canvas(secret_button, "center", 0, "center", 0, "image");
 
 			break;
 
 		case 1:
 
-			scale_to_canvas(background, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_left, stage.canvas.width / 2, 0 - (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_right, stage.canvas.width / 2, 0 + (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(foreground, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
+			scale_to_canvas(background, "center", 0, "center", 0, "image");
+			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
+			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
+			scale_to_canvas(foreground, "center", 0, "center", 0, "image");
 
       // if (stage.canvas.width < 900) {
-  		// 	scale_to_canvas(left_sword_button, stage.canvas.width / 2, 0 - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height / 2, 0 + (buttonY/2 + 140) * scene_scale_Y, "gui");
-  		// 	scale_to_canvas(right_sword_button, stage.canvas.width / 2, 0 + (buttonX/2 + 50) * scene_scale_Y, stage.canvas.height / 2, 0 + (buttonY/2 + 140) * scene_scale_Y, "gui");
+  		// 	scale_to_canvas(left_sword_button, "center", 0 - (buttonX/2 + 10) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "gui");
+  		// 	scale_to_canvas(right_sword_button, "center", 0 + (buttonX/2 + 50) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "gui");
       // } else {
-  			scale_to_canvas(left_sword_button, stage.canvas.width / 2, 0 - (buttonX/2 + 30) * scene_scale_Y, stage.canvas.height / 2, 0 + (buttonY/2 + 200) * scene_scale_Y, "image");
-  			scale_to_canvas(right_sword_button, stage.canvas.width / 2, 0 + (buttonX/2 + 65) * scene_scale_Y, stage.canvas.height / 2, 0 + (buttonY/2 + 200) * scene_scale_Y, "image");
+  			scale_to_canvas(left_sword_button, "center", 0 - (buttonX/2 + 30) * scene_scale_Y, "center", 0 + (buttonY/2 + 200) * scene_scale_Y, "image");
+  			scale_to_canvas(right_sword_button, "center", 0 + (buttonX/2 + 65) * scene_scale_Y, "center", 0 + (buttonY/2 + 200) * scene_scale_Y, "image");
       // }
 
 			break;
 
 		case 2:
 
-			scale_to_canvas(background, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_left, stage.canvas.width / 2, 0 - (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_right, stage.canvas.width / 2, 0 + (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
+			scale_to_canvas(background, "center", 0, "center", 0, "image");
+			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
+			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
 
       if (stage.canvas.width < 900) {
-  			scale_to_canvas(play_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 - 105, "gui");
-  			scale_to_canvas(stats_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 - 20, "gui");
-  			scale_to_canvas(h2p_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 + 65, "gui");
-  			scale_to_canvas(settings_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 + 150, "gui");
-  			scale_to_canvas(logout_button, 0, (buttonX/2 + 10), 0, (buttonY/2 + 10), "gui");
-  			scale_to_canvas(account_button, stage.canvas.width, 0 - (buttonX/2 + 10), 0, (buttonY/2 + 10), "gui");
+  			scale_to_canvas(play_button, "center", 0, "center", 0 - 105, "gui");
+  			scale_to_canvas(stats_button, "center", 0, "center", 0 - 20, "gui");
+  			scale_to_canvas(h2p_button, "center", 0, "center", 0 + 65, "gui");
+  			scale_to_canvas(settings_button, "center", 0, "center", 0 + 150, "gui");
+  			scale_to_canvas(logout_button, "left", (buttonX/2 + 10), "top", (buttonY/2 + 10), "gui");
+  			scale_to_canvas(account_button, "right", 0 - (buttonX/2 + 10), "top", (buttonY/2 + 10), "gui");
       } else {
-  			scale_to_canvas(play_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 - 200 * scene_scale_Y, "gui");
-  			scale_to_canvas(stats_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 - 100 * scene_scale_Y, "gui");
-  			scale_to_canvas(h2p_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 - 0 * scene_scale_Y, "gui");
-  			scale_to_canvas(settings_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 + 100 * scene_scale_Y, "gui");
-  			scale_to_canvas(logout_button, 0, (buttonX/2 + 10) * scene_scale_Y, 0, (buttonY/2 + 10) * scene_scale_Y, "gui");
-  			scale_to_canvas(account_button, stage.canvas.width, 0 - (buttonX/2 + 10) * scene_scale_Y, 0, (buttonY/2 + 10) * scene_scale_Y, "gui");
+  			scale_to_canvas(play_button, "center", 0, "center", 0 - 200 * scene_scale_Y, "gui");
+  			scale_to_canvas(stats_button, "center", 0, "center", 0 - 100 * scene_scale_Y, "gui");
+  			scale_to_canvas(h2p_button, "center", 0, "center", 0 - 0 * scene_scale_Y, "gui");
+  			scale_to_canvas(settings_button, "center", 0, "center", 0 + 100 * scene_scale_Y, "gui");
+  			scale_to_canvas(logout_button, "left", (buttonX/2 + 10) * scene_scale_Y, "top", (buttonY/2 + 10) * scene_scale_Y, "gui");
+  			scale_to_canvas(account_button, "right", 0 - (buttonX/2 + 10) * scene_scale_Y, "top", (buttonY/2 + 10) * scene_scale_Y, "gui");
       }
 
 			break;
@@ -550,174 +550,174 @@ function scaleGUI() {
 
 	    if (stage.canvas.width < 900) {
 
-				scale_to_canvas(pause_menu, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-				scale_to_canvas(close_button, stage.canvas.width / 2, 0 + 445 * scene_scale_Y, stage.canvas.height / 2, 0 - 281 * scene_scale_Y, "gui");
-				scale_to_canvas(main_menu_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 - 180 * scene_scale_Y, "gui");
-				scale_to_canvas(exit_level_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 - 110 * scene_scale_Y, "gui");
-				scale_to_canvas(settings_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 - 40 * scene_scale_Y, "gui");
+				scale_to_canvas(pause_menu, "center", 0, "center", 0, "image");
+				scale_to_canvas(close_button, "center", 0 + 445 * scene_scale_Y, "center", 0 - 281 * scene_scale_Y, "gui");
+				scale_to_canvas(main_menu_button, "center", 0, "center", 0 - 180 * scene_scale_Y, "gui");
+				scale_to_canvas(exit_level_button, "center", 0, "center", 0 - 110 * scene_scale_Y, "gui");
+				scale_to_canvas(settings_button, "center", 0, "center", 0 - 40 * scene_scale_Y, "gui");
 
-				scale_to_canvas(end_level_scene, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-				scale_to_canvas(end_level_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 + 250 * scene_scale_Y, "gui");
-				scale_to_canvas(end_text, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 - 140 * scene_scale_Y, "image");
-				scale_to_canvas(hit_text, stage.canvas.width / 2, 0 - 120 * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-				scale_to_canvas(low_text, stage.canvas.width / 2, 0 - 120 * scene_scale_Y, stage.canvas.height / 2, 0 + 40 * scene_scale_Y, "image");
-				scale_to_canvas(high_text, stage.canvas.width / 2, 0 - 120 * scene_scale_Y, stage.canvas.height / 2, 0 + 80 * scene_scale_Y, "image");
+				scale_to_canvas(end_level_scene, "center", 0, "center", 0, "image");
+				scale_to_canvas(end_level_button, "center", 0, "center", 0 + 250 * scene_scale_Y, "gui");
+				scale_to_canvas(end_text, "center", 0, "center", 0 - 140 * scene_scale_Y, "image");
+				scale_to_canvas(hit_text, "center", 0 - 120 * scene_scale_Y, "center", 0, "image");
+				scale_to_canvas(low_text, "center", 0 - 120 * scene_scale_Y, "center", 0 + 40 * scene_scale_Y, "image");
+				scale_to_canvas(high_text, "center", 0 - 120 * scene_scale_Y, "center", 0 + 80 * scene_scale_Y, "image");
 
-				scale_to_canvas(hit_text_counter, 0, 30, stage.canvas.height / 2, 0 + 225 * scene_scale_Y, "image");
-				scale_to_canvas(low_text_counter, 0, 30, stage.canvas.height / 2, 0 + 280 * scene_scale_Y, "image");
-				scale_to_canvas(high_text_counter, 0, 30, stage.canvas.height / 2, 0 + 300 * scene_scale_Y, "image");
+				scale_to_canvas(hit_text_counter, "left", 30, "center", 0 + 225 * scene_scale_Y, "image");
+				scale_to_canvas(low_text_counter, "left", 30, "center", 0 + 280 * scene_scale_Y, "image");
+				scale_to_canvas(high_text_counter, "left", 30, "center", 0 + 300 * scene_scale_Y, "image");
 
-				scale_to_canvas(login_button, stage.canvas.width, 0 - (buttonX/2 + 10), stage.canvas.height, 0 - (buttonY/2 + 10), "gui");
-				scale_to_canvas(hint_button, stage.canvas.width / 2, 0 - 313 * scene_scale_Y, stage.canvas.height / 2, 0 + 194 * scene_scale_Y, "gui");
+				scale_to_canvas(login_button, "right", 0 - (buttonX/2 + 10), "bottom", 0 - (buttonY/2 + 10), "gui");
+				scale_to_canvas(hint_button, "center", 0 - 313 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui");
 
 	    } else {
 
-			scale_to_canvas(pause_menu, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(close_button, stage.canvas.width / 2, 0 + 445 * scene_scale_Y, stage.canvas.height / 2, 0 - 281 * scene_scale_Y, "gui");
-			scale_to_canvas(main_menu_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 - 180 * scene_scale_Y, "gui");
-			scale_to_canvas(exit_level_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 - 110 * scene_scale_Y, "gui");
-			scale_to_canvas(settings_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 - 40 * scene_scale_Y, "gui");
+			scale_to_canvas(pause_menu, "center", 0, "center", 0, "image");
+			scale_to_canvas(close_button, "center", 0 + 445 * scene_scale_Y, "center", 0 - 281 * scene_scale_Y, "gui");
+			scale_to_canvas(main_menu_button, "center", 0, "center", 0 - 180 * scene_scale_Y, "gui");
+			scale_to_canvas(exit_level_button, "center", 0, "center", 0 - 110 * scene_scale_Y, "gui");
+			scale_to_canvas(settings_button, "center", 0, "center", 0 - 40 * scene_scale_Y, "gui");
 
-			scale_to_canvas(end_level_scene, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(end_level_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 + 250 * scene_scale_Y, "gui");
-			scale_to_canvas(end_text, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 - 140 * scene_scale_Y, "image");
-			scale_to_canvas(hit_text, stage.canvas.width / 2, 0 - 120 * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(low_text, stage.canvas.width / 2, 0 - 120 * scene_scale_Y, stage.canvas.height / 2, 0 + 40 * scene_scale_Y, "image");
-			scale_to_canvas(high_text, stage.canvas.width / 2, 0 - 120 * scene_scale_Y, stage.canvas.height / 2, 0 + 80 * scene_scale_Y, "image");
+			scale_to_canvas(end_level_scene, "center", 0, "center", 0, "image");
+			scale_to_canvas(end_level_button, "center", 0, "center", 0 + 250 * scene_scale_Y, "gui");
+			scale_to_canvas(end_text, "center", 0, "center", 0 - 140 * scene_scale_Y, "image");
+			scale_to_canvas(hit_text, "center", 0 - 120 * scene_scale_Y, "center", 0, "image");
+			scale_to_canvas(low_text, "center", 0 - 120 * scene_scale_Y, "center", 0 + 40 * scene_scale_Y, "image");
+			scale_to_canvas(high_text, "center", 0 - 120 * scene_scale_Y, "center", 0 + 80 * scene_scale_Y, "image");
 
-			scale_to_canvas(hit_text_counter, 0, 30, stage.canvas.height / 2, 0 + 225 * scene_scale_Y, "image");
-			scale_to_canvas(low_text_counter, 0, 30, stage.canvas.height / 2, 0 + 280 * scene_scale_Y, "image");
-			scale_to_canvas(high_text_counter, 0, 30, stage.canvas.height / 2, 0 + 300 * scene_scale_Y, "image");
+			scale_to_canvas(hit_text_counter, "left", 30, "center", 0 + 225 * scene_scale_Y, "image");
+			scale_to_canvas(low_text_counter, "left", 30, "center", 0 + 280 * scene_scale_Y, "image");
+			scale_to_canvas(high_text_counter, "left", 30, "center", 0 + 300 * scene_scale_Y, "image");
 
-		// scale_to_canvas(pause_menu, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-		// scale_to_canvas(close_button, stage.canvas.width / 2, 0 + 517, stage.canvas.height / 2, 0 -325, "gui");
-		// scale_to_canvas(main_menu_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 -180, "gui");
-		// scale_to_canvas(exit_level_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 -110, "gui");
-		// scale_to_canvas(settings_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 -40, "gui");
+		// scale_to_canvas(pause_menu, "center", 0, "center", 0, "image");
+		// scale_to_canvas(close_button, "center", 0 + 517, "center", 0 -325, "gui");
+		// scale_to_canvas(main_menu_button, "center", 0, "center", 0 -180, "gui");
+		// scale_to_canvas(exit_level_button, "center", 0, "center", 0 -110, "gui");
+		// scale_to_canvas(settings_button, "center", 0, "center", 0 -40, "gui");
 
-		// scale_to_canvas(end_level_button, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 + 250, "gui");
-		// scale_to_canvas(end_text, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 - 140, "image");
-		// scale_to_canvas(hit_text, stage.canvas.width / 2, 0 - 120, stage.canvas.height / 2, 0, "image");
-		// scale_to_canvas(low_text, stage.canvas.width / 2, 0 - 120, stage.canvas.height / 2, 0 + 40, "image");
-		// scale_to_canvas(high_text, stage.canvas.width / 2, 0 - 120, stage.canvas.height / 2, 0 + 80, "image");
+		// scale_to_canvas(end_level_button, "center", 0, "center", 0 + 250, "gui");
+		// scale_to_canvas(end_text, "center", 0, "center", 0 - 140, "image");
+		// scale_to_canvas(hit_text, "center", 0 - 120, "center", 0, "image");
+		// scale_to_canvas(low_text, "center", 0 - 120, "center", 0 + 40, "image");
+		// scale_to_canvas(high_text, "center", 0 - 120, "center", 0 + 80, "image");
 
-        scale_to_canvas(login_button, stage.canvas.width, 0 - (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height, 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
-        scale_to_canvas(hint_button, stage.canvas.width / 2, 0 - 313 * scene_scale_Y, stage.canvas.height / 2, 0 + 194 * scene_scale_Y, "gui");
+        scale_to_canvas(login_button, "right", 0 - (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
+        scale_to_canvas(hint_button, "center", 0 - 313 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui");
 
       }
 
 			if (stage.canvas.width < 900) {
-				scale_to_canvas(ll_number_button, stage.canvas.width / 2, 0, stage.canvas.height, 0 - (288/2) * scene_scale_Y, "image");
-				scale_to_canvas(lr_number_button, stage.canvas.width / 2, 0, stage.canvas.height, 0 - (288/2) * scene_scale_Y, "image");
-				scale_to_canvas(rl_number_button, stage.canvas.width / 2, 0, stage.canvas.height, 0 - (288/2) * scene_scale_Y, "image");
-				scale_to_canvas(rr_number_button, stage.canvas.width / 2, 0, stage.canvas.height, 0 - (288/2) * scene_scale_Y, "image");
+				scale_to_canvas(ll_number_button, "center", 0, "bottom", 0 - (288/2) * scene_scale_Y, "image");
+				scale_to_canvas(lr_number_button, "center", 0, "bottom", 0 - (288/2) * scene_scale_Y, "image");
+				scale_to_canvas(rl_number_button, "center", 0, "bottom", 0 - (288/2) * scene_scale_Y, "image");
+				scale_to_canvas(rr_number_button, "center", 0, "bottom", 0 - (288/2) * scene_scale_Y, "image");
 			}
 
 			break;
 
 		case 4:
 
-			scale_to_canvas(background, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_left, stage.canvas.width / 2, 0 - (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_right, stage.canvas.width / 2, 0 + (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(foreground, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
+			scale_to_canvas(background, "center", 0, "center", 0, "image");
+			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
+			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
+			scale_to_canvas(foreground, "center", 0, "center", 0, "image");
 
       if (stage.canvas.width < 900) {
-        scale_to_canvas(login_button, 0, (buttonX/2 + 10), stage.canvas.height, 0 - (buttonY/2 + 10), "gui");
+        scale_to_canvas(login_button, "left", (buttonX/2 + 10), "bottom", 0 - (buttonY/2 + 10), "gui");
       } else {
-        scale_to_canvas(login_button, 0, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height, 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
+        scale_to_canvas(login_button, "left", (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
       }
 
 			break;
 
 		case 5:
 
-			scale_to_canvas(background, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_left, stage.canvas.width / 2, 0 - (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_right, stage.canvas.width / 2, 0 + (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(foreground, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
+			scale_to_canvas(background, "center", 0, "center", 0, "image");
+			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
+			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
+			scale_to_canvas(foreground, "center", 0, "center", 0, "image");
 
       if (stage.canvas.width < 900) {
-        scale_to_canvas(login_button, 0, (buttonX/2 + 10), stage.canvas.height, 0 - (buttonY/2 + 10), "gui");
+        scale_to_canvas(login_button, "left", (buttonX/2 + 10), "bottom", 0 - (buttonY/2 + 10), "gui");
       } else {
-        scale_to_canvas(login_button, 0, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height, 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
+        scale_to_canvas(login_button, "left", (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
       }
 
 			break;
 
 		case 6:
 
-			scale_to_canvas(background, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_left, stage.canvas.width / 2, 0 - (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_right, stage.canvas.width / 2, 0 + (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(foreground, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
+			scale_to_canvas(background, "center", 0, "center", 0, "image");
+			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
+			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
+			scale_to_canvas(foreground, "center", 0, "center", 0, "image");
 
       if (stage.canvas.width < 900) {
-        scale_to_canvas(login_button, 0, (buttonX/2 + 10), stage.canvas.height, 0 - (buttonY/2 + 10), "gui");
+        scale_to_canvas(login_button, "left", (buttonX/2 + 10), "bottom", 0 - (buttonY/2 + 10), "gui");
       } else {
-        scale_to_canvas(login_button, 0, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height, 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
+        scale_to_canvas(login_button, "left", (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
       }
 
 			break;
 
 		case 7:
 
-			scale_to_canvas(background, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_left, stage.canvas.width / 2, 0 - (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_right, stage.canvas.width / 2, 0 + (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(foreground, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
+			scale_to_canvas(background, "center", 0, "center", 0, "image");
+			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
+			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
+			scale_to_canvas(foreground, "center", 0, "center", 0, "image");
 
       if (stage.canvas.width < 900) {
-        scale_to_canvas(login_button, 0, (buttonX/2 + 10), stage.canvas.height, 0 - (buttonY/2 + 10), "gui");
+        scale_to_canvas(login_button, "left", (buttonX/2 + 10), "bottom", 0 - (buttonY/2 + 10), "gui");
       } else {
-        scale_to_canvas(login_button, 0, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height, 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
+        scale_to_canvas(login_button, "left", (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
       }
 
 			break;
 
 		case 8:
 
-			scale_to_canvas(background, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_left, stage.canvas.width / 2, 0 - (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_right, stage.canvas.width / 2, 0 + (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(midground, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(foreground, stage.canvas.width / 2, 0, 0, 0 + (144/2) * scene_scale_Y, "image");
+			scale_to_canvas(background, "center", 0, "center", 0, "image");
+			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
+			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
+			scale_to_canvas(midground, "center", 0, "center", 0, "image");
+			scale_to_canvas(foreground, "center", 0, 0, 0 + (144/2) * scene_scale_Y, "image");
 
-			scale_to_canvas(login_button, 0, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height, 0 - (buttonY/2 + 10) * scene_scale_Y, "image");
+			scale_to_canvas(login_button, "left", (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "image");
 
       if (stage.canvas.width < 900) {
-        scale_to_canvas(login_button, 0, (buttonX/2 + 10), stage.canvas.height, 0 - (buttonY/2 + 10), "gui");
-        scale_to_canvas(level1_indicator, stage.canvas.width / 2, 0 - (indicatorX/2 + 72) * scene_scale_Y, stage.canvas.height, 0 - (indicatorY/2 + 285) * scene_scale_Y, "gui");
-			  scale_to_canvas(level2_indicator, stage.canvas.width / 2, 0 - (indicatorX/2 + 285) * scene_scale_Y, stage.canvas.height, 0 - (indicatorY/2 + 384) * scene_scale_Y, "gui");
-			  scale_to_canvas(level3_indicator, stage.canvas.width / 2, 0 - (indicatorX/2 + 582) * scene_scale_Y, stage.canvas.height, 0 - (indicatorY/2 + 174) * scene_scale_Y, "gui");
-			  scale_to_canvas(level4_indicator, stage.canvas.width / 2, 0 - (indicatorX/2 + 168) * scene_scale_Y, stage.canvas.height, 0 - (indicatorY/2 + 150) * scene_scale_Y, "gui");
-			  scale_to_canvas(level5_indicator, stage.canvas.width / 2, 0 - (indicatorX/2 + 72) * scene_scale_Y, 0, 0 + (indicatorY/2 + 297) * scene_scale_Y, "gui");
-			  scale_to_canvas(level6_indicator, stage.canvas.width / 2, 0 + (indicatorX/2 + 522) * scene_scale_Y, 0, 0 + (indicatorY/2 + 150) * scene_scale_Y, "gui");
-			  scale_to_canvas(level7_indicator, stage.canvas.width / 2, 0 + (indicatorX/2 + 285) * scene_scale_Y, stage.canvas.height, 0 - (indicatorY/2 + 384) * scene_scale_Y, "gui");
+        scale_to_canvas(login_button, "left", (buttonX/2 + 10), "bottom", 0 - (buttonY/2 + 10), "gui");
+        scale_to_canvas(level1_indicator, "center", 0 - (indicatorX/2 + 72) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 285) * scene_scale_Y, "gui");
+			  scale_to_canvas(level2_indicator, "center", 0 - (indicatorX/2 + 285) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 384) * scene_scale_Y, "gui");
+			  scale_to_canvas(level3_indicator, "center", 0 - (indicatorX/2 + 582) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 174) * scene_scale_Y, "gui");
+			  scale_to_canvas(level4_indicator, "center", 0 - (indicatorX/2 + 168) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 150) * scene_scale_Y, "gui");
+			  scale_to_canvas(level5_indicator, "center", 0 - (indicatorX/2 + 72) * scene_scale_Y, "top", 0 + (indicatorY/2 + 297) * scene_scale_Y, "gui");
+			  scale_to_canvas(level6_indicator, "center", 0 + (indicatorX/2 + 522) * scene_scale_Y, "top", 0 + (indicatorY/2 + 150) * scene_scale_Y, "gui");
+			  scale_to_canvas(level7_indicator, "center", 0 + (indicatorX/2 + 285) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 384) * scene_scale_Y, "gui");
       } else {
-        scale_to_canvas(login_button, 0, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height, 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
-        scale_to_canvas(level1_indicator, stage.canvas.width / 2, 0 - (indicatorX/2 + 72) * scene_scale_Y, stage.canvas.height, 0 - (indicatorY/2 + 285) * scene_scale_Y, "gui");
-			  scale_to_canvas(level2_indicator, stage.canvas.width / 2, 0 - (indicatorX/2 + 285) * scene_scale_Y, stage.canvas.height, 0 - (indicatorY/2 + 384) * scene_scale_Y, "gui");
-			  scale_to_canvas(level3_indicator, stage.canvas.width / 2, 0 - (indicatorX/2 + 582) * scene_scale_Y, stage.canvas.height, 0 - (indicatorY/2 + 174) * scene_scale_Y, "gui");
-			  scale_to_canvas(level4_indicator, stage.canvas.width / 2, 0 - (indicatorX/2 + 168) * scene_scale_Y, stage.canvas.height, 0 - (indicatorY/2 + 150) * scene_scale_Y, "gui");
-			  scale_to_canvas(level5_indicator, stage.canvas.width / 2, 0 - (indicatorX/2 + 72) * scene_scale_Y, 0, 0 + (indicatorY/2 + 297) * scene_scale_Y, "gui");
-			  scale_to_canvas(level6_indicator, stage.canvas.width / 2, 0 + (indicatorX/2 + 522) * scene_scale_Y, 0, 0 + (indicatorY/2 + 150) * scene_scale_Y, "gui");
-			  scale_to_canvas(level7_indicator, stage.canvas.width / 2, 0 + (indicatorX/2 + 285) * scene_scale_Y, stage.canvas.height, 0 - (indicatorY/2 + 384) * scene_scale_Y, "gui");
+        scale_to_canvas(login_button, "left", (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
+        scale_to_canvas(level1_indicator, "center", 0 - (indicatorX/2 + 72) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 285) * scene_scale_Y, "gui");
+			  scale_to_canvas(level2_indicator, "center", 0 - (indicatorX/2 + 285) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 384) * scene_scale_Y, "gui");
+			  scale_to_canvas(level3_indicator, "center", 0 - (indicatorX/2 + 582) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 174) * scene_scale_Y, "gui");
+			  scale_to_canvas(level4_indicator, "center", 0 - (indicatorX/2 + 168) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 150) * scene_scale_Y, "gui");
+			  scale_to_canvas(level5_indicator, "center", 0 - (indicatorX/2 + 72) * scene_scale_Y, "top", 0 + (indicatorY/2 + 297) * scene_scale_Y, "gui");
+			  scale_to_canvas(level6_indicator, "center", 0 + (indicatorX/2 + 522) * scene_scale_Y, "top", 0 + (indicatorY/2 + 150) * scene_scale_Y, "gui");
+			  scale_to_canvas(level7_indicator, "center", 0 + (indicatorX/2 + 285) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 384) * scene_scale_Y, "gui");
       }
 
 			break;
 
     case 9:
 
-    	scale_to_canvas(background, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_left, stage.canvas.width / 2, 0 - (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-			scale_to_canvas(background_right, stage.canvas.width / 2, 0 + (backgroundX) * scene_scale_Y, stage.canvas.height / 2, 0, "image");
-    	scale_to_canvas(foreground, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
+    	scale_to_canvas(background, "center", 0, "center", 0, "image");
+			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
+			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
+    	scale_to_canvas(foreground, "center", 0, "center", 0, "image");
 
       if (stage.canvas.width < 900) {
-        scale_to_canvas(login_button, 0, (buttonX/2 + 10), stage.canvas.height, 0 - (buttonY/2 + 10), "gui");
+        scale_to_canvas(login_button, "left", (buttonX/2 + 10), "bottom", 0 - (buttonY/2 + 10), "gui");
       } else {
-        scale_to_canvas(login_button, 0, (buttonX/2 + 10) * scene_scale_Y, stage.canvas.height, 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
+        scale_to_canvas(login_button, "left", (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
       }
 
 	    break;
@@ -728,21 +728,21 @@ function scaleGUI() {
 
 	// GUI in front of everything
   if (stage.canvas.width < 900) {
-		scale_to_canvas(previous_indicator, stage.canvas.width / 2, 0 - 50 * scene_scale_Y, stage.canvas.height / 2, 0 + 194 * scene_scale_Y, "gui");
-  	scale_to_canvas(pause_indicator, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 + 194 * scene_scale_Y, "gui");
-  	scale_to_canvas(next_indicator, stage.canvas.width / 2, 0 + 50 * scene_scale_Y, stage.canvas.height / 2, 0 + 194 * scene_scale_Y, "gui");
-  	scale_to_canvas(lute, stage.canvas.width / 2, 0 + 313 * scene_scale_Y, stage.canvas.height / 2, 0 + 194 * scene_scale_Y, "gui");
+		scale_to_canvas(previous_indicator, "center", 0 - 50 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui");
+  	scale_to_canvas(pause_indicator, "center", 0, "center", 0 + 194 * scene_scale_Y, "gui");
+  	scale_to_canvas(next_indicator, "center", 0 + 50 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui");
+  	scale_to_canvas(lute, "center", 0 + 313 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui");
   } else {
-  	scale_to_canvas(previous_indicator, stage.canvas.width / 2, 0 - 50, stage.canvas.height / 2, 0 + 194, "gui");
-  	scale_to_canvas(pause_indicator, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0 + 194, "gui");
-  	scale_to_canvas(next_indicator, stage.canvas.width / 2, 0 + 50, stage.canvas.height / 2, 0 + 194, "gui");
-  	scale_to_canvas(lute, stage.canvas.width / 2, 0 + 313, stage.canvas.height / 2, 0 + 194, "gui");
+  	scale_to_canvas(previous_indicator, "center", 0 - 50, "center", 0 + 194, "gui");
+  	scale_to_canvas(pause_indicator, "center", 0, "center", 0 + 194, "gui");
+  	scale_to_canvas(next_indicator, "center", 0 + 50, "center", 0 + 194, "gui");
+  	scale_to_canvas(lute, "center", 0 + 313, "center", 0 + 194, "gui");
   }
 
   landscape_warning.graphics.clear()
   landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, stage.canvas.width, stage.canvas.height);
 
-  scale_to_canvas(phone_rotation, stage.canvas.width / 2, 0, stage.canvas.height / 2, 0, "image");
+  scale_to_canvas(phone_rotation, "center", 0, "center", 0, "image");
 
 }
 
