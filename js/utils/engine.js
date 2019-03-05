@@ -178,4 +178,6 @@ function resize() {
 
   scaleGUI();
 
+  stage.update()
+
 }

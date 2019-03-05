@@ -474,14 +474,7 @@ function tick(event) {
           }
         }
       }
-    }    if (hit_counter >= 3 && miss_upper_counter >= 1 && miss_lower_counter >= 1 && reload == false) {
-
-  	hit_text.text += hit_counter.toString();
-  	low_text.text += miss_lower_counter.toString();
-  	high_text.text += miss_upper_counter.toString();
-
-
-
+    }
 
 	//Victory Banner
     if (hit_counter >= 3 && miss_upper_counter >= 1 && miss_lower_counter >= 1 && reload == false) {
@@ -684,7 +677,7 @@ function genRange() {
 	if (current_level == 8) {
 		// Generate new range
 		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = Math.random() * 7) + 2;
+		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
 		upper = Math.floor(Math.random() * 7) + 2;
 	}
 	if (current_level == 9) {
