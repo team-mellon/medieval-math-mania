@@ -4,6 +4,12 @@ function createLoginForm()
 	progressBar.hidden = true;
 	progressBackground.hidden = true;
 	ldBg.hidden = true;
+
+	//registers Menu sounds
+	createjs.Sound.registerSound("res/sound_effects/menu.wav", "menu");
+	createjs.Sound.registerSound("res/sound_effects/select.wav", "select");
+	createjs.Sound.registerSound("res/sound_effects/sword.wav", "sword");
+
   // Creates username display label and input box
   var username_text = document.createTextNode("Username");
   // Creates line break for form div spacing
@@ -278,20 +284,17 @@ function createSettingsForm() {
   // Creates username display text and input slider
   var volume_text = document.createTextNode("Volume:");
   var volume_input = document.createElement("input");  // document.getElementById("").value
-
   volume_input.id = "volumeSlider";
-
   volume_input.setAttribute("type", "range");
   volume_input.setAttribute("name", "volume");
   volume_input.setAttribute("min", "0");
   volume_input.setAttribute("max", "1");
   volume_input.setAttribute("step", "0.1");
-  volume_input.setAttribute("value", "50");
+  volume_input.setAttribute("value", "0.5");
   volume_input.setAttribute(oninput, "SetVolume(this.value)");
   volume_input.setAttribute(onchange, "SetVolume(this.value)");
   volume_input.addEventListener('change', setVolume);
   volume_input.addEventListener('input', setVolume);
-
   // Creates username div to hold display text and input slider
   var settings_volume_div = document.createElement("div");
   settings_volume_div.className = "login";
@@ -508,7 +511,10 @@ function createGameForm() {
 
 
 
-  // Creates username display text
+  // Creates Tutorial display text
+	// if(current_level == 1)
+  // if(true)
+  // {
   var tutorial_label = document.createTextNode("Tutorial");
   var br1 = document.createElement("br");
   var tutorial_text = document.createElement("span");
@@ -516,14 +522,13 @@ function createGameForm() {
   tutorial_text.id = "tutorialText";
   var tutorial_words = document.createTextNode("The tutorial is broken");
   tutorial_text.appendChild(tutorial_words);
-
-  // Creates username div to hold display text and input box
   var tutorial_div = document.createElement("div");
   tutorial_div.className = "tutorial_title";
   tutorial_div.id = "tutorialDiv"
   tutorial_div.appendChild(tutorial_label);
   tutorial_div.appendChild(br1);
   tutorial_div.appendChild(tutorial_text);
+  // }
 
 
   // Creates login form to hold username and password divs
@@ -549,8 +554,10 @@ function createGameForm() {
   scene_html.appendChild(game_range_form);
   scene_html.appendChild(game_entry_form);
   scene_html.appendChild(game_history_form);
-  scene_html.appendChild(tutorial_div);
-
+  // if(current_level == 1)
+  // {
+	scene_html.appendChild(tutorial_div);
+  // }
 }
 
 function createHintForm() {

@@ -1,3 +1,4 @@
+var muted = false;
 var playlistSources = [
   "res/music/one-eyed_maestro.wav",
   "res/music/achaidh_cheide.wav",
@@ -8,7 +9,11 @@ var playlistSources = [
   "res/music/fiddles_mcGinty.wav",
   "res/music/galway.wav",
   "res/music/hidden_past.wav",
-  "res/music/parisian.wav"
+  "res/music/parisian.wav",
+  "res/music/bobbin_beeps.wav",
+  "res/music/whirlwind.wav",
+  "res/music/drums_in_the_deep.wav",
+  "res/music/fortress.wav"
 ];
 
 var playlistIDs = [
@@ -21,7 +26,11 @@ var playlistIDs = [
   "FiddlesMcGinty",
   "Galway",
   "HiddenPast",
-  "Parisian"
+  "Parisian",
+  "BoppinBeeps",
+  "whirlwind",
+  "DrumsInTheDeep",
+  "Fortress"
 ];
 
 // Player to play playlist music
@@ -35,7 +44,7 @@ var current_song;
 var sound_off = true;
 
 // Volume for
-var volume = 50;
+var volume = 0.5;
 
 // Loads sounds when game starts
 function loadSound () {
@@ -91,6 +100,7 @@ function previousSound () {
     current_song.destroy();
     current_song = createjs.Sound.play(playlist.ids[playlist.current]);
 	current_song.volume = volume;
+	current_song.muted = muted;
   }
 
 }
@@ -108,6 +118,7 @@ function nextSound () {
     current_song.destroy();
     current_song = createjs.Sound.play(playlist.ids[playlist.current]);
 	current_song.volume = volume;
+	current_song.muted = muted;
   }
 
 }
@@ -118,9 +129,24 @@ function nextSound () {
 function muteSound () {
 
   if (!sound_off) {
+	  console.log(lute.src);
+	if(!muted)
+	{
+		stage.removeChild(lute);
+		lute = new createImage("res/antiLute.png", luteX, luteY);
+		lute.addEventListener("click", muteSound);
+		scaleGUI();
+	}
+	else
+	{
+		stage.removeChild(lute);
+		lute = new createImage("res/lute.png", luteX, luteY);
+		lute.addEventListener("click", muteSound);
+		scaleGUI();
+	}
     current_song.muted = !current_song.muted;
+	muted = !muted;
   }
-
 }
 
 
@@ -129,4 +155,5 @@ function muteSound () {
 function setVolume() {
   volume = document.getElementById("volumeSlider").value;
   current_song.volume = volume;
+  console.log(volume);
 }
