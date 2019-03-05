@@ -80,36 +80,26 @@ var phone_rotationS = {
 };
 
 // Scale the image-like assets
-function scale_image(image, x_loc, y_loc) {
+function scale_to_canvas(image, x_loc, y_loc, type) {
 
   image.scaleX = scene_scale_X;
   image.scaleY = scene_scale_Y;
-  image.x = x_loc;
-  image.y = y_loc;
 
-}
-
-// Scale the image-like assets
-function scale_gui(image, x_loc, y_loc) {
-
-  image.scaleX = scene_scale_X;
-  image.scaleY = scene_scale_Y;
   if (stage.canvas.width < 900) {
-    image.scale = 1;
+
+    switch (type) {
+      case "image":
+        break;
+      case "gui":
+        image.scale = 1.0;
+        break;
+      case "smallgui":
+        image.scale = 0.5;
+        break;
+    }
+
   }
-  image.x = x_loc;
-  image.y = y_loc;
 
-}
-
-// Scale the image-like assets
-function scale_gui2(image, x_loc, y_loc) {
-
-  image.scaleX = scene_scale_X;
-  image.scaleY = scene_scale_Y;
-  if (stage.canvas.width < 900) {
-    image.scale = 0.5;
-  }
   image.x = x_loc;
   image.y = y_loc;
 
