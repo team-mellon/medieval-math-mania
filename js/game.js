@@ -172,7 +172,7 @@ function randomizeRangeAndMultiplier() {
   }
 
   var multip = document.createTextNode(multiplicand);
-  multip_div.appendChild( multip);
+  multip_div.appendChild(multip);
 
   // Remake the display for the banner
   var left_paren = document.createTextNode("[");
@@ -226,7 +226,9 @@ function runInput() {
 
       // Actual math
       solution = multiplier * multiplicand;
+      console.log(solution);
       solution = Math.floor10(solution, -1);
+      console.log(solution);
       var solut_div = document.getElementById("solutionText");
       while (solut_div.firstChild) {
         solut_div.removeChild(solut_div.firstChild);
@@ -311,6 +313,9 @@ function runInput() {
 
       // Actual math
       solution = multiplier * multiplicand;
+      console.log(solution);
+      solution = Math.round((solution + 0.00001) * 100) / 100
+      console.log(solution);
 
       var solut_div = document.getElementById("solutionText");
       while (solut_div.firstChild) {
