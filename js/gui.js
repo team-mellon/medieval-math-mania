@@ -49,6 +49,19 @@ var level4_indicator;
 var level5_indicator;
 var level6_indicator;
 var level7_indicator;
+var level8_indicator;
+var level9_indicator;
+var level10_indicator;
+var level11_indicator;
+var level12_indicator;
+var level13_indicator;
+var level14_indicator;
+var level15_indicator;
+var level16_indicator;
+var level17_indicator;
+var level18_indicator;
+var level19_indicator;
+var level20_indicator;
 
 var end_level_scene;
 var end_level_button;
@@ -440,6 +453,110 @@ function createGUI() {
 				changeScene(3);
 			});
 
+			level8_indicator = createButton("res/map-indicator.png", "8", 24, 24, "center", 0 - (24/2 + 102), "bottom", 0 - (24/2 + 285), "gui", function() {
+				generated = false;
+				createjs.Sound.play("select");
+				current_level = 8;
+				resetLevel();
+				changeScene(3);
+			});
+
+			level9_indicator = createButton("res/map-indicator.png", "9", 24, 24, "center", 0 - (24/2 + 315), "bottom", 0 - (24/2 + 384), "gui", function() {
+				generated = false;
+				createjs.Sound.play("select");
+				current_level = 9;
+				resetLevel();
+				changeScene(3);
+			});
+
+			level10_indicator = createButton("res/map-indicator.png", "10", 24, 24, "center", 0 - (24/2 + 612), "bottom", 0 - (24/2 + 174), "gui", function() {
+				generated = false;
+				createjs.Sound.play("select");
+				current_level = 10;
+				resetLevel();
+				changeScene(3);
+			});
+
+			level11_indicator = createButton("res/map-indicator.png", "11", 24, 24, "center", 0 - (24/2 + 168), "bottom", 0 - (24/2 + 180), "gui", function() {
+				generated = false;
+				createjs.Sound.play("select");
+				current_level = 11;
+				resetLevel();
+				changeScene(3);
+			});
+
+			level12_indicator = createButton("res/map-indicator.png", "12", 24, 24, "center", 0 - (24/2 + 72), "top", 0 + (24/2 + 327), "gui", function() {
+				generated = false;
+				createjs.Sound.play("select");
+				current_level = 12;
+				resetLevel();
+				changeScene(3);
+			});
+
+			level13_indicator = createButton("res/map-indicator.png", "13", 24, 24, "center", 0 + (24/2 + 552), "top", 0 + (24/2 + 150), "gui", function() {
+				generated = false;
+				createjs.Sound.play("select");
+				current_level = 13;
+				resetLevel();
+				changeScene(3);
+			});
+
+			level14_indicator = createButton("res/map-indicator.png", "14", 24, 24, "center", 0 + (24/2 + 315), "bottom", 0 - (24/2 + 414), "gui", function() {
+				generated = false;
+				createjs.Sound.play("select");
+				current_level = 14;
+				resetLevel();
+				changeScene(3);
+			});
+
+			level15_indicator = createButton("res/map-indicator.png", "15", 24, 24, "center", 0 - (24/2 + 102), "bottom", 0 - (24/2 + 315), "gui", function() {
+				generated = false;
+				createjs.Sound.play("select");
+				current_level = 15;
+				resetLevel();
+				changeScene(3);
+			});
+
+			level16_indicator = createButton("res/map-indicator.png", "16", 24, 24, "center", 0 - (24/2 + 285), "bottom", 0 - (24/2 + 384), "gui", function() {
+				generated = false;
+				createjs.Sound.play("select");
+				current_level = 16;
+				resetLevel();
+				changeScene(3);
+			});
+
+			level17_indicator = createButton("res/map-indicator.png", "17", 24, 24, "center", 0 - (24/2 + 552), "bottom", 0 - (24/2 + 174), "gui", function() {
+				generated = false;
+				createjs.Sound.play("select");
+				current_level = 17;
+				resetLevel();
+				changeScene(3);
+			});
+
+			level18_indicator = createButton("res/map-indicator.png", "18", 24, 24, "center", 0 - (24/2 + 168), "bottom", 0 - (24/2 + 120), "gui", function() {
+				generated = false;
+				createjs.Sound.play("select");
+				current_level = 18;
+				resetLevel();
+				changeScene(3);
+			});
+
+			level19_indicator = createButton("res/map-indicator.png", "19", 24, 24, "center", 0 - (24/2 + 72), "top", 0 + (24/2 + 267), "gui", function() {
+				generated = false;
+				createjs.Sound.play("select");
+				current_level = 19;
+				resetLevel();
+				changeScene(3);
+			});
+
+			level20_indicator = createButton("res/map-indicator.png", "20", 24, 24, "center", 0 + (24/2 + 522), "top", 0 + (24/2 + 120), "gui", function() {
+				generated = false;
+				createjs.Sound.play("select");
+				current_level = 20;
+				resetLevel();
+				changeScene(3);
+			});
+
 			break;
 
     case 9:
@@ -579,5 +696,5 @@ function resetLevel() {
 	hit_counter = 0;
 	miss_upper_counter = 0;
 	miss_lower_counter = 0;
-	
+
 }

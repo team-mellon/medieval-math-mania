@@ -6,14 +6,22 @@ var level_bg_colors = [
   "#c9f9ff", // Grasslands
   "#3b0a0a", // Volcano
   "#c2ffe6", // Sea
-  // "#b3b3b3", // Mountains
-  // "#effffe", // Summit
-  // "#010027", // Cave
+  "#b3b3b3", // Mountains
+  "#effffe", // Summit
+  "#010027", // Cave
   "#2f3b25", // Forest
   "#cae3e9", // Alpine
-  // "#3f2900", // Woods
-  "#292c2b" // Swamp
-  // "#231e25" // Deadlands
+  "#3f2900", // Woods
+  "#292c2b", // Swamp
+  "#231e25", // Deadlands
+  "#c9e6ff", // Sky
+  "#c9f9ff", // Underwater
+  "#3b0a0a", // Fungi
+  "#c2ffe6", // Tundra
+  "#b3b3b3", // Tarpit
+  "#effffe", // Desert
+  "#010027", // Boreal
+  "#2f3b25" // Monolith
 
 ];
 
@@ -175,7 +183,7 @@ function genRange() {
 		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
 		upper = Math.floor(Math.random() * 7) + 2;
 	}
-  
+
 	if (current_level == 20) {
 		// Generate new range
 		multiplicand = Math.floor(Math.random() * 90) + 10;
