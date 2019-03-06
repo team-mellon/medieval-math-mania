@@ -216,7 +216,7 @@ function loadImage() {
 //   preload.addEventListener("fileload", handleFileComplete);
 //   preload.loadFile("assets/preloadjs-bg-center.png");
 // }
-//
+
 // function handleFileComplete(event) {
 //   document.body.appendChild(event.result);
 // }
@@ -260,10 +260,12 @@ function createLevel() {
   number_spacer = 25;
 
   for(i = -25; i <= 25; i++){
+
   	var temp = createLevelText(i.toString(), "Arial", "16px", "bold", "black", structureX, structureY, "center", 0 - (((number_spacer * 48) + 5)), "top", 30, "image");
   	number_text.push(temp);
     // number_spacing += 48;
     number_spacer--;
+
   }
 
   numberline = createLevelSprite(numberlineS, structureX, structureY, "center", 0, "center", 0, "image");
@@ -287,11 +289,7 @@ function destroyLevel() {
 
 function changeLevel(new_level) {
 
-  hide_knight = false;
-  hide_archer1 = false;
-  hide_archer2 = false;
-  hide_archer3 = false;
-  hide_archer4 = false;
+  resetLevel();
 
   current_level++;
 

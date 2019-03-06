@@ -480,83 +480,56 @@ function createGUI() {
 
 function pauseAnimation(paused) {
 
+	henchman_left.paused = paused;
+	henchman_left_center.paused = paused;
+	boss.paused = paused;
+	henchman_right.paused = paused;
+	henchman_right_center.paused = paused;
+	projectile.paused = paused;
+
   if(paused){
 
-		henchman_left.paused = true;
-		henchman_left_center.paused = true;
-		boss.paused = true;
-		henchman_right.paused = true;
-		henchman_right_center.paused = true;
-		projectile.paused = true;
-
-			/*
-		if(structure_center.currentAnimationFrame != 0 && structure_center.currentAnimationFrame != 11)
-	    structure_center.paused = true;
-
-		if(structure_left_center.currentAnimationFrame != 0 && structure_left_center.currentAnimationFrame != 11)
-	    structure_left_center.paused = true;
-
-		if(structure_right_center.currentAnimationFrame != 0 && structure_right_center.currentAnimationFrame != 11)
-	    structure_right_center.paused = true;
-
-		if(structure_left.currentAnimationFrame != 0 && structure_left.currentAnimationFrame != 11)
-	    structure_left.paused = true;
-
-		if(structure_right.currentAnimationFrame != 0 && structure_right.currentAnimationFrame != 11)
-	    structure_right.paused = true;
-
-		if(catapult.currentAnimationFrame != 0 && catapult.currentAnimationFrame != 11)
-	    catapult.paused = true;
-			*/
-
-			/*
 		structure_center.paused = true;
 		structure_left_center.paused = true;
 		structure_right_center.paused = true;
 		structure_left.paused = true;
 		structure_right.paused = true;
+		firework_low.paused = true;
+    firework_hit.paused = true;
+    firework_high.paused = true;
 		catapult.paused = true;
-			*/
 
   } else {
 
-		henchman_left.paused = false;
-		henchman_left_center.paused = false;
-		boss.paused = false;
-		henchman_right.paused = false;
-		henchman_right_center.paused = false;
-		projectile.paused = false;
-
-			/*
-		if(structure_center.currentAnimationFrame != 0 && structure_center.currentAnimationFrame != 11)
+		if(structure_center.currentFrame != 0 && structure_center.currentFrame != 11)
 	    structure_center.paused = false;
 
-		if(structure_left_center.currentAnimationFrame != 0 && structure_left_center.currentAnimationFrame != 11)
+		if(structure_left_center.currentFrame != 0 && structure_left_center.currentFrame != 11)
 	    structure_left_center.paused = false;
 
-		if(structure_right_center.currentAnimationFrame != 0 && structure_right_center.currentAnimationFrame != 11)
+		if(structure_right_center.currentFrame != 0 && structure_right_center.currentFrame != 11)
 	    structure_right_center.paused = false;
 
-		if(structure_left.currentAnimationFrame != 0 && structure_left.currentAnimationFrame != 11)
+		if(structure_left.currentFrame != 0 && structure_left.currentFrame != 11)
 	    structure_left.paused = false;
 
-		if(structure_right.currentAnimationFrame != 0 && structure_right.currentAnimationFrame != 11)
+		if(structure_right.currentFrame != 0 && structure_right.currentFrame != 11)
 	    structure_right.paused = false;
 
-		if(catapult.currentAnimationFrame != 0 && catapult.currentAnimationFrame != 11)
+		if(catapult.currentFrame != 0 && catapult.currentFrame != 11)
 			catapult.paused = false;
-			*/
 
-			/*
-		structure_center.paused = false;
-		structure_left_center.paused = false;
-		structure_right_center.paused = false;
-		structure_left.paused = false;
-		structure_right.paused = false;
-		catapult.paused = false;
-			*/
+		if(firework_low.currentFrame != 0 && firework_low.currentFrame != 11)
+	    firework_low.paused = false;
 
-    }
+		if(firework_hit.currentFrame != 0 && firework_hit.currentFrame != 11)
+	    firework_hit.paused = false;
+
+		if(firework_high.currentFrame != 0 && firework_high.currentFrame != 11)
+	    firework_high.paused = false;
+
+  }
+
 }
 
 function visibleButton(visible) {
@@ -606,6 +579,5 @@ function resetLevel() {
 	hit_counter = 0;
 	miss_upper_counter = 0;
 	miss_lower_counter = 0;
-	history_list = [];
-
+	
 }

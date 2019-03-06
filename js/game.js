@@ -737,7 +737,7 @@ function reloadCatapult() {
 }
 
 function checkBossFight() {
-//
+
 //   if (boss_fight) {
 //
 //     big_boss = createSprite(big_bossS, structureX, structureY);
@@ -750,15 +750,7 @@ function checkBossFight() {
 //     changeLevel();
 //
 //   }
-//
-}
 
-function setBoss() {
-  boss_fight = document.getElementById("bossValue").checked;
-}
-
-function setTutorial() {
-  play_tutorial = document.getElementById("tutorialValue").checked;
 }
 
 function flagAnimation(){
@@ -831,75 +823,3 @@ function flagAnimation(){
 //   });                                                                     // the canvas/window resize event handler
 //
 // }
-
-function clearGameForm() {
-
-  var scene_html = document.getElementById("sceneHTML");
-
-  while (scene_html.firstChild) {
-
-    scene_html.removeChild(scene_html.firstChild);
-
-  }
-
-  createGameForm();
-
-}
-
-function clearMultiplicandBanner() {
-
-  // Clear the multiplicand banner
-	var multip_div = document.getElementById("multiplicandText");
-
-	while (multip_div.firstChild) {
-
-	   multip_div.removeChild(multip_div.firstChild);
-
-	}
-
-}
-
-function clearRangeBanner() {
-
-	// Clear the range banner
-	var range_div = document.getElementById("rangeDiv");
-
-	while (range_div.firstChild) {
-
-		range_div.removeChild(range_div.firstChild);
-
-	}
-
-}
-
-function remakeMultiplierBanner() {
-
-	var multip_div = document.getElementById("multiplicandText");
-
-  // Remake multiplier for banner
-	var multip = document.createTextNode(multiplicand);
-
-  // Append to the range banner
-	multip_div.appendChild(multip);
-
-}
-
-function remakeRangeBanner() {
-
-  var range_div = document.getElementById("rangeDiv");
-
-	// Remake range for the banner
-	var left_paren = document.createTextNode("[");
-	var lower_number = document.createTextNode(lower);
-	var middle_comma = document.createTextNode(", ");
-	var upper_number = document.createTextNode(upper);
-	var right_paren = document.createTextNode("]");
-
-	// Append to the range banner
-	range_div.appendChild(left_paren);
-	range_div.appendChild(lower_number);
-	range_div.appendChild(middle_comma);
-	range_div.appendChild(upper_number);
-	range_div.appendChild(right_paren);
-
-}

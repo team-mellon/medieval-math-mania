@@ -31,7 +31,7 @@ function init() {
   this.document.onkeyup = keyup; // Add keyup listener
 
   resize(); // Resize to set initial scale
-  stage.update();
+  stage.update(); //
 
 }
 
@@ -50,10 +50,7 @@ function destroyScene() {
 	// 	default:
 	// }
 
-  var scene_html = document.getElementById("sceneHTML");
-  while (scene_html.firstChild) {
-    scene_html.removeChild(scene_html.firstChild);
-  }
+  clearHtml();
 
   stage.removeAllChildren();
 
