@@ -208,7 +208,18 @@ function loadImage() {
 	createjs.Sound.registerSound("res/sound_effects/victory.wav", "win", 1);
 	createjs.Sound.registerSound("res/sound_effects/fire_lighting.wav", "light", 1);
 	createjs.Sound.registerSound("res/sound_effects/crumbling.wav", "crumble");
+
 }
+
+// function loadImage() {
+//   var preload = new createjs.LoadQueue();
+//   preload.addEventListener("fileload", handleFileComplete);
+//   preload.loadFile("assets/preloadjs-bg-center.png");
+// }
+//
+// function handleFileComplete(event) {
+//   document.body.appendChild(event.result);
+// }
 
 function createLevel() {
 

@@ -324,12 +324,34 @@ function createSettingsForm() {
 
 
 
+	// Creates password display text and check box
+	var tutorial_text = document.createTextNode("Tutorial:");
+	var tutorial_input = document.createElement("input");
+	tutorial_input.id = "tutorialValue";
+	tutorial_input.setAttribute("type", "checkbox");
+	tutorial_input.setAttribute("name", "tutorial");
+	if (play_tutorial) {
+	  tutorial_input.checked = true;
+	} else {
+	  tutorial_input.checked = false;
+	}
+	tutorial_input.addEventListener('change', setTutorial);
+
+  // Creates password div to hold display text and check box
+  var settings_tutorial_div = document.createElement("div");
+  settings_tutorial_div.className = "login";
+  settings_tutorial_div.appendChild(tutorial_text);
+  settings_tutorial_div.appendChild(tutorial_input);
+
+
+
   // Creates login form to hold username and password divs
   var settings_form = document.createElement("form");
   settings_form.id = "settingsForm";
   settings_form.className = "scrollMenu";
   settings_form.appendChild(settings_volume_div);
   settings_form.appendChild(settings_time_div);
+  settings_form.appendChild(settings_tutorial_div);
 
   // Injecting login form into existing html
   var scene_html = document.getElementById("sceneHTML");

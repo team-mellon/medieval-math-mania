@@ -34,6 +34,7 @@ var hide_archer3 = false;
 var hide_archer4 = false;
 
 var boss_fight = false;
+var play_tutorial = true;
 
 var landscape_warning;
 
@@ -75,7 +76,6 @@ var multiplicand = 5;
 var sign = " x "; //&#37
 var equal = " = ";
 var solution = 0;
-var solution2 = 0;
 
 function tick(event) {
   //Calls external function to generate ranges for each level, this is reset when each level is selected on level select
@@ -173,11 +173,7 @@ function tick(event) {
             var solut = document.createTextNode(solution);
             solut_div.appendChild(solut);
 
-            // var scene_html = document.getElementById("sceneHTML");
-            // while (scene_html.firstChild) {
-            //   scene_html.removeChild(scene_html.firstChild);
-            // }
-            // createGameForm();
+            clearGameForm();
 
             if (solution <= upper && solution >= lower) {
               hit = true;
@@ -221,8 +217,8 @@ function tick(event) {
               entry_is_correct = false;
 
             } else {
-				  //this is where to add level specific rules should they prove neccesary, at the moment they are not
-                  entry_is_correct = true;
+		          //this is where to add level specific rules should they prove neccesary, at the moment they are not
+              entry_is_correct = true;
             }
 
           } else {
@@ -231,7 +227,7 @@ function tick(event) {
           for (var x in history_list) {
             console.log(history_list[x]);
             console.log(entry);
-			//Commented out for sake of sprint
+			      //Commented out for sake of sprint
             /*if (entry == history_list[x]) {
               valid = false;
             }*/
@@ -239,23 +235,6 @@ function tick(event) {
           // Animate the catapult
           if (entry_is_correct && valid) {
             multiplier = document.getElementById("entryInput").value;
-
-      			//Counts input for already completed highs lows and hits
-      			solution2 = multiplier * multiplicand;
-
-      			// console.log("Solution 2" + solution2);
-      			// if (solution2 <= upper && solution2 >= lower && hit_counter >= 3){
-      			// 	hit_counter++;
-      			// 	hit_text_counter.text = "Total Hits: "+hit_counter.toString();
-      			// }
-      			// else if (solution2 > upper && miss_upper_counter >= 1){
-      			// 	miss_upper_counter++;
-      			// 	upper_text_counter.text = "Total Highs: "+miss_upper_counter.toString();
-      			// }
-      			// else if(solution2 < lower && miss_lower_counter >= 1){
-      			// 	miss_lower_counter++;
-      			// 	low_text_counter.text = "Total Lows: "+miss_lower_counter.toString();
-      			// }
 
       			// Add to history
             history_list.push(multiplier);
@@ -278,11 +257,7 @@ function tick(event) {
             var solut = document.createTextNode(solution);
             solut_div.appendChild(solut);
 
-            // var scene_html = document.getElementById("sceneHTML");
-            // while (scene_html.firstChild) {
-            //   scene_html.removeChild(scene_html.firstChild);
-            // }
-            // createGameForm();
+            clearGameForm();
 
             document.getElementById("entryInput").value = "";
 
@@ -365,99 +340,9 @@ function tick(event) {
 
     updateSinglePlayAnimations();
 
-    if (hit) {
-      switch (hit_counter) {
-        case 0:
-          console.log("henchmanLC");
-          target_x = henchman_left_center.x;
-          projectile_x_speed = 12;
-          break;
-        case 1:
-          console.log("henchmanRC");
-          target_x = henchman_right_center.x;
-          projectile_x_speed = 12;
-          break;
-        case 2:
-          console.log("bossC");
-          target_x = boss.x;
-          projectile_x_speed = 0;
-          break;
-        default:
-      }
-      hit = false;
-      waiting_hit = true;
-    }
+    runHitAnimations();
+    runMissAnimations();
 
-    if (waiting_hit) {
-      if (projectile_speed < 0 && projectile.y >= boss.y) {
-        switch (hit_counter) {
-          case 0:
-            hide_archer1 = true;
-            structure_left_center.gotoAndPlay(0);
-            break;
-          case 1:
-            hide_archer2 = true;
-            structure_right_center.gotoAndPlay(0);
-            break;
-          case 2:
-            hide_knight = true;
-            structure_center.gotoAndPlay(0);
-            break;
-          default:
-			break;
-        }
-        firework_hit.gotoAndPlay(0);
-        reload = true;
-        waiting_hit = false;
-        hit_counter++;
-        hit_text_counter.text = "Total Hits: "+hit_counter.toString();
-
-      }
-    }
-
-    if (miss_lower) {
-      target_x = henchman_left.x;
-      projectile_x_speed = 20;
-      // miss_lower = false;
-      waiting_miss = true;
-    }
-
-    if (miss_upper) {
-      target_x = henchman_right.x;
-      projectile_x_speed = 20;
-      // miss_upper = false;
-      waiting_miss = true;
-    }
-
-    if (waiting_miss) {
-      if (miss_lower) {
-        if (projectile_speed < 0 && projectile.y >= boss.y) {
-          if (miss_lower_counter < 1) {
-            hide_archer3 = true;
-            structure_left.gotoAndPlay(0);
-          }
-          firework_low.gotoAndPlay(0);
-          reload = true;
-          miss_lower = false;
-          miss_lower_counter++;
-		      low_text_counter.text ="Total Lows: "+ miss_lower_counter.toString();
-        }
-      }
-
-      if (miss_upper) {
-        if (projectile_speed < 0 && projectile.y >= boss.y) {
-          if (miss_upper_counter < 1) {
-            hide_archer4 = true;
-            structure_right.gotoAndPlay(0);
-          }
-          firework_high.gotoAndPlay(0);
-          reload = true;
-          miss_upper = false;
-          miss_upper_counter++;
-		      high_text_counter.text ="Total Highs: "+ miss_upper_counter.toString();
-        }
-      }
-    }
 	// Tutorial
     // if (current_level == 1) {
     if (true) {
@@ -476,62 +361,11 @@ function tick(event) {
       }
     }
 
-	//Victory Banner
+    //Victory Banner
     if (hit_counter >= 3 && miss_upper_counter >= 1 && miss_lower_counter >= 1 && reload == false) {
 
-		hit_text.text += hit_counter.toString();
-		low_text.text += miss_lower_counter.toString();
-		high_text.text += miss_upper_counter.toString();
-
-		visibleForm(false);
-		pauseAnimation(true);
-
-		end_level_button.visible = true;
-
-		createjs.Tween.get(end_level_flag).wait(2250).to({visible:true}).call(flagAnimation);
-
-		end_text.visible = true;
-		var tempX = scene_scale_X;
-		var tempY = scene_scale_Y;
-		end_text.scaleX = 0;
-		end_text.scaleY = 0;
-		createjs.Tween.get(end_text).wait(4250).to({scaleX:tempX ,scaleY:tempY}, 1000, createjs.Ease.quintIn);
-		createjs.Tween.get(end_text).wait(4250).to({rotation:360}, 1000);
-		hit_text.visible = true;
-		createjs.Tween.get(hit_text).wait(5750).to({alpha:1}, 500);
-
-		low_text.visible = true;
-		createjs.Tween.get(low_text).wait(6750).to({alpha:1}, 500);
-
-		high_text.visible = true;
-		createjs.Tween.get(high_text).wait(7750).to({alpha:1}, 500);
-
-		end_level_button.visible = true;
-		createjs.Tween.get(end_level_button).wait(8375).to({alpha:1}, 125);
-
-		login_button.visible = false;
-		console.log("next level");
-
-		target_x = 0;
-		hit = false;
-		miss_upper = false;
-		miss_lower = false;
-		hit_counter = 0;
-		miss_upper_counter = 0;
-		miss_lower_counter = 0;
-		projectile_x_speed = 0;
-
-		//plays victory tune
-		createjs.Sound.play("win", delayWin);
-
-		 /* if (boss_fight) {
-			big_boss = createSprite(big_bossS, structureX, structureY, "center", 0, "center", 0, "image");
-			console.log("boss");
-		  } else {
-			changeLevel();
-
-		  }*/
-
+      createVictoryBanner();
+      // checkBossFight();
 
     }
 
@@ -608,181 +442,6 @@ function tick(event) {
 
 }
 
-//generates range for each level
-function genRange() {
-	//exactly one multiple of multiplicand in range, single digit multiplicand
-	if (current_level == 1) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 7) + 2;
-		multiple = Math.floor(Math.random() * 7) + 2;
-		lower = (multiple * multiplicand) - Math.floor(multiplicand/2);
-		upper = (multiple * multiplicand) + Math.floor(multiplicand/2);
-	}
-	//No multiples of multiplicand in range, single digit multiplicand
-	if (current_level == 2) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 7) + 2;
-		multiple = Math.floor(Math.random() * 7) + 2;
-		lower = (multiple * multiplicand) + 1;
-		upper = (multiple * (multiplicand+1)) - 1;
-	}
-	//Starting number is a two-digit number, target range includes the value which is one tenth of the number, and is bounded by positive single-digit integers.
-	if (current_level == 3) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90)+ 10;
-		factor = (0.1) * multiplicand;
-		lower = Math.floor(factor);
-		upper = Math.ceil(factor);
-		if(lower == upper)
-		{
-			upper++;
-		}
-	}
-	//Starting number is a two-digit number, target range goes from 0 to a single-digit positive integer.
-	if (current_level == 4) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = 0;
-		upper = Math.floor(Math.random() * 7) + 2;
-	}
-	/*Starting number is a single-digit number. For target range, choose another single-digit number,
-	multiply it by 10 times the starting number, and make sure that the target range contains that number.
-	The lower boundary is an integer at least 10 below the product and the upper boundary is an integer
-	at least 10 above the product.*/
-	if (current_level == 5) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 7) + 2;
-		multiple = Math.floor(Math.random() * 7) + 2;
-		storage = multiplicand * multiple * 10;
-		lower = storage - 10;
-		upper = storage + 10;
-	}
-	/*Starting number is a single-digit number n, target range contains 100n,
-	and the range makes it so there is only one integer answer
-	(i.e. the lower bound is above 100n − n and the upper bound is below 100n + n.*/
-	if (current_level == 6) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 7) + 2;
-		multiple = 100 * multiplicand;
-		lower = multiple - multiplicand;
-		upper = multiple + multiplicand;
-	}
-	//Starting number is a two-digit number, target range contains 0 (flanked by single-digit integers)
-	if (current_level == 7) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
-	}
-	//Starting number is a two-digit number, target range numbers are both 3-digit, with no integer
-	if (current_level == 8) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
-	}
-	if (current_level == 9) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
-	}
-	if (current_level == 10) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
-	}
-	if (current_level == 11) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
-	}
-	if (current_level == 12) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
-	}
-	if (current_level == 13) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
-	}
-	if (current_level == 14) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
-	}
-	if (current_level == 15) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
-	}
-	if (current_level == 16) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
-	}
-	if (current_level == 17) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
-	}
-	if (current_level == 18) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
-	}
-	if (current_level == 19) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
-	}
-	if (current_level == 20) {
-		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
-	}
-
-	// Clear the range banner
-	var range_div = document.getElementById("rangeDiv");
-	while (range_div.firstChild) {
-		range_div.removeChild(range_div.firstChild);
-	}
-
-	var multip_div = document.getElementById("multiplicandText");
-	while (multip_div.firstChild) {
-	multip_div.removeChild(multip_div.firstChild);
-	}
-
-	var multip = document.createTextNode(multiplicand);
-	multip_div.appendChild( multip);
-
-	// Remake the display for the banner
-	var left_paren = document.createTextNode("[");
-	var lower_number = document.createTextNode(lower);
-	var middle_comma = document.createTextNode(", ");
-	var upper_number = document.createTextNode(upper);
-	var right_paren = document.createTextNode("]");
-
-	// Append the display
-	range_div.appendChild(left_paren);
-	range_div.appendChild(lower_number);
-	range_div.appendChild(middle_comma);
-	range_div.appendChild(upper_number);
-	range_div.appendChild(right_paren);
-}
-
 function updateSinglePlayAnimations() {
 
   //Catapult or whatever it is in the scene
@@ -792,7 +451,7 @@ function updateSinglePlayAnimations() {
   }
 
   if (!end_level_flag.paused && end_level_flag.currentFrame == 11) {
-      end_level_flag.stop();
+    end_level_flag.stop();
   }
 
   // Structure in the scene
@@ -825,23 +484,223 @@ function updateSinglePlayAnimations() {
 
 }
 
+function runHitAnimations() {
+
+  if (hit) {
+
+    switch (hit_counter) {
+
+      case 0:
+        console.log("henchmanLC");
+        target_x = henchman_left_center.x;
+        projectile_x_speed = 12;
+        break;
+
+      case 1:
+        console.log("henchmanRC");
+        target_x = henchman_right_center.x;
+        projectile_x_speed = 12;
+        break;
+
+      case 2:
+        console.log("bossC");
+        target_x = boss.x;
+        projectile_x_speed = 0;
+        break;
+
+      default:
+        break;
+
+    }
+
+    hit = false;
+    waiting_hit = true;
+
+  }
+
+  if (waiting_hit) {
+
+    if (projectile_speed < 0 && projectile.y >= boss.y) {
+
+      switch (hit_counter) {
+
+        case 0:
+          hide_archer1 = true;
+          structure_left_center.gotoAndPlay(0);
+          break;
+
+        case 1:
+          hide_archer2 = true;
+          structure_right_center.gotoAndPlay(0);
+          break;
+
+        case 2:
+          hide_knight = true;
+          structure_center.gotoAndPlay(0);
+          break;
+
+        default:
+          break;
+
+      }
+
+      firework_hit.gotoAndPlay(0);
+      reload = true;
+      waiting_hit = false;
+      hit_counter++;
+      hit_text_counter.text = "Total Hits: "+hit_counter.toString();
+
+    }
+
+  }
+
+}
+
+function runMissAnimations() {
+
+  if (miss_lower) {
+
+    target_x = henchman_left.x;
+    projectile_x_speed = 20;
+    // miss_lower = false;
+    waiting_miss = true;
+
+  }
+
+  if (miss_upper) {
+
+    target_x = henchman_right.x;
+    projectile_x_speed = 20;
+    // miss_upper = false;
+    waiting_miss = true;
+
+  }
+
+  if (waiting_miss) {
+
+    if (miss_lower) {
+
+      if (projectile_speed < 0 && projectile.y >= boss.y) {
+
+        if (miss_lower_counter < 1) {
+
+          hide_archer3 = true;
+          structure_left.gotoAndPlay(0);
+
+        }
+
+        firework_low.gotoAndPlay(0);
+        reload = true;
+        miss_lower = false;
+        miss_lower_counter++;
+	      low_text_counter.text ="Total Lows: "+ miss_lower_counter.toString();
+
+      }
+
+    }
+
+    if (miss_upper) {
+
+      if (projectile_speed < 0 && projectile.y >= boss.y) {
+
+        if (miss_upper_counter < 1) {
+
+          hide_archer4 = true;
+          structure_right.gotoAndPlay(0);
+
+        }
+
+        firework_high.gotoAndPlay(0);
+        reload = true;
+        miss_upper = false;
+        miss_upper_counter++;
+	      high_text_counter.text ="Total Highs: "+ miss_upper_counter.toString();
+
+      }
+
+    }
+
+  }
+
+}
+
+function createVictoryBanner() {
+
+  hit_text.text += hit_counter.toString();
+  low_text.text += miss_lower_counter.toString();
+  high_text.text += miss_upper_counter.toString();
+
+  visibleForm(false);
+  pauseAnimation(true);
+
+  end_level_button.visible = true;
+
+  createjs.Tween.get(end_level_flag).wait(2250).to({visible:true}).call(flagAnimation);
+
+  end_text.visible = true;
+  var tempX = scene_scale_X;
+  var tempY = scene_scale_Y;
+  end_text.scaleX = 0;
+  end_text.scaleY = 0;
+  createjs.Tween.get(end_text).wait(4250).to({scaleX:tempX ,scaleY:tempY}, 1000, createjs.Ease.quintIn);
+  createjs.Tween.get(end_text).wait(4250).to({rotation:360}, 1000);
+  hit_text.visible = true;
+  createjs.Tween.get(hit_text).wait(5750).to({alpha:1}, 500);
+
+  low_text.visible = true;
+  createjs.Tween.get(low_text).wait(6750).to({alpha:1}, 500);
+
+  high_text.visible = true;
+  createjs.Tween.get(high_text).wait(7750).to({alpha:1}, 500);
+
+  end_level_button.visible = true;
+  createjs.Tween.get(end_level_button).wait(8375).to({alpha:1}, 125);
+
+  login_button.visible = false;
+  console.log("next level");
+
+  target_x = 0;
+  hit = false;
+  miss_upper = false;
+  miss_lower = false;
+  hit_counter = 0;
+  miss_upper_counter = 0;
+  miss_lower_counter = 0;
+  projectile_x_speed = 0;
+
+  //plays victory tune
+  createjs.Sound.play("win", delayWin);
+
+}
+
+// function checkBossFight() {
+//
+//   if (boss_fight) {
+//
+//     big_boss = createSprite(big_bossS, structureX, structureY);
+//     scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
+//
+//     console.log("boss");
+//
+//   } else {
+//
+//     changeLevel();
+//
+//   }
+//
+// }
+
 function setBoss() {
   boss_fight = document.getElementById("bossValue").checked;
+}
+
+function setTutorial() {
+  play_tutorial = document.getElementById("tutorialValue").checked;
 }
 
 function flagAnimation(){
   end_level_flag.gotoAndPlay(0);
 }
-
-// function loadImage() {
-//   var preload = new createjs.LoadQueue();
-//   preload.addEventListener("fileload", handleFileComplete);
-//   preload.loadFile("assets/preloadjs-bg-center.png");
-// }
-//
-// function handleFileComplete(event) {
-//   document.body.appendChild(event.result);
-// }
 
 // function runGame(renderingCanvas) {
 //
@@ -909,3 +768,75 @@ function flagAnimation(){
 //   });                                                                     // the canvas/window resize event handler
 //
 // }
+
+function clearGameForm() {
+
+  var scene_html = document.getElementById("sceneHTML");
+
+  while (scene_html.firstChild) {
+
+    scene_html.removeChild(scene_html.firstChild);
+
+  }
+
+  createGameForm();
+
+}
+
+function clearMultiplicandBanner() {
+
+  // Clear the multiplicand banner
+	var multip_div = document.getElementById("multiplicandText");
+
+	while (multip_div.firstChild) {
+
+	   multip_div.removeChild(multip_div.firstChild);
+
+	}
+
+}
+
+function clearRangeBanner() {
+
+	// Clear the range banner
+	var range_div = document.getElementById("rangeDiv");
+
+	while (range_div.firstChild) {
+
+		range_div.removeChild(range_div.firstChild);
+
+	}
+
+}
+
+function remakeMultiplierBanner() {
+
+	var multip_div = document.getElementById("multiplicandText");
+
+  // Remake multiplier for banner
+	var multip = document.createTextNode(multiplicand);
+
+  // Append to the range banner
+	multip_div.appendChild(multip);
+
+}
+
+function remakeRangeBanner() {
+
+  var range_div = document.getElementById("rangeDiv");
+
+	// Remake range for the banner
+	var left_paren = document.createTextNode("[");
+	var lower_number = document.createTextNode(lower);
+	var middle_comma = document.createTextNode(", ");
+	var upper_number = document.createTextNode(upper);
+	var right_paren = document.createTextNode("]");
+
+	// Append to the range banner
+	range_div.appendChild(left_paren);
+	range_div.appendChild(lower_number);
+	range_div.appendChild(middle_comma);
+	range_div.appendChild(upper_number);
+	range_div.appendChild(right_paren);
+
+}
