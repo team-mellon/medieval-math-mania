@@ -314,7 +314,7 @@ function runInput() {
       // Actual math
       solution = multiplier * multiplicand;
       console.log(solution);
-      solution = Math.round((solution + 0.00001) * 100) / 100
+      solution = Math.round(solution * 100) / 100
       console.log(solution);
 
       var solut_div = document.getElementById("solutionText");
@@ -653,7 +653,7 @@ function createVictoryBanner() {
   end_level_button.visible = true;
   createjs.Tween.get(end_level_button).wait(8375).to({alpha:1}, 125);
 
-  login_button.visible = false;
+  menu_button.visible = false;
   console.log("next level");
 
   target_x = 0;
