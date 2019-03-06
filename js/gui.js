@@ -1,18 +1,12 @@
 var lute;
 //var antiLute;
-var luteX = 96;
-var luteY = 96;
 
 var previous_indicator;
 var pause_indicator;
 var next_indicator;
-var indicatorX = 24;
-var indicatorY = 24;
 
 var buttonX = 216;
 var buttonY = 72;
-var small_buttonX = 72;
-var small_buttonY = 72;
 
 var left_sword_button;
 var right_sword_button;
@@ -44,7 +38,7 @@ var settings_button;
 var logout_button;
 var account_button;
 
-var login_button;
+var menu_button;
 
 var hint_button;
 
@@ -69,11 +63,6 @@ function createGUI() {
 	switch(current_scene) {
 
 		case 0:
-
-			background = createImage("res/login.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
-			background_left = createImage("res/login.png", backgroundX, backgroundY, "center", -backgroundX, "center", 0, "image");
-			background_right = createImage("res/login.png", backgroundX, backgroundY, "center", backgroundX, "center", 0, "image");
-			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
 
 			// scale_to_canvas(left_sword_button, "center", 0 - (buttonX/2 + 10) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "image");
 			// scale_to_canvas(right_sword_button, "center", 0 + (buttonX/2 + 50) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "image");
@@ -129,11 +118,6 @@ function createGUI() {
 		// 	scale_to_canvas(left_sword_button, "center", 0 - (buttonX/2 + 10) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "gui");
 		// 	scale_to_canvas(right_sword_button, "center", 0 + (buttonX/2 + 50) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "gui");
 		// } else {
-
-			background = createImage("res/login.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
-			background_left = createImage("res/login.png", backgroundX, backgroundY, "center", -backgroundX, "center", 0, "image");
-			background_right = createImage("res/login.png", backgroundX, backgroundY, "center", backgroundX, "center", 0, "image");
-			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
 
 			left_sword_button = createButton("res/sword-left.png", "Login", buttonX, buttonY, "center", -(buttonX/2 + 30), "center", (buttonY/2 + 200), "image", function() {
 				createjs.Sound.play("sword");
@@ -229,10 +213,6 @@ function createGUI() {
 
 		case 2:
 
-			background = createImage("res/menu.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
-			background_left = createImage("res/menu-left.png", backgroundX, backgroundY, "center", 0 - (backgroundX), "center", 0, "image");
-			background_right = createImage("res/menu-right.png", backgroundX, backgroundY, "center", 0 + (backgroundX), "center", 0, "image");
-
 			// if (stage.canvas.width < 900) {
 			// 	scale_to_canvas(play_button, "center", 0, "center", 0 - 105, "gui");
 			// 	scale_to_canvas(stats_button, "center", 0, "center", 0 - 20, "gui");
@@ -272,7 +252,7 @@ function createGUI() {
 		// 	scale_to_canvas(low_text_counter, "left", 30, "center", 0 + 280 * scene_scale_Y, "image");
 		// 	scale_to_canvas(high_text_counter, "left", 30, "center", 0 + 300 * scene_scale_Y, "image");
 		//
-		// 	scale_to_canvas(login_button, "right", 0 - (buttonX/2 + 10), "bottom", 0 - (buttonY/2 + 10), "gui");
+		// 	scale_to_canvas(menu_button, "right", 0 - (buttonX/2 + 10), "bottom", 0 - (buttonY/2 + 10), "gui");
 		// 	scale_to_canvas(hint_button, "center", 0 - 313 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui");
 		//
 		// } else {
@@ -310,10 +290,10 @@ function createGUI() {
 	    pause_menu.visible = false;
 
 	    close_button = createButton("res/hit-target-pause-close-button.png", "", buttonX, buttonY, "center", 0 + 445 * scene_scale_Y, "center", 0 - 281 * scene_scale_Y, "gui", function() {
-			createjs.Sound.play("menu");
-			pauseAnimation(false);
-			visibleButton(false);
-			visibleForm(true);
+				createjs.Sound.play("menu");
+				pauseAnimation(false);
+				visibleButton(false);
+				visibleForm(true);
 	    });
 
 	    close_button.visible = false;
@@ -327,148 +307,132 @@ function createGUI() {
 	    settings_button = createButton("res/hit-target-pause-button.png", "Settings", buttonX, buttonY, "center", 0, "center", 0 - 40 * scene_scale_Y, "gui", function() { createjs.Sound.play("menu"); changeScene(6);  visibleForm(true);});
 	    settings_button.visible = false;
 
-	    login_button = createButton("res/login-button.png", "Pause", buttonX, buttonY, "right", 0 - (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui", function() {
-			createjs.Sound.play("menu");
-			pauseAnimation(true);
-			visibleButton(true);
-			visibleForm(false);
+	    menu_button = createButton("res/login-button.png", "Pause", buttonX, buttonY, "right", 0 - (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui", function() {
+				createjs.Sound.play("menu");
+				pauseAnimation(true);
+				visibleButton(true);
+				visibleForm(false);
 	    });
 
-	    hint_button = createButton("res/hint-button.png", "Hint", small_buttonX, small_buttonY, "center", 0 - 313 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui", function() { createjs.Sound.play("sword"); changeScene(9); visibleForm(true); });
+	    hint_button = createButton("res/hint-button.png", "Hint", 72, 72, "center", 0 - 313 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui", function() { createjs.Sound.play("sword"); changeScene(9); visibleForm(true); });
 	    hint_button.visible = false;
 
 			if (stage.canvas.width < 900) {
+
 				ll_number_button = createButton("res/number-button-ll.png", "", backgroundX, 288, "center", 0, "bottom", 0 - (288/2) * scene_scale_Y, "image", function() {
 					if(digit > 0)
 						digit--;
 					if(digit < 0)
 						digit = 0;
-
 					console.log(digit);
 				});
+
 				lr_number_button = createButton("res/number-button-lr.png", "", backgroundX, 288, "center", 0, "bottom", 0 - (288/2) * scene_scale_Y, "image", function() {
 					if(digit < 2)
 						digit++;
 					if(digit > 2)
 						digit = 2;
-
 					console.log(digit);
 				});
+
 				rl_number_button = createButton("res/number-button-rl.png", "", backgroundX, 288, "center", 0, "bottom", 0 - (288/2) * scene_scale_Y, "image", function() {
 					multiplier -= adder;
 					document.getElementById("hundredsPlace").textContent = Math.floor(multiplier/100 % 10);
 					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(multiplier/10 % 10));
 					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(multiplier % 10));
 				});
+
 				rr_number_button = createButton("res/number-button-rr.png", "", backgroundX, 288, "center", 0, "bottom", 0 - (288/2) * scene_scale_Y, "image", function() {
 					multiplier += adder;
 					document.getElementById("hundredsPlace").textContent = Math.floor(multiplier/100 % 10);
 					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(multiplier/10 % 10));
 					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(multiplier % 10));
 				});
+
 			}
-
-
 
 			break;
 
 		case 4:
 
-			background = createImage("res/login.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
-			background_left = createImage("res/login.png", backgroundX, backgroundY, "center", -backgroundX, "center", 0, "image");
-			background_right = createImage("res/login.png", backgroundX, backgroundY, "center", backgroundX, "center", 0, "image");
-			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
-
-			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); });
+			menu_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); });
 
 			break;
 
 		case 5:
 
-			background = createImage("res/login.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
-			background_left = createImage("res/login.png", backgroundX, backgroundY, "center", -backgroundX, "center", 0, "image");
-			background_right = createImage("res/login.png", backgroundX, backgroundY, "center", backgroundX, "center", 0, "image");
-			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
-
-			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); });
+			menu_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); });
 
 			break;
 
 		case 6:
 
-			background = createImage("res/login.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
-			background_left = createImage("res/login.png", backgroundX, backgroundY, "center", -backgroundX, "center", 0, "image");
-			background_right = createImage("res/login.png", backgroundX, backgroundY, "center", backgroundX, "center", 0, "image");
-			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
-
-			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); oneWayScene(); });
+			menu_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); oneWayScene(); });
 
 			break;
 
 		case 7:
 
-			background = createImage("res/login.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
-			background_left = createImage("res/login.png", backgroundX, backgroundY, "center", -backgroundX, "center", 0, "image");
-			background_right = createImage("res/login.png", backgroundX, backgroundY, "center", backgroundX, "center", 0, "image");
-			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
-
-			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); });
+			menu_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); });
 
 			break;
 
 		case 8:
 
-			background = createImage("res/login.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
-			background_left = createImage("res/login.png", backgroundX, backgroundY, "center", -backgroundX, "center", 0, "image");
-			background_right = createImage("res/login.png", backgroundX, backgroundY, "center", backgroundX, "center", 0, "image");
 			midground = createImage("res/map.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
 			foreground = createButton("res/map-banner.png", "Select a level", backgroundX, 144, "center", 0, "top", 0 + (144/2), "image", function() {});
 
-			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); });
+			menu_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); });
 
-			level1_indicator = createButton("res/map-indicator.png", "1", indicatorX, indicatorY, "center", 0 - (indicatorX/2 + 72), "bottom", 0 - (indicatorY/2 + 285), "gui", function() {
+			level1_indicator = createButton("res/map-indicator.png", "1", 24, 24, "center", 0 - (24/2 + 72), "bottom", 0 - (24/2 + 285), "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 1;
 				resetLevel();
 				changeScene(3);
 			});
-			level2_indicator = createButton("res/map-indicator.png", "2", indicatorX, indicatorY, "center", 0 - (indicatorX/2 + 285), "bottom", 0 - (indicatorY/2 + 384), "gui", function() {
+
+			level2_indicator = createButton("res/map-indicator.png", "2", 24, 24, "center", 0 - (24/2 + 285), "bottom", 0 - (24/2 + 384), "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 2;
 				resetLevel();
 				changeScene(3);
 			});
-			level3_indicator = createButton("res/map-indicator.png", "3", indicatorX, indicatorY, "center", 0 - (indicatorX/2 + 582), "bottom", 0 - (indicatorY/2 + 174), "gui", function() {
+
+			level3_indicator = createButton("res/map-indicator.png", "3", 24, 24, "center", 0 - (24/2 + 582), "bottom", 0 - (24/2 + 174), "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 3;
 				resetLevel();
 				changeScene(3);
 			});
-			level4_indicator = createButton("res/map-indicator.png", "4", indicatorX, indicatorY, "center", 0 - (indicatorX/2 + 168), "bottom", 0 - (indicatorY/2 + 150), "gui", function() {
+
+			level4_indicator = createButton("res/map-indicator.png", "4", 24, 24, "center", 0 - (24/2 + 168), "bottom", 0 - (24/2 + 150), "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 4;
 				resetLevel();
 				changeScene(3);
 			});
-			level5_indicator = createButton("res/map-indicator.png", "5", indicatorX, indicatorY, "center", 0 - (indicatorX/2 + 72), "top", 0 + (indicatorY/2 + 297), "gui", function() {
+
+			level5_indicator = createButton("res/map-indicator.png", "5", 24, 24, "center", 0 - (24/2 + 72), "top", 0 + (24/2 + 297), "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 5;
 				resetLevel();
 				changeScene(3);
 			});
-			level6_indicator = createButton("res/map-indicator.png", "6", indicatorX, indicatorY, "center", 0 + (indicatorX/2 + 522), "top", 0 + (indicatorY/2 + 150), "gui", function() {
+
+			level6_indicator = createButton("res/map-indicator.png", "6", 24, 24, "center", 0 + (24/2 + 522), "top", 0 + (24/2 + 150), "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 6;
 				resetLevel();
 				changeScene(3);
 			});
-			level7_indicator = createButton("res/map-indicator.png", "7", indicatorX, indicatorY, "center", 0 + (indicatorX/2 + 285), "bottom", 0 - (indicatorY/2 + 384), "gui", function() {
+
+			level7_indicator = createButton("res/map-indicator.png", "7", 24, 24, "center", 0 + (24/2 + 285), "bottom", 0 - (24/2 + 384), "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 7;
@@ -480,12 +444,7 @@ function createGUI() {
 
     case 9:
 
-			background = createImage("res/login.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
-			background_left = createImage("res/login.png", backgroundX, backgroundY, "center", -backgroundX, "center", 0, "image");
-			background_right = createImage("res/login.png", backgroundX, backgroundY, "center", backgroundX, "center", 0, "image");
-			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
-
-			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(3); pauseAnimation(true); visibleButton(true); visibleForm(false);});
+			menu_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(3); pauseAnimation(true); visibleButton(true); visibleForm(false);});
 
       break;
 
@@ -493,33 +452,24 @@ function createGUI() {
 
 	}
 
-	previous_indicator = createImage("res/previous-indicator.png", indicatorX, indicatorY, "center", 0 - 50, "center", 0 + 194, "gui");
-    previous_indicator.addEventListener("click", previousSound);
-    previous_indicator.visible = false;
+	previous_indicator = createImage("res/previous-indicator.png", 24, 24, "center", 0 - 50, "center", 0 + 194, "gui");
+  previous_indicator.addEventListener("click", previousSound);
+  previous_indicator.visible = false;
 
-	pause_indicator = createImage("res/pause-indicator.png", indicatorX, indicatorY, "center", 0, "center", 0 + 194, "gui");
-    pause_indicator.addEventListener("click", playSound);
-    pause_indicator.visible = false;
+	pause_indicator = createImage("res/pause-indicator.png", 24, 24, "center", 0, "center", 0 + 194, "gui");
+  pause_indicator.addEventListener("click", playSound);
+  pause_indicator.visible = false;
 
-	next_indicator = createImage("res/next-indicator.png", indicatorX, indicatorY, "center", 0 + 50, "center", 0 + 194, "gui");
-    next_indicator.addEventListener("click", nextSound);
-    next_indicator.visible = false;
+	next_indicator = createImage("res/next-indicator.png", 24, 24, "center", 0 + 50, "center", 0 + 194, "gui");
+  next_indicator.addEventListener("click", nextSound);
+  next_indicator.visible = false;
 
-	lute = createImage("res/lute.png", luteX, luteY, "center", 0 + 313, "center", 0 + 194, "gui");
-	//antiLute = createImage("res/antiLute.png", luteX, luteY, 2);
-    lute.addEventListener("click", muteSound);
-    lute.visible = false;
+	lute = createImage("res/lute.png", 96, 96, "center", 0 + 313, "center", 0 + 194, "gui");
+	//antiLute = createImage("res/antiLute.png", 96, 96, 2);
+  lute.addEventListener("click", muteSound);
+  lute.visible = false;
 	//antiLute.visible = false;
 	//antiLute.hidden = true;
-
-  // lute.regX = 160;
-  // lute.regY = 160;
-  // createjs.Tween.get(lute, {loop: false})
-  //   .to({x: 400}, 1000, createjs.Ease.getPowInOut(4))
-  //   .to({alpha: 0, y: 75}, 500, createjs.Ease.getPowInOut(2))
-  //   .to({alpha: 0, y: 125}, 100)
-  //   .to({alpha: 1, y: 100}, 500, createjs.Ease.getPowInOut(2))
-  //   .to({x: 100}, 800, createjs.Ease.getPowInOut(2));
 
   landscape_warning = new createjs.Shape();
 
@@ -528,110 +478,120 @@ function createGUI() {
 
 }
 
-
 function pauseAnimation(paused) {
-    if(paused){
-	henchman_left.paused = true;
-	henchman_left_center.paused = true;
-	boss.paused = true;
-	henchman_right.paused = true;
-	henchman_right_center.paused = true;
-	projectile.paused = true;
-/*
-	if(structure_center.currentAnimationFrame != 0 && structure_center.currentAnimationFrame != 11)
+
+  if(paused){
+
+		henchman_left.paused = true;
+		henchman_left_center.paused = true;
+		boss.paused = true;
+		henchman_right.paused = true;
+		henchman_right_center.paused = true;
+		projectile.paused = true;
+
+			/*
+		if(structure_center.currentAnimationFrame != 0 && structure_center.currentAnimationFrame != 11)
 	    structure_center.paused = true;
 
-	if(structure_left_center.currentAnimationFrame != 0 && structure_left_center.currentAnimationFrame != 11)
+		if(structure_left_center.currentAnimationFrame != 0 && structure_left_center.currentAnimationFrame != 11)
 	    structure_left_center.paused = true;
 
-	if(structure_right_center.currentAnimationFrame != 0 && structure_right_center.currentAnimationFrame != 11)
+		if(structure_right_center.currentAnimationFrame != 0 && structure_right_center.currentAnimationFrame != 11)
 	    structure_right_center.paused = true;
 
-	if(structure_left.currentAnimationFrame != 0 && structure_left.currentAnimationFrame != 11)
+		if(structure_left.currentAnimationFrame != 0 && structure_left.currentAnimationFrame != 11)
 	    structure_left.paused = true;
 
-	if(structure_right.currentAnimationFrame != 0 && structure_right.currentAnimationFrame != 11)
+		if(structure_right.currentAnimationFrame != 0 && structure_right.currentAnimationFrame != 11)
 	    structure_right.paused = true;
 
-	if(catapult.currentAnimationFrame != 0 && catapult.currentAnimationFrame != 11)
+		if(catapult.currentAnimationFrame != 0 && catapult.currentAnimationFrame != 11)
 	    catapult.paused = true;
+			*/
 
-*/
-	/*structure_center.paused = true;
-	structure_left_center.paused = true;
-	structure_right_center.paused = true;
-	structure_left.paused = true;
-	structure_right.paused = true;
-	catapult.paused = true;*/
-    }
-    else {
-	henchman_left.paused = false;
-	henchman_left_center.paused = false;
-	boss.paused = false;
-	henchman_right.paused = false;
-	henchman_right_center.paused = false;
-	projectile.paused = false;
-/*
-	if(structure_center.currentAnimationFrame != 0 && structure_center.currentAnimationFrame != 11)
+			/*
+		structure_center.paused = true;
+		structure_left_center.paused = true;
+		structure_right_center.paused = true;
+		structure_left.paused = true;
+		structure_right.paused = true;
+		catapult.paused = true;
+			*/
+
+  } else {
+
+		henchman_left.paused = false;
+		henchman_left_center.paused = false;
+		boss.paused = false;
+		henchman_right.paused = false;
+		henchman_right_center.paused = false;
+		projectile.paused = false;
+
+			/*
+		if(structure_center.currentAnimationFrame != 0 && structure_center.currentAnimationFrame != 11)
 	    structure_center.paused = false;
 
-	if(structure_left_center.currentAnimationFrame != 0 && structure_left_center.currentAnimationFrame != 11)
+		if(structure_left_center.currentAnimationFrame != 0 && structure_left_center.currentAnimationFrame != 11)
 	    structure_left_center.paused = false;
 
-	if(structure_right_center.currentAnimationFrame != 0 && structure_right_center.currentAnimationFrame != 11)
+		if(structure_right_center.currentAnimationFrame != 0 && structure_right_center.currentAnimationFrame != 11)
 	    structure_right_center.paused = false;
 
-	if(structure_left.currentAnimationFrame != 0 && structure_left.currentAnimationFrame != 11)
+		if(structure_left.currentAnimationFrame != 0 && structure_left.currentAnimationFrame != 11)
 	    structure_left.paused = false;
 
-	if(structure_right.currentAnimationFrame != 0 && structure_right.currentAnimationFrame != 11)
+		if(structure_right.currentAnimationFrame != 0 && structure_right.currentAnimationFrame != 11)
 	    structure_right.paused = false;
 
-	if(catapult.currentAnimationFrame != 0 && catapult.currentAnimationFrame != 11)
-	    catapult.paused = false;
-*/
-	/*structure_center.paused = false;
-	structure_left_center.paused = false;
-	structure_right_center.paused = false;
-	structure_left.paused = false;
-	structure_right.paused = false;
-	catapult.paused = false;*/
+		if(catapult.currentAnimationFrame != 0 && catapult.currentAnimationFrame != 11)
+			catapult.paused = false;
+			*/
+
+			/*
+		structure_center.paused = false;
+		structure_left_center.paused = false;
+		structure_right_center.paused = false;
+		structure_left.paused = false;
+		structure_right.paused = false;
+		catapult.paused = false;
+			*/
+
     }
 }
 
 function visibleButton(visible) {
 
-    if(visible) {
+  if(visible) {
 
-			login_button.visible = false;
-			pause_menu.visible = true;
-			close_button.visible = true;
-			main_menu_button.visible = true;
-			exit_level_button.visible = true;
-			settings_button.visible = true;
-			previous_indicator.visible = true;
-			pause_indicator.visible = true;
-			next_indicator.visible = true;
-			lute.visible = true;
-			//antiLute.visible = true;
-			hint_button.visible = true;
+		menu_button.visible = false;
+		pause_menu.visible = true;
+		close_button.visible = true;
+		main_menu_button.visible = true;
+		exit_level_button.visible = true;
+		settings_button.visible = true;
+		previous_indicator.visible = true;
+		pause_indicator.visible = true;
+		next_indicator.visible = true;
+		lute.visible = true;
+		//antiLute.visible = true;
+		hint_button.visible = true;
 
-    } else {
+  } else {
 
-			login_button.visible = true;
-			pause_menu.visible = false;
-			close_button.visible = false;
-			main_menu_button.visible = false;
-			exit_level_button.visible = false;
-			settings_button.visible = false;
-			previous_indicator.visible = false;
-			pause_indicator.visible = false;
-			next_indicator.visible = false;
-			lute.visible = false;
-			//antiLute.visible = false;
-			hint_button.visible = false;
+		menu_button.visible = true;
+		pause_menu.visible = false;
+		close_button.visible = false;
+		main_menu_button.visible = false;
+		exit_level_button.visible = false;
+		settings_button.visible = false;
+		previous_indicator.visible = false;
+		pause_indicator.visible = false;
+		next_indicator.visible = false;
+		lute.visible = false;
+		//antiLute.visible = false;
+		hint_button.visible = false;
 
-    }
+  }
 
 }
 

@@ -1,116 +1,83 @@
-var num_scenes = 10;
-
-var scene_bg_colors = [
-
-  "#919191", // login
-  "#919191", // signup
-  "#8ac5dc", // menu
-  "#000000", // game
-  "#919191", // stats
-  "#919191", // how 2 play
-  "#919191", // settings
-  "#919191", // account
-  "#fffcd8", // map
-  "#919191"  // hint
-
-];
-
-var scene_forms = [
-
-  function() { createLoginForm(); },
-  function() { createSignupForm(); },
-  function() { createMenuForm(); },
-  function() { createGameForm();
-    createLevel();
-    if (stage.canvas.width < 900) {
-
-    } else {
-      document.getElementById("entryInput").value = 0;
-    }
-    document.getElementById("myDropdown").classList.toggle("show");
-  },
-  // This was in stats scene, may need this structure
-  // var key = message.current_user;
-  // stats1_text.text = "Hits: " + database["stats"][key]["hits"];
-  // stats2_text.text = "Misses: " + database["stats"][key]["misses"];
-  function() { createStatsForm(); },
-  function() { createHow2PlayForm(); },
-  function() { createSettingsForm(); },
-  // This was in account scene, may need this structure
-  // var key = message.current_user;
-  // username_text.text = "Fullname: " + database["users"][key]["firstname"] + " " + database["users"][key]["lastname"];
-  // password_text.text = "Password: " + database["users"][key]["password"];
-  function() { createAccountForm(); },
-  function() { },
-  // function() { createMapForm(); },
-  function() { createHintForm(); }
-
-];
-
-function loadScene() {
-
-  bg_color = scene_bg_colors[current_scene];
-
-  switch(current_scene) {
-
-    case 3:
-  		loadLevel();
-  		//loadGUI();
-      break;
-
-  }
-
-}
-
 function createScene() {
 
   stage.addChild(bg);
   bg.graphics.clear()
   bg.graphics.beginFill(bg_color).drawRect(0, 0, stage.canvas.width, stage.canvas.height);
 
-  scene_forms[current_scene]();
+  background = createImage(scene_bg_imgs[current_scene], backgroundX, backgroundY, "center", 0, "center", 0, "image");
+  background_left = createImage(scene_bg_imgs[current_scene], backgroundX, backgroundY, "center", -backgroundX, "center", 0, "image");
+  background_right = createImage(scene_bg_imgs[current_scene], backgroundX, backgroundY, "center", backgroundX, "center", 0, "image");
+
+  if (current_scene != 8) {
+    foreground = createImage(scene_fg_imgs[current_scene], backgroundX, backgroundY, "center", 0, "center", 0, "image");
+  }
+
+  if (current_scene == 2) {
+    background = createImage("res/menu.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
+    background_left = createImage("res/menu-left.png", backgroundX, backgroundY, "center", 0 - (backgroundX), "center", 0, "image");
+    background_right = createImage("res/menu-right.png", backgroundX, backgroundY, "center", 0 + (backgroundX), "center", 0, "image");
+  }
+
+  if (current_scene == 3) {
+    createLevel();
+  }
 
 	createGUI();
 
-  console.log(entity_component_system);
+  scene_forms[current_scene]();
+
+  // console.log(entity_component_system);
+
+}
+
+// Load the scene in the variable current_scene
+function loadCurrentScene() {
+
+  // Load background color for the scene
+  bg_color = scene_bg_colors[current_scene];
+
+  // If the current scene is the game load the special level assets
+  if (current_scene == 3) {
+
+      loadLevel();
+
+  }
+
+  // Destroy the last scene
+  destroyScene();
+
+  // Create the new scene
+  createScene();
+
+  // Resize everything for scaling
+  resize();
 
 }
 
 function changeScene(new_scene) {
 
+  // Set the current scene to the new scene
   last_scene = current_scene;
   current_scene = new_scene;
 
-  loadScene();
-  destroyScene();
-  createScene();
-  resize();
+  // Load the scene
+  loadCurrentScene();
 
 }
 
 function oneWayScene() {
 
-  if(last_scene != 3){
+  // Switch the current and last screen
+  var temp = current_scene;
+  current_scene = last_scene;
+  last_scene = temp;
 
-  	var temp = current_scene;
-  	current_scene = last_scene;
-  	last_scene = temp;
+  // Load the scene
+  loadCurrentScene();
 
-  	loadScene();
-  	destroyScene();
-  	createScene();
-  	resize();
+  // If the last scene was the game open with the pause screen
+  if (last_scene == 3) {
 
-  } else{
-
-  	var temp = current_scene;
-  	current_scene = last_scene;
-  	last_scene = temp;
-
-  	loadScene();
-  	destroyScene();
-  	createScene();
-  	resize();
   	pauseAnimation(true);
   	visibleButton(true);
   	visibleForm(false);

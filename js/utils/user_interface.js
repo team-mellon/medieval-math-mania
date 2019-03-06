@@ -18,7 +18,7 @@ function createImage(location, width, height, x_lock, x_location, y_lock, y_loca
     type: type
   };
 
-  entity_component_system.push(entity_object);
+  ecs.push(entity_object);
 
   return image;
 
@@ -43,7 +43,32 @@ function createSprite(animation, width, height, x_lock, x_location, y_lock, y_lo
     type: type
   };
 
-  entity_component_system.push(entity_object);
+  ecs.push(entity_object);
+
+  return sprite;
+
+}
+
+function createLevelSprite(animation, width, height, x_lock, x_location, y_lock, y_location, type) {
+
+  var spriteSheet = new createjs.SpriteSheet(animation);
+  var sprite = new createjs.Sprite(spriteSheet);
+  stage.addChild(sprite);
+  sprite.regX = width/2;
+  sprite.regY = height/2;
+
+  var entity_object = {
+    object: sprite,
+    width: width,
+    height: height,
+    x_lock: x_lock,
+    x_location: x_location,
+    y_lock: y_lock,
+    y_location: y_location,
+    type: type
+  };
+
+  lcs.push(entity_object);
 
   return sprite;
 
@@ -127,7 +152,7 @@ function createButton(location, text, width, height, x_lock, x_location, y_lock,
     type: type
   };
 
-  entity_component_system.push(entity_object);
+  ecs.push(entity_object);
 
   return button;
 
@@ -151,7 +176,31 @@ function createText(num, font, size, style, color, width, height, x_lock, x_loca
     type: type
   };
 
-  entity_component_system.push(entity_object);
+  ecs.push(entity_object);
+
+  return text;
+
+}
+
+function createLevelText(num, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type) {
+
+  var text = new createjs.Text(num, style + " " + size + " " + font, color);
+	stage.addChild(text);
+  text.regX = width/2;
+  text.regY = height/2;
+
+  var entity_object = {
+    object: text,
+    width: width,
+    height: height,
+    x_lock: x_lock,
+    x_location: x_location,
+    y_lock: y_lock,
+    y_location: y_location,
+    type: type
+  };
+
+  lcs.push(entity_object);
 
   return text;
 

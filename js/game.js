@@ -534,7 +534,8 @@ function tick(event) {
 
 
     }
-	//Mors omnibus tyrannis
+
+	  //Mors omnibus tyrannis
     if (hide_knight) {
       boss.alpha = 0;
     } else {
@@ -606,6 +607,7 @@ function tick(event) {
   stage.update(event);
 
 }
+
 //generates range for each level
 function genRange() {
 	//exactly one multiple of multiplicand in range, single digit multiplicand

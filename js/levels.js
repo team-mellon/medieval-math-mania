@@ -1,23 +1,17 @@
-var num_levels = 2;
 var current_level = 1;
 
 var number_text;
 var number_spacing = 10;
 var number_spacer = 25;
-var numberline;
 
+var numberline;
 var numberlineS;
 
 var big_boss;
-
 var big_bossS;
 
 var boss;
-
 var bossS;
-
-var bossX = 96;
-var bossY = 96;
 
 var henchman_left,
     henchman_left_center,
@@ -25,9 +19,6 @@ var henchman_left,
     henchman_right;
 
 var henchmanS;
-
-var henchmanX = 96;
-var henchmanY = 96;
 
 var end_level_flag;
 var end_level_flagS;
@@ -40,6 +31,7 @@ var structure_center,
     structure_right,
     structure_facade,
     structure_banner;
+
 var center,
     left_center,
     right_center,
@@ -70,77 +62,16 @@ var firework_lowS,
     firework_highS;
 
 var projectile;
-
 var projectileS;
 
-var projectileX = 96;
-var projectileY = 96;
-
 var catapult;
-
 var catapultS;
-
-var catapultX = 288;
-var catapultY = 384;
 
 var preload;
 
 function loadLevel() {
 
-  switch(current_level) {
-
-    case 1: // City
-      bg_color = "#c9e6ff";
-      break;
-
-    case 2: // Grasslands
-      bg_color = "#c9f9ff";
-      break;
-
-    case 3: // Volcano
-      bg_color = "#3b0a0a";
-      break;
-
-    case 4: // Sea
-      bg_color = "#c2ffe6";
-      break;
-
-    // case 5: // Mountains
-    //   bg_color = "#b3b3b3";
-    //   break;
-
-    // case 6: // Summit
-    //   bg_color = "#effffe";
-    //   break;
-
-    // case 7: // Cave
-    //   bg_color = "#010027";
-    //   break;
-
-    case 5: // Forest
-      bg_color = "#2f3b25";
-      break;
-
-    case 6: // Alpine
-      bg_color = "#cae3e9";
-      break;
-
-    // case 7: // Woods
-    //   bg_color = "#3f2900";
-    //   break;
-
-    case 7: // Swamp
-      bg_color = "#292c2b";
-      break;
-
-    // case 9: // Deadlands
-    //   bg_color = "#231e25";
-    //   break;
-
-    default:
-      // code block
-
-  }
+  bg_color = level_bg_colors[current_level - 1];
 
   loadImage();
 
@@ -282,95 +213,65 @@ function loadImage() {
 function createLevel() {
 
   // Level structure in background
-  structure_center = createSprite(centerS, structureX, structureY, "center", 0, "center", 0, "image");
-  structure_left_center = createSprite(left_centerS, structureX, structureY, "center", 0, "center", 0, "image");
-  structure_right_center = createSprite(right_centerS, structureX, structureY, "center", 0, "center", 0, "image");
+  structure_center = createLevelSprite(centerS, structureX, structureY, "center", 0, "center", 0, "image");
+  structure_left_center = createLevelSprite(left_centerS, structureX, structureY, "center", 0, "center", 0, "image");
+  structure_right_center = createLevelSprite(right_centerS, structureX, structureY, "center", 0, "center", 0, "image");
 
   // Bad guys in midground
-  henchman_left = createSprite(henchmanS, henchmanX, henchmanY, "center", 0 - (henchmanX/2 + 625), "center", 0 + (24), "image");
+  henchman_left = createLevelSprite(henchmanS, 96, 96, "center", 0 - (96/2 + 625), "center", 0 + (24), "image");
   henchman_left.gotoAndPlay(0);
-  henchman_left_center = createSprite(henchmanS, henchmanX, henchmanY, "center", 0 - (henchmanX/2 + 375), "center", 0, "image");
+  henchman_left_center = createLevelSprite(henchmanS, 96, 96, "center", 0 - (96/2 + 375), "center", 0, "image");
   henchman_left_center.gotoAndPlay(0);
-  boss = createSprite(bossS, bossX, bossY, "center", 0, "center", 0, "image");
+  boss = createLevelSprite(bossS, 96, 96, "center", 0, "center", 0, "image");
   boss.gotoAndPlay(0);
-  henchman_right_center = createSprite(henchmanS, henchmanX, henchmanY, "center", 0 + (henchmanX/2 + 375), "center", 0, "image");
+  henchman_right_center = createLevelSprite(henchmanS, 96, 96, "center", 0 + (96/2 + 375), "center", 0, "image");
   henchman_right_center.gotoAndPlay(0);
-  henchman_right = createSprite(henchmanS, henchmanX, henchmanY, "center", 0 + (henchmanX/2 + 625 ), "center", 0 + (24), "image");
+  henchman_right = createLevelSprite(henchmanS, 96, 96, "center", 0 + (96/2 + 625 ), "center", 0 + (24), "image");
   henchman_right.gotoAndPlay(0);
 
   // Level structure in foreground
-  structure_body = createSprite(bodyS, structureX, structureY, "center", 0, "center", 0, "image");
-  structure_left = createSprite(leftS, structureX, structureY, "center", 0, "center", 0, "image");
-  structure_right = createSprite(rightS, structureX, structureY, "center", 0, "center", 0, "image");
-  structure_banner = createSprite(bannerS, structureX, structureY, "center", 0, "center", 0, "image");
-  structure_facade = createSprite(facadeS, structureX, structureY, "center", 0, "center", 0, "image");  // Level structure in foreground
+  structure_left = createLevelSprite(leftS, structureX, structureY, "center", 0, "center", 0, "image");
+  structure_right = createLevelSprite(rightS, structureX, structureY, "center", 0, "center", 0, "image");
+  structure_body = createLevelSprite(bodyS, structureX, structureY, "center", 0, "center", 0, "image");
+  structure_banner = createLevelSprite(bannerS, structureX, structureY, "center", 0, "center", 0, "image");
+  structure_facade = createLevelSprite(facadeS, structureX, structureY, "center", 0, "center", 0, "image");  // Level structure in foreground
 
-  firework_low = createSprite(firework_lowS, structureX, structureY, "center", 0, "center", 0, "image");
-  firework_hit = createSprite(firework_hitS, structureX, structureY, "center", 0, "center", 0, "image");
-  firework_high = createSprite(firework_highS, structureX, structureY, "center", 0, "center", 0, "image");
+  firework_low = createLevelSprite(firework_lowS, structureX, structureY, "center", 0, "center", 0, "image");
+  firework_hit = createLevelSprite(firework_hitS, structureX, structureY, "center", 0, "center", 0, "image");
+  firework_high = createLevelSprite(firework_highS, structureX, structureY, "center", 0, "center", 0, "image");
 
   // Main character in foreground
-  projectile = createSprite(projectileS, projectileX, projectileY, "center", 0, "bottom", 0 - (projectileY/2 + 57), "image");
+  projectile = createLevelSprite(projectileS, 96, 96, "center", 0, "bottom", 0 - (96/2 + 57), "image");
   projectile.gotoAndPlay(0);
-  catapult = createSprite(catapultS, catapultX, catapultY, "center", 0, "bottom", 0 - (catapultY/2 - 57), "image");
+  catapult = createLevelSprite(catapultS, 288, 384, "center", 0, "bottom", 0 - (384/2 - 57), "image");
 
   // number_spacing = 10;
   number_spacer = 25;
 
   for(i = -25; i <= 25; i++){
-  	var temp = createText(i.toString(), "Arial", "16px", "bold", "black", structureX, structureY, "center", 0 - (((number_spacer * 48) + 5)), "top", 30, "image");
+  	var temp = createLevelText(i.toString(), "Arial", "16px", "bold", "black", structureX, structureY, "center", 0 - (((number_spacer * 48) + 5)), "top", 30, "image");
   	number_text.push(temp);
     // number_spacing += 48;
     number_spacer--;
   }
 
-  numberline = createSprite(numberlineS, structureX, structureY, "center", 0, "center", 0, "image");
+  numberline = createLevelSprite(numberlineS, structureX, structureY, "center", 0, "center", 0, "image");
 
-  end_level_flag = createSprite(end_level_flagS, structureX, structureY, "center", 0, "center", 0, "image");
+  end_level_flag = createLevelSprite(end_level_flagS, structureX, structureY, "center", 0, "center", 0, "image");
   end_level_flag.visible = false;
 
 }
 
 function destroyLevel() {
 
-  stage.removeChild(end_level_flag);
-  // Level structure in background
-  stage.removeChild(structure_center);
-  stage.removeChild(structure_left_center);
-  stage.removeChild(structure_right_center);
+  for (var i = 0; i < lcs.length; i++) {
 
-  // Bad guys in midground
-  stage.removeChild(henchman_left);
-  stage.removeChild(henchman_left_center);
-  stage.removeChild(boss);
-  stage.removeChild(henchman_right_center);
-  stage.removeChild(henchman_right);
+    stage.removeChild(lcs[i].object)
 
-  // Level structure in foreground
-  stage.removeChild(structure_body);
-  stage.removeChild(structure_left);
-  stage.removeChild(structure_right);
-  stage.removeChild(structure_banner);
-  stage.removeChild(structure_facade);
-
-  stage.removeChild(firework_low);
-  stage.removeChild(firework_hit);
-  stage.removeChild(firework_high);
-
-  // Main character in foreground
-  stage.removeChild(projectile);
-  stage.removeChild(catapult);
-
-
-  // REMOVE THIS!!!!! BUT ALSO THE REST OF IT
-  stage.removeChild(lute);
-  stage.removeChild(big_boss);
-
-  stage.removeChild(numberline);
-  
-  for(var i = 0; i < 50; i++) {
-     stage.removeChild(number_text[i]);
   }
+
+  lcs = [];
+
 }
 
 function changeLevel(new_level) {
@@ -395,6 +296,8 @@ function changeLevel(new_level) {
 }
 
 function myFunction(e) {
+
   e.preventDefault();
   document.getElementById("myDropdown").classList.toggle("show");
+
 }

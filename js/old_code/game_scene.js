@@ -1,13 +1,5 @@
   scene.clearColor = new BABYLON.Color4(0.78, 1, 0.98, 1);
 
-	// var foreground = new BABYLON.Layer("fore", "hit-target-castle-facade-concept-high-res.png", scene);
-	// foreground.isBackground = false;
-
-	//sound effects initialized
-	var firing  = new BABYLON.Sound("firing", "res/sound_effects/catapult_firing.wav", scene, null, { loop: false, autoplay: false});
-	var reload  = new BABYLON.Sound("reloading", "res/sound_effects/catapult_cocking.wav", scene, null, { loop: false, autoplay: false});
-	var lighting  = new BABYLON.Sound("lighting", "res/sound_effects/fire_lighting.wav", scene, null, { loop: false, autoplay: false});
-
 	//><><><><><><><><><>< START OF NUMBER LINE CODE ><><><><><><><><><><
 
 	var line = new BABYLON.GUI.Line();
