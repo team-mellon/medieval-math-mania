@@ -70,12 +70,15 @@ function createGUI() {
 
 		case 0:
 
-			background = createImage("res/login.png", backgroundX, backgroundY);
-			background_left = createImage("res/login.png", backgroundX, backgroundY);
-			background_right = createImage("res/login.png", backgroundX, backgroundY);
-			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
+			background = createImage("res/login.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
+			background_left = createImage("res/login.png", backgroundX, backgroundY, "center", -backgroundX, "center", 0, "image");
+			background_right = createImage("res/login.png", backgroundX, backgroundY, "center", backgroundX, "center", 0, "image");
+			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
 
-			left_sword_button = createButton("res/sword-left.png", "Login", buttonX, buttonY, function() {
+			// scale_to_canvas(left_sword_button, "center", 0 - (buttonX/2 + 10) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "image");
+			// scale_to_canvas(right_sword_button, "center", 0 + (buttonX/2 + 50) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "image");
+
+			left_sword_button = createButton("res/sword-left.png", "Login", buttonX, buttonY, "center", -(buttonX/2 + 30), "center", (buttonY/2 + 200), "image", function() {
 				createjs.Sound.play("sword");
 				var key = document.getElementById('usernameInput').value;
 				if(key in database.users) {
@@ -101,8 +104,19 @@ function createGUI() {
 					// login_error.alpha = 1;
 				}
 			});
-			right_sword_button = createButton("res/sword-right.png", "Signup", buttonX, buttonY, function() {createjs.Sound.play("sword"); changeScene(1); });
-			secret_button = createButton("res/secret_button.png", "", backgroundX, backgroundY, function() {createjs.Sound.play("sword"); changeScene(8); });
+
+			right_sword_button = createButton("res/sword-right.png", "Signup", buttonX, buttonY, "center", (buttonX/2 + 65), "center", (buttonY/2 + 200), "image", function() {
+				createjs.Sound.play("sword"); changeScene(1);
+			});
+
+			secret_button = createButton("res/secret_button.png", "", backgroundX, backgroundY, "center", 0, "center", 0, "image", function() {
+				createjs.Sound.play("sword"); changeScene(8);
+			});
+
+			// if (stage.canvas.width < 900) {
+			// 	scale_to_canvas(left_sword_button, "center", 0 - (buttonX/2 + 30) * scene_scale_Y, "center", 0 + (buttonY/2 + 200) * scene_scale_Y, "smallgui");
+			// 	scale_to_canvas(right_sword_button, "center", 0 + (buttonX/2 + 65) * scene_scale_Y, "center", 0 + (buttonY/2 + 200) * scene_scale_Y, "smallgui");
+			// } else {
 
 			break;
 
@@ -486,22 +500,7 @@ function scaleGUI() {
 
 		case 0:
 
-			scale_to_canvas(background, "center", 0, "center", 0, "image");
-			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
-			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
-			scale_to_canvas(foreground, "center", 0, "center", 0, "image");
 
-			// scale_to_canvas(left_sword_button, "center", 0 - (buttonX/2 + 10) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "image");
-			// scale_to_canvas(right_sword_button, "center", 0 + (buttonX/2 + 50) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "image");
-
-      if (stage.canvas.width < 900) {
-  			scale_to_canvas(left_sword_button, "center", 0 - (buttonX/2 + 30) * scene_scale_Y, "center", 0 + (buttonY/2 + 200) * scene_scale_Y, "smallgui");
-  			scale_to_canvas(right_sword_button, "center", 0 + (buttonX/2 + 65) * scene_scale_Y, "center", 0 + (buttonY/2 + 200) * scene_scale_Y, "smallgui");
-      } else {
-  			scale_to_canvas(left_sword_button, "center", 0 - (buttonX/2 + 30) * scene_scale_Y, "center", 0 + (buttonY/2 + 200) * scene_scale_Y, "image");
-  			scale_to_canvas(right_sword_button, "center", 0 + (buttonX/2 + 65) * scene_scale_Y, "center", 0 + (buttonY/2 + 200) * scene_scale_Y, "image");
-      }
-			scale_to_canvas(secret_button, "center", 0, "center", 0, "image");
 
 			break;
 

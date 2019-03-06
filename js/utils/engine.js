@@ -145,35 +145,83 @@ function scale_to_canvas(image, x_lock, x_location, y_lock, y_location, type) {
 
 }
 
-// // Scale the image-like assets
-// function scale_to_canvas(image, x_lock, x_location, y_lock, y_location, type) {
-//
-//   for (var i = 0; i < entity_component_system.length; i++) {
-//
-//     entity_component_system[i].object.scaleX = scene_scale_X;
-//     entity_component_system[i].object.scaleY = scene_scale_Y;
-//
-//     if (stage.canvas.width < 900) {
-//
-//       switch (type) {
-//         case "image":
-//           break;
-//         case "gui":
-//           entity_component_system[i].object.scale = 1.0;
-//           break;
-//         case "smallgui":
-//           entity_component_system[i].object.scale = 0.5;
-//           break;
-//       }
-//
-//     }
-//
-//     entity_component_system[i].object.x = entity_component_system[i].x_lock + entity_component_system[i].x_location;
-//     entity_component_system[i].object.y = entity_component_system[i].y_lock + entity_component_system[i].y_location;
-//
-//   }
-//
-// }
+// Scale the image-like assets
+function scale_assets() {
+
+  for (var i = 0; i < entity_component_system.length; i++) {
+
+    var x_start = stage.canvas.width / 2;
+    var y_start = stage.canvas.height / 2;
+
+    entity_component_system[i].object.scaleX = scene_scale_X;
+    entity_component_system[i].object.scaleY = scene_scale_Y;
+
+    if (stage.canvas.width < 900) {
+
+      switch (entity_component_system[i].type) {
+
+        case "image":
+          break;
+
+        case "gui":
+          entity_component_system[i].object.scale = 1.0;
+          break;
+
+        case "smallgui":
+          entity_component_system[i].object.scale = 0.5;
+          break;
+
+      }
+
+    }
+
+    switch (entity_component_system[i].x_lock) {
+
+      case "left":
+        var x_start = 0;
+        break;
+
+      case "center":
+        var x_start = stage.canvas.width / 2;
+        break;
+
+      case "right":
+        var x_start = stage.canvas.width;
+        break;
+
+    }
+
+    switch (entity_component_system[i].y_lock) {
+
+      case "top":
+        var y_start = 0;
+        break;
+
+      case "center":
+        var y_start = stage.canvas.height / 2;
+        break;
+
+      case "bottom":
+        var y_start = stage.canvas.height;
+        break;
+
+    }
+
+    if (stage.canvas.width < 900) {
+
+      entity_component_system[i].object.x = x_start + entity_component_system[i].x_location;
+      entity_component_system[i].object.y = y_start + entity_component_system[i].y_location;
+
+    } else {
+
+      entity_component_system[i].object.x = x_start + entity_component_system[i].x_location * scene_scale_Y;
+      entity_component_system[i].object.y = y_start + entity_component_system[i].y_location * scene_scale_Y;
+
+    }
+
+  }
+
+}
 
 // Scale the stage
 function resize() {
@@ -237,6 +285,8 @@ function resize() {
   }
 
   scaleGUI();
+
+  scale_assets();
 
   stage.update()
 
