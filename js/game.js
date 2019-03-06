@@ -78,350 +78,326 @@ var equal = " = ";
 var solution = 0;
 
 function tick(event) {
+
   //Calls external function to generate ranges for each level, this is reset when each level is selected on level select
+
   if (current_scene == 3 && pause_menu.visible == false) {
-	if(!generated)
-	{
-		genRange();
-		generated = true;
-	}
 
-    //Key checks at the beginning of the update loop
-	// made the level generate this instead of spacebar since thats the game will work anyway
-    /*if (keys[32]){ // Spacebar to randomize the range
+    // If the range is not generated
+  	if(!generated) {
 
-      // Generate new range
-      rand_num1 = Math.floor((Math.random() * 10) + 1);
-      rand_num2 = Math.floor((Math.random() * 100) + 1);
-      multiplicand = Math.floor(Math.random() * 11);
-      lower = rand_num1 * rand_num2;
-      upper = rand_num1 * (rand_num2 + 3);
+      // Generate the range
+  		genRange();
+  		generated = true;
 
-      // Clear the range banner
-      var range_div = document.getElementById("rangeDiv");
-      while (range_div.firstChild) {
-        range_div.removeChild(range_div.firstChild);
-      }
+  	}
 
-      var multip_div = document.getElementById("multiplicandText");
-      while (multip_div.firstChild) {
-        multip_div.removeChild(multip_div.firstChild);
-      }
+    // Key checks at the beginning of the update loop
+    // Spacebar to randomize the range
+    // if (keys[32]){
+      // randomizeRangeAndMultiplier();
+    // }
 
-      var multip = document.createTextNode(multiplicand);
-      multip_div.appendChild( multip);
-
-      // Remake the display for the banner
-      var left_paren = document.createTextNode("[");
-      var lower_number = document.createTextNode(lower);
-      var middle_comma = document.createTextNode(", ");
-      var upper_number = document.createTextNode(upper);
-      var right_paren = document.createTextNode("]");
-
-      // Append the display
-      range_div.appendChild(left_paren);
-      range_div.appendChild(lower_number);
-      range_div.appendChild(middle_comma);
-      range_div.appendChild(upper_number);
-      range_div.appendChild(right_paren);
-
-    }*/
-
+    // Enter or swipe up to check input
     if ((keys[13] || drag_up) && catapult.paused) { // Enter or drag up swipe on mobile
-
-      // Reset drag_up bool;
-      drag_up = false;
-
-      console.log("HIT: " + hit_counter);
-      console.log("MU" + miss_upper_counter);
-      console.log("ML" + miss_lower_counter);
-
-      // Need to check for input correctness here
-      // No letters or symbols only numbers
-
-      valid = true;
-
-        if (stage.canvas.width < 900) {
-
-          for (var x in history_list) {
-            console.log(history_list[x]);
-            console.log(entry);
-            // if (multiplier == history_list[x]){
-            //   valid = false;
-            // }
-          }
-          if (valid) {
-
-			      // Add to history
-            console.log(history_list);
-            history_list.push(multiplier);
-            var dropdown = document.getElementById("myDropdown");
-            var history_entry = document.createTextNode(multiplier);
-            var line_break = document.createElement("br");
-            dropdown.appendChild(history_entry);
-            dropdown.appendChild(line_break);
-
-            // Actual math
-            solution = multiplier * multiplicand;
-			      solution = Math.floor10(solution, -1);
-            var solut_div = document.getElementById("solutionText");
-            while (solut_div.firstChild) {
-              solut_div.removeChild(solut_div.firstChild);
-            }
-
-            var solut = document.createTextNode(solution);
-            solut_div.appendChild(solut);
-
-            clearGameForm();
-
-            if (solution <= upper && solution >= lower) {
-              hit = true;
-              console.log("hit");
-              catapult.gotoAndPlay(0);
-              // Triggering other fired events
-              fired = true;
-      			}
-      			else if (solution > upper) {
-              miss_upper = true;
-              console.log("miss upper");
-              catapult.gotoAndPlay(0);
-              // Triggering other fired events
-              fired = true;
-            }
-      			else if (solution < lower) {
-              miss_lower = true;
-              console.log("miss lower");
-              catapult.gotoAndPlay(0);
-              // Triggering other fired events
-              fired = true;
-            }
-
-            multiplier = 0;
-            document.getElementById("hundredsPlace").textContent = Math.floor(multiplier/100 % 10);
-            document.getElementById("tensPlace").textContent = Math.abs(Math.floor(multiplier/10 % 10));
-            document.getElementById("onesPlace").textContent = Math.abs(Math.floor(multiplier % 10));
-
-          }
-
-        } else {
-
-          // Parse entry
-          var entry = parseInt(document.getElementById("entryInput").value);
-          console.log("Entry type: " + typeof entry);
-          console.log("Entry: " + entry);
-
-          if ((typeof entry) == "number") {
-
-            if (Number.isNaN(entry)) {
-              entry_is_correct = false;
-
-            } else {
-		          //this is where to add level specific rules should they prove neccesary, at the moment they are not
-              entry_is_correct = true;
-            }
-
-          } else {
-            entry_is_correct = false;
-          }
-          for (var x in history_list) {
-            console.log(history_list[x]);
-            console.log(entry);
-			      //Commented out for sake of sprint
-            /*if (entry == history_list[x]) {
-              valid = false;
-            }*/
-          }
-          // Animate the catapult
-          if (entry_is_correct && valid) {
-            multiplier = document.getElementById("entryInput").value;
-
-      			// Add to history
-            history_list.push(multiplier);
-            console.log(history_list);
-            var dropdown = document.getElementById("myDropdown");
-            var history_entry = document.createTextNode(multiplier);
-            var line_break = document.createElement("br");
-            dropdown.appendChild(history_entry);
-            dropdown.appendChild(line_break);
-
-
-            // Actual math
-            solution = multiplier * multiplicand;
-
-            var solut_div = document.getElementById("solutionText");
-            while (solut_div.firstChild) {
-              solut_div.removeChild(solut_div.firstChild);
-            }
-
-            var solut = document.createTextNode(solution);
-            solut_div.appendChild(solut);
-
-            clearGameForm();
-
-            document.getElementById("entryInput").value = "";
-
-            if (solution <= upper && solution >= lower) {
-      			  //Plays reload sfx
-      			  createjs.Sound.play("firing");
-      			  createjs.Sound.play("reload", delayRe);
-              hit = true;
-              console.log("hit");
-              catapult.gotoAndPlay(0);
-              // Triggering other fired events
-              fired = true;
-      			  //plays sound for lighting fireball and hitting castle
-      			  createjs.Sound.play("light");
-      			  createjs.Sound.play("crumble", delayIn);
-            } else if (solution > upper) {
-      			  //Plays reload sfx
-      			  createjs.Sound.play("firing");
-      			  createjs.Sound.play("reload", delayRe);
-              miss_upper = true;
-              console.log("miss upper");
-              catapult.gotoAndPlay(0);
-              // Triggering other fired events
-              fired = true;
-      			  //plays sound for lighting fireball and hitting castle
-      			  createjs.Sound.play("light");
-      			  createjs.Sound.play("crumble", delayOut);
-            } else if (solution < lower) {
-      			  //Plays reload sfx
-      			  createjs.Sound.play("firing");
-      			  createjs.Sound.play("reload", delayRe);
-              miss_lower = true;
-              console.log("miss lower");
-              catapult.gotoAndPlay(0);
-              // Triggering other fired events
-              fired = true;
-      			  //plays sound for lighting fireball and hitting castle
-      			  createjs.Sound.play("light");
-      			  createjs.Sound.play("crumble", delayOut);
-            }
-          }
-        }
-
-      // console.log(projectile.alpha);
-
+      runInput();
     }
 
+    // If on mobile
     if (stage.canvas.width < 900) {
-
-      if (digit != last_digit) {
-
-        switch(digit) {
-
-          case 0:
-            adder = 100;
-            document.getElementById("hundredsPlace").style.color = "red";
-            document.getElementById("tensPlace").style.color = "black";
-            document.getElementById("onesPlace").style.color = "black";
-            break;
-          case 1:
-            adder = 10;
-            document.getElementById("hundredsPlace").style.color = "black";
-            document.getElementById("tensPlace").style.color = "red";
-            document.getElementById("onesPlace").style.color = "black";
-            break;
-          case 2:
-            adder = 1;
-            document.getElementById("hundredsPlace").style.color = "black";
-            document.getElementById("tensPlace").style.color = "black";
-            document.getElementById("onesPlace").style.color = "red";
-            break;
-
-        }
-
-        last_digit = digit;
-
-      }
-
+      // Check which digit is selected and highlight it
+      checkSelectedDigit();
     }
 
+    // Run through and finish animations that play once
     updateSinglePlayAnimations();
 
+    // Check for hit and miss and then run thier animations
     runHitAnimations();
     runMissAnimations();
 
+    // Check to see if the tutorial should be displayed
     checkTutorial();
 
-    //Victory Banner
+    //If game over
     if (hit_counter >= 3 && miss_upper_counter >= 1 && miss_lower_counter >= 1 && reload == false) {
-
+      // Show the endgame screen
       createVictoryBanner();
+      // Also maybe check if boss level is active
       // checkBossFight();
-
     }
 
-	  //Mors omnibus tyrannis
-    if (hide_knight) {
-      boss.alpha = 0;
-    } else {
-      boss.alpha = 1;
-    }
+    // Hide bad guys when hit
+    hideBadGuys();
 
-    if (hide_archer1) {
-      henchman_left_center.alpha = 0;
-    } else {
-      henchman_left_center.alpha = 1;
-    }
+    // Run the catapult animation
+    runCatapultAnimation();
 
-    if (hide_archer2) {
-      henchman_right_center.alpha = 0;
-    } else {
-      henchman_right_center.alpha = 1;
-    }
-
-    if (hide_archer3) {
-      henchman_left.alpha = 0;
-    } else {
-      henchman_left.alpha = 1;
-    }
-
-    if (hide_archer4) {
-      henchman_right.alpha = 0;
-    } else {
-      henchman_right.alpha = 1;
-    }
-
-    //Catapult projectile animtion
-    if (fired == true) {
-      // if (frame_counter > 9) {
-        projectile.y -= projectile_speed * scene_scale_Y;
-        if (projectile.x < target_x) {
-          projectile.x += projectile_x_speed * scene_scale_Y;
-        } else if (projectile.x > target_x) {
-          projectile.x -= projectile_x_speed * scene_scale_Y;
-        }
-        projectile_speed -= 3;
-      // }
-    }
-
-    if (catapult.currentFrame == 11){
-      reload = false;
-    }
-
-    if (reload) {
-      console.log("reload");
-      fired = false;
-      projectile.alpha = 0;
-      projectile.x = stage.canvas.width / 2;
-      projectile.y = stage.canvas.height - (96/2 + 57) * scene_scale_Y;
-      projectile_speed = 57;
-    } else {
-      projectile.alpha = 1;
-    }
+    // Reload the catapult
+    reloadCatapult()
 
   }
 
-  //Update frame counter for drawing
-  frame_counter++;
+  // Update frame counter for drawing
+  // frame_counter++;
 
-  if (frame_counter > 9) {
-    reload_counter += frame_counter;
-    frame_counter = 0;
-  }
+  // if (frame_counter > 9) {
+  //
+  //   reload_counter += frame_counter;
+  //   frame_counter = 0;
+  //
+  // }
 
   stage.update(event);
+
+}
+
+function randomizeRangeAndMultiplier() {
+  // Generate new range
+  rand_num1 = Math.floor((Math.random() * 10) + 1);
+  rand_num2 = Math.floor((Math.random() * 100) + 1);
+  multiplicand = Math.floor(Math.random() * 11);
+  lower = rand_num1 * rand_num2;
+  upper = rand_num1 * (rand_num2 + 3);
+
+  // Clear the range banner
+  var range_div = document.getElementById("rangeDiv");
+  while (range_div.firstChild) {
+    range_div.removeChild(range_div.firstChild);
+  }
+
+  var multip_div = document.getElementById("multiplicandText");
+  while (multip_div.firstChild) {
+    multip_div.removeChild(multip_div.firstChild);
+  }
+
+  var multip = document.createTextNode(multiplicand);
+  multip_div.appendChild( multip);
+
+  // Remake the display for the banner
+  var left_paren = document.createTextNode("[");
+  var lower_number = document.createTextNode(lower);
+  var middle_comma = document.createTextNode(", ");
+  var upper_number = document.createTextNode(upper);
+  var right_paren = document.createTextNode("]");
+
+  // Append the display
+  range_div.appendChild(left_paren);
+  range_div.appendChild(lower_number);
+  range_div.appendChild(middle_comma);
+  range_div.appendChild(upper_number);
+  range_div.appendChild(right_paren);
+
+}
+
+function runInput() {
+
+  // Reset drag_up bool;
+  drag_up = false;
+
+  console.log("HIT: " + hit_counter);
+  console.log("MU" + miss_upper_counter);
+  console.log("ML" + miss_lower_counter);
+
+  // Need to check for input correctness here
+  // No letters or symbols only numbers
+
+  valid = true;
+
+  if (stage.canvas.width < 900) {
+
+    for (var x in history_list) {
+      console.log(history_list[x]);
+      console.log(entry);
+      // if (multiplier == history_list[x]){
+      //   valid = false;
+      // }
+    }
+    if (valid) {
+
+      // Add to history
+      console.log(history_list);
+      history_list.push(multiplier);
+      var dropdown = document.getElementById("myDropdown");
+      var history_entry = document.createTextNode(multiplier);
+      var line_break = document.createElement("br");
+      dropdown.appendChild(history_entry);
+      dropdown.appendChild(line_break);
+
+      // Actual math
+      solution = multiplier * multiplicand;
+      solution = Math.floor10(solution, -1);
+      var solut_div = document.getElementById("solutionText");
+      while (solut_div.firstChild) {
+        solut_div.removeChild(solut_div.firstChild);
+      }
+
+      var solut = document.createTextNode(solution);
+      solut_div.appendChild(solut);
+
+      clearGameForm();
+
+      if (solution <= upper && solution >= lower) {
+        hit = true;
+        console.log("hit");
+        catapult.gotoAndPlay(0);
+        // Triggering other fired events
+        fired = true;
+      }
+      else if (solution > upper) {
+        miss_upper = true;
+        console.log("miss upper");
+        catapult.gotoAndPlay(0);
+        // Triggering other fired events
+        fired = true;
+      }
+      else if (solution < lower) {
+        miss_lower = true;
+        console.log("miss lower");
+        catapult.gotoAndPlay(0);
+        // Triggering other fired events
+        fired = true;
+      }
+
+      multiplier = 0;
+      document.getElementById("hundredsPlace").textContent = Math.floor(multiplier/100 % 10);
+      document.getElementById("tensPlace").textContent = Math.abs(Math.floor(multiplier/10 % 10));
+      document.getElementById("onesPlace").textContent = Math.abs(Math.floor(multiplier % 10));
+
+    }
+
+  } else {
+
+    // Parse entry
+    var entry = parseInt(document.getElementById("entryInput").value);
+    console.log("Entry type: " + typeof entry);
+    console.log("Entry: " + entry);
+
+    if ((typeof entry) == "number") {
+
+      if (Number.isNaN(entry)) {
+        entry_is_correct = false;
+
+      } else {
+        //this is where to add level specific rules should they prove neccesary, at the moment they are not
+        entry_is_correct = true;
+      }
+
+    } else {
+      entry_is_correct = false;
+    }
+    for (var x in history_list) {
+      console.log(history_list[x]);
+      console.log(entry);
+      //Commented out for sake of sprint
+      /*if (entry == history_list[x]) {
+        valid = false;
+      }*/
+    }
+    // Animate the catapult
+    if (entry_is_correct && valid) {
+
+      multiplier = document.getElementById("entryInput").value;
+
+      // Add to history
+      history_list.push(multiplier);
+      console.log(history_list);
+      var dropdown = document.getElementById("myDropdown");
+      var history_entry = document.createTextNode(multiplier);
+      var line_break = document.createElement("br");
+      dropdown.appendChild(history_entry);
+      dropdown.appendChild(line_break);
+
+
+      // Actual math
+      solution = multiplier * multiplicand;
+
+      var solut_div = document.getElementById("solutionText");
+      while (solut_div.firstChild) {
+        solut_div.removeChild(solut_div.firstChild);
+      }
+
+      var solut = document.createTextNode(solution);
+      solut_div.appendChild(solut);
+
+      clearGameForm();
+
+      document.getElementById("entryInput").value = "";
+
+      if (solution <= upper && solution >= lower) {
+        //Plays reload sfx
+        createjs.Sound.play("firing");
+        createjs.Sound.play("reload", delayRe);
+        hit = true;
+        console.log("hit");
+        catapult.gotoAndPlay(0);
+        // Triggering other fired events
+        fired = true;
+        //plays sound for lighting fireball and hitting castle
+        createjs.Sound.play("light");
+        createjs.Sound.play("crumble", delayIn);
+      } else if (solution > upper) {
+        //Plays reload sfx
+        createjs.Sound.play("firing");
+        createjs.Sound.play("reload", delayRe);
+        miss_upper = true;
+        console.log("miss upper");
+        catapult.gotoAndPlay(0);
+        // Triggering other fired events
+        fired = true;
+        //plays sound for lighting fireball and hitting castle
+        createjs.Sound.play("light");
+        createjs.Sound.play("crumble", delayOut);
+      } else if (solution < lower) {
+        //Plays reload sfx
+        createjs.Sound.play("firing");
+        createjs.Sound.play("reload", delayRe);
+        miss_lower = true;
+        console.log("miss lower");
+        catapult.gotoAndPlay(0);
+        // Triggering other fired events
+        fired = true;
+        //plays sound for lighting fireball and hitting castle
+        createjs.Sound.play("light");
+        createjs.Sound.play("crumble", delayOut);
+      }
+    }
+  }
+
+  // console.log(projectile.alpha);
+
+}
+
+function checkSelectedDigit() {
+
+  if (digit != last_digit) {
+
+    switch(digit) {
+
+      case 0:
+        adder = 100;
+        document.getElementById("hundredsPlace").style.color = "red";
+        document.getElementById("tensPlace").style.color = "black";
+        document.getElementById("onesPlace").style.color = "black";
+        break;
+      case 1:
+        adder = 10;
+        document.getElementById("hundredsPlace").style.color = "black";
+        document.getElementById("tensPlace").style.color = "red";
+        document.getElementById("onesPlace").style.color = "black";
+        break;
+      case 2:
+        adder = 1;
+        document.getElementById("hundredsPlace").style.color = "black";
+        document.getElementById("tensPlace").style.color = "black";
+        document.getElementById("onesPlace").style.color = "red";
+        break;
+
+    }
+
+    last_digit = digit;
+
+  }
 
 }
 
@@ -689,7 +665,78 @@ function createVictoryBanner() {
 
 }
 
-// function checkBossFight() {
+function hideBadGuys() {
+
+  //Mors omnibus tyrannis
+  if (hide_knight) {
+    boss.alpha = 0;
+  } else {
+    boss.alpha = 1;
+  }
+
+  if (hide_archer1) {
+    henchman_left_center.alpha = 0;
+  } else {
+    henchman_left_center.alpha = 1;
+  }
+
+  if (hide_archer2) {
+    henchman_right_center.alpha = 0;
+  } else {
+    henchman_right_center.alpha = 1;
+  }
+
+  if (hide_archer3) {
+    henchman_left.alpha = 0;
+  } else {
+    henchman_left.alpha = 1;
+  }
+
+  if (hide_archer4) {
+    henchman_right.alpha = 0;
+  } else {
+    henchman_right.alpha = 1;
+  }
+
+}
+
+function runCatapultAnimation() {
+
+  //Catapult projectile animtion
+  if (fired == true) {
+    // if (frame_counter > 9) {
+    projectile.y -= projectile_speed * scene_scale_Y;
+    if (projectile.x < target_x) {
+      projectile.x += projectile_x_speed * scene_scale_Y;
+    } else if (projectile.x > target_x) {
+      projectile.x -= projectile_x_speed * scene_scale_Y;
+    }
+    projectile_speed -= 3;
+    // }
+  }
+
+}
+
+function reloadCatapult() {
+
+  if (catapult.currentFrame == 11){
+    reload = false;
+  }
+
+  if (reload) {
+    console.log("reload");
+    fired = false;
+    projectile.alpha = 0;
+    projectile.x = stage.canvas.width / 2;
+    projectile.y = stage.canvas.height - (96/2 + 57) * scene_scale_Y;
+    projectile_speed = 57;
+  } else {
+    projectile.alpha = 1;
+  }
+
+}
+
+function checkBossFight() {
 //
 //   if (boss_fight) {
 //
@@ -704,7 +751,7 @@ function createVictoryBanner() {
 //
 //   }
 //
-// }
+}
 
 function setBoss() {
   boss_fight = document.getElementById("bossValue").checked;
