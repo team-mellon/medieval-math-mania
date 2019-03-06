@@ -128,9 +128,9 @@ function tick(event) {
     }*/
 
     if ((keys[13] || drag_up) && catapult.paused) { // Enter or drag up swipe on mobile
+
       // Reset drag_up bool;
       drag_up = false;
-
 
       console.log("HIT: " + hit_counter);
       console.log("MU" + miss_upper_counter);
@@ -146,10 +146,9 @@ function tick(event) {
           for (var x in history_list) {
             console.log(history_list[x]);
             console.log(entry);
-			/*
-            if (multiplier == history_list[x]){
-              valid = false;
-            }*/
+            // if (multiplier == history_list[x]){
+            //   valid = false;
+            // }
           }
           if (valid) {
 
@@ -343,22 +342,7 @@ function tick(event) {
     runHitAnimations();
     runMissAnimations();
 
-	  // Tutorial
-    if (play_tutorial) {
-      if (miss_lower_counter != 1) {
-        document.getElementById("tutorialText").textContent = "Try finding any multiplier that produces a solution below the range";
-      } else {
-        if (miss_upper_counter != 1) {
-          document.getElementById("tutorialText").textContent = "Try finding any multiplier that produces a solution above the range";
-        } else {
-          if (hit_counter != 3) {
-            document.getElementById("tutorialText").textContent = "Try finding 3 multipliers that produce solutions within the range";
-          } else {
-
-          }
-        }
-      }
-    }
+    checkTutorial();
 
     //Victory Banner
     if (hit_counter >= 3 && miss_upper_counter >= 1 && miss_lower_counter >= 1 && reload == false) {
@@ -421,7 +405,7 @@ function tick(event) {
       fired = false;
       projectile.alpha = 0;
       projectile.x = stage.canvas.width / 2;
-      projectile.y = stage.canvas.height - (projectileY/2 + 57) * scene_scale_Y;
+      projectile.y = stage.canvas.height - (96/2 + 57) * scene_scale_Y;
       projectile_speed = 57;
     } else {
       projectile.alpha = 1;
@@ -614,6 +598,39 @@ function runMissAnimations() {
         miss_upper = false;
         miss_upper_counter++;
 	      high_text_counter.text ="Total Highs: "+ miss_upper_counter.toString();
+
+      }
+
+    }
+
+  }
+
+}
+
+function checkTutorial() {
+
+  // Tutorial
+  if (play_tutorial) {
+
+    if (miss_lower_counter != 1) {
+
+      document.getElementById("tutorialText").textContent = "Try finding any multiplier that produces a solution below the range";
+
+    } else {
+
+      if (miss_upper_counter != 1) {
+
+        document.getElementById("tutorialText").textContent = "Try finding any multiplier that produces a solution above the range";
+
+      } else {
+
+        if (hit_counter != 3) {
+
+          document.getElementById("tutorialText").textContent = "Try finding 3 multipliers that produce solutions within the range";
+
+        } else {
+
+        }
 
       }
 
