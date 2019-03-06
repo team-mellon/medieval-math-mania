@@ -30,7 +30,7 @@ function init() {
   this.document.onkeyup = keyup; // Add keyup listener
 
   resize(); // Resize to set initial scale
-  scaleGUI(); // Scale scene appropriately
+  stage.update();
 
 }
 
@@ -284,9 +284,10 @@ function resize() {
     scaleLevel();
   }
 
-  scaleGUI();
+  landscape_warning.graphics.clear()
+  landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, stage.canvas.width, stage.canvas.height);
 
-  scale_assets();
+  scale_assets(); // Scale scene appropriately
 
   stage.update()
 

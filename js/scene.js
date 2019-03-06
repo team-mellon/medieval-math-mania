@@ -85,7 +85,6 @@ function changeScene(new_scene) {
   destroyScene();
   createScene();
   resize();
-	scaleGUI();
 
 }
 
@@ -101,7 +100,6 @@ function oneWayScene() {
   	destroyScene();
   	createScene();
   	resize();
-  	scaleGUI();
 
   } else{
 
@@ -113,7 +111,6 @@ function oneWayScene() {
   	destroyScene();
   	createScene();
   	resize();
-  	scaleGUI();
   	pauseAnimation(true);
   	visibleButton(true);
   	visibleForm(false);

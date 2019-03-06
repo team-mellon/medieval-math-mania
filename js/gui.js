@@ -125,13 +125,17 @@ function createGUI() {
     // password_error.text = "Passwords did not match.\n Please try again.";
     // fieldInput_error.text = "Please fill-in\n every field";
 
+		// if (stage.canvas.width < 900) {
+		// 	scale_to_canvas(left_sword_button, "center", 0 - (buttonX/2 + 10) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "gui");
+		// 	scale_to_canvas(right_sword_button, "center", 0 + (buttonX/2 + 50) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "gui");
+		// } else {
 
-			background = createImage("res/login.png", backgroundX, backgroundY);
-			background_left = createImage("res/login.png", backgroundX, backgroundY);
-			background_right = createImage("res/login.png", backgroundX, backgroundY);
-			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
+			background = createImage("res/login.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
+			background_left = createImage("res/login.png", backgroundX, backgroundY, "center", -backgroundX, "center", 0, "image");
+			background_right = createImage("res/login.png", backgroundX, backgroundY, "center", backgroundX, "center", 0, "image");
+			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
 
-			left_sword_button = createButton("res/sword-left.png", "Create", buttonX, buttonY, function() {
+			left_sword_button = createButton("res/sword-left.png", "Login", buttonX, buttonY, "center", -(buttonX/2 + 30), "center", (buttonY/2 + 200), "image", function() {
 				createjs.Sound.play("sword");
 				var key = document.getElementById('usernameInput').value;
 				if(key in database.users || key == "") {
@@ -207,8 +211,8 @@ function createGUI() {
         //   }
       	// }
       // });
-		right_sword_button = createButton("res/sword-right.png", "Cancel", buttonX, buttonY, function() {
 
+		right_sword_button = createButton("res/sword-right.png", "Signup", buttonX, buttonY, "center", (buttonX/2 + 65), "center", (buttonY/2 + 200), "image", function() {
 			// firstname_input.text = "";
 			// lastname_input.text = "";
 			// username_input.text = "";
@@ -225,58 +229,87 @@ function createGUI() {
 
 		case 2:
 
-			background = createImage("res/menu.png", backgroundX, backgroundY);
-			background_left = createImage("res/menu-left.png", backgroundX, backgroundY);
-			background_right = createImage("res/menu-right.png", backgroundX, backgroundY);
+			background = createImage("res/menu.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
+			background_left = createImage("res/menu-left.png", backgroundX, backgroundY, "center", 0 - (backgroundX), "center", 0, "image");
+			background_right = createImage("res/menu-right.png", backgroundX, backgroundY, "center", 0 + (backgroundX), "center", 0, "image");
 
-			play_button = createButton("res/menu-button.png", "Play", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(8); });
-			stats_button = createButton("res/menu-button.png", "Stats", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(4); });
-			h2p_button = createButton("res/menu-button.png", "How To Play", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(5); });
-			settings_button = createButton("res/menu-button.png", "Settings", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(6); });
-			logout_button = createButton("res/menu-button.png", "Logout", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(0); });
-			account_button = createButton("res/menu-button.png", "Account", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(7); });
+			// if (stage.canvas.width < 900) {
+			// 	scale_to_canvas(play_button, "center", 0, "center", 0 - 105, "gui");
+			// 	scale_to_canvas(stats_button, "center", 0, "center", 0 - 20, "gui");
+			// 	scale_to_canvas(h2p_button, "center", 0, "center", 0 + 65, "gui");
+			// 	scale_to_canvas(settings_button, "center", 0, "center", 0 + 150, "gui");
+			// 	scale_to_canvas(logout_button, "left", (buttonX/2 + 10), "top", (buttonY/2 + 10), "gui");
+			// 	scale_to_canvas(account_button, "right", 0 - (buttonX/2 + 10), "top", (buttonY/2 + 10), "gui");
+			// } else {
+
+			play_button = createButton("res/menu-button.png", "Play", buttonX, buttonY, "center", 0, "center", 0 - 200, "gui", function() { createjs.Sound.play("menu"); changeScene(8); });
+			stats_button = createButton("res/menu-button.png", "Stats", buttonX, buttonY, "center", 0, "center", 0 - 100, "gui", function() { createjs.Sound.play("menu"); changeScene(4); });
+			h2p_button = createButton("res/menu-button.png", "How To Play", buttonX, buttonY, "center", 0, "center", 0 - 0, "gui", function() { createjs.Sound.play("menu"); changeScene(5); });
+			settings_button = createButton("res/menu-button.png", "Settings", buttonX, buttonY, "center", 0, "center", 0 + 100, "gui", function() { createjs.Sound.play("menu"); changeScene(6); });
+			logout_button = createButton("res/menu-button.png", "Logout", buttonX, buttonY, "left", (buttonX/2 + 10), "top", (buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(0); });
+			account_button = createButton("res/menu-button.png", "Account", buttonX, buttonY, "right", 0 - (buttonX/2 + 10), "top", (buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(7); });
 
 			break;
 
 		case 3:
 
-	    end_level_scene = createImage("res/login_scroll.png", backgroundX, backgroundY);
+		// if (stage.canvas.width < 900) {
+		//
+		// 	scale_to_canvas(pause_menu, "center", 0, "center", 0, "image");
+		// 	scale_to_canvas(close_button, "center", 0 + 445 * scene_scale_Y, "center", 0 - 281 * scene_scale_Y, "gui");
+		// 	scale_to_canvas(main_menu_button, "center", 0, "center", 0 - 180 * scene_scale_Y, "gui");
+		// 	scale_to_canvas(exit_level_button, "center", 0, "center", 0 - 110 * scene_scale_Y, "gui");
+		// 	scale_to_canvas(settings_button, "center", 0, "center", 0 - 40 * scene_scale_Y, "gui");
+		//
+		// 	scale_to_canvas(end_level_scene, "center", 0, "center", 0, "image");
+		// 	scale_to_canvas(end_level_button, "center", 0, "center", 0 + 250 * scene_scale_Y, "gui");
+		// 	scale_to_canvas(end_text, "center", 0, "center", 0 - 140 * scene_scale_Y, "image");
+		// 	scale_to_canvas(hit_text, "center", 0 - 120 * scene_scale_Y, "center", 0, "image");
+		// 	scale_to_canvas(low_text, "center", 0 - 120 * scene_scale_Y, "center", 0 + 40 * scene_scale_Y, "image");
+		// 	scale_to_canvas(high_text, "center", 0 - 120 * scene_scale_Y, "center", 0 + 80 * scene_scale_Y, "image");
+		//
+		// 	scale_to_canvas(hit_text_counter, "left", 30, "center", 0 + 225 * scene_scale_Y, "image");
+		// 	scale_to_canvas(low_text_counter, "left", 30, "center", 0 + 280 * scene_scale_Y, "image");
+		// 	scale_to_canvas(high_text_counter, "left", 30, "center", 0 + 300 * scene_scale_Y, "image");
+		//
+		// 	scale_to_canvas(login_button, "right", 0 - (buttonX/2 + 10), "bottom", 0 - (buttonY/2 + 10), "gui");
+		// 	scale_to_canvas(hint_button, "center", 0 - 313 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui");
+		//
+		// } else {
+
+	    end_level_scene = createImage("res/login_scroll.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
 	    end_level_scene.visible = false;
 
-	    end_level_button = createButton("res/login-button.png", "Next Level", buttonX, buttonY, function() { createjs.Sound.play("select"); changeScene(8); visibleForm(true);});
+	    end_level_button = createButton("res/login-button.png", "Next Level", buttonX, buttonY, "center", 0, "center", 0 + 250 * scene_scale_Y, "gui", function() { createjs.Sound.play("select"); changeScene(8); visibleForm(true);});
 	    end_level_button.visible = false;
 	    end_level_button.alpha = 0;
 
-	    end_text = createText("Good Job!!", "Oldstyle", "65px", "bold", "gold", 10, 10);
+	    end_text = createText("Good Job!!", "Oldstyle", "65px", "bold", "gold", 10, 10, "center", 0, "center", 0 - 140 * scene_scale_Y, "image");
 	    end_text.visible = false;
 	    //end_text.skewX = -5;
 	    end_text.skewY = -15;
 	    end_text.textAlign = "center";
 
-	    hit_text = createText("Total Hits:      ", "Oldstyle", "25px", "", "gold", 10, 10);
+	    hit_text = createText("Total Hits:      ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120 * scene_scale_Y, "center", 0, "image");
 	    hit_text.visible = false;
 	    hit_text.alpha = 0;
 
-	    low_text = createText("Total Lows:     ", "Oldstyle", "25px", "", "gold", 10, 10);
+	    low_text = createText("Total Lows:     ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120 * scene_scale_Y, "center", 0 + 40 * scene_scale_Y, "image");
 	    low_text.visible = false;
 	    low_text.alpha = 0;
 
-	    high_text = createText("Total Highs:    ", "Oldstyle", "25px", "", "gold", 10, 10);
+	    high_text = createText("Total Highs:    ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120 * scene_scale_Y, "center", 0 + 80 * scene_scale_Y, "image");
 	    high_text.visible = false;
 	    high_text.alpha = 0;
 
-	    //low counter
-	    low_text_counter = createText("Total Lows: 0", "Oldstyle", "25px", "", "saddlebrown", 10, 10);
-	    //high counter
-	    high_text_counter = createText("Total High: 0", "Oldstyle", "25px", "", "saddlebrown", 10, 10);
-			//hit counter
-	    hit_text_counter = createText("Total Hits: 0", "Oldstyle", "25px", "", "saddlebrown", 10, 10);
+	    low_text_counter = createText("Total Lows: 0", "Oldstyle", "25px", "", "saddlebrown", 10, 10, "left", 30, "center", 0 + 225 * scene_scale_Y, "image");
+	    high_text_counter = createText("Total High: 0", "Oldstyle", "25px", "", "saddlebrown", 10, 10, "left", 30, "center", 0 + 280 * scene_scale_Y, "image");
+	    hit_text_counter = createText("Total Hits: 0", "Oldstyle", "25px", "", "saddlebrown", 10, 10, "left", 30, "center", 0 + 300 * scene_scale_Y, "image");
 
-
-	    pause_menu = createImage("res/hit-target-pause-menu.png", backgroundX, backgroundY);
+	    pause_menu = createImage("res/hit-target-pause-menu.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
 	    pause_menu.visible = false;
 
-	    close_button = createButton("res/hit-target-pause-close-button.png", "", buttonX, buttonY, function() {
+	    close_button = createButton("res/hit-target-pause-close-button.png", "", buttonX, buttonY, "center", 0 + 445 * scene_scale_Y, "center", 0 - 281 * scene_scale_Y, "gui", function() {
 			createjs.Sound.play("menu");
 			pauseAnimation(false);
 			visibleButton(false);
@@ -285,28 +318,27 @@ function createGUI() {
 
 	    close_button.visible = false;
 
-	    main_menu_button = createButton("res/hit-target-pause-button.png", "Main Menu", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(2);  visibleForm(true);});
+	    main_menu_button = createButton("res/hit-target-pause-button.png", "Main Menu", buttonX, buttonY, "center", 0, "center", 0 - 180 * scene_scale_Y, "gui", function() { createjs.Sound.play("menu"); changeScene(2);  visibleForm(true);});
 	    main_menu_button.visible = false;
 
-	    exit_level_button = createButton("res/hit-target-pause-button.png", "Exit Level", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(8);  visibleForm(true);});
+	    exit_level_button = createButton("res/hit-target-pause-button.png", "Exit Level", buttonX, buttonY, "center", 0, "center", 0 - 110 * scene_scale_Y, "gui", function() { createjs.Sound.play("menu"); changeScene(8);  visibleForm(true);});
 	    exit_level_button.visible = false;
 
-	    settings_button = createButton("res/hit-target-pause-button.png", "Settings", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(6);  visibleForm(true);});
+	    settings_button = createButton("res/hit-target-pause-button.png", "Settings", buttonX, buttonY, "center", 0, "center", 0 - 40 * scene_scale_Y, "gui", function() { createjs.Sound.play("menu"); changeScene(6);  visibleForm(true);});
 	    settings_button.visible = false;
 
-	    login_button = createButton("res/login-button.png", "Pause", buttonX, buttonY, function() {
+	    login_button = createButton("res/login-button.png", "Pause", buttonX, buttonY, "right", 0 - (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui", function() {
 			createjs.Sound.play("menu");
 			pauseAnimation(true);
 			visibleButton(true);
 			visibleForm(false);
 	    });
 
-	    hint_button = createButton("res/hint-button.png", "Hint", small_buttonX, small_buttonY, function() { createjs.Sound.play("sword"); changeScene(9); visibleForm(true); });
+	    hint_button = createButton("res/hint-button.png", "Hint", small_buttonX, small_buttonY, "center", 0 - 313 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui", function() { createjs.Sound.play("sword"); changeScene(9); visibleForm(true); });
 	    hint_button.visible = false;
 
-
 			if (stage.canvas.width < 900) {
-				ll_number_button = createButton("res/number-button-ll.png", "", backgroundX, 288, function() {
+				ll_number_button = createButton("res/number-button-ll.png", "", backgroundX, 288, "center", 0, "bottom", 0 - (288/2) * scene_scale_Y, "image", function() {
 					if(digit > 0)
 						digit--;
 					if(digit < 0)
@@ -314,7 +346,7 @@ function createGUI() {
 
 					console.log(digit);
 				});
-				lr_number_button = createButton("res/number-button-lr.png", "", backgroundX, 288, function() {
+				lr_number_button = createButton("res/number-button-lr.png", "", backgroundX, 288, "center", 0, "bottom", 0 - (288/2) * scene_scale_Y, "image", function() {
 					if(digit < 2)
 						digit++;
 					if(digit > 2)
@@ -322,13 +354,13 @@ function createGUI() {
 
 					console.log(digit);
 				});
-				rl_number_button = createButton("res/number-button-rl.png", "", backgroundX, 288, function() {
+				rl_number_button = createButton("res/number-button-rl.png", "", backgroundX, 288, "center", 0, "bottom", 0 - (288/2) * scene_scale_Y, "image", function() {
 					multiplier -= adder;
 					document.getElementById("hundredsPlace").textContent = Math.floor(multiplier/100 % 10);
 					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(multiplier/10 % 10));
 					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(multiplier % 10));
 				});
-				rr_number_button = createButton("res/number-button-rr.png", "", backgroundX, 288, function() {
+				rr_number_button = createButton("res/number-button-rr.png", "", backgroundX, 288, "center", 0, "bottom", 0 - (288/2) * scene_scale_Y, "image", function() {
 					multiplier += adder;
 					document.getElementById("hundredsPlace").textContent = Math.floor(multiplier/100 % 10);
 					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(multiplier/10 % 10));
@@ -342,101 +374,101 @@ function createGUI() {
 
 		case 4:
 
-			background = createImage("res/login.png", backgroundX, backgroundY);
-			background_left = createImage("res/login.png", backgroundX, backgroundY);
-			background_right = createImage("res/login.png", backgroundX, backgroundY);
-			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
+			background = createImage("res/login.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
+			background_left = createImage("res/login.png", backgroundX, backgroundY, "center", -backgroundX, "center", 0, "image");
+			background_right = createImage("res/login.png", backgroundX, backgroundY, "center", backgroundX, "center", 0, "image");
+			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
 
-			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(2); });
+			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); });
 
 			break;
 
 		case 5:
 
-			background = createImage("res/login.png", backgroundX, backgroundY);
-			background_left = createImage("res/login.png", backgroundX, backgroundY);
-			background_right = createImage("res/login.png", backgroundX, backgroundY);
-			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
+			background = createImage("res/login.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
+			background_left = createImage("res/login.png", backgroundX, backgroundY, "center", -backgroundX, "center", 0, "image");
+			background_right = createImage("res/login.png", backgroundX, backgroundY, "center", backgroundX, "center", 0, "image");
+			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
 
-			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(2); });
+			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); });
 
 			break;
 
 		case 6:
 
-			background = createImage("res/login.png", backgroundX, backgroundY);
-			background_left = createImage("res/login.png", backgroundX, backgroundY);
-			background_right = createImage("res/login.png", backgroundX, backgroundY);
-			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
+			background = createImage("res/login.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
+			background_left = createImage("res/login.png", backgroundX, backgroundY, "center", -backgroundX, "center", 0, "image");
+			background_right = createImage("res/login.png", backgroundX, backgroundY, "center", backgroundX, "center", 0, "image");
+			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
 
-	    login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { createjs.Sound.play("menu"); oneWayScene(); });
+			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); oneWayScene(); });
 
 			break;
 
 		case 7:
 
-			background = createImage("res/login.png", backgroundX, backgroundY);
-			background_left = createImage("res/login.png", backgroundX, backgroundY);
-			background_right = createImage("res/login.png", backgroundX, backgroundY);
-			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
+			background = createImage("res/login.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
+			background_left = createImage("res/login.png", backgroundX, backgroundY, "center", -backgroundX, "center", 0, "image");
+			background_right = createImage("res/login.png", backgroundX, backgroundY, "center", backgroundX, "center", 0, "image");
+			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
 
-			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(2); });
+			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); });
 
 			break;
 
 		case 8:
 
-			background = createImage("res/login.png", backgroundX, backgroundY);
-			background_left = createImage("res/login.png", backgroundX, backgroundY);
-			background_right = createImage("res/login.png", backgroundX, backgroundY);
-			midground = createImage("res/map.png", backgroundX, backgroundY);
-			foreground = createButton("res/map-banner.png", "Select a level", backgroundX, 144, function() {});
+			background = createImage("res/login.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
+			background_left = createImage("res/login.png", backgroundX, backgroundY, "center", -backgroundX, "center", 0, "image");
+			background_right = createImage("res/login.png", backgroundX, backgroundY, "center", backgroundX, "center", 0, "image");
+			midground = createImage("res/map.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
+			foreground = createButton("res/map-banner.png", "Select a level", backgroundX, 144, "center", 0, "top", 0 + (144/2), "image", function() {});
 
-			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(2); });
+			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); });
 
-			level1_indicator = createButton("res/map-indicator.png", "1", indicatorX, indicatorY, function() {
+			level1_indicator = createButton("res/map-indicator.png", "1", indicatorX, indicatorY, "center", 0 - (indicatorX/2 + 72), "bottom", 0 - (indicatorY/2 + 285), "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 1;
 				resetLevel();
 				changeScene(3);
 			});
-			level2_indicator = createButton("res/map-indicator.png", "2", indicatorX, indicatorY, function() {
+			level2_indicator = createButton("res/map-indicator.png", "2", indicatorX, indicatorY, "center", 0 - (indicatorX/2 + 285), "bottom", 0 - (indicatorY/2 + 384), "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 2;
 				resetLevel();
 				changeScene(3);
 			});
-			level3_indicator = createButton("res/map-indicator.png", "3", indicatorX, indicatorY, function() {
+			level3_indicator = createButton("res/map-indicator.png", "3", indicatorX, indicatorY, "center", 0 - (indicatorX/2 + 582), "bottom", 0 - (indicatorY/2 + 174), "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 3;
 				resetLevel();
 				changeScene(3);
 			});
-			level4_indicator = createButton("res/map-indicator.png", "4", indicatorX, indicatorY, function() {
+			level4_indicator = createButton("res/map-indicator.png", "4", indicatorX, indicatorY, "center", 0 - (indicatorX/2 + 168), "bottom", 0 - (indicatorY/2 + 150), "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 4;
 				resetLevel();
 				changeScene(3);
 			});
-			level5_indicator = createButton("res/map-indicator.png", "5", indicatorX, indicatorY, function() {
+			level5_indicator = createButton("res/map-indicator.png", "5", indicatorX, indicatorY, "center", 0 - (indicatorX/2 + 72), "top", 0 + (indicatorY/2 + 297), "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 5;
 				resetLevel();
 				changeScene(3);
 			});
-			level6_indicator = createButton("res/map-indicator.png", "6", indicatorX, indicatorY, function() {
+			level6_indicator = createButton("res/map-indicator.png", "6", indicatorX, indicatorY, "center", 0 + (indicatorX/2 + 522), "top", 0 + (indicatorY/2 + 150), "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 6;
 				resetLevel();
 				changeScene(3);
 			});
-			level7_indicator = createButton("res/map-indicator.png", "7", indicatorX, indicatorY, function() {
+			level7_indicator = createButton("res/map-indicator.png", "7", indicatorX, indicatorY, "center", 0 + (indicatorX/2 + 285), "bottom", 0 - (indicatorY/2 + 384), "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 7;
@@ -445,13 +477,15 @@ function createGUI() {
 			});
 
 			break;
+
     case 9:
 
-      background = createImage("res/login.png", backgroundX, backgroundY);
-			background_left = createImage("res/login.png", backgroundX, backgroundY);
-			background_right = createImage("res/login.png", backgroundX, backgroundY);
-      foreground = createImage("res/login_scroll.png", backgroundX, backgroundY);
-	    login_button = createButton("res/login-button.png", "Back", buttonX, buttonY, function() { createjs.Sound.play("menu"); changeScene(3); pauseAnimation(true); visibleButton(true); visibleForm(false);});
+			background = createImage("res/login.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
+			background_left = createImage("res/login.png", backgroundX, backgroundY, "center", -backgroundX, "center", 0, "image");
+			background_right = createImage("res/login.png", backgroundX, backgroundY, "center", backgroundX, "center", 0, "image");
+			foreground = createImage("res/login_scroll.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
+
+			login_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(3); pauseAnimation(true); visibleButton(true); visibleForm(false);});
 
       break;
 
@@ -459,19 +493,19 @@ function createGUI() {
 
 	}
 
-	previous_indicator = createImage("res/previous-indicator.png", indicatorX, indicatorY);
+	previous_indicator = createImage("res/previous-indicator.png", indicatorX, indicatorY, "center", 0 - 50, "center", 0 + 194, "gui");
     previous_indicator.addEventListener("click", previousSound);
     previous_indicator.visible = false;
 
-	pause_indicator = createImage("res/pause-indicator.png", indicatorX, indicatorY);
+	pause_indicator = createImage("res/pause-indicator.png", indicatorX, indicatorY, "center", 0, "center", 0 + 194, "gui");
     pause_indicator.addEventListener("click", playSound);
     pause_indicator.visible = false;
 
-	next_indicator = createImage("res/next-indicator.png", indicatorX, indicatorY);
+	next_indicator = createImage("res/next-indicator.png", indicatorX, indicatorY, "center", 0 + 50, "center", 0 + 194, "gui");
     next_indicator.addEventListener("click", nextSound);
     next_indicator.visible = false;
 
-	lute = createImage("res/lute.png", luteX, luteY);
+	lute = createImage("res/lute.png", luteX, luteY, "center", 0 + 313, "center", 0 + 194, "gui");
 	//antiLute = createImage("res/antiLute.png", luteX, luteY, 2);
     lute.addEventListener("click", muteSound);
     lute.visible = false;
@@ -489,259 +523,8 @@ function createGUI() {
 
   landscape_warning = new createjs.Shape();
 
-  phone_rotation = createSprite(phone_rotationS, 288, 288);
+  phone_rotation = createSprite(phone_rotationS, 288, 288, "center", 0, "center", 0, "image");
   stage.removeChild(phone_rotation);
-
-}
-
-function scaleGUI() {
-
-	switch(current_scene) {
-
-		case 0:
-
-
-
-			break;
-
-		case 1:
-
-			scale_to_canvas(background, "center", 0, "center", 0, "image");
-			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
-			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
-			scale_to_canvas(foreground, "center", 0, "center", 0, "image");
-
-      // if (stage.canvas.width < 900) {
-  		// 	scale_to_canvas(left_sword_button, "center", 0 - (buttonX/2 + 10) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "gui");
-  		// 	scale_to_canvas(right_sword_button, "center", 0 + (buttonX/2 + 50) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "gui");
-      // } else {
-  			scale_to_canvas(left_sword_button, "center", 0 - (buttonX/2 + 30) * scene_scale_Y, "center", 0 + (buttonY/2 + 200) * scene_scale_Y, "image");
-  			scale_to_canvas(right_sword_button, "center", 0 + (buttonX/2 + 65) * scene_scale_Y, "center", 0 + (buttonY/2 + 200) * scene_scale_Y, "image");
-      // }
-
-			break;
-
-		case 2:
-
-			scale_to_canvas(background, "center", 0, "center", 0, "image");
-			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
-			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
-
-      if (stage.canvas.width < 900) {
-  			scale_to_canvas(play_button, "center", 0, "center", 0 - 105, "gui");
-  			scale_to_canvas(stats_button, "center", 0, "center", 0 - 20, "gui");
-  			scale_to_canvas(h2p_button, "center", 0, "center", 0 + 65, "gui");
-  			scale_to_canvas(settings_button, "center", 0, "center", 0 + 150, "gui");
-  			scale_to_canvas(logout_button, "left", (buttonX/2 + 10), "top", (buttonY/2 + 10), "gui");
-  			scale_to_canvas(account_button, "right", 0 - (buttonX/2 + 10), "top", (buttonY/2 + 10), "gui");
-      } else {
-  			scale_to_canvas(play_button, "center", 0, "center", 0 - 200 * scene_scale_Y, "gui");
-  			scale_to_canvas(stats_button, "center", 0, "center", 0 - 100 * scene_scale_Y, "gui");
-  			scale_to_canvas(h2p_button, "center", 0, "center", 0 - 0 * scene_scale_Y, "gui");
-  			scale_to_canvas(settings_button, "center", 0, "center", 0 + 100 * scene_scale_Y, "gui");
-  			scale_to_canvas(logout_button, "left", (buttonX/2 + 10) * scene_scale_Y, "top", (buttonY/2 + 10) * scene_scale_Y, "gui");
-  			scale_to_canvas(account_button, "right", 0 - (buttonX/2 + 10) * scene_scale_Y, "top", (buttonY/2 + 10) * scene_scale_Y, "gui");
-      }
-
-			break;
-
-		case 3:
-
-	    if (stage.canvas.width < 900) {
-
-				scale_to_canvas(pause_menu, "center", 0, "center", 0, "image");
-				scale_to_canvas(close_button, "center", 0 + 445 * scene_scale_Y, "center", 0 - 281 * scene_scale_Y, "gui");
-				scale_to_canvas(main_menu_button, "center", 0, "center", 0 - 180 * scene_scale_Y, "gui");
-				scale_to_canvas(exit_level_button, "center", 0, "center", 0 - 110 * scene_scale_Y, "gui");
-				scale_to_canvas(settings_button, "center", 0, "center", 0 - 40 * scene_scale_Y, "gui");
-
-				scale_to_canvas(end_level_scene, "center", 0, "center", 0, "image");
-				scale_to_canvas(end_level_button, "center", 0, "center", 0 + 250 * scene_scale_Y, "gui");
-				scale_to_canvas(end_text, "center", 0, "center", 0 - 140 * scene_scale_Y, "image");
-				scale_to_canvas(hit_text, "center", 0 - 120 * scene_scale_Y, "center", 0, "image");
-				scale_to_canvas(low_text, "center", 0 - 120 * scene_scale_Y, "center", 0 + 40 * scene_scale_Y, "image");
-				scale_to_canvas(high_text, "center", 0 - 120 * scene_scale_Y, "center", 0 + 80 * scene_scale_Y, "image");
-
-				scale_to_canvas(hit_text_counter, "left", 30, "center", 0 + 225 * scene_scale_Y, "image");
-				scale_to_canvas(low_text_counter, "left", 30, "center", 0 + 280 * scene_scale_Y, "image");
-				scale_to_canvas(high_text_counter, "left", 30, "center", 0 + 300 * scene_scale_Y, "image");
-
-				scale_to_canvas(login_button, "right", 0 - (buttonX/2 + 10), "bottom", 0 - (buttonY/2 + 10), "gui");
-				scale_to_canvas(hint_button, "center", 0 - 313 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui");
-
-	    } else {
-
-			scale_to_canvas(pause_menu, "center", 0, "center", 0, "image");
-			scale_to_canvas(close_button, "center", 0 + 445 * scene_scale_Y, "center", 0 - 281 * scene_scale_Y, "gui");
-			scale_to_canvas(main_menu_button, "center", 0, "center", 0 - 180 * scene_scale_Y, "gui");
-			scale_to_canvas(exit_level_button, "center", 0, "center", 0 - 110 * scene_scale_Y, "gui");
-			scale_to_canvas(settings_button, "center", 0, "center", 0 - 40 * scene_scale_Y, "gui");
-
-			scale_to_canvas(end_level_scene, "center", 0, "center", 0, "image");
-			scale_to_canvas(end_level_button, "center", 0, "center", 0 + 250 * scene_scale_Y, "gui");
-			scale_to_canvas(end_text, "center", 0, "center", 0 - 140 * scene_scale_Y, "image");
-			scale_to_canvas(hit_text, "center", 0 - 120 * scene_scale_Y, "center", 0, "image");
-			scale_to_canvas(low_text, "center", 0 - 120 * scene_scale_Y, "center", 0 + 40 * scene_scale_Y, "image");
-			scale_to_canvas(high_text, "center", 0 - 120 * scene_scale_Y, "center", 0 + 80 * scene_scale_Y, "image");
-
-			scale_to_canvas(hit_text_counter, "left", 30, "center", 0 + 225 * scene_scale_Y, "image");
-			scale_to_canvas(low_text_counter, "left", 30, "center", 0 + 280 * scene_scale_Y, "image");
-			scale_to_canvas(high_text_counter, "left", 30, "center", 0 + 300 * scene_scale_Y, "image");
-
-		// scale_to_canvas(pause_menu, "center", 0, "center", 0, "image");
-		// scale_to_canvas(close_button, "center", 0 + 517, "center", 0 -325, "gui");
-		// scale_to_canvas(main_menu_button, "center", 0, "center", 0 -180, "gui");
-		// scale_to_canvas(exit_level_button, "center", 0, "center", 0 -110, "gui");
-		// scale_to_canvas(settings_button, "center", 0, "center", 0 -40, "gui");
-
-		// scale_to_canvas(end_level_button, "center", 0, "center", 0 + 250, "gui");
-		// scale_to_canvas(end_text, "center", 0, "center", 0 - 140, "image");
-		// scale_to_canvas(hit_text, "center", 0 - 120, "center", 0, "image");
-		// scale_to_canvas(low_text, "center", 0 - 120, "center", 0 + 40, "image");
-		// scale_to_canvas(high_text, "center", 0 - 120, "center", 0 + 80, "image");
-
-        scale_to_canvas(login_button, "right", 0 - (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
-        scale_to_canvas(hint_button, "center", 0 - 313 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui");
-
-      }
-
-			if (stage.canvas.width < 900) {
-				scale_to_canvas(ll_number_button, "center", 0, "bottom", 0 - (288/2) * scene_scale_Y, "image");
-				scale_to_canvas(lr_number_button, "center", 0, "bottom", 0 - (288/2) * scene_scale_Y, "image");
-				scale_to_canvas(rl_number_button, "center", 0, "bottom", 0 - (288/2) * scene_scale_Y, "image");
-				scale_to_canvas(rr_number_button, "center", 0, "bottom", 0 - (288/2) * scene_scale_Y, "image");
-			}
-
-			break;
-
-		case 4:
-
-			scale_to_canvas(background, "center", 0, "center", 0, "image");
-			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
-			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
-			scale_to_canvas(foreground, "center", 0, "center", 0, "image");
-
-      if (stage.canvas.width < 900) {
-        scale_to_canvas(login_button, "left", (buttonX/2 + 10), "bottom", 0 - (buttonY/2 + 10), "gui");
-      } else {
-        scale_to_canvas(login_button, "left", (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
-      }
-
-			break;
-
-		case 5:
-
-			scale_to_canvas(background, "center", 0, "center", 0, "image");
-			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
-			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
-			scale_to_canvas(foreground, "center", 0, "center", 0, "image");
-
-      if (stage.canvas.width < 900) {
-        scale_to_canvas(login_button, "left", (buttonX/2 + 10), "bottom", 0 - (buttonY/2 + 10), "gui");
-      } else {
-        scale_to_canvas(login_button, "left", (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
-      }
-
-			break;
-
-		case 6:
-
-			scale_to_canvas(background, "center", 0, "center", 0, "image");
-			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
-			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
-			scale_to_canvas(foreground, "center", 0, "center", 0, "image");
-
-      if (stage.canvas.width < 900) {
-        scale_to_canvas(login_button, "left", (buttonX/2 + 10), "bottom", 0 - (buttonY/2 + 10), "gui");
-      } else {
-        scale_to_canvas(login_button, "left", (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
-      }
-
-			break;
-
-		case 7:
-
-			scale_to_canvas(background, "center", 0, "center", 0, "image");
-			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
-			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
-			scale_to_canvas(foreground, "center", 0, "center", 0, "image");
-
-      if (stage.canvas.width < 900) {
-        scale_to_canvas(login_button, "left", (buttonX/2 + 10), "bottom", 0 - (buttonY/2 + 10), "gui");
-      } else {
-        scale_to_canvas(login_button, "left", (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
-      }
-
-			break;
-
-		case 8:
-
-			scale_to_canvas(background, "center", 0, "center", 0, "image");
-			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
-			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
-			scale_to_canvas(midground, "center", 0, "center", 0, "image");
-			scale_to_canvas(foreground, "center", 0, 0, 0 + (144/2) * scene_scale_Y, "image");
-
-			scale_to_canvas(login_button, "left", (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "image");
-
-      if (stage.canvas.width < 900) {
-        scale_to_canvas(login_button, "left", (buttonX/2 + 10), "bottom", 0 - (buttonY/2 + 10), "gui");
-        scale_to_canvas(level1_indicator, "center", 0 - (indicatorX/2 + 72) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 285) * scene_scale_Y, "gui");
-			  scale_to_canvas(level2_indicator, "center", 0 - (indicatorX/2 + 285) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 384) * scene_scale_Y, "gui");
-			  scale_to_canvas(level3_indicator, "center", 0 - (indicatorX/2 + 582) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 174) * scene_scale_Y, "gui");
-			  scale_to_canvas(level4_indicator, "center", 0 - (indicatorX/2 + 168) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 150) * scene_scale_Y, "gui");
-			  scale_to_canvas(level5_indicator, "center", 0 - (indicatorX/2 + 72) * scene_scale_Y, "top", 0 + (indicatorY/2 + 297) * scene_scale_Y, "gui");
-			  scale_to_canvas(level6_indicator, "center", 0 + (indicatorX/2 + 522) * scene_scale_Y, "top", 0 + (indicatorY/2 + 150) * scene_scale_Y, "gui");
-			  scale_to_canvas(level7_indicator, "center", 0 + (indicatorX/2 + 285) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 384) * scene_scale_Y, "gui");
-      } else {
-        scale_to_canvas(login_button, "left", (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
-        scale_to_canvas(level1_indicator, "center", 0 - (indicatorX/2 + 72) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 285) * scene_scale_Y, "gui");
-			  scale_to_canvas(level2_indicator, "center", 0 - (indicatorX/2 + 285) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 384) * scene_scale_Y, "gui");
-			  scale_to_canvas(level3_indicator, "center", 0 - (indicatorX/2 + 582) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 174) * scene_scale_Y, "gui");
-			  scale_to_canvas(level4_indicator, "center", 0 - (indicatorX/2 + 168) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 150) * scene_scale_Y, "gui");
-			  scale_to_canvas(level5_indicator, "center", 0 - (indicatorX/2 + 72) * scene_scale_Y, "top", 0 + (indicatorY/2 + 297) * scene_scale_Y, "gui");
-			  scale_to_canvas(level6_indicator, "center", 0 + (indicatorX/2 + 522) * scene_scale_Y, "top", 0 + (indicatorY/2 + 150) * scene_scale_Y, "gui");
-			  scale_to_canvas(level7_indicator, "center", 0 + (indicatorX/2 + 285) * scene_scale_Y, "bottom", 0 - (indicatorY/2 + 384) * scene_scale_Y, "gui");
-      }
-
-			break;
-
-    case 9:
-
-    	scale_to_canvas(background, "center", 0, "center", 0, "image");
-			scale_to_canvas(background_left, "center", 0 - (backgroundX) * scene_scale_Y, "center", 0, "image");
-			scale_to_canvas(background_right, "center", 0 + (backgroundX) * scene_scale_Y, "center", 0, "image");
-    	scale_to_canvas(foreground, "center", 0, "center", 0, "image");
-
-      if (stage.canvas.width < 900) {
-        scale_to_canvas(login_button, "left", (buttonX/2 + 10), "bottom", 0 - (buttonY/2 + 10), "gui");
-      } else {
-        scale_to_canvas(login_button, "left", (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui");
-      }
-
-	    break;
-
-		default:
-
-	}
-
-	// GUI in front of everything
-  if (stage.canvas.width < 900) {
-		scale_to_canvas(previous_indicator, "center", 0 - 50 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui");
-  	scale_to_canvas(pause_indicator, "center", 0, "center", 0 + 194 * scene_scale_Y, "gui");
-  	scale_to_canvas(next_indicator, "center", 0 + 50 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui");
-  	scale_to_canvas(lute, "center", 0 + 313 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui");
-  } else {
-  	scale_to_canvas(previous_indicator, "center", 0 - 50, "center", 0 + 194, "gui");
-  	scale_to_canvas(pause_indicator, "center", 0, "center", 0 + 194, "gui");
-  	scale_to_canvas(next_indicator, "center", 0 + 50, "center", 0 + 194, "gui");
-  	scale_to_canvas(lute, "center", 0 + 313, "center", 0 + 194, "gui");
-  }
-
-  landscape_warning.graphics.clear()
-  landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, stage.canvas.width, stage.canvas.height);
-
-  scale_to_canvas(phone_rotation, "center", 0, "center", 0, "image");
 
 }
 
