@@ -145,61 +145,70 @@ function genRange() {
 		lower = (Math.floor(multiplicand * 0.0001)) - (Math.floor(Math.random() * 50) + 10);
 		upper = (Math.floor(multiplicand * 0.0001)) + (Math.floor(Math.random() * 50) + 10);
 	}
-
+	/*Starting number is an integer less than 200. Target range contains the number which is half the value 
+	with an overall range less than 10. */
 	if (current_level == 13) {
 		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
+		multiplicand = Math.floor(Math.random() * 100 + 100);
+		lower = Math.floor(multiplicand / 2) - 4;
+		upper = Math.floor(multiplicand / 2) + 4;
 	}
-
+	/*Starting number is a number less than 10 with one decimal place. 
+	Target range has three-digit bounding numbers, does not contain an 
+	integer multiple of the starting number, and the range of the interval is 1.*/
 	if (current_level == 14) {
 		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
+		multiplicand = Math.floor(Math.random() * 90 + 9) / 10;
+		lower = Math.floor(Math.random() * 900 + 100);
+		upper = lower + 1;
 	}
-
+	/*Starting number is a negative single-digit integer. Target range contains only positive values, one of 
+	which is a multiple of the starting number.*/
 	if (current_level == 15) {
 		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
+		multiplicand = -Math.abs(Math.floor(Math.random() * 7) + 2);
+		lower = multiplicand * multiplicand;
+		upper = lower + (Math.floor(Math.random() * 7) + 2);
 	}
-
+	/*Starting number is a positive two-digit integer. Target range is bounded by two-digit negative integers 
+	5 away from each other.*/
 	if (current_level == 16) {
 		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
+		multiplicand = Math.floor(Math.random() * 90 + 9);
+		lower = -Math.abs(Math.floor(Math.random() * 84) + 15);
+		upper = lower + 5;
 	}
-
+	/*Starting number is a number between -100 and -10 with one decimal place. Target range bounds are 
+	any two integers between -20 and 0.*/
 	if (current_level == 17) {
 		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
+		multiplicand = -Math.abs(Math.floor(Math.random() * 90) + 10);
+		lower = -Math.abs(Math.floor(Math.random() * 10) + 10);
+		upper = -Math.abs(Math.floor(Math.random() * 10));
 	}
-
+	/*Starting number is a number between -100 and -10 with one decimal place. Target range bounds are 
+	any two integers between 0 and 20. */
 	if (current_level == 18) {
 		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
+		multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
+		lower = Math.floor(Math.random() * 10);
+		upper = Math.floor(Math.random() * 10 + 10);
 	}
-
+	/*Starting number is an integer between -100 and -10 with one decimal place. Target range bounds are 
+	positive numbers between 0 and 1 with two decimal places that are one hundredth apart. */
 	if (current_level == 19) {
 		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
+		multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
+		lower = Math.floor((Math.random() * 90) + 9) / 100;
+		upper = lower + 0.01;
 	}
-
+	/*Starting number is any positive three digit integer. Target range is bounded by two numbers between 
+	-10 and -5, with three decimal places, and within one hundredth of each other. */
 	if (current_level == 20) {
 		// Generate new range
-		multiplicand = Math.floor(Math.random() * 90) + 10;
-		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-		upper = Math.floor(Math.random() * 7) + 2;
+		multiplicand = Math.floor(Math.random() * 900) + 100;
+		lower = -Math.abs((Math.floor(Math.random() * 10000) + 5000) /1000);
+		upper = lower + 0.01;
 	}
 
   clearMultiplicandBanner();
