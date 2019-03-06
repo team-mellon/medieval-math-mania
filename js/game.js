@@ -525,8 +525,7 @@ function tick(event) {
 		createjs.Sound.play("win", delayWin);
 
 		 /* if (boss_fight) {
-			big_boss = createSprite(big_bossS, structureX, structureY);
-			scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
+			big_boss = createSprite(big_bossS, structureX, structureY, "center", 0, "center", 0, "image");
 			console.log("boss");
 		  } else {
 			changeLevel();

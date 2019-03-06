@@ -280,10 +280,6 @@ function resize() {
   //Somehow get ECS in here
   //***********************
 
-  if (current_scene == 3) {
-    scaleLevel();
-  }
-
   landscape_warning.graphics.clear()
   landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, stage.canvas.width, stage.canvas.height);
 

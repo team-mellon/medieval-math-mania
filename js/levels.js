@@ -282,48 +282,58 @@ function loadImage() {
 function createLevel() {
 
   // Level structure in background
-  structure_center = createSprite(centerS, structureX, structureY);
-  structure_left_center = createSprite(left_centerS, structureX, structureY);
-  structure_right_center = createSprite(right_centerS, structureX, structureY);
+  structure_center = createSprite(centerS, structureX, structureY, "center", 0, "center", 0, "image");
+  structure_left_center = createSprite(left_centerS, structureX, structureY, "center", 0, "center", 0, "image");
+  structure_right_center = createSprite(right_centerS, structureX, structureY, "center", 0, "center", 0, "image");
 
   // Bad guys in midground
-  henchman_left = createSprite(henchmanS, henchmanX, henchmanY);
+  henchman_left = createSprite(henchmanS, henchmanX, henchmanY, "center", 0 - (henchmanX/2 + 625), "center", 0 + (24), "image");
   henchman_left.gotoAndPlay(0);
-  henchman_left_center = createSprite(henchmanS, henchmanX, henchmanY);
+  henchman_left_center = createSprite(henchmanS, henchmanX, henchmanY, "center", 0 - (henchmanX/2 + 375), "center", 0, "image");
   henchman_left_center.gotoAndPlay(0);
-  boss = createSprite(bossS, bossX, bossY);
+  boss = createSprite(bossS, bossX, bossY, "center", 0, "center", 0, "image");
   boss.gotoAndPlay(0);
-  henchman_right_center = createSprite(henchmanS, henchmanX, henchmanY);
+  henchman_right_center = createSprite(henchmanS, henchmanX, henchmanY, "center", 0 + (henchmanX/2 + 375), "center", 0, "image");
   henchman_right_center.gotoAndPlay(0);
-  henchman_right = createSprite(henchmanS, henchmanX, henchmanY);
+  henchman_right = createSprite(henchmanS, henchmanX, henchmanY, "center", 0 + (henchmanX/2 + 625 ), "center", 0 + (24), "image");
   henchman_right.gotoAndPlay(0);
 
   // Level structure in foreground
-  structure_body = createSprite(bodyS, structureX, structureY);
-  structure_left = createSprite(leftS, structureX, structureY);
-  structure_right = createSprite(rightS, structureX, structureY);
-  structure_banner = createSprite(bannerS, structureX, structureY);
-  structure_facade = createSprite(facadeS, structureX, structureY);
+  structure_body = createSprite(bodyS, structureX, structureY, "center", 0, "center", 0, "image");
+  structure_left = createSprite(leftS, structureX, structureY, "center", 0, "center", 0, "image");
+  structure_right = createSprite(rightS, structureX, structureY, "center", 0, "center", 0, "image");
+  structure_banner = createSprite(bannerS, structureX, structureY, "center", 0, "center", 0, "image");
+  structure_facade = createSprite(facadeS, structureX, structureY, "center", 0, "center", 0, "image");  // Level structure in foreground
 
-  firework_low = createSprite(firework_lowS, structureX, structureY);
-  firework_hit = createSprite(firework_hitS, structureX, structureY);
-  firework_high = createSprite(firework_highS, structureX, structureY);
+  firework_low = createSprite(firework_lowS, structureX, structureY, "center", 0, "center", 0, "image");
+  firework_hit = createSprite(firework_hitS, structureX, structureY, "center", 0, "center", 0, "image");
+  firework_high = createSprite(firework_highS, structureX, structureY, "center", 0, "center", 0, "image");
 
   // Main character in foreground
-  projectile = createSprite(projectileS, projectileX, projectileY);
+  projectile = createSprite(projectileS, projectileX, projectileY, "center", 0, "bottom", 0 - (projectileY/2 + 57), "image");
   projectile.gotoAndPlay(0);
-  catapult = createSprite(catapultS, catapultX, catapultY);
+  catapult = createSprite(catapultS, catapultX, catapultY, "center", 0, "bottom", 0 - (catapultY/2 - 57), "image");
 
-  numberline = createSprite(numberlineS, structureX, structureY);
-  createNumbers();
+  // number_spacing = 10;
+  number_spacer = 25;
 
-    end_level_flag = createSprite(end_level_flagS, structureX, structureY);
-    end_level_flag.visible = false;
+  for(i = -25; i <= 25; i++){
+  	var temp = createText(i.toString(), "Arial", "16px", "bold", "black", structureX, structureY, "center", 0 - (((number_spacer * 48) + 5)), "top", 30, "image");
+  	number_text.push(temp);
+    // number_spacing += 48;
+    number_spacer--;
+  }
+
+  numberline = createSprite(numberlineS, structureX, structureY, "center", 0, "center", 0, "image");
+
+  end_level_flag = createSprite(end_level_flagS, structureX, structureY, "center", 0, "center", 0, "image");
+  end_level_flag.visible = false;
+
 }
 
 function destroyLevel() {
 
-    stage.removeChild(end_level_flag);
+  stage.removeChild(end_level_flag);
   // Level structure in background
   stage.removeChild(structure_center);
   stage.removeChild(structure_left_center);
@@ -357,6 +367,7 @@ function destroyLevel() {
   stage.removeChild(big_boss);
 
   stage.removeChild(numberline);
+  
   for(var i = 0; i < 50; i++) {
      stage.removeChild(number_text[i]);
   }
@@ -383,61 +394,7 @@ function changeLevel(new_level) {
 
 }
 
-function scaleLevel() {
-
-  // number_spacing = 10;
-  number_spacer = 25;
-
-  scale_to_canvas(end_level_flag, "center", 0, "center", 0, "image");
-  // Level structure in background
-  scale_to_canvas(structure_center, "center", 0, "center", 0, "image");
-  scale_to_canvas(structure_left_center, "center", 0, "center", 0, "image");
-  scale_to_canvas(structure_right_center, "center", 0, "center", 0, "image");
-
-  // Bad guys in midground
-  scale_to_canvas(henchman_left, "center", 0 - (henchmanX/2 + 625) * scene_scale_Y, "center", 0 + (24) * scene_scale_Y, "image");
-  scale_to_canvas(henchman_left_center, "center", 0 - (henchmanX/2 + 375) * scene_scale_Y, "center", 0, "image");
-  scale_to_canvas(boss, "center", 0, "center", 0, "image");
-  scale_to_canvas(henchman_right_center, "center", 0 + (henchmanX/2 + 375) * scene_scale_Y, "center", 0, "image");
-  scale_to_canvas(henchman_right, "center", 0 + (henchmanX/2 + 625 ) * scene_scale_Y, "center", 0 + (24) * scene_scale_Y, "image");
-
-  // Level structure in foreground
-  scale_to_canvas(structure_body, "center", 0, "center", 0, "image");
-  scale_to_canvas(structure_left, "center", 0, "center", 0, "image");
-  scale_to_canvas(structure_right, "center", 0, "center", 0, "image");
-  scale_to_canvas(structure_banner, "center", 0, "center", 0, "image");
-  scale_to_canvas(structure_facade, "center", 0, "center", 0, "image");
-
-  scale_to_canvas(firework_low, "center", 0, "center", 0, "image");
-  scale_to_canvas(firework_hit, "center", 0, "center", 0, "image");
-  scale_to_canvas(firework_high, "center", 0, "center", 0, "image");
-
-  // Main character in foreground
-  scale_to_canvas(projectile, "center", 0, "bottom", 0 - (projectileY/2 + 57) * scene_scale_Y, "image");
-  scale_to_canvas(catapult, "center", 0, "bottom", 0 - (catapultY/2 - 57) * scene_scale_Y, "image");
-
-  scale_to_canvas(numberline, "center", 0, "center", 0, "image");
-
-  for(i = 0; i <= 50; i++){
-  	scale_to_canvas(number_text[i], "center", 0 - (((number_spacer * 48) + 5) * scene_scale_Y), "top", 30 * scene_scale_Y, "image");
-    number_spacer--
-    // number_spacing += 48;
-  }
-
-  if (fire_counter == 5) {
-    scale_to_canvas(big_boss, "center", 0, "center", 0, "image");
-  }
-
-}
-
 function myFunction(e) {
   e.preventDefault();
   document.getElementById("myDropdown").classList.toggle("show");
-}
-
-function createNumbers(){
-  for(i = -25; i <= 25; i++){
-  	var temp = createText(i.toString(), "Arial", "16px", "bold", "black", structureX, structureY);
-  	number_text.push(temp);
-  }
 }
