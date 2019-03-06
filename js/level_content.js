@@ -103,8 +103,16 @@ function genRange() {
 	if (current_level == 8) {
 		// Generate new range
 		multiplicand = Math.round((Math.random() * 90)) + 10;
-		lower = ((Math.round((Math.random() * 90))*100) / 100) + 10;
-		upper = lower + multiplicand/2
+		lower = (Math.round((Math.random() * 90)+ 10 * 11) / 10);
+		if(lower % 1 == 0)
+		{
+			lower += 0.7;
+		}
+		upper = Math.round((lower * lower/8)*10 + lower/2) / 10;
+		if(upper % 1 == 0)
+		{
+			upper += 0.4;
+		}
 	}
 	//Starting number is a three-digit number, target range goes from 0 to a single-digit positive integer. 
 	if (current_level == 9) {
@@ -117,9 +125,9 @@ function genRange() {
 	range is 1000 times the starting number, and upper bound is one more than the lower bound. */
 	if (current_level == 10) {
 		// Generate new range
-		multiplicand = Math.floor((Math.random() * 990) * 1000 + 10) / 1000;
+		multiplicand = Math.floor((Math.random() * 990) + 10) / 1000;
 		lower = 1000 * multiplicand;
-		upper = lower + (lower / 2);
+		upper = lower + 1;
 	}
 	/*Starting number is a number between 10 and 100 with one decimal place. Lower bound of target 
 	range is 1000 times the starting number, and upper bound is one more than the lower bound.*/
@@ -127,15 +135,15 @@ function genRange() {
 		// Generate new range
 		multiplicand = Math.floor(Math.random() * 90 * 10 + 10) / 10;
 		lower = 1000 * multiplicand;
-		upper = lower + (lower / 2);
+		upper = lower + 1;
 	}
 	/*Starting number is a whole number greater than 1,000,000. Target range contains the number which is .0001 times the size of the starting number.
 	The lower bound may be up to 50 less than this value and the upper bound may be up to 50 greater than this value.*/
 	if (current_level == 12) {
 		// Generate new range
 		multiplicand = Math.floor(Math.random() * 10000000);
-		lower = multiplicand * 0.0001 - (Math.floor(Math.random() * 50) + 10);
-		upper = multiplicand * 0.0001 + (Math.floor(Math.random() * 50) + 10);
+		lower = (Math.floor(multiplicand * 0.0001)) - (Math.floor(Math.random() * 50) + 10);
+		upper = (Math.floor(multiplicand * 0.0001)) + (Math.floor(Math.random() * 50) + 10);
 	}
 
 	if (current_level == 13) {
