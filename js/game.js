@@ -343,9 +343,8 @@ function tick(event) {
     runHitAnimations();
     runMissAnimations();
 
-	// Tutorial
-    // if (current_level == 1) {
-    if (true) {
+	  // Tutorial
+    if (play_tutorial) {
       if (miss_lower_counter != 1) {
         document.getElementById("tutorialText").textContent = "Try finding any multiplier that produces a solution below the range";
       } else {

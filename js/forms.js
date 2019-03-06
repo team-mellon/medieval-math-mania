@@ -534,23 +534,21 @@ function createGameForm() {
 
 
   // Creates Tutorial display text
-	// if(current_level == 1)
-  // if(true)
-  // {
-  var tutorial_label = document.createTextNode("Tutorial");
-  var br1 = document.createElement("br");
-  var tutorial_text = document.createElement("span");
-  tutorial_text.className = "tutorial";
-  tutorial_text.id = "tutorialText";
-  var tutorial_words = document.createTextNode("The tutorial is broken");
-  tutorial_text.appendChild(tutorial_words);
-  var tutorial_div = document.createElement("div");
-  tutorial_div.className = "tutorial_title";
-  tutorial_div.id = "tutorialDiv"
-  tutorial_div.appendChild(tutorial_label);
-  tutorial_div.appendChild(br1);
-  tutorial_div.appendChild(tutorial_text);
-  // }
+	if (play_tutorial) {
+	  var tutorial_label = document.createTextNode("Tutorial");
+	  var br1 = document.createElement("br");
+	  var tutorial_text = document.createElement("span");
+	  tutorial_text.className = "tutorial";
+	  tutorial_text.id = "tutorialText";
+	  var tutorial_words = document.createTextNode("The tutorial is broken");
+	  tutorial_text.appendChild(tutorial_words);
+	  var tutorial_div = document.createElement("div");
+	  tutorial_div.className = "tutorial_title";
+	  tutorial_div.id = "tutorialDiv"
+	  tutorial_div.appendChild(tutorial_label);
+	  tutorial_div.appendChild(br1);
+	  tutorial_div.appendChild(tutorial_text);
+  }
 
 
   // Creates login form to hold username and password divs
@@ -576,10 +574,11 @@ function createGameForm() {
   scene_html.appendChild(game_range_form);
   scene_html.appendChild(game_entry_form);
   scene_html.appendChild(game_history_form);
-  // if(current_level == 1)
-  // {
-	scene_html.appendChild(tutorial_div);
-  // }
+
+	if (play_tutorial) {
+		scene_html.appendChild(tutorial_div);
+  }
+	
 }
 
 function createHintForm() {
