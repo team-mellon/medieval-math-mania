@@ -153,7 +153,7 @@ function tick(event) {
 }
 
 function randomizeRangeAndMultiplier() {
-  
+
   // Generate new range
   rand_num1 = Math.floor((Math.random() * 10) + 1);
   rand_num2 = Math.floor((Math.random() * 100) + 1);
