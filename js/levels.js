@@ -30,6 +30,9 @@ var structure_center,
     structure_left,
     structure_right,
     structure_facade,
+    structure_range,
+    structure_equation,
+    structure_history,
     structure_banner;
 
 var center,
@@ -131,6 +134,24 @@ function loadLevel() {
   bannerS = {
     images: ["res/banners.png"],
     frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+  };
+
+  range_bannerS = {
+    images: ["res/range-banner.png"],
+    frames: {width:192, height:192, count:1, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+  };
+
+  equation_bannerS = {
+    images: ["res/equation-banner.png"],
+    frames: {width:192, height:192, count:1, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+  };
+
+  history_bannerS = {
+    images: ["res/history-banner.png"],
+    frames: {width:192, height:192, count:1, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
   };
 
@@ -237,14 +258,17 @@ function createLevel() {
   boss.gotoAndPlay(0);
   henchman_right_center = createLevelSprite(henchmanS, 96, 96, "center", 0 + (96/2 + 375), "center", 0, "image");
   henchman_right_center.gotoAndPlay(0);
-  henchman_right = createLevelSprite(henchmanS, 96, 96, "center", 0 + (96/2 + 625 ), "center", 0 + (24), "image");
+  henchman_right = createLevelSprite(henchmanS, 96, 96, "center", 0 + (96/2 + 625), "center", 0 + (24), "image");
   henchman_right.gotoAndPlay(0);
 
   // Level structure in foreground
   structure_left = createLevelSprite(leftS, structureX, structureY, "center", 0, "center", 0, "image");
   structure_right = createLevelSprite(rightS, structureX, structureY, "center", 0, "center", 0, "image");
   structure_body = createLevelSprite(bodyS, structureX, structureY, "center", 0, "center", 0, "image");
-  structure_banner = createLevelSprite(bannerS, structureX, structureY, "center", 0, "center", 0, "image");
+  // structure_banner = createLevelSprite(bannerS, structureX, structureY, "center", 0, "center", 0, "image");
+  structure_range = createLevelSprite(range_bannerS, 192, 192, "center", -378 + 192 / 2, "center", 48 + 192 / 2, "image");
+  // structure_banner = createLevelSprite(bannerS, structureX, structureY, "center", 0, "center", 0, "image");
+  structure_history = createLevelSprite(history_bannerS, 192, 192, "center", 186 + 192 / 2, "center", 48 + 192 / 2, "image");
   structure_facade = createLevelSprite(facadeS, structureX, structureY, "center", 0, "center", 0, "image");  // Level structure in foreground
 
   firework_low = createLevelSprite(firework_lowS, structureX, structureY, "center", 0, "center", 0, "image");

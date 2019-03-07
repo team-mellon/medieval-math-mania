@@ -392,13 +392,31 @@ function createGUI() {
 
 		case 8:
 
+			var reefS = {
+				images: ["res/reef.png"],
+				frames: {width:120, height:108, count:6, regX: 0, regY:0, spacing:0, margin:0},
+				framerate: 3
+			};
+
+			var skylandS = {
+				images: ["res/skyland.png"],
+				frames: {width:180, height:120, count:6, regX: 0, regY:0, spacing:0, margin:0},
+				framerate: 3
+			};
+
 			midground = createImage("res/map.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
-			foreground = createButton("res/map-banner.png", "Select a level", backgroundX, 144, "center", 0, "top", 0 + (144/2), "image", function() {});
+			foreground = createButton("res/map-banner.png", "Select a level", backgroundX, 108, "center", 0, "top", 0 + (108/2), "image", function() {});
+
+			var reef = createSprite(reefS, 120, 108, "center", -480 + 120 / 2, "center", 96 + 108 / 2, "image");
+			reef.gotoAndPlay(0);
+
+			var skyland = createSprite(skylandS, 180, 120, "center", -243 + 180 / 2, "center", -246 + 120 / 2, "image");
+			skyland.gotoAndPlay(0);
 
 			menu_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); });
 
 			// City
-			level1_indicator = createButton("res/map-indicator.png", "1", 24, 24, "center", 0 - (24/2 + 72), "bottom", 0 - (24/2 + 285), "gui", function() {
+			level1_indicator = createButton("res/map-indicator.png", "1", 24, 24, "center", -72 + 24/2, "bottom", -285 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 1;
@@ -407,7 +425,7 @@ function createGUI() {
 			});
 
 			// Grasslands
-			level2_indicator = createButton("res/map-indicator.png", "2", 24, 24, "center", 0 - (24/2 + 285), "bottom", 0 - (24/2 + 384), "gui", function() {
+			level2_indicator = createButton("res/map-indicator.png", "2", 24, 24, "center", -285 + 24/2, "bottom", -384 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 2;
@@ -416,7 +434,7 @@ function createGUI() {
 			});
 
 			// Volcano
-			level3_indicator = createButton("res/map-indicator.png", "3", 24, 24, "center", 0 - (24/2 + 582), "bottom", 0 - (24/2 + 174), "gui", function() {
+			level3_indicator = createButton("res/map-indicator.png", "3", 24, 24, "center", -582 + 24/2, "bottom", -174 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 3;
@@ -425,7 +443,7 @@ function createGUI() {
 			});
 
 			// Sea
-			level4_indicator = createButton("res/map-indicator.png", "4", 24, 24, "center", 0 - (24/2 + 168), "bottom", 0 - (24/2 + 150), "gui", function() {
+			level4_indicator = createButton("res/map-indicator.png", "4", 24, 24, "center", -168 + 24/2, "bottom", -150 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 4;
@@ -434,7 +452,7 @@ function createGUI() {
 			});
 
 			// Mountains
-			level5_indicator = createButton("res/map-indicator.png", "5", 24, 24, "center", 0 - (24/2 + 474), "center", 0 - (24/2 + 102), "gui", function() {
+			level5_indicator = createButton("res/map-indicator.png", "5", 24, 24, "center", -474 + 24/2, "center", -102 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 5;
@@ -443,7 +461,7 @@ function createGUI() {
 			});
 
 			// Summit
-			level6_indicator = createButton("res/map-indicator.png", "6", 24, 24, "center", 0 - (24/2 + 474), "center", 0 - (24/2 + 186), "gui", function() {
+			level6_indicator = createButton("res/map-indicator.png", "6", 24, 24, "center", -474 + 24/2, "center", -186 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 6;
@@ -452,7 +470,7 @@ function createGUI() {
 			});
 
 			// Cave
-			level7_indicator = createButton("res/map-indicator.png", "7", 24, 24, "center", 0 - (24/2 + 354), "center", 0 - (24/2 + 138), "gui", function() {
+			level7_indicator = createButton("res/map-indicator.png", "7", 24, 24, "center", -354 + 24/2, "center", -138 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 7;
@@ -461,7 +479,7 @@ function createGUI() {
 			});
 
 			// Forest
-			level8_indicator = createButton("res/map-indicator.png", "8", 24, 24, "center", 0 - (24/2 + 90), "center", 0 - (24/2 + 78), "gui", function() {
+			level8_indicator = createButton("res/map-indicator.png", "8", 24, 24, "center", -90 + 24/2, "center", -78 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 8;
@@ -470,7 +488,7 @@ function createGUI() {
 			});
 
 			// Alpine
-			level9_indicator = createButton("res/map-indicator.png", "9", 24, 24, "center", 0 + (24/2 + 534), "center", 0 - (24/2 + 222), "gui", function() {
+			level9_indicator = createButton("res/map-indicator.png", "9", 24, 24, "center", 534 + 24/2, "center", -222 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 9;
@@ -479,7 +497,7 @@ function createGUI() {
 			});
 
 			// Woods
-			level10_indicator = createButton("res/map-indicator.png", "10", 24, 24, "center", 0 + (24/2 + 150), "center", 0 + (24/2 + 102), "gui", function() {
+			level10_indicator = createButton("res/map-indicator.png", "10", 24, 24, "center", 150 + 24/2, "center", 102 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 10;
@@ -488,7 +506,7 @@ function createGUI() {
 			});
 
 			// Swamp
-			level11_indicator = createButton("res/map-indicator.png", "11", 24, 24, "center", 0 + (24/2 + 318), "center", 0 + (24/2 + 54), "gui", function() {
+			level11_indicator = createButton("res/map-indicator.png", "11", 24, 24, "center", 318 + 24/2, "center", 54 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 11;
@@ -497,7 +515,7 @@ function createGUI() {
 			});
 
 			// Deadlands
-			level12_indicator = createButton("res/map-indicator.png", "12", 24, 24, "center", 0 + (24/2 + 546), "center", 0 + (24/2 + 150), "gui", function() {
+			level12_indicator = createButton("res/map-indicator.png", "12", 24, 24, "center", 546 + 24/2, "center", 150 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 12;
@@ -506,7 +524,7 @@ function createGUI() {
 			});
 
 			// Sky
-			level13_indicator = createButton("res/map-indicator.png", "13", 24, 24, "center", 0 - (24/2 + 186), "center", 0 - (24/2 + 198), "gui", function() {
+			level13_indicator = createButton("res/map-indicator.png", "13", 24, 24, "center", -186 + 24/2, "center", -198 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 13;
@@ -515,7 +533,7 @@ function createGUI() {
 			});
 
 			// Underwater
-			level14_indicator = createButton("res/map-indicator.png", "14", 24, 24, "center", 0 - (24/2 + 414), "center", 0 + (24/2 + 150), "gui", function() {
+			level14_indicator = createButton("res/map-indicator.png", "14", 24, 24, "center", -414 + 24/2, "center", 150 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 14;
@@ -524,7 +542,7 @@ function createGUI() {
 			});
 
 			// Fungi
-			level15_indicator = createButton("res/map-indicator.png", "15", 24, 24, "center", 0 + (24/2 + 234), "center", 0 - (24/2 + 78), "gui", function() {
+			level15_indicator = createButton("res/map-indicator.png", "15", 24, 24, "center", 234 + 24/2, "center", -78 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 15;
@@ -533,7 +551,7 @@ function createGUI() {
 			});
 
 			// Tundra
-			level16_indicator = createButton("res/map-indicator.png", "16", 24, 24, "center", 0 + (24/2 + 354), "center", 0 - (24/2 + 186), "gui", function() {
+			level16_indicator = createButton("res/map-indicator.png", "16", 24, 24, "center", 354 + 24/2, "center", -186 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 16;
@@ -542,7 +560,7 @@ function createGUI() {
 			});
 
 			// Tarpit
-			level17_indicator = createButton("res/map-indicator.png", "17", 24, 24, "center", 0 + (24/2 + 486), "center", 0 - (24/2 + 30), "gui", function() {
+			level17_indicator = createButton("res/map-indicator.png", "17", 24, 24, "center", 486 + 24/2, "center", -30 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 17;
@@ -551,7 +569,7 @@ function createGUI() {
 			});
 
 			// Desert
-			level18_indicator = createButton("res/map-indicator.png", "18", 24, 24, "center", 0 - (24/2 + 618), "center", 0 + (24/2 + 102), "gui", function() {
+			level18_indicator = createButton("res/map-indicator.png", "18", 24, 24, "center", -618 + 24/2, "center", 102 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 18;
@@ -560,7 +578,7 @@ function createGUI() {
 			});
 
 			// Boreal
-			level19_indicator = createButton("res/map-indicator.png", "19", 24, 24, "center", 0 + (24/2 + 42), "center", 0 - (24/2 + 162), "gui", function() {
+			level19_indicator = createButton("res/map-indicator.png", "19", 24, 24, "center", 42 + 24/2, "center", -162 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 19;
@@ -569,7 +587,7 @@ function createGUI() {
 			});
 
 			// Monolith
-			level20_indicator = createButton("res/map-indicator.png", "20", 24, 24, "center", 0 - (24/2 + 426), "center", 0 - (24/2 + 6), "gui", function() {
+			level20_indicator = createButton("res/map-indicator.png", "20", 24, 24, "center", -426 + 24/2, "center", -6 + 24/2, "gui", function() {
 				generated = false;
 				createjs.Sound.play("select");
 				current_level = 20;
