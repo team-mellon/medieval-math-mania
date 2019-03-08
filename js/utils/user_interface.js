@@ -206,6 +206,74 @@ function createLevelText(num, font, size, style, color, width, height, x_lock, x
 
 }
 
+function createTextContainer(location, text, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type) { // }, handleClick) {
+
+  var image = new createjs.Bitmap(location);
+  image.regX = width/2;
+  image.regY = height/2;
+
+  var text = new createjs.Text(num, style + " " + size + " " + font, color);
+  text.textAlign = "center";
+  text.textBaseline = "middle";
+
+  var container = new createjs.Container();
+  button.addChild(image, text);
+  stage.addChild(button);
+
+  // button.on("click", handleClick);
+
+  var entity_object = {
+    object: container,
+    width: width,
+    height: height,
+    x_lock: x_lock,
+    x_location: x_location,
+    y_lock: y_lock,
+    y_location: y_location,
+    type: type
+  };
+
+  ecs.push(entity_object);
+
+  return text;
+
+}
+
+function createLevelTextContainer(animation, words, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type, reg) { // }, handleClick) {
+
+  var spriteSheet = new createjs.SpriteSheet(animation);
+  var sprite = new createjs.Sprite(spriteSheet);
+  sprite.regX = width/2;
+  sprite.regY = height/2;
+
+  var text = new createjs.Text(words, style + " " + size + " " + font, color);
+  text.textAlign = "center";
+  text.textBaseline = "middle";
+  text.regY = reg / 2;
+
+  var container = new createjs.Container();
+  container.addChild(sprite, text);
+  stage.addChild(container);
+
+  // button.on("click", handleClick);
+
+  var entity_object = {
+    object: container,
+    width: width,
+    height: height,
+    x_lock: x_lock,
+    x_location: x_location,
+    y_lock: y_lock,
+    y_location: y_location,
+    type: type
+  };
+
+  lcs.push(entity_object);
+
+  return text;
+
+}
+
 // function createLine(x_one, y_one, x_two, y_two, wid, col) {
 //
 //   var line = new BABYLON.GUI.Line();

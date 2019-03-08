@@ -431,29 +431,6 @@ function createMapForm() {
 function createGameForm() {
 
   // Creates username display text
-  var range_label = document.createTextNode("Range");
-  var br = document.createElement("br");
-  var left_paren = document.createTextNode("[");
-  var lower_number = document.createTextNode(lower);
-  var middle_comma = document.createTextNode(", ");
-  var upper_number = document.createTextNode(upper);
-  var right_paren = document.createTextNode("]");
-
-  // Creates username div to hold display text and input box
-  var game_range_div = document.createElement("div");
-  game_range_div.className = "login";
-  game_range_div.id = "rangeDiv"
-  game_range_div.appendChild(range_label);
-  game_range_div.appendChild(br);
-  game_range_div.appendChild(left_paren);
-  game_range_div.appendChild(lower_number);
-  game_range_div.appendChild(middle_comma);
-  game_range_div.appendChild(upper_number);
-  game_range_div.appendChild(right_paren);
-
-
-
-  // Creates username display text
   var multiplicand_div = document.createElement("div");
   multiplicand_div.id = "multiplicandText";
   var multiplicand_text = document.createTextNode(multiplicand);
@@ -512,7 +489,7 @@ function createGameForm() {
 
 
   // Creates username display text
-  var button_text = document.createTextNode("History");
+  var button_text = document.createTextNode("#");
   var history_button = document.createElement("button");
   var history_div = document.createElement("div");
   history_button.className = "dropbtn";
@@ -551,13 +528,6 @@ function createGameForm() {
 	  tutorial_div.appendChild(tutorial_text);
   }
 
-
-  // Creates login form to hold username and password divs
-  var game_range_form = document.createElement("form");
-  game_range_form.id = "rangeBanner";
-  game_range_form.className = "scrollMenu";
-  game_range_form.appendChild(game_range_div);
-
   // Creates login form to hold username and password divs
   var game_entry_form = document.createElement("form");
   game_entry_form.id = "equationBanner";
@@ -572,7 +542,6 @@ function createGameForm() {
 
   // Injecting login form into existing html
   var scene_html = document.getElementById("sceneHTML");
-  scene_html.appendChild(game_range_form);
   scene_html.appendChild(game_entry_form);
   scene_html.appendChild(game_history_form);
 
@@ -680,19 +649,6 @@ function clearMultiplicandBanner() {
 
 }
 
-function clearRangeBanner() {
-
-	// Clear the range banner
-	var range_div = document.getElementById("rangeDiv");
-
-	while (range_div.firstChild) {
-
-		range_div.removeChild(range_div.firstChild);
-
-	}
-
-}
-
 function remakeMultiplierBanner() {
 
 	var multip_div = document.getElementById("multiplicandText");
@@ -703,24 +659,6 @@ function remakeMultiplierBanner() {
   // Append to the range banner
 	multip_div.appendChild(multip);
 
-}
-
-function remakeRangeBanner() {
-
-  var range_div = document.getElementById("rangeDiv");
-
-	// Remake range for the banner
-	var left_paren = document.createTextNode("[");
-	var lower_number = document.createTextNode(lower);
-	var middle_comma = document.createTextNode(", ");
-	var upper_number = document.createTextNode(upper);
-	var right_paren = document.createTextNode("]");
-
-	// Append to the range banner
-	range_div.appendChild(left_paren);
-	range_div.appendChild(lower_number);
-	range_div.appendChild(middle_comma);
-	range_div.appendChild(upper_number);
-	range_div.appendChild(right_paren);
+	structure_equation_banner.text = multiplicand.toString() + " x          = " + solution.toString();
 
 }

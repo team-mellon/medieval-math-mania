@@ -114,14 +114,14 @@ function genRange() {
 			upper += 0.4;
 		}
 	}
-	//Starting number is a three-digit number, target range goes from 0 to a single-digit positive integer. 
+	//Starting number is a three-digit number, target range goes from 0 to a single-digit positive integer.
 	if (current_level == 9) {
 		// Generate new range
 		multiplicand = Math.floor((Math.random() * 900) + 100);
 		lower = 0;
 		upper = Math.floor(Math.random() * 7) + 2;
 	}
-	/*Starting number is a number between 0 and .1 with three decimal places. Lower bound of target 
+	/*Starting number is a number between 0 and .1 with three decimal places. Lower bound of target
 	range is 1000 times the starting number, and upper bound is one more than the lower bound. */
 	if (current_level == 10) {
 		// Generate new range
@@ -129,7 +129,7 @@ function genRange() {
 		lower = 1000 * multiplicand;
 		upper = lower + 1;
 	}
-	/*Starting number is a number between 10 and 100 with one decimal place. Lower bound of target 
+	/*Starting number is a number between 10 and 100 with one decimal place. Lower bound of target
 	range is 1000 times the starting number, and upper bound is one more than the lower bound.*/
 	if (current_level == 11) {
 		// Generate new range
@@ -145,7 +145,7 @@ function genRange() {
 		lower = (Math.floor(multiplicand * 0.0001)) - (Math.floor(Math.random() * 50) + 10);
 		upper = (Math.floor(multiplicand * 0.0001)) + (Math.floor(Math.random() * 50) + 10);
 	}
-	/*Starting number is an integer less than 200. Target range contains the number which is half the value 
+	/*Starting number is an integer less than 200. Target range contains the number which is half the value
 	with an overall range less than 10. */
 	if (current_level == 13) {
 		// Generate new range
@@ -153,8 +153,8 @@ function genRange() {
 		lower = Math.floor(multiplicand / 2) - 4;
 		upper = Math.floor(multiplicand / 2) + 4;
 	}
-	/*Starting number is a number less than 10 with one decimal place. 
-	Target range has three-digit bounding numbers, does not contain an 
+	/*Starting number is a number less than 10 with one decimal place.
+	Target range has three-digit bounding numbers, does not contain an
 	integer multiple of the starting number, and the range of the interval is 1.*/
 	if (current_level == 14) {
 		// Generate new range
@@ -162,7 +162,7 @@ function genRange() {
 		lower = Math.floor(Math.random() * 900 + 100);
 		upper = lower + 1;
 	}
-	/*Starting number is a negative single-digit integer. Target range contains only positive values, one of 
+	/*Starting number is a negative single-digit integer. Target range contains only positive values, one of
 	which is a multiple of the starting number.*/
 	if (current_level == 15) {
 		// Generate new range
@@ -170,7 +170,7 @@ function genRange() {
 		lower = multiplicand * multiplicand;
 		upper = lower + (Math.floor(Math.random() * 7) + 2);
 	}
-	/*Starting number is a positive two-digit integer. Target range is bounded by two-digit negative integers 
+	/*Starting number is a positive two-digit integer. Target range is bounded by two-digit negative integers
 	5 away from each other.*/
 	if (current_level == 16) {
 		// Generate new range
@@ -178,7 +178,7 @@ function genRange() {
 		lower = -Math.abs(Math.floor(Math.random() * 84) + 15);
 		upper = lower + 5;
 	}
-	/*Starting number is a number between -100 and -10 with one decimal place. Target range bounds are 
+	/*Starting number is a number between -100 and -10 with one decimal place. Target range bounds are
 	any two integers between -20 and 0.*/
 	if (current_level == 17) {
 		// Generate new range
@@ -186,7 +186,7 @@ function genRange() {
 		lower = -Math.abs(Math.floor(Math.random() * 10) + 10);
 		upper = -Math.abs(Math.floor(Math.random() * 10));
 	}
-	/*Starting number is a number between -100 and -10 with one decimal place. Target range bounds are 
+	/*Starting number is a number between -100 and -10 with one decimal place. Target range bounds are
 	any two integers between 0 and 20. */
 	if (current_level == 18) {
 		// Generate new range
@@ -194,15 +194,15 @@ function genRange() {
 		lower = Math.floor(Math.random() * 10);
 		upper = Math.floor(Math.random() * 10 + 10);
 	}
-	/*Starting number is an integer between -100 and -10 with one decimal place. Target range bounds are 
+	/*Starting number is an integer between -100 and -10 with one decimal place. Target range bounds are
 	positive numbers between 0 and 1 with two decimal places that are one hundredth apart. */
 	if (current_level == 19) {
 		// Generate new range
 		multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
 		lower = Math.floor((Math.random() * 90) + 9) / 100;
-		upper = lower + 0.01;
+		upper = Math.floor((lower + 0.01)* 100)/100;
 	}
-	/*Starting number is any positive three digit integer. Target range is bounded by two numbers between 
+	/*Starting number is any positive three digit integer. Target range is bounded by two numbers between
 	-10 and -5, with three decimal places, and within one hundredth of each other. */
 	if (current_level == 20) {
 		// Generate new range
@@ -212,9 +212,16 @@ function genRange() {
 	}
 
   clearMultiplicandBanner();
-  clearRangeBanner();
 
   remakeMultiplierBanner();
   remakeRangeBanner();
+
+}
+
+function remakeRangeBanner() {
+
+  var range = "[ " + lower + ", " + upper + "]";
+
+  structure_range.text = range;
 
 }

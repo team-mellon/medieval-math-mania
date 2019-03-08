@@ -67,9 +67,9 @@ var end_level_scene;
 var end_level_button;
 var end_text;
 
-var hit_text_counter;
-var low_text_counter;
-var high_text_counter;
+// var hit_text_counter;
+// var low_text_counter;
+// var high_text_counter;
 
 function createGUI() {
 
@@ -295,10 +295,6 @@ function createGUI() {
 	    high_text.visible = false;
 	    high_text.alpha = 0;
 
-	    low_text_counter = createText("Total Lows: 0", "Oldstyle", "25px", "", "saddlebrown", 10, 10, "left", 30, "center", 0 + 225 * scene_scale_Y, "image");
-	    high_text_counter = createText("Total High: 0", "Oldstyle", "25px", "", "saddlebrown", 10, 10, "left", 30, "center", 0 + 280 * scene_scale_Y, "image");
-	    hit_text_counter = createText("Total Hits: 0", "Oldstyle", "25px", "", "saddlebrown", 10, 10, "left", 30, "center", 0 + 300 * scene_scale_Y, "image");
-
 	    pause_menu = createImage("res/hit-target-pause-menu.png", backgroundX, backgroundY, "center", 0, "center", 0, "image");
 	    pause_menu.visible = false;
 
@@ -320,7 +316,7 @@ function createGUI() {
 	    settings_button = createButton("res/hit-target-pause-button.png", "Settings", buttonX, buttonY, "center", 0, "center", 0 - 40 * scene_scale_Y, "gui", function() { createjs.Sound.play("menu"); changeScene(6);  visibleForm(true);});
 	    settings_button.visible = false;
 
-	    menu_button = createButton("res/login-button.png", "Pause", buttonX, buttonY, "right", 0 - (buttonX/2 + 10) * scene_scale_Y, "bottom", 0 - (buttonY/2 + 10) * scene_scale_Y, "gui", function() {
+	    menu_button = createButton("res/login-button.png", "Pause", buttonX, buttonY, "right", -(buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() {
 				createjs.Sound.play("menu");
 				pauseAnimation(true);
 				visibleButton(true);

@@ -110,50 +110,6 @@
 	text4.zIndex = 1;
 	advTexture.addControl(text4);
 
-	var hitmarker_l = new BABYLON.GUI.TextBlock("lo", "Low");
-	hitmarker_l.width = "200px";
-	hitmarker_l.height = "100px";
-	hitmarker_l.left = "-500px";
-	hitmarker_l.top = "-345px";
-	hitmarker_l.color = "red";
-	hitmarker_l.fontSize = 60;
-	hitmarker_l.alpha = 0;
-	advTexture.addControl(hitmarker_l);
-
-	var hitmarker_h = new BABYLON.GUI.TextBlock("hi", "High");
-	hitmarker_h.width = "200px";
-	hitmarker_h.height = "100px";
-	hitmarker_h.left = "500px";
-	hitmarker_h.top = "-345px";
-	hitmarker_h.color = "red";
-	hitmarker_h.fontSize = 60;
-	hitmarker_h.alpha = 0;
-	advTexture.addControl(hitmarker_h);
-
-	var hitmarker_t = new BABYLON.GUI.TextBlock("tar", "Hit");
-	hitmarker_t.width = "200px";
-	hitmarker_t.height = "100px";
-	hitmarker_t.left = "0px";
-	hitmarker_t.top = "-345px";
-	hitmarker_t.color = "green";
-	hitmarker_t.fontSize = 60;
-	hitmarker_t.alpha = 0;
-	advTexture.addControl(hitmarker_t);
-
-	// Range numbers
-	var range = new BABYLON.GUI.TextBlock();
-	range.text = "[]";
-	range.color = "black";
-	range.height = "70px";
-	range.width = "190px";
-	range.fontFamily = "Arial";
-	range.fontStyle = "bold";
-	range.fontSize = 35;
-	range.top = "130px";
-	range.left = "-345px";
-	range.zIndex = 1;
-	advTexture.addControl(range);
-
 	var param = "";
 	var rand_num1;
 	var rand_num2;

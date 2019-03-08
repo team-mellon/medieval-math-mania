@@ -161,12 +161,6 @@ function randomizeRangeAndMultiplier() {
   lower = rand_num1 * rand_num2;
   upper = rand_num1 * (rand_num2 + 3);
 
-  // Clear the range banner
-  var range_div = document.getElementById("rangeDiv");
-  while (range_div.firstChild) {
-    range_div.removeChild(range_div.firstChild);
-  }
-
   var multip_div = document.getElementById("multiplicandText");
   while (multip_div.firstChild) {
     multip_div.removeChild(multip_div.firstChild);
@@ -174,20 +168,6 @@ function randomizeRangeAndMultiplier() {
 
   var multip = document.createTextNode(multiplicand);
   multip_div.appendChild(multip);
-
-  // Remake the display for the banner
-  var left_paren = document.createTextNode("[");
-  var lower_number = document.createTextNode(lower);
-  var middle_comma = document.createTextNode(", ");
-  var upper_number = document.createTextNode(upper);
-  var right_paren = document.createTextNode("]");
-
-  // Append the display
-  range_div.appendChild(left_paren);
-  range_div.appendChild(lower_number);
-  range_div.appendChild(middle_comma);
-  range_div.appendChild(upper_number);
-  range_div.appendChild(right_paren);
 
 }
 
@@ -230,6 +210,7 @@ function runInput() {
       console.log(solution);
       solution = Math.floor10(solution, -1);
       console.log(solution);
+
       var solut_div = document.getElementById("solutionText");
       while (solut_div.firstChild) {
         solut_div.removeChild(solut_div.firstChild);
@@ -237,6 +218,8 @@ function runInput() {
 
       var solut = document.createTextNode(solution);
       solut_div.appendChild(solut);
+
+    	structure_equation_banner.text = multiplicand.toString() + " x          = " + solution.toString();
 
       clearGameForm();
 
@@ -325,6 +308,8 @@ function runInput() {
 
       var solut = document.createTextNode(solution);
       solut_div.appendChild(solut);
+
+      structure_equation_banner.text = multiplicand.toString() + " x          = " + solution.toString();
 
       clearGameForm();
 
@@ -513,7 +498,7 @@ function runHitAnimations() {
       reload = true;
       waiting_hit = false;
       hit_counter++;
-      hit_text_counter.text = "Total Hits: "+hit_counter.toString();
+      structure_score.text = "Total Lows: " + miss_lower_counter.toString() + "\nTotal High: " + miss_upper_counter.toString() + "\nTotal Hits: " + hit_counter.toString();
 
     }
 
@@ -558,7 +543,7 @@ function runMissAnimations() {
         reload = true;
         miss_lower = false;
         miss_lower_counter++;
-	      low_text_counter.text ="Total Lows: "+ miss_lower_counter.toString();
+        structure_score.text = "Total Lows: " + miss_lower_counter.toString() + "\nTotal High: " + miss_upper_counter.toString() + "\nTotal Hits: " + hit_counter.toString();
 
       }
 
@@ -579,7 +564,7 @@ function runMissAnimations() {
         reload = true;
         miss_upper = false;
         miss_upper_counter++;
-	      high_text_counter.text ="Total Highs: "+ miss_upper_counter.toString();
+        structure_score.text = "Total Lows: " + miss_lower_counter.toString() + "\nTotal High: " + miss_upper_counter.toString() + "\nTotal Hits: " + hit_counter.toString();
 
       }
 

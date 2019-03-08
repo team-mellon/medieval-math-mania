@@ -130,15 +130,9 @@ html, body {
   line-height: 0.7;
 }
 
-#rangeBanner {
-  font-family: "Oldstyle";
-  position: absolute;
-  top: 62.5%;
-  left: 32%;
-}
-
 #equationBanner {
   font-family: "Oldstyle";
+  color: transparent;
   position: absolute;
   top: 62.5%;
   left: 50%;
@@ -292,9 +286,6 @@ input::-webkit-outer-spin-button {
   .scrollMenu {
     line-height: 75%;
     font-size: 7vh;
-  }
-  #rangeBanner {
-    font-size: 5vh;
   }
 
   #equationBanner {

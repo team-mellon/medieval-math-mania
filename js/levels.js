@@ -83,9 +83,10 @@ function loadLevel() {
     frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
   };
+
   numberlineS = {
     images: ["res/numberline.png"],
-    frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
+    frames: {width:1920, height:24, count:1, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
   };
 
@@ -139,19 +140,19 @@ function loadLevel() {
 
   range_bannerS = {
     images: ["res/range-banner.png"],
-    frames: {width:192, height:192, count:1, regX: 0, regY:0, spacing:0, margin:0},
+    frames: {width:192, height:126, count:1, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
   };
 
   equation_bannerS = {
     images: ["res/equation-banner.png"],
-    frames: {width:192, height:192, count:1, regX: 0, regY:0, spacing:0, margin:0},
+    frames: {width:300, height:78, count:1, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
   };
 
   history_bannerS = {
     images: ["res/history-banner.png"],
-    frames: {width:192, height:192, count:1, regX: 0, regY:0, spacing:0, margin:0},
+    frames: {width:192, height:126, count:1, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
   };
 
@@ -200,6 +201,12 @@ function loadLevel() {
   firework_highS = {
     images: ["res/firework-high.png"],
     frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
+    framerate: 6
+  };
+
+  score_bannerS = {
+    images: ["res/score-banner.png"],
+    frames: {width:192, height:126, count:1, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
   };
 
@@ -266,9 +273,9 @@ function createLevel() {
   structure_right = createLevelSprite(rightS, structureX, structureY, "center", 0, "center", 0, "image");
   structure_body = createLevelSprite(bodyS, structureX, structureY, "center", 0, "center", 0, "image");
   // structure_banner = createLevelSprite(bannerS, structureX, structureY, "center", 0, "center", 0, "image");
-  structure_range = createLevelSprite(range_bannerS, 192, 192, "center", -378 + 192 / 2, "center", 48 + 192 / 2, "image");
-  // structure_banner = createLevelSprite(bannerS, structureX, structureY, "center", 0, "center", 0, "image");
-  structure_history = createLevelSprite(history_bannerS, 192, 192, "center", 186 + 192 / 2, "center", 48 + 192 / 2, "image");
+  structure_range = createLevelTextContainer(range_bannerS, "[ #, # ]", "Oldstyle", "32px", "normal", "Gold", 192, 126, "center", -378 + 192 / 2, "center", 48 + 126 / 2, "image", 0);
+  structure_equation_banner = createLevelTextContainer(equation_bannerS, "# x          = #", "Oldstyle", "26px", "normal", "Gold", 300, 78, "center", -150 + 300 / 2, "center", 63 + 78 / 2, "image", 0);
+  structure_history = createLevelTextContainer(history_bannerS, "History", "Oldstyle", "18px", "normal", "Gold", 192, 126, "center", 186 + 192 / 2, "center", 48 + 126 / 2, "image", 126 / 2);
   structure_facade = createLevelSprite(facadeS, structureX, structureY, "center", 0, "center", 0, "image");  // Level structure in foreground
 
   firework_low = createLevelSprite(firework_lowS, structureX, structureY, "center", 0, "center", 0, "image");
@@ -292,7 +299,9 @@ function createLevel() {
 
   }
 
-  numberline = createLevelSprite(numberlineS, structureX, structureY, "center", 0, "center", 0, "image");
+  numberline = createLevelSprite(numberlineS, structureX, 24, "center", 0, "top", 24 / 2, "image");
+
+  structure_score = createLevelTextContainer(score_bannerS, "Total Lows: 0\nTotal High: 0\nTotal Hits: 0", "Oldstyle", "24px", "normal", "Gold", 192, 126, "left", (10 + 192 / 2), "bottom", -(10 + 126 / 2), "image", 126 / 2);
 
   end_level_flag = createLevelSprite(end_level_flagS, structureX, structureY, "center", 0, "center", 0, "image");
   end_level_flag.visible = false;
