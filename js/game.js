@@ -66,8 +66,8 @@ var database = {
   },
   "stats": {
     "admin": {
-      "hits": "9001",
-      "misses": "0"
+      "hits": 0,
+      "misses": 0
     }
   }
 };
@@ -87,7 +87,13 @@ function tick(event) {
   	if(!generated) {
 
       // Generate the range
-  		genRange();
+  		levels[current_level - 1].math();
+
+      clearMultiplicandBanner();
+
+      remakeMultiplierBanner();
+      remakeRangeBanner();
+
   		generated = true;
 
   	}
@@ -104,7 +110,7 @@ function tick(event) {
     }
 
     // If on mobile
-    if (stage.canvas.width < 900) {
+    if (mobile) {
       // Check which digit is selected and highlight it
       checkSelectedDigit();
     }
@@ -185,7 +191,7 @@ function runInput() {
 
   valid = true;
 
-  if (stage.canvas.width < 900) {
+  if (mobile) {
 
     for (var x in history_list) {
       console.log(history_list[x]);
@@ -654,6 +660,11 @@ function createVictoryBanner() {
   //plays victory tune
   createjs.Sound.play("win", delayWin);
 
+  // udpate global total
+  database["stats"]["admin"]["hits"] += hit_counter;
+  database["stats"]["admin"]["misses"] += miss_lower_counter;
+  database["stats"]["admin"]["misses"] += miss_upper_counter;
+
 }
 
 function hideBadGuys() {
@@ -746,6 +757,302 @@ function checkBossFight() {
 
 function flagAnimation(){
   end_level_flag.gotoAndPlay(0);
+}
+
+function setBoss() {
+  boss_fight = document.getElementById("bossValue").checked;
+}
+
+function setTutorial() {
+  play_tutorial = document.getElementById("tutorialValue").checked;
+}
+
+function clearMultiplicandBanner() {
+
+  // Clear the multiplicand banner
+	var multip_div = document.getElementById("multiplicandText");
+
+	while (multip_div.firstChild) {
+
+	   multip_div.removeChild(multip_div.firstChild);
+
+	}
+
+}
+
+function remakeMultiplierBanner() {
+
+	var multip_div = document.getElementById("multiplicandText");
+
+  // Remake multiplier for banner
+	var multip = document.createTextNode(multiplicand);
+
+  // Append to the range banner
+	multip_div.appendChild(multip);
+
+	structure_equation_banner.text = multiplicand.toString() + " x          = " + solution.toString();
+
+}
+
+function clearGameForm() {
+
+	clearHtml();
+
+
+    // Creates username display text
+    var multiplicand_div = document.createElement("div");
+    multiplicand_div.id = "multiplicandText";
+    var multiplicand_text = document.createTextNode(multiplicand);
+    multiplicand_div.appendChild(multiplicand_text);
+    var sign_text = document.createTextNode(sign);
+    var entry_input;
+    if (mobile) {
+
+      entry_input = document.createElement("div");
+      entry_input.id = "entryDisplay";
+      var hundreds = document.createElement("span");
+      hundreds.id = "hundredsPlace";
+      var hundreds_place = document.createTextNode("0");
+      hundreds.appendChild(hundreds_place);
+      var tens = document.createElement("span");
+      tens.id = "tensPlace";
+      var tens_place = document.createTextNode("0");
+      tens.appendChild(tens_place);
+      var ones = document.createElement("span");
+      ones.id = "onesPlace";
+      var ones_place = document.createTextNode("0");
+      ones.appendChild(ones_place);
+      entry_input.appendChild(hundreds);
+      entry_input.appendChild(tens);
+      entry_input.appendChild(ones);
+
+    } else {
+
+      entry_input = document.createElement("input");
+      entry_input.id = "entryInput";
+      entry_input.setAttribute("type", "number");
+      entry_input.setAttribute("placeholder", "###");
+      entry_input.setAttribute("value", "");
+      entry_input.setAttribute("maxlength", "3");
+      entry_input.setAttribute("size", "4");
+      entry_input.setAttribute("min", "-999");
+      entry_input.setAttribute("max", "999");
+      entry_input.setAttribute("name", "entry");
+      entry_input.addEventListener('keypress', function(event) {
+        if (event.keyCode == 13) {
+          event.preventDefault();
+        }
+      });
+
+    }
+
+    var equal_text = document.createTextNode(equal);
+    var solution_div = document.createElement("div");
+    solution_div.id = "solutionText";
+    var solution_text = document.createTextNode(solution);
+    solution_div.appendChild(solution_text);
+
+    // Creates username div to hold display text and input box
+    var game_entry_div = document.createElement("div");
+    game_entry_div.className = "login";
+    game_entry_div.appendChild(multiplicand_div);
+    game_entry_div.appendChild(sign_text);
+    game_entry_div.appendChild(entry_input);
+    game_entry_div.appendChild(equal_text);
+    game_entry_div.appendChild(solution_div);
+
+    // Creates username display text
+    var button_text = document.createTextNode("#");
+    var history_button = document.createElement("button");
+    var history_div = document.createElement("div");
+    history_button.className = "dropbtn";
+    history_button.addEventListener('click', myFunction);
+    history_div.className = "dropdown-content";
+    history_div.id = "myDropdown";
+    history_button.appendChild(button_text);
+    var history_dropdown = document.createElement("div");
+    history_dropdown.className = "dropdown";
+    history_dropdown.appendChild(history_button);
+    history_dropdown.appendChild(history_div);
+
+    // Does a thing
+    var game_history_div = document.createElement("div");
+    game_history_div.className = "login";
+    game_history_div.appendChild(history_dropdown);
+
+    // Creates Tutorial display text
+    if (play_tutorial) {
+      var tutorial_label = document.createTextNode("Tutorial");
+      var br1 = document.createElement("br");
+      var tutorial_text = document.createElement("span");
+      tutorial_text.className = "tutorial";
+      tutorial_text.id = "tutorialText";
+      var tutorial_words = document.createTextNode("The tutorial is broken");
+      tutorial_text.appendChild(tutorial_words);
+      var tutorial_div = document.createElement("div");
+      tutorial_div.className = "tutorial_title";
+      tutorial_div.id = "tutorialDiv"
+      tutorial_div.appendChild(tutorial_label);
+      tutorial_div.appendChild(br1);
+      tutorial_div.appendChild(tutorial_text);
+    }
+
+    // Creates login form to hold username and password divs
+    var game_entry_form = document.createElement("form");
+    game_entry_form.id = "equationBanner";
+    game_entry_form.className = "scrollMenu";
+    game_entry_form.appendChild(game_entry_div);
+
+    // Creates login form to hold username and password divs
+    var game_history_form = document.createElement("form");
+    game_history_form.id = "historyBanner";
+    game_history_form.className = "scrollMenu";
+    game_history_form.appendChild(game_history_div);
+
+    // Injecting login form into existing html
+    var scene_html = document.getElementById("sceneHTML");
+    scene_html.appendChild(game_entry_form);
+    scene_html.appendChild(game_history_form);
+
+    if (play_tutorial) {
+      scene_html.appendChild(tutorial_div);
+    }
+
+}
+
+function visibleForm(visible) {
+
+  if(visible) {
+		var scene_html = document.getElementById("sceneHTML");
+		scene_html.hidden = false;
+  } else {
+		var scene_html = document.getElementById("sceneHTML");
+		scene_html.hidden = true;
+  }
+
+}
+
+//Loadbar for loading screen
+function loading(evt){
+  var progbar = document.getElementById("progressBar");
+  var perctext = document.getElementById("percentText");
+  progressBar.hidden= false;
+  progressBackground.hidden = false;
+  ldBg.hidden = false;
+  progbar.style.width = preload.progress * 100 + '%';
+  perctext.innerHTML = (Math.floor(preload.progress * 100)).toString() + '%';
+  if(preload.progress * 100  >= 100)
+  {
+	  progressBar.hidden = true;
+	  progressBackground.hidden = true;
+	  ldBg.hidden = true;
+  }
+}
+
+
+
+function resetLevel() {
+
+	history_list = [];
+	hide_knight = false;
+	hide_archer1 = false;
+	hide_archer2 = false;
+	hide_archer3 = false;
+	hide_archer4 = false;
+	hit_counter = 0;
+	miss_upper_counter = 0;
+	miss_lower_counter = 0;
+
+}
+
+function pauseAnimation(paused) {
+
+	henchman_left.paused = paused;
+	henchman_left_center.paused = paused;
+	boss.paused = paused;
+	henchman_right.paused = paused;
+	henchman_right_center.paused = paused;
+	projectile.paused = paused;
+
+  if(paused){
+
+		structure_center.paused = true;
+		structure_left_center.paused = true;
+		structure_right_center.paused = true;
+		structure_left.paused = true;
+		structure_right.paused = true;
+		firework_low.paused = true;
+    firework_hit.paused = true;
+    firework_high.paused = true;
+		catapult.paused = true;
+
+  } else {
+
+		if(structure_center.currentFrame != 0 && structure_center.currentFrame != 11)
+	    structure_center.paused = false;
+
+		if(structure_left_center.currentFrame != 0 && structure_left_center.currentFrame != 11)
+	    structure_left_center.paused = false;
+
+		if(structure_right_center.currentFrame != 0 && structure_right_center.currentFrame != 11)
+	    structure_right_center.paused = false;
+
+		if(structure_left.currentFrame != 0 && structure_left.currentFrame != 11)
+	    structure_left.paused = false;
+
+		if(structure_right.currentFrame != 0 && structure_right.currentFrame != 11)
+	    structure_right.paused = false;
+
+		if(catapult.currentFrame != 0 && catapult.currentFrame != 11)
+			catapult.paused = false;
+
+		if(firework_low.currentFrame != 0 && firework_low.currentFrame != 11)
+	    firework_low.paused = false;
+
+		if(firework_hit.currentFrame != 0 && firework_hit.currentFrame != 11)
+	    firework_hit.paused = false;
+
+		if(firework_high.currentFrame != 0 && firework_high.currentFrame != 11)
+	    firework_high.paused = false;
+
+  }
+
+}
+
+function visibleButton(visible) {
+
+  if(visible) {
+
+		menu_button.visible = false;
+		pause_menu.visible = true;
+		close_button.visible = true;
+		main_menu_button.visible = true;
+		exit_level_button.visible = true;
+		settings_button.visible = true;
+		previous_indicator.visible = true;
+		pause_indicator.visible = true;
+		next_indicator.visible = true;
+		lute.visible = true;
+		//antiLute.visible = true;
+		hint_button.visible = true;
+
+  } else {
+
+		menu_button.visible = true;
+		pause_menu.visible = false;
+		close_button.visible = false;
+		main_menu_button.visible = false;
+		exit_level_button.visible = false;
+		settings_button.visible = false;
+		previous_indicator.visible = false;
+		pause_indicator.visible = false;
+		next_indicator.visible = false;
+		lute.visible = false;
+		//antiLute.visible = false;
+		hint_button.visible = false;
+
+  }
+
 }
 
 // function runGame(renderingCanvas) {

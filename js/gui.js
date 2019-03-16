@@ -42,26 +42,7 @@ var menu_button;
 
 var hint_button;
 
-var level1_indicator;
-var level2_indicator;
-var level3_indicator;
-var level4_indicator;
-var level5_indicator;
-var level6_indicator;
-var level7_indicator;
-var level8_indicator;
-var level9_indicator;
-var level10_indicator;
-var level11_indicator;
-var level12_indicator;
-var level13_indicator;
-var level14_indicator;
-var level15_indicator;
-var level16_indicator;
-var level17_indicator;
-var level18_indicator;
-var level19_indicator;
-var level20_indicator;
+var indicators = [];
 
 var end_level_scene;
 var end_level_button;
@@ -70,6 +51,93 @@ var end_text;
 // var hit_text_counter;
 // var low_text_counter;
 // var high_text_counter;
+
+indicator_counter = 0;
+
+var	indicator_coordinates = [
+
+	{ // City
+		x: -90,
+		y: 72
+	},
+	{ // Grasslands
+		x: -288,
+		y: 0
+	},
+	{ // Volcano
+		x: -600,
+		y: 192
+	},
+	{ // Sea
+		x: -186,
+		y: 216
+	},
+	{ // Mountains
+		x: -480,
+		y: -108
+	},
+	{ // Summit
+		x: -474,
+		y: -186
+	},
+	{ // Cave
+		x: -354,
+		y: -138
+	},
+	{ // Forest
+		x: -90,
+		y: -78
+	},
+	{ // Alpine
+		x: 534,
+		y: -222
+	},
+	{ // Woods
+		x: 150,
+		y: 102
+	},
+	{ // Swamp
+		x: 318,
+		y: 54
+	},
+	{ // Deadlands
+		x: 546,
+		y: 150
+	},
+	{ // Sky
+		x: -186,
+		y: -198
+	},
+	{ // Underwater
+		x: -414,
+		y: 150
+	},
+	{ // Fungi
+		x: 234,
+		y: -78
+	},
+	{ // Tundra
+		x: 354,
+		y: -186
+	},
+	{ // Tarpit
+		x: 486,
+		y: -30
+	},
+	{ // Desert
+		x: -618,
+		y: 102
+	},
+	{ // Boreal
+		x: 42,
+		y: -162
+	},
+	{ // Monolith
+		x: -426,
+		y: -6
+	}
+
+];
 
 function createGUI() {
 
@@ -111,12 +179,12 @@ function createGUI() {
 				createjs.Sound.play("sword"); changeScene(1);
 			});
 
-			secret_button = createButton("res/secret_button.png", "", backgroundX, backgroundY, "center", 0, "center", 0, "image", function() {
+			secret_button = createButton("res/secret_button.png", "", backgroundX, 1440, "center", 0, "center", 0, "image", function() {
 				createjs.Sound.play("sword"); changeScene(8);
 			});
 
-			// if (stage.canvas.width < 900) {
-			// 	scale_to_canvas(left_sword_button, "center", 0 - (buttonX/2 + 30) * scene_scale_Y, "center", 0 + (buttonY/2 + 200) * scene_scale_Y, "smallgui");
+			// if (mobile) {
+			// 	scale_to_canvas(left_swor768tton, "center", 0 - (buttonX/2 + 30) * scene_scale_Y, "center", 0 + (buttonY/2 + 200) * scene_scale_Y, "smallgui");
 			// 	scale_to_canvas(right_sword_button, "center", 0 + (buttonX/2 + 65) * scene_scale_Y, "center", 0 + (buttonY/2 + 200) * scene_scale_Y, "smallgui");
 			// } else {
 
@@ -127,7 +195,7 @@ function createGUI() {
     // password_error.text = "Passwords did not match.\n Please try again.";
     // fieldInput_error.text = "Please fill-in\n every field";
 
-		// if (stage.canvas.width < 900) {
+		// if (mobile) {
 		// 	scale_to_canvas(left_sword_button, "center", 0 - (buttonX/2 + 10) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "gui");
 		// 	scale_to_canvas(right_sword_button, "center", 0 + (buttonX/2 + 50) * scene_scale_Y, "center", 0 + (buttonY/2 + 140) * scene_scale_Y, "gui");
 		// } else {
@@ -226,7 +294,7 @@ function createGUI() {
 
 		case 2:
 
-			// if (stage.canvas.width < 900) {
+			// if (mobile) {
 			// 	scale_to_canvas(play_button, "center", 0, "center", 0 - 105, "gui");
 			// 	scale_to_canvas(stats_button, "center", 0, "center", 0 - 20, "gui");
 			// 	scale_to_canvas(h2p_button, "center", 0, "center", 0 + 65, "gui");
@@ -246,7 +314,7 @@ function createGUI() {
 
 		case 3:
 
-		// if (stage.canvas.width < 900) {
+		// if (mobile) {
 		//
 		// 	scale_to_canvas(pause_menu, "center", 0, "center", 0, "image");
 		// 	scale_to_canvas(close_button, "center", 0 + 445 * scene_scale_Y, "center", 0 - 281 * scene_scale_Y, "gui");
@@ -326,7 +394,7 @@ function createGUI() {
 	    hint_button = createButton("res/hint-button.png", "Hint", 72, 72, "center", 0 - 313 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui", function() { createjs.Sound.play("sword"); changeScene(9); visibleForm(true); });
 	    hint_button.visible = false;
 
-			if (stage.canvas.width < 900) {
+			if (mobile) {
 
 				ll_number_button = createButton("res/number-button-ll.png", "", backgroundX, 288, "center", 0, "bottom", 0 - (288/2) * scene_scale_Y, "image", function() {
 					if(digit > 0)
@@ -411,185 +479,13 @@ function createGUI() {
 
 			menu_button = createButton("res/login-button.png", "Menu", buttonX, buttonY, "left", (buttonX/2 + 10), "bottom", -(buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); });
 
-			// City
-			level1_indicator = createButton("res/map-indicator.png", "1", 24, 24, "center", -72 + 24/2, "bottom", -285 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 1;
-				resetLevel();
-				changeScene(3);
-			});
+			for (var i = 0; i < num_levels; i++) {
 
-			// Grasslands
-			level2_indicator = createButton("res/map-indicator.png", "2", 24, 24, "center", -285 + 24/2, "bottom", -384 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 2;
-				resetLevel();
-				changeScene(3);
-			});
+				var temp = createButton("res/map-indicator.png", (i + 1).toString(), 24, 24, "center", indicator_coordinates[i].x + 24/2, "center", indicator_coordinates[i].y + 24/2, "gui", levels[i].open);
 
-			// Volcano
-			level3_indicator = createButton("res/map-indicator.png", "3", 24, 24, "center", -582 + 24/2, "bottom", -174 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 3;
-				resetLevel();
-				changeScene(3);
-			});
+				indicators.push(temp);
 
-			// Sea
-			level4_indicator = createButton("res/map-indicator.png", "4", 24, 24, "center", -168 + 24/2, "bottom", -150 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 4;
-				resetLevel();
-				changeScene(3);
-			});
-
-			// Mountains
-			level5_indicator = createButton("res/map-indicator.png", "5", 24, 24, "center", -474 + 24/2, "center", -102 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 5;
-				resetLevel();
-				changeScene(3);
-			});
-
-			// Summit
-			level6_indicator = createButton("res/map-indicator.png", "6", 24, 24, "center", -474 + 24/2, "center", -186 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 6;
-				resetLevel();
-				changeScene(3);
-			});
-
-			// Cave
-			level7_indicator = createButton("res/map-indicator.png", "7", 24, 24, "center", -354 + 24/2, "center", -138 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 7;
-				resetLevel();
-				changeScene(3);
-			});
-
-			// Forest
-			level8_indicator = createButton("res/map-indicator.png", "8", 24, 24, "center", -90 + 24/2, "center", -78 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 8;
-				resetLevel();
-				changeScene(3);
-			});
-
-			// Alpine
-			level9_indicator = createButton("res/map-indicator.png", "9", 24, 24, "center", 534 + 24/2, "center", -222 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 9;
-				resetLevel();
-				changeScene(3);
-			});
-
-			// Woods
-			level10_indicator = createButton("res/map-indicator.png", "10", 24, 24, "center", 150 + 24/2, "center", 102 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 10;
-				resetLevel();
-				changeScene(3);
-			});
-
-			// Swamp
-			level11_indicator = createButton("res/map-indicator.png", "11", 24, 24, "center", 318 + 24/2, "center", 54 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 11;
-				resetLevel();
-				changeScene(3);
-			});
-
-			// Deadlands
-			level12_indicator = createButton("res/map-indicator.png", "12", 24, 24, "center", 546 + 24/2, "center", 150 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 12;
-				resetLevel();
-				changeScene(3);
-			});
-
-			// Sky
-			level13_indicator = createButton("res/map-indicator.png", "13", 24, 24, "center", -186 + 24/2, "center", -198 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 13;
-				resetLevel();
-				changeScene(3);
-			});
-
-			// Underwater
-			level14_indicator = createButton("res/map-indicator.png", "14", 24, 24, "center", -414 + 24/2, "center", 150 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 14;
-				resetLevel();
-				changeScene(3);
-			});
-
-			// Fungi
-			level15_indicator = createButton("res/map-indicator.png", "15", 24, 24, "center", 234 + 24/2, "center", -78 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 15;
-				resetLevel();
-				changeScene(3);
-			});
-
-			// Tundra
-			level16_indicator = createButton("res/map-indicator.png", "16", 24, 24, "center", 354 + 24/2, "center", -186 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 16;
-				resetLevel();
-				changeScene(3);
-			});
-
-			// Tarpit
-			level17_indicator = createButton("res/map-indicator.png", "17", 24, 24, "center", 486 + 24/2, "center", -30 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 17;
-				resetLevel();
-				changeScene(3);
-			});
-
-			// Desert
-			level18_indicator = createButton("res/map-indicator.png", "18", 24, 24, "center", -618 + 24/2, "center", 102 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 18;
-				resetLevel();
-				changeScene(3);
-			});
-
-			// Boreal
-			level19_indicator = createButton("res/map-indicator.png", "19", 24, 24, "center", 42 + 24/2, "center", -162 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 19;
-				resetLevel();
-				changeScene(3);
-			});
-
-			// Monolith
-			level20_indicator = createButton("res/map-indicator.png", "20", 24, 24, "center", -426 + 24/2, "center", -6 + 24/2, "gui", function() {
-				generated = false;
-				createjs.Sound.play("select");
-				current_level = 20;
-				resetLevel();
-				changeScene(3);
-			});
+			}
 
 			break;
 
@@ -626,109 +522,5 @@ function createGUI() {
 
   phone_rotation = createSprite(phone_rotationS, 288, 288, "center", 0, "center", 0, "image");
   stage.removeChild(phone_rotation);
-
-}
-
-function pauseAnimation(paused) {
-
-	henchman_left.paused = paused;
-	henchman_left_center.paused = paused;
-	boss.paused = paused;
-	henchman_right.paused = paused;
-	henchman_right_center.paused = paused;
-	projectile.paused = paused;
-
-  if(paused){
-
-		structure_center.paused = true;
-		structure_left_center.paused = true;
-		structure_right_center.paused = true;
-		structure_left.paused = true;
-		structure_right.paused = true;
-		firework_low.paused = true;
-    firework_hit.paused = true;
-    firework_high.paused = true;
-		catapult.paused = true;
-
-  } else {
-
-		if(structure_center.currentFrame != 0 && structure_center.currentFrame != 11)
-	    structure_center.paused = false;
-
-		if(structure_left_center.currentFrame != 0 && structure_left_center.currentFrame != 11)
-	    structure_left_center.paused = false;
-
-		if(structure_right_center.currentFrame != 0 && structure_right_center.currentFrame != 11)
-	    structure_right_center.paused = false;
-
-		if(structure_left.currentFrame != 0 && structure_left.currentFrame != 11)
-	    structure_left.paused = false;
-
-		if(structure_right.currentFrame != 0 && structure_right.currentFrame != 11)
-	    structure_right.paused = false;
-
-		if(catapult.currentFrame != 0 && catapult.currentFrame != 11)
-			catapult.paused = false;
-
-		if(firework_low.currentFrame != 0 && firework_low.currentFrame != 11)
-	    firework_low.paused = false;
-
-		if(firework_hit.currentFrame != 0 && firework_hit.currentFrame != 11)
-	    firework_hit.paused = false;
-
-		if(firework_high.currentFrame != 0 && firework_high.currentFrame != 11)
-	    firework_high.paused = false;
-
-  }
-
-}
-
-function visibleButton(visible) {
-
-  if(visible) {
-
-		menu_button.visible = false;
-		pause_menu.visible = true;
-		close_button.visible = true;
-		main_menu_button.visible = true;
-		exit_level_button.visible = true;
-		settings_button.visible = true;
-		previous_indicator.visible = true;
-		pause_indicator.visible = true;
-		next_indicator.visible = true;
-		lute.visible = true;
-		//antiLute.visible = true;
-		hint_button.visible = true;
-
-  } else {
-
-		menu_button.visible = true;
-		pause_menu.visible = false;
-		close_button.visible = false;
-		main_menu_button.visible = false;
-		exit_level_button.visible = false;
-		settings_button.visible = false;
-		previous_indicator.visible = false;
-		pause_indicator.visible = false;
-		next_indicator.visible = false;
-		lute.visible = false;
-		//antiLute.visible = false;
-		hint_button.visible = false;
-
-  }
-
-}
-
-function resetLevel() {
-
-	history_list = [];
-	hide_knight = false;
-	hide_archer1 = false;
-	hide_archer2 = false;
-	hide_archer3 = false;
-	hide_archer4 = false;
-	hit_counter = 0;
-	miss_upper_counter = 0;
-	miss_lower_counter = 0;
 
 }

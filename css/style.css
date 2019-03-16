@@ -105,29 +105,10 @@ html, body {
 #signupForm {
 }
 
-#statsForm {
-}
-
-#h2pForm {
-}
-
 #settingsForm {
 }
 
-#accountForm {
-}
-
 #gameForm {
-}
-
-#mapForm {
-  position: absolute;
-  top: 45%;
-  left: 68%;
-  transform: translate(-50%, -50%);
-  margin: 5px;
-  font-size: 15vh;
-  line-height: 0.7;
 }
 
 #equationBanner {

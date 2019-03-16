@@ -1,345 +1,377 @@
-var current_level = 1;
+var num_levels = 20;
 
-var number_text;
-var number_spacing = 10;
-var number_spacer = 25;
+var levels = [
 
-var numberline;
-var numberlineS;
+  { // City
+    number: 1,
+    color: "#c9e6ff",
+    hint: "If the student got the one whole number hit, and got the high, and the low, prompt them to think about money. For example, if they tried 8 × 7 = 56 and also tried 8 × 6 = 48 and 8 × 8 = 64, prompt them to try a value between 6 and 7 or between 7 and 8. Is there an amount of money between $6 and $7 or between $7 and $8? Try that value next!",
+    // Exactly one multiple of multiplicand in range, single digit multiplicand
+    math: function () {
+      multiplicand = Math.floor(Math.random() * 7) + 2;
+      multiple = Math.floor(Math.random() * 7) + 2;
+      lower = (multiple * multiplicand) - Math.floor(multiplicand/2);
+      upper = (multiple * multiplicand) + Math.floor(multiplicand/2);
+    },
+    open: function () {
+      indicatorFunction(1);
+    }
+  },
 
-var big_boss;
-var big_bossS;
 
-var boss;
-var bossS;
 
-var henchman_left,
-    henchman_left_center,
-    henchman_right_center,
-    henchman_right;
+  { // Grasslands
+    number: 2,
+    color: "#c9f9ff",
+    hint: "If the student got the whole number high and the low right above and below the target range, prompt them to think about money. For example, if they tried 7 × 7 = 49 and also tried 7 × 8 = 56, prompt them to try a value between 7 and 8. Think about money — is there an amount of money between $7 and $8? Try that value next!",
+    // No multiples of multiplicand in range, single digit multiplicand
+    math: function () {
+      multiplicand = Math.floor(Math.random() * 7) + 2;
+      multiple = Math.floor(Math.random() * 7) + 2;
+      lower = (multiple * multiplicand) + 1;
+      upper = (multiple * (multiplicand+1)) - 1;
+    },
+    open: function () {
+      indicatorFunction(2);
+    }
+  },
 
-var henchmanS;
 
-var end_level_flag;
-var end_level_flagS;
 
-var structure_center,
-    structure_left_center,
-    structure_right_center,
-    structure_body,
-    structure_left,
-    structure_right,
-    structure_facade,
-    structure_range,
-    structure_equation,
-    structure_history,
-    structure_banner;
+  { // Volcano
+    number: 3,
+    color: "#3b0a0a",
+    hint: "No hint for this level yet",
+    // Starting number is a two-digit number, target range includes the value which is one tenth of the number, and is bounded by positive single-digit integers.
+    math: function () {
+      multiplicand = Math.floor(Math.random() * 90)+ 10;
+      factor = (0.1) * multiplicand;
+      lower = Math.floor(factor);
+      upper = Math.ceil(factor);
+      if(lower == upper) {
+        upper++;
+      }
+    },
+    open: function () {
+      indicatorFunction(3);
+    }
+  },
 
-var center,
-    left_center,
-    right_center,
-    body,
-    left,
-    right,
-    facade,
-    banner;
 
-var centerS,
-    left_centerS,
-    right_centerS,
-    bodyS,
-    leftS,
-    rightS,
-    facadeS,
-    bannerS;
 
-var structureX = 1920;
-var structureY = 768;
+  { // Sea
+    number: 4,
+    color: "#c2ffe6",
+    hint: "No hint for this level yet",
+    // Starting number is a two-digit number, target range goes from 0 to a single-digit positive integer.
+    math: function () {
+      multiplicand = Math.floor(Math.random() * 90) + 10;
+      lower = 0;
+      upper = Math.floor(Math.random() * 7) + 2;
+    },
+    open: function () {
+      indicatorFunction(4);
+    }
+  },
 
-var firework_low,
-    firework_hit,
-    firework_high;
 
-var firework_lowS,
-    firework_hitS,
-    firework_highS;
 
-var projectile;
-var projectileS;
+  { // Mountains
+    number: 5,
+    color: "#b3b3b3",
+    hint: "No hint for this level yet",
+    /*Starting number is a single-digit number. For target range, choose another single-digit number,
+    multiply it by 10 times the starting number, and make sure that the target range contains that number.
+    The lower boundary is an integer at least 10 below the product and the upper boundary is an integer
+    at least 10 above the product.*/
+    math: function () {
+      multiplicand = Math.floor(Math.random() * 7) + 2;
+      multiple = Math.floor(Math.random() * 7) + 2;
+      storage = multiplicand * multiple * 10;
+      lower = storage - 10;
+      upper = storage + 10;
+    },
+    open: function () {
+      indicatorFunction(5);
+    }
+  },
 
-var catapult;
-var catapultS;
 
-var preload;
 
-function loadLevel() {
+  { // Summit
+    number: 6,
+    color: "#effffe",
+    hint: "No hint for this level yet",
+    /*Starting number is a single-digit number n, target range contains 100n,
+  	and the range makes it so there is only one integer answer
+  	(i.e. the lower bound is above 100n − n and the upper bound is below 100n + n.*/
+    math: function () {
+  		multiplicand = Math.floor(Math.random() * 7) + 2;
+  		multiple = 100 * multiplicand;
+  		lower = multiple - Math.floor(multiplicand/2);
+  		upper = multiple + Math.floor(multiplicand/2);
+    },
+    open: function () {
+      indicatorFunction(6);
+    }
+  },
 
-  bg_color = level_bg_colors[current_level - 1];
 
-  loadImage();
 
-  end_level_flagS = {
-    images: ["res/endgame-flag.png"],
-    frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
+  { // Cave
+    number: 7,
+    color: "#010027",
+    hint: "No hint for this level yet",
+    //Starting number is a two-digit number, target range contains 0 (flanked by single-digit integers)
+    math: function () {
+  		multiplicand = Math.floor(Math.random() * 90) + 10;
+  		lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
+  		upper = Math.floor(Math.random() * 7) + 2;
+    },
+    open: function () {
+      indicatorFunction(7);
+    }
+  },
 
-  numberlineS = {
-    images: ["res/numberline.png"],
-    frames: {width:1920, height:24, count:1, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
 
-  bossS = {
-    images: ["res/level" + current_level + "/boss.png"],
-    frames: {width:96, height:96, count:12, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
 
-  henchmanS = {
-    images: ["res/level" + current_level + "/henchman.png"],
-    frames: {width:96, height:96, count:12, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
+  { // Forest
+    number: 8,
+    color: "#2f3b25",
+    hint: "No hint for this level yet",
+    //Starting number is a two-digit number, target range numbers are both 3-digit, with no integer
+    math: function () {
+  		multiplicand = Math.round((Math.random() * 90)) + 10;
+  		lower = (Math.round((Math.random() * 90)+ 10 * 11) / 10);
+  		if(lower % 1 == 0)
+  		{
+  			lower += 0.7;
+  		}
+  		upper = Math.round((lower * lower/8)*10 + lower/2) / 10;
+  		if(upper % 1 == 0)
+  		{
+  			upper += 0.4;
+  		}
+    },
+    open: function () {
+      indicatorFunction(8);
+    }
+  },
 
-  projectileS = {
-    images: ["res/ammo.png"],
-    frames: {width:96, height:96, count:12, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
 
-  catapultS = {
-    images: ["res/catapult.png"],
-    frames: {width:288, height:384, count:12, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
 
-  centerS = {
-    images: ["res/level" + current_level + "/center-tower.png"],
-    frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
+  { // Alpine
+    number: 9,
+    color: "#dbf8ff",
+    hint: "No hint for this level yet",
+    //Starting number is a three-digit number, target range goes from 0 to a single-digit positive integer.
+    math: function () {
+  		multiplicand = Math.floor((Math.random() * 900) + 100);
+  		lower = 0;
+  		upper = Math.floor(Math.random() * 7) + 2;
+    },
+    open: function () {
+      indicatorFunction(9);
+    }
+  },
 
-  left_centerS = {
-    images: ["res/level" + current_level + "/left-center-tower.png"],
-    frames: {width:1920, height:768, count:6, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
 
-  right_centerS = {
-    images: ["res/level" + current_level + "/right-center-tower.png"],
-    frames: {width:1920, height:768, count:6, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
 
-  bannerS = {
-    images: ["res/banners.png"],
-    frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
+  { // Woods
+    number: 10,
+    color: "#3f2900",
+    hint: "No hint for this level yet",
+    /*Starting number is a number between 0 and .1 with three decimal places. Lower bound of target
+  	range is 1000 times the starting number, and upper bound is one more than the lower bound. */
+    math: function () {
+  		multiplicand = Math.floor((Math.random() * 990) + 10) / 1000;
+  		lower = 1000 * multiplicand;
+  		upper = lower + 1;
+    },
+    open: function () {
+      indicatorFunction(10);
+    }
+  },
 
-  range_bannerS = {
-    images: ["res/range-banner.png"],
-    frames: {width:192, height:126, count:1, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
 
-  equation_bannerS = {
-    images: ["res/equation-banner.png"],
-    frames: {width:300, height:78, count:1, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
 
-  history_bannerS = {
-    images: ["res/history-banner.png"],
-    frames: {width:192, height:126, count:1, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
+  { // Swamp
+    number: 11,
+    color: "#292c2b",
+    hint: "No hint for this level yet",
+    /*Starting number is a number between 10 and 100 with one decimal place. Lower bound of target
+  	range is 1000 times the starting number, and upper bound is one more than the lower bound.*/
+    math: function () {
+  		multiplicand = Math.floor(Math.random() * 90 * 10 + 10) / 10;
+  		lower = 1000 * multiplicand;
+  		upper = lower + 1;
+    },
+    open: function () {
+      indicatorFunction(11);
+    }
+  },
 
-  bodyS = {
-    images: ["res/level" + current_level + "/body.png"],
-    frames: {width:1920, height:768, count:6, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
 
-  leftS = {
-    images: ["res/level" + current_level + "/left-tower.png"],
-    frames: {width:1920, height:768, count:6, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
 
-  rightS = {
-    images: ["res/level" + current_level + "/right-tower.png"],
-    frames: {width:1920, height:768, count:6, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
+  { // Deadlands
+    number: 12,
+    color: "#231e25",
+    hint: "No hint for this level yet",
+    /*Starting number is a whole number greater than 1,000,000. Target range contains the number which is .0001 times the size of the starting number.
+  	The lower bound may be up to 50 less than this value and the upper bound may be up to 50 greater than this value.*/
+    math: function () {
+  		multiplicand = Math.floor(Math.random() * 10000000);
+  		lower = (Math.floor(multiplicand * 0.0001)) - (Math.floor(Math.random() * 50) + 10);
+  		upper = (Math.floor(multiplicand * 0.0001)) + (Math.floor(Math.random() * 50) + 10);
+    },
+    open: function () {
+      indicatorFunction(12);
+    }
+  },
 
-  facadeS = {
-    images: ["res/level" + current_level + "/facade.png"],
-    frames: {width:1920, height:768, count:6, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
 
-  big_bossS = {
-    images: ["res/level" + current_level + "/big-boss.png"],
-    frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
 
-  firework_lowS = {
-    images: ["res/firework-low.png"],
-    frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
+  { // Sky
+    number: 13,
+    color: "#b6c1ff",
+    hint: "No hint for this level yet",
+    /*Starting number is an integer less than 200. Target range contains the number which is half the value
+  	with an overall range less than 10. */
+    math: function () {
+  		multiplicand = Math.floor(Math.random() * 100 + 100);
+  		lower = Math.floor(multiplicand / 2) - 4;
+  		upper = Math.floor(multiplicand / 2) + 4;
+    },
+    open: function () {
+      indicatorFunction(13);
+    }
+  },
 
-  firework_hitS = {
-    images: ["res/firework-hit.png"],
-    frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
 
-  firework_highS = {
-    images: ["res/firework-high.png"],
-    frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
 
-  score_bannerS = {
-    images: ["res/score-banner.png"],
-    frames: {width:192, height:126, count:1, regX: 0, regY:0, spacing:0, margin:0},
-    framerate: 6
-  };
+  { // Underwater
+    number: 14,
+    color: "#00373d",
+    hint: "No hint for this level yet",
+    /*Starting number is a number less than 10 with one decimal place.
+  	Target range has three-digit bounding numbers, does not contain an
+  	integer multiple of the starting number, and the range of the interval is 1.*/
+    math: function () {
+  		multiplicand = Math.floor(Math.random() * 90 + 9) / 10;
+  		lower = Math.floor(Math.random() * 900 + 100);
+  		upper = lower + 1;
+    },
+    open: function () {
+      indicatorFunction(14);
+    }
+  },
 
-  number_text = [];
-}
 
-function loadImage() {
 
-	preload = new createjs.LoadQueue();
-	preload.on("progress", loading);
-	preload.loadFile("res/numberline.png");
-	preload.loadFile("res/level" + current_level + "/boss.png");
-	preload.loadFile("res/level" + current_level + "/henchman.png");
-	preload.loadFile("res/ammo.png");
-	preload.loadFile("res/catapult.png");
-	preload.loadFile("res/level" + current_level + "/center-tower.png");
-	preload.loadFile("res/level" + current_level + "/left-center-tower.png");
-	preload.loadFile("res/level" + current_level + "/right-center-tower.png");
-	preload.loadFile("res/level" + current_level + "/body.png");
-	preload.loadFile("res/level" + current_level + "/left-tower.png");
-	preload.loadFile("res/level" + current_level + "/right-tower.png");
-	preload.loadFile("res/level" + current_level + "/facade.png");
-	preload.loadFile("res/level" + current_level + "/big-boss.png");
-	//The 1 at the end on these makes it so only one instance can play at once
-	createjs.Sound.registerSound("res/sound_effects/catapult_cocking.wav", "reload");
-	createjs.Sound.registerSound("res/sound_effects/catapult_firing.wav", "firing");
-	createjs.Sound.registerSound("res/sound_effects/victory.wav", "win", 1);
-	createjs.Sound.registerSound("res/sound_effects/fire_lighting.wav", "light", 1);
-	createjs.Sound.registerSound("res/sound_effects/crumbling.wav", "crumble");
+  { // Fungi
+    number: 15,
+    color: "#3b0a30",
+    hint: "No hint for this level yet",
+    /*Starting number is a negative single-digit integer. Target range contains only positive values, one of
+  	which is a multiple of the starting number.*/
+    math: function ()  {
+  		multiplicand = -Math.abs(Math.floor(Math.random() * 7) + 2);
+  		lower = multiplicand * multiplicand;
+  		upper = lower + (Math.floor(Math.random() * 7) + 2);
+    },
+    open: function () {
+      indicatorFunction(15);
+    }
+  },
 
-}
 
-// function loadImage() {
-//   var preload = new createjs.LoadQueue();
-//   preload.addEventListener("fileload", handleFileComplete);
-//   preload.loadFile("assets/preloadjs-bg-center.png");
-// }
 
-// function handleFileComplete(event) {
-//   document.body.appendChild(event.result);
-// }
+  { // Tundra
+    number: 16,
+    color: "#ccf1ff",
+    hint: "No hint for this level yet",
+    /*Starting number is a positive two-digit integer. Target range is bounded by two-digit negative integers
+    5 away from each other.*/
+    math: function () {
+      multiplicand = Math.floor(Math.random() * 90 + 9);
+      lower = -Math.abs(Math.floor(Math.random() * 84) + 15);
+      upper = lower + 5;
+    },
+    open: function () {
+      indicatorFunction(16);
+    }
+  },
 
-function createLevel() {
 
-  // Level structure in background
-  structure_center = createLevelSprite(centerS, structureX, structureY, "center", 0, "center", 0, "image");
-  structure_left_center = createLevelSprite(left_centerS, structureX, structureY, "center", 0, "center", 0, "image");
-  structure_right_center = createLevelSprite(right_centerS, structureX, structureY, "center", 0, "center", 0, "image");
 
-  // Bad guys in midground
-  henchman_left = createLevelSprite(henchmanS, 96, 96, "center", 0 - (96/2 + 625), "center", 0 + (24), "image");
-  henchman_left.gotoAndPlay(0);
-  henchman_left_center = createLevelSprite(henchmanS, 96, 96, "center", 0 - (96/2 + 375), "center", 0, "image");
-  henchman_left_center.gotoAndPlay(0);
-  boss = createLevelSprite(bossS, 96, 96, "center", 0, "center", 0, "image");
-  boss.gotoAndPlay(0);
-  henchman_right_center = createLevelSprite(henchmanS, 96, 96, "center", 0 + (96/2 + 375), "center", 0, "image");
-  henchman_right_center.gotoAndPlay(0);
-  henchman_right = createLevelSprite(henchmanS, 96, 96, "center", 0 + (96/2 + 625), "center", 0 + (24), "image");
-  henchman_right.gotoAndPlay(0);
+  { // Tarpit
+    number: 17,
+    color: "#5d5661",
+    hint: "No hint for this level yet",
+    /*Starting number is a number between -100 and -10 with one decimal place. Target range bounds are
+    any two integers between -20 and 0.*/
+    math: function () {
+      multiplicand = -Math.abs(Math.floor(Math.random() * 90) + 10);
+      lower = -Math.abs(Math.floor(Math.random() * 10) + 10);
+      upper = -Math.abs(Math.floor(Math.random() * 10));
+    },
+    open: function () {
+      indicatorFunction(17);
+    }
+  },
 
-  // Level structure in foreground
-  structure_left = createLevelSprite(leftS, structureX, structureY, "center", 0, "center", 0, "image");
-  structure_right = createLevelSprite(rightS, structureX, structureY, "center", 0, "center", 0, "image");
-  structure_body = createLevelSprite(bodyS, structureX, structureY, "center", 0, "center", 0, "image");
-  // structure_banner = createLevelSprite(bannerS, structureX, structureY, "center", 0, "center", 0, "image");
-  structure_range = createLevelTextContainer(range_bannerS, "[ #, # ]", "Oldstyle", "32px", "normal", "Gold", 192, 126, "center", -378 + 192 / 2, "center", 48 + 126 / 2, "image", 0);
-  structure_equation_banner = createLevelTextContainer(equation_bannerS, "# x          = #", "Oldstyle", "26px", "normal", "Gold", 300, 78, "center", -150 + 300 / 2, "center", 63 + 78 / 2, "image", 0);
-  structure_history = createLevelTextContainer(history_bannerS, "History", "Oldstyle", "18px", "normal", "Gold", 192, 126, "center", 186 + 192 / 2, "center", 48 + 126 / 2, "image", 126 / 2);
-  structure_facade = createLevelSprite(facadeS, structureX, structureY, "center", 0, "center", 0, "image");  // Level structure in foreground
 
-  firework_low = createLevelSprite(firework_lowS, structureX, structureY, "center", 0, "center", 0, "image");
-  firework_hit = createLevelSprite(firework_hitS, structureX, structureY, "center", 0, "center", 0, "image");
-  firework_high = createLevelSprite(firework_highS, structureX, structureY, "center", 0, "center", 0, "image");
 
-  // Main character in foreground
-  projectile = createLevelSprite(projectileS, 96, 96, "center", 0, "bottom", 0 - (96/2 + 57), "image");
-  projectile.gotoAndPlay(0);
-  catapult = createLevelSprite(catapultS, 288, 384, "center", 0, "bottom", 0 - (384/2 - 57), "image");
+  { // Desert
+    number: 18,
+    color: "#effffe",
+    hint: "No hint for this level yet",
+    /*Starting number is a number between -100 and -10 with one decimal place. Target range bounds are
+    any two integers between 0 and 20. */
+    math: function () {
+      multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
+      lower = Math.floor(Math.random() * 10);
+      upper = Math.floor(Math.random() * 10 + 10);
+    },
+    open: function () {
+      indicatorFunction(18);
+    }
+  },
 
-  // number_spacing = 10;
-  number_spacer = 25;
 
-  for(i = -25; i <= 25; i++){
 
-  	var temp = createLevelText(i.toString(), "Arial", "16px", "bold", "black", structureX, structureY, "center", 0 - (((number_spacer * 48) + 5)), "top", 30, "image");
-  	number_text.push(temp);
-    // number_spacing += 48;
-    number_spacer--;
+  { // Boreal
+    number: 19,
+    color: "#556968", // "#010027",
+    hint: "No hint for this level yet",
+    /*Starting number is an integer between -100 and -10 with one decimal place. Target range bounds are
+    positive numbers between 0 and 1 with two decimal places that are one hundredth apart. */
+    math: function () {
+      multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
+      lower = Math.floor((Math.random() * 90) + 9) / 100;
+      upper = Math.floor((lower + 0.01)* 100)/100;
+    },
+    open: function () {
+      indicatorFunction(19);
+    }
+  },
 
+
+
+  { // Monolith
+    number: 20,
+    color: "#56727d",
+    hint: "No hint for this level yet",
+    /*Starting number is any positive three digit integer. Target range is bounded by two numbers between
+    -10 and -5, with three decimal places, and within one hundredth of each other. */
+    math: function () {
+      multiplicand = Math.floor(Math.random() * 900) + 100;
+      lower = -Math.abs((Math.floor(Math.random() * 10000) + 5000) /1000);
+      upper = lower + 0.01;
+    },
+    open: function () {
+      indicatorFunction(20);
+    }
   }
 
-  numberline = createLevelSprite(numberlineS, structureX, 24, "center", 0, "top", 24 / 2, "image");
-
-  structure_score = createLevelTextContainer(score_bannerS, "Total Lows: 0\nTotal High: 0\nTotal Hits: 0", "Oldstyle", "24px", "normal", "Gold", 192, 126, "left", (10 + 192 / 2), "bottom", -(10 + 126 / 2), "image", 126 / 2);
-
-  end_level_flag = createLevelSprite(end_level_flagS, structureX, structureY, "center", 0, "center", 0, "image");
-  end_level_flag.visible = false;
-
-}
-
-function destroyLevel() {
-
-  for (var i = 0; i < lcs.length; i++) {
-
-    stage.removeChild(lcs[i].object)
-
-  }
-
-  lcs = [];
-
-}
-
-function changeLevel(new_level) {
-
-  resetLevel();
-
-  current_level++;
-
-  if (current_level > num_levels) {
-    current_level = 1;
-  }
-
-  loadLevel();
-  destroyScene();
-  createScene();
-  resize();
-
-}
-
-function myFunction(e) {
-
-  e.preventDefault();
-  document.getElementById("myDropdown").classList.toggle("show");
-
-}
+];
