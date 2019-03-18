@@ -26,7 +26,18 @@ function createImage(location, width, height, x_lock, x_location, y_lock, y_loca
 
 function createSprite(animation, width, height, x_lock, x_location, y_lock, y_location, type) {
 
+  console.log("Spritesheet loading starting.");
+
   var spriteSheet = new createjs.SpriteSheet(animation);
+
+  var listener = spriteSheet.on("error", function(evt, data) {
+    console.log("'" + evt.src + "' failed to load");
+  });
+
+  var listener2 = spriteSheet.on("complete", function(evt) {
+    console.log("Spritesheet loading complete. Check for errors.");
+  });
+
   var sprite = new createjs.Sprite(spriteSheet);
   stage.addChild(sprite);
   sprite.regX = width/2;
@@ -52,6 +63,15 @@ function createSprite(animation, width, height, x_lock, x_location, y_lock, y_lo
 function createLevelSprite(animation, width, height, x_lock, x_location, y_lock, y_location, type) {
 
   var spriteSheet = new createjs.SpriteSheet(animation);
+
+  let listener = spriteSheet.on("error", function(evt, data) {
+    console.log("'" + evt.src + "' failed to load");
+  });
+
+  let listener2 = spriteSheet.on("complete", function(evt) {
+    console.log("Spritesheet loading complete. Check for errors.");
+  });
+
   var sprite = new createjs.Sprite(spriteSheet);
   stage.addChild(sprite);
   sprite.regX = width/2;

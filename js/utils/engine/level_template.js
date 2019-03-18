@@ -257,15 +257,15 @@ function createLevel() {
   structure_right_center = createLevelSprite(right_centerS, structureX, structureY, "center", 0, "center", 0, "image");
 
   // Bad guys in midground
-  henchman_left = createLevelSprite(henchmanS, 96, 96, "center", 0 - (96/2 + 625), "center", 0 + (24), "image");
+  henchman_left = createLevelSprite(henchmanS, 96, 96, "center", 0 - (96/2 + 625), "bottom", -384 + (24), "image");
   henchman_left.gotoAndPlay(0);
-  henchman_left_center = createLevelSprite(henchmanS, 96, 96, "center", 0 - (96/2 + 375), "center", 0, "image");
+  henchman_left_center = createLevelSprite(henchmanS, 96, 96, "center", 0 - (96/2 + 375), "bottom", -384, "image");
   henchman_left_center.gotoAndPlay(0);
-  boss = createLevelSprite(bossS, 96, 96, "center", 0, "center", 0, "image");
+  boss = createLevelSprite(bossS, 96, 96, "center", 0, "bottom", -384, "image");
   boss.gotoAndPlay(0);
-  henchman_right_center = createLevelSprite(henchmanS, 96, 96, "center", 0 + (96/2 + 375), "center", 0, "image");
+  henchman_right_center = createLevelSprite(henchmanS, 96, 96, "center", 0 + (96/2 + 375), "bottom", -384, "image");
   henchman_right_center.gotoAndPlay(0);
-  henchman_right = createLevelSprite(henchmanS, 96, 96, "center", 0 + (96/2 + 625), "center", 0 + (24), "image");
+  henchman_right = createLevelSprite(henchmanS, 96, 96, "center", 0 + (96/2 + 625), "bottom", -384 + (24), "image");
   henchman_right.gotoAndPlay(0);
 
   // Level structure in foreground
@@ -273,9 +273,9 @@ function createLevel() {
   structure_right = createLevelSprite(rightS, structureX, structureY, "center", 0, "center", 0, "image");
   structure_body = createLevelSprite(bodyS, structureX, structureY, "center", 0, "center", 0, "image");
   // structure_banner = createLevelSprite(bannerS, structureX, structureY, "center", 0, "center", 0, "image");
-  structure_range = createLevelTextContainer(range_bannerS, "[ #, # ]", "Oldstyle", "32px", "normal", "Gold", 192, 126, "center", -378 + 192 / 2, "center", 48 + 126 / 2, "image", 0);
-  structure_equation_banner = createLevelTextContainer(equation_bannerS, "# x          = #", "Oldstyle", "26px", "normal", "Gold", 300, 78, "center", -150 + 300 / 2, "center", 63 + 78 / 2, "image", 0);
-  structure_history = createLevelTextContainer(history_bannerS, "History", "Oldstyle", "18px", "normal", "Gold", 192, 126, "center", 186 + 192 / 2, "center", 48 + 126 / 2, "image", 126 / 2);
+  structure_range = createLevelTextContainer(range_bannerS, "[ #, # ]", "Oldstyle", "32px", "normal", "Gold", 192, 126, "center", -378 + 192 / 2, "bottom", -336 + 126 / 2, "image", 0);
+  structure_equation_banner = createLevelTextContainer(equation_bannerS, "# x          = #", "Oldstyle", "26px", "normal", "Gold", 300, 78, "center", -150 + 300 / 2, "bottom", -321 + 78 / 2, "image", 0);
+  structure_history = createLevelTextContainer(history_bannerS, "History", "Oldstyle", "18px", "normal", "Gold", 192, 126, "center", 186 + 192 / 2, "bottom", -336 + 126 / 2, "image", 126 / 2);
   structure_facade = createLevelSprite(facadeS, structureX, structureY, "center", 0, "center", 0, "image");  // Level structure in foreground
 
   firework_low = createLevelSprite(firework_lowS, structureX, structureY, "center", 0, "center", 0, "image");
