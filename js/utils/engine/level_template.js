@@ -1,5 +1,3 @@
-var current_level = 1;
-
 var number_text;
 var number_spacing = 10;
 var number_spacer = 25;
@@ -80,7 +78,7 @@ function loadLevel() {
 
   end_level_flagS = {
     images: ["res/endgame-flag.png"],
-    frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
+    frames: {width:1920, height:1440, count:12, regX: 0, regY:0, spacing:0, margin:0},
     framerate: 6
   };
 

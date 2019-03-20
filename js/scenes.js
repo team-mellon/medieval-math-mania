@@ -16,6 +16,7 @@ var scenes = [
             },
     fg_text: "Login didn't load",
     custom:   function() {
+
       	//putting this here because I dont know how else to initialize this as hidden
       	progressBar.hidden = true;
       	progressBackground.hidden = true;
