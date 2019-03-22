@@ -34,6 +34,10 @@
 import UserInterface from './UserInterface.vue'
 import Input from './Input.vue'
 
+// Game Data
+import { playlistSources, playlistIDs } from '../game_data/music.js'
+import { sceneData, indicatorCoordinates } from '../game_data/levels.js'
+
 export default {
 
   name: 'Engine',
@@ -697,106 +701,15 @@ export default {
     // GUI //
     /////////
 
-    // var lute;
-    // //var antiLute;
-    //
-    // var previous_indicator;
-    // var pause_indicator;
-    // var next_indicator;
-    //
     this.buttonX = 216;
     this.buttonY = 72;
-    //
-    // var left_sword_button;
-    // var right_sword_button;
-    //
-    // var ll_number_button;
-    // var lr_number_button;
-    // var rl_number_button;
-    // var rr_number_button;
-    //
-    // var pause_menu;
-    //
-    // var background;
-    // var background_left;
-    // var background_right;
-    //
-    // var midground;
-    //
-    // var foreground;
+
     this.backgroundX = 1920;
     this.backgroundY = 768;
-    //
-    // var exit_level_button;
-    // var main_menu_button;
-    // var close_button;
-    // var play_button;
-    // var stats_button;
-    // var h2p_button;
-    // var settings_button;
-    // var logout_button;
-    // var account_button;
-    //
-    // var menu_button;
-    //
-    // var hint_button;
-    //
-    this.indicators = [];
-    //
-    // var end_level_scene;
-    // var end_level_button;
-    // var end_text;
 
-    // var hit_text_counter;
-    // var low_text_counter;
-    // var high_text_counter;
+    this.indicators = [];
 
     this.indicator_counter = 0;
-
-    this.indicator_coordinates = [
-
-    	{ // City
-    		x: -90,	y: 72 },
-    	{ // Grasslands
-    		x: -288, y: 0 },
-    	{ // Volcano
-    		x: -600, y: 192 },
-    	{ // Sea
-    		x: -186, y: 216 },
-    	{ // Mountains
-    		x: -480, y: -108 },
-    	{ // Summit
-    		x: -474, y: -186 },
-    	{ // Cave
-    		x: -354, y: -138 },
-    	{ // Forest
-    		x: -90, y: -78 },
-    	{ // Alpine
-    		x: 534, y: -222 },
-    	{ // Woods
-    		x: 150, y: 102 },
-    	{ // Swamp
-    		x: 318, y: 54 },
-    	{ // Deadlands
-    		x: 546, y: 150 },
-    	{ // Sky
-    		x: -186, y: -198 },
-    	{ // Underwater
-    		x: -414, y: 150 },
-    	{ // Fungi
-    		x: 234, y: -78 },
-    	{ // Tundra
-    		x: 354, y: -186 },
-    	{ // Tarpit
-    		x: 486, y: -30 },
-    	{ // Desert
-    		x: -618, y: 102 },
-    	{ // Boreal
-    		x: 42, y: -162 },
-    	{ // Monolith
-    		x: -426, y: -6 }
-
-    ];
 
     ////////////
     // LEVELS //
@@ -818,7 +731,7 @@ export default {
           this.multiple = Math.floor(Math.random() * 7) + 2;
           this.lower = (this.multiple * this.multiplicand) - Math.floor(this.multiplicand/2);
           this.upper = (this.multiple * this.multiplicand) + Math.floor(this.multiplicand/2);
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(1);
         }
@@ -834,7 +747,7 @@ export default {
           this.multiple = Math.floor(Math.random() * 7) + 2;
           this.lower = (this.multiple * this.multiplicand) + 1;
           this.upper = (this.multiple * (this.multiplicand+1)) - 1;
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(2);
         }
@@ -847,13 +760,13 @@ export default {
         // Starting number is a two-digit number, target range includes the value which is one tenth of the number, and is bounded by positive single-digit integers.
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 90)+ 10;
-          factor = (0.1) * this.multiplicand;
-          this.lower = Math.floor(factor);
-          this.upper = Math.ceil(factor);
+          this.factor = (0.1) * this.multiplicand;
+          this.lower = Math.floor(this.factor);
+          this.upper = Math.ceil(this.factor);
           if(this.lower == this.upper) {
             this.upper++;
           }
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(3);
         }
@@ -868,7 +781,7 @@ export default {
           this.multiplicand = Math.floor(Math.random() * 90) + 10;
           this.lower = 0;
           this.upper = Math.floor(Math.random() * 7) + 2;
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(4);
         }
@@ -885,10 +798,10 @@ export default {
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 7) + 2;
           this.multiple = Math.floor(Math.random() * 7) + 2;
-          storage = this.multiplicand * this.multiple * 10;
-          this.lower = storage - 10;
-          this.upper = storage + 10;
-        },
+          this.storage = this.multiplicand * this.multiple * 10;
+          this.lower = this.storage - 10;
+          this.upper = this.storage + 10;
+        }.bind(this),
         open: function () {
           this.indicatorFunction(5);
         }
@@ -906,7 +819,7 @@ export default {
       		this.multiple = 100 * this.multiplicand;
       		this.lower = this.multiple - Math.floor(this.multiplicand/2);
       		this.upper = this.multiple + Math.floor(this.multiplicand/2);
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(6);
         }
@@ -921,7 +834,7 @@ export default {
       		this.multiplicand = Math.floor(Math.random() * 90) + 10;
       		this.lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
       		this.upper = Math.floor(Math.random() * 7) + 2;
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(7);
         }
@@ -944,7 +857,7 @@ export default {
       		{
       			this.upper += 0.4;
       		}
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(8);
         }
@@ -959,7 +872,7 @@ export default {
       		this.multiplicand = Math.floor((Math.random() * 900) + 100);
       		this.lower = 0;
       		this.upper = Math.floor(Math.random() * 7) + 2;
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(9);
         }
@@ -975,7 +888,7 @@ export default {
       		this.multiplicand = Math.floor((Math.random() * 990) + 10) / 1000;
       		this.lower = 1000 * this.multiplicand;
       		this.upper = this.lower + 1;
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(10);
         }
@@ -991,7 +904,7 @@ export default {
       		this.multiplicand = Math.floor(Math.random() * 90 * 10 + 10) / 10;
       		this.lower = 1000 * this.multiplicand;
       		this.upper = this.lower + 1;
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(11);
         }
@@ -1007,7 +920,7 @@ export default {
       		this.multiplicand = Math.floor(Math.random() * 10000000);
       		this.lower = (Math.floor(this.multiplicand * 0.0001)) - (Math.floor(Math.random() * 50) + 10);
       		this.upper = (Math.floor(this.multiplicand * 0.0001)) + (Math.floor(Math.random() * 50) + 10);
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(12);
         }
@@ -1023,7 +936,7 @@ export default {
       		this.multiplicand = Math.floor(Math.random() * 100 + 100);
       		this.lower = Math.floor(this.multiplicand / 2) - 4;
       		this.upper = Math.floor(this.multiplicand / 2) + 4;
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(13);
         }
@@ -1040,7 +953,7 @@ export default {
       		this.multiplicand = Math.floor(Math.random() * 90 + 9) / 10;
       		this.lower = Math.floor(Math.random() * 900 + 100);
       		this.upper = this.lower + 1;
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(14);
         }
@@ -1056,7 +969,7 @@ export default {
       		this.multiplicand = -Math.abs(Math.floor(Math.random() * 7) + 2);
       		this.lower = this.multiplicand * this.multiplicand;
       		this.upper = this.lower + (Math.floor(Math.random() * 7) + 2);
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(15);
         }
@@ -1072,7 +985,7 @@ export default {
           this.multiplicand = Math.floor(Math.random() * 90 + 9);
           this.lower = -Math.abs(Math.floor(Math.random() * 84) + 15);
           this.upper = this.lower + 5;
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(16);
         }
@@ -1088,7 +1001,7 @@ export default {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90) + 10);
           this.lower = -Math.abs(Math.floor(Math.random() * 10) + 10);
           this.upper = -Math.abs(Math.floor(Math.random() * 10));
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(17);
         }
@@ -1104,7 +1017,7 @@ export default {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
           this.lower = Math.floor(Math.random() * 10);
           this.upper = Math.floor(Math.random() * 10 + 10);
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(18);
         }
@@ -1120,7 +1033,7 @@ export default {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
           this.lower = Math.floor((Math.random() * 90) + 9) / 100;
           this.upper = Math.floor((this.lower + 0.01)* 100)/100;
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(19);
         }
@@ -1136,7 +1049,7 @@ export default {
           this.multiplicand = Math.floor(Math.random() * 900) + 100;
           this.lower = -Math.abs((Math.floor(Math.random() * 10000) + 5000) /1000);
           this.upper = this.lower + 0.01;
-        },
+        }.bind(this),
         open: function () {
           this.indicatorFunction(20);
         }
@@ -1181,39 +1094,6 @@ export default {
     ///////////
 
     this.muted = false;
-    this.playlistSources = [
-      "res/music/one-eyed_maestro.wav",
-      "res/music/achaidh_cheide.wav",
-      "res/music/cartoon_battle.wav",
-      "res/music/celtic_impulse.wav",
-      "res/music/clenched_teeth.wav",
-      "res/music/failing_defense.wav",
-      "res/music/fiddles_mcGinty.wav",
-      "res/music/galway.wav",
-      "res/music/hidden_past.wav",
-      "res/music/parisian.wav",
-      "res/music/bobbin_beeps.wav",
-      "res/music/whirlwind.wav",
-      "res/music/drums_in_the_deep.wav",
-      "res/music/fortress.wav"
-    ];
-
-    this.playlistIDs = [
-      "OneEyedMaestro",
-      "AchaidhCheide",
-      "CartoonBattle",
-      "CelticImpulse",
-      "ClenchedTeeth",
-      "FailingDefense",
-      "FiddlesMcGinty",
-      "Galway",
-      "HiddenPast",
-      "Parisian",
-      "BoppinBeeps",
-      "whirlwind",
-      "DrumsInTheDeep",
-      "Fortress"
-    ];
 
     // Player to play playlist music
     this.playlist = {
@@ -1245,8 +1125,8 @@ export default {
     this.bg_color = "#333333";                              // Background color
     this.stage.addChild(this.bg);                           // Add rectangle to the stage
 
-    // loadSound(); // Load sounds from file
-    // console.log(playlist);
+    this.loadSound(); // Load sounds from file
+    console.log(this.playlist);
 
     this.createScene(); // Create scene assets
 
@@ -1792,7 +1672,7 @@ export default {
     loadCurrentScene: function() {
 
       // Load background color for the scene
-      this.bg_color = this.scenes[this.current_scene].color;
+      this.bg_color = sceneData[this.current_scene].color;
 
       // If the current scene is the game load the special level assets
       if (this.current_scene == 3) {
@@ -1833,41 +1713,41 @@ export default {
       this.bg.graphics.clear()
       this.bg.graphics.beginFill(this.bg_color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
 
-      this.background = this.createImage(this.scenes[this.current_scene].bg_img, this.backgroundX, 1440, "center", 0, "center", 0, "image", "menu");
-      this.background_left = this.createImage(this.scenes[this.current_scene].bg_img, this.backgroundX, 1440, "center", -this.backgroundX, "center", 0, "image", "menu");
-      this.background_right = this.createImage(this.scenes[this.current_scene].bg_img, this.backgroundX, 1440, "center", this.backgroundX, "center", 0, "image", "menu");
+      this.background = this.createImage(sceneData[this.current_scene].bg_img, this.backgroundX, 1440, "center", 0, "center", 0, "image", "menu");
+      this.background_left = this.createImage(sceneData[this.current_scene].bg_img, this.backgroundX, 1440, "center", -this.backgroundX, "center", 0, "image", "menu");
+      this.background_right = this.createImage(sceneData[this.current_scene].bg_img, this.backgroundX, 1440, "center", this.backgroundX, "center", 0, "image", "menu");
 
       switch (this.current_scene) {
         case 0:
           // scenes[this.current_scene].fg_text] = "Login:\n\nSignup:\n\n";
-          this.scenes[this.current_scene].fg_text = "";
+          sceneData[this.current_scene].fg_text = "";
           break;
         case 1:
           // scenes[this.current_scene].fg_text = "Firstname:\n\nLastname:\n\nUsername:\n\nPassword:\n\nConfirm:\n\n";
-          this.scenes[this.current_scene].fg_text = "";
+          sceneData[this.current_scene].fg_text = "";
           break;
         case 4:
-          this.scenes[this.current_scene].fg_text = "Hits: " + this.database.stats.admin.hits + "\n\nMisses: " + this.database.stats.admin.misses + "\n\n";
+          sceneData[this.current_scene].fg_text = "Hits: " + this.database.stats.admin.hits + "\n\nMisses: " + this.database.stats.admin.misses + "\n\n";
           break;
         case 5:
-          this.scenes[this.current_scene].fg_text = "How To Play:\nThe goal of the game is to get\none hit anywhere above the range,\none hit anywhere below the range,\nand three hits within the range";
+          sceneData[this.current_scene].fg_text = "How To Play:\nThe goal of the game is to get\none hit anywhere above the range,\none hit anywhere below the range,\nand three hits within the range";
           break;
         case 6:
           // scenes[this.current_scene].fg_text = "Volume:\n\nTime:\n\nTutorial\n\n";
-          this.scenes[this.current_scene].fg_text = "";
+          sceneData[this.current_scene].fg_text = "";
           break;
         case 7:
-          this.scenes[this.current_scene].fg_text = "Username: " + "admin" + "\n\nFirstname: " + this.database.users.admin.firstname + " " + this.database.users.admin.lastname + "\n\n";
+          sceneData[this.current_scene].fg_text = "Username: " + "admin" + "\n\nFirstname: " + this.database.users.admin.firstname + " " + this.database.users.admin.lastname + "\n\n";
           break;
         case 9:
-          this.scenes[this.current_scene].fg_text = this.levels[this.current_level - 1].hint;
+          sceneData[this.current_scene].fg_text = this.levels[this.current_level - 1].hint;
           break;
         default:
 
       }
 
       if (this.current_scene != 8 && this.current_scene != 2 && this.current_scene != 3) {
-        this.foreground = this.createTextContainer(this.scenes[this.current_scene].fg_img, this.scenes[this.current_scene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", this.scenes[this.current_scene].fg_img.frames.width, this.scenes[this.current_scene].fg_img.frames.height, "center", 0, "center", 0, "image", 0, "menu");
+        this.foreground = this.createTextContainer(sceneData[this.current_scene].fg_img, sceneData[this.current_scene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", sceneData[this.current_scene].fg_img.frames.width, sceneData[this.current_scene].fg_img.frames.height, "center", 0, "center", 0, "image", 0, "menu");
       }
 
       if (this.current_scene == 2) {
@@ -1958,7 +1838,7 @@ export default {
     				createjs.Sound.play("sword");
     				var key = document.getElementById('usernameInput').value;
     				if(key in this.database.users) {
-    					if(database["users"][key]["password"] == document.getElementById('passwordInput').value) {
+    					if(this.database["users"][key]["password"] == document.getElementById('passwordInput').value) {
     						document.getElementById('usernameInput').value = "";
     						document.getElementById('passwordInput').value = "";
     						// login_error.alpha = 0;
@@ -2008,7 +1888,7 @@ export default {
     		// 	scale_to_canvas(right_sword_button, "center", 0 + (this.buttonX/2 + 50) * scene_scale_Y, "center", 0 + (this.buttonY/2 + 140) * scene_scale_Y, "gui");
     		// } else {
 
-    			this.left_sword_button = this.createButton("res/sword-left.png", "Login", this.buttonX, this.buttonY, "center", -(this.buttonX/2 + 30), "center", (this.buttonY/2 + 200), "image", function() {
+    			this.left_sword_button = this.createButton("res/sword-left.png", "Signup", this.buttonX, this.buttonY, "center", -(this.buttonX/2 + 30), "center", (this.buttonY/2 + 200), "image", function() {
     				createjs.Sound.play("sword");
     				var key = document.getElementById('usernameInput').value;
     				if(key in this.database.users || key == "") {
@@ -2085,7 +1965,7 @@ export default {
           	// }
           // });
 
-    		this.right_sword_button = this.createButton("res/sword-right.png", "Signup", this.buttonX, this.buttonY, "center", (this.buttonX/2 + 65), "center", (this.buttonY/2 + 200), "image", function() {
+    		this.right_sword_button = this.createButton("res/sword-right.png", "Cancel", this.buttonX, this.buttonY, "center", (this.buttonX/2 + 65), "center", (this.buttonY/2 + 200), "image", function() {
     			// firstname_input.text = "";
     			// lastname_input.text = "";
     			// username_input.text = "";
@@ -2289,7 +2169,7 @@ export default {
 
     			for (var i = 0; i < this.num_levels; i++) {
 
-    				var temp = this.createButton("res/map-indicator.png", (i + 1).toString(), 24, 24, "center", this.indicator_coordinates[i].x + 24/2, "center", this.indicator_coordinates[i].y + 24/2, "gui", this.levels[i].open.bind(this), "menu");
+    				var temp = this.createButton("res/map-indicator.png", (i + 1).toString(), 24, 24, "center", indicatorCoordinates[i].x + 24/2, "center", indicatorCoordinates[i].y + 24/2, "gui", this.levels[i].open.bind(this), "menu");
 
     				this.indicators.push(temp);
 
@@ -3583,11 +3463,13 @@ export default {
     // Loads sounds when game starts
     loadSound: function() {
 
-      this.playlist.size = this.playlistSources.length;
-      this.playlist.sources = this.playlistSources;
-      this.playlist.ids = this.playlistIDs;
+      this.playlist.size = playlistSources.length;
+      this.playlist.sources = playlistSources;
+      this.playlist.ids = playlistIDs;
 
-      for (i = 0; i < this.playlist.size; i++) {
+      this.playlist.size = this.playlist.sources.length;
+
+      for (var i = 0; i < this.playlist.size; i++) {
         createjs.Sound.registerSound(this.playlist.sources[i], this.playlist.ids[i]);
       }
 
