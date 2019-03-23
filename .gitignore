@@ -24,3 +24,6 @@ yarn-error.log*
 .firebaserc
 404.html
 firebase.json
+
+#server client stuff
+/client

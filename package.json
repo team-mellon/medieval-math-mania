@@ -1,47 +1,30 @@
 {
-  "name": "medieval-math-mania",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
+  "name": "medieval_math_mania",
+  "version": "1.0.0",
+  "description": "Math game to help children with their multiplication skills",
+  "main": "index.js",
   "dependencies": {
-    "vue": "^2.6.6"
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "createjs": "^1.0.1",
+    "express": "^4.16.4",
+    "mongodb": "^3.2.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.5.0",
-    "@vue/cli-plugin-eslint": "^3.5.0",
-    "@vue/cli-service": "^3.5.0",
-    "babel-eslint": "^10.0.1",
-    "createjs": "^1.0.1",
-    "eslint": "^5.8.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.5.21"
+    "nodemon": "^1.18.10"
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js"
   },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cs4560-18-19/belloq.git"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  "author": "Team Belloq",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cs4560-18-19/belloq/issues"
+  },
+  "homepage": "https://github.com/cs4560-18-19/belloq#readme"
 }
