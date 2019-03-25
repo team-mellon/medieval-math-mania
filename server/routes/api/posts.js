@@ -28,14 +28,19 @@ router.delete('/:id', async (req, res) => {
 });
 
 async function loadPostsCollection() {
-  const client = await mongodb.MongoClient.connect(
-    'mongodb+srv://belloq:1234@medieval-math-mania-dodmo.mongodb.net/test?retryWrites=true',
-    {
-      useNewUrlParser: true
-    }
-  );
+  // try {
+    // console.log("try");
+    const client = await mongodb.MongoClient.connect(
+      'mongodb+srv://belloq:1234@medival-math-mania-dodmo.mongodb.net/test?retryWrites=true',
+      {
+        useNewUrlParser: true
+      }
+    );
+  // } catch(err) {
+  //   console.log("Error: " + err + " :End");
+  // }
 
   return client.db('vue_express').collection('posts');
-}
+};
 
 module.exports = router;
