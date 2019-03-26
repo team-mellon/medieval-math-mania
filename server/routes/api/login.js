@@ -1,21 +1,19 @@
 var passport = require('passport');
 var express = require('express');
 const mongodb = require('mongodb');
-// const router = express.Router();
 const bcrypt = require('bcryptjs');
-var User = require("../../models/user");
+const db = require('../../config/keys').mongoURI;
+var Account = require("../../models/account");
+var Stats = require("../../models/stats");
 
 const router = express.Router();
 
 // Get Users
 router.get('/', async (req, res) => {
+
   const users = await loadUsersCollection();
   res.send(await users.find({}).toArray());
-  // res.send("Hello");
-});
 
-router.get('/verify', async (req, res) => {
-  console.log("User Verified!");
 });
 
 // Register
@@ -34,51 +32,52 @@ router.post('/register', (req, res) => {
   }
 
   if (pass != confirm) {
-    errors.push({ msg: 'Passwords do not match' });
+    // errors.push({ msg: 'Passwords do not match' });
   }
 
-  // if (pass.length < 6) {
+  if (pass.length < 6) {
   //   errors.push({ msg: 'Password must be at least 6 characters' });
-  // }
+  }
 
   if (errors.length > 0) {
     console.log(errors);
-    // res.render('register', {
-    //   errors,
-    //   fname,
-    //   lname,
-    //   uname,
-    //   pass,
-    //   confirm
-    // });
+    // RENDER ERROR TEXT HERE
   } else {
-    User.findOne({ uname: uname }).then(user => {
+    Account.findOne({ uname: uname }).then(user => {
+
       if (user) {
         errors.push({ msg: 'User already exists' });
         console.log(errors);
-        // res.render('register', {
-        //   errors,
-        //   fname,
-        //   lname,
-        //   uname,
-        //   pass,
-        //   confirm
-        // });
+        // RENDER ERROR TEXT HERE
       } else {
-        const newUser = new User({
+        const newAccount = new Account({
           fname,
           lname,
           uname,
           pass
         });
+        const newStats = new Stats({
+          uname
+        });
 
-        console.log(newUser.pass);
+        console.log(newAccount);
+        console.log(newStats);
 
         bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(newUser.pass, salt, (err, hash) => {
+          bcrypt.hash(newAccount.pass, salt, (err, hash) => {
             if (err) throw err;
-            newUser.pass = hash;
-            newUser
+            newAccount.pass = hash;
+            newStats
+              .save()
+              .then(user => {
+                req.flash(
+                  'success_msg',
+                  'You are now registered and can log in'
+                );
+                // res.redirect('/users/login');
+              })
+              .catch(err => console.log(err));
+            newAccount
               .save()
               .then(user => {
                 req.flash(
@@ -90,6 +89,7 @@ router.post('/register', (req, res) => {
               .catch(err => console.log(err));
           });
         });
+
       }
     });
   }
@@ -97,38 +97,40 @@ router.post('/register', (req, res) => {
 
 // Login
 router.post('/login', passport.authenticate('local'), function (req, res) {
-  //   successRedirect: '/api/login/verify',
-  //   // successRedirect: '/',
-  //   // failureRedirect: '/users/login',
+
+  //   successRedirect: '/',
   //   failureRedirect: '/api/login/',
   //   failureFlash: true
   // })(req, res, next);
-    res.send("Success");
-  }
-);
+
+  res.send( { result:"Success", user: req.user.uname, first: req.user.fname, last: req.user.lname } );
+
+});
 
 // Logout
 router.get('/logout', (req, res) => {
+
   req.logout();
   req.flash('success_msg', 'You are logged out');
   console.log("Signed Out");
-  // res.redirect('/users/login');
+  // res.send();
+
 });
 
 async function loadUsersCollection() {
-  // try {
-    // console.log("try");
-    const client = await mongodb.MongoClient.connect(
-      'mongodb+srv://belloq:1234@medival-math-mania-dodmo.mongodb.net/test?retryWrites=true',
-      {
-        useNewUrlParser: true
-      }
-    );
-  // } catch(err) {
-  //   console.log("Error: " + err + " :End");
-  // }
 
-  return client.db('test').collection('users');
+  const client = await mongodb.MongoClient.connect( db, { useNewUrlParser: true } );
+
+  return client.db('test').collection('accounts');
+
+};
+
+async function loadStatsCollection() {
+
+  const client = await mongodb.MongoClient.connect( db, { useNewUrlParser: true } );
+
+  return client.db('test').collection('stats');
+
 };
 
 module.exports = router;

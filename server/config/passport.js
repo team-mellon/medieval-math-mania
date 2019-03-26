@@ -3,22 +3,20 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 // Load User model
-const User = require('../models/user');
+const Account = require('../models/account');
 
 module.exports = function(passport) {
   passport.use(
     new LocalStrategy({ usernameField: 'uname', passwordField: 'pass' }, (uname, pass, done) => {
       console.log(uname);
       // Match user
-      User.findOne({
+      Account.findOne({
         uname: uname
       }).then(user => {
         if (!user) {
           console.log("User not found");
           return done(null, false, { message: 'That user is not registered' });
         }
-
-        console.log(pass);
 
         // Match password
         bcrypt.compare(pass, user.pass, (err, isMatch) => {
@@ -39,7 +37,7 @@ module.exports = function(passport) {
   });
 
   passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
+    Account.findById(id, function(err, user) {
       done(err, user);
     });
   });

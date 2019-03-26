@@ -58,10 +58,10 @@ app.use(function(req, res, next) {
 });
 
 // Routes
-const posts = require('./routes/api/posts');
+const stats = require('./routes/api/stats');
 const login = require('./routes/api/login');
 
-app.use('/api/posts', posts);
+app.use('/api/stats', stats);
 app.use('/api/login', login);
 
 // Handle production
