@@ -16,6 +16,23 @@ router.get('/', async (req, res) => {
 
 });
 
+// Find User Stats
+router.post('/find', async (req, res) => {
+
+  Stats.findOne({
+    uname: req.body.uname
+  }).then(stat => {
+    console.log(stat);
+    if (!stat) {
+      console.log("User not found");
+    } else {
+      console.log(stat);
+      res.send(stat);
+    }
+  });
+
+});
+
 // Register
 router.post('/register', (req, res) => {
   // const { fname, lname, uname, pass, confirm } = req.body;
