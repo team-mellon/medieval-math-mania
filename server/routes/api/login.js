@@ -87,6 +87,8 @@ router.post('/register', (req, res) => {
                 // res.redirect('/users/login');
               })
               .catch(err => console.log(err));
+
+              res.send( { result:"Success", user: newAccount.uname, first: newAccount.fname, last: newAccount.lname } );
           });
         });
 
