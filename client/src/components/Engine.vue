@@ -3038,7 +3038,7 @@ export default {
     },
 
     victoryGenerator: function() {
-        switch(Math.floor((Math.random * 10) + 1)){
+        switch(Math.floor((Math.random() * 10) + 1)){
 	  case 1:
 	      return "Excellent";
 	      break;
