@@ -167,7 +167,7 @@ class GUIHandler {
         this.end_level_button.visible = false;
         this.end_level_button.alpha = 0;
 
-        this.end_text = this.assets.createText("Good Job!!", "Oldstyle", "65px", "bold", "gold", 10, 10, "center", 0, "center", 0 - 140, "image", entity_component_system, this.stage);
+        this.end_text = this.assets.createText(this.victoryGenerator, "Oldstyle", "65px", "bold", "gold", 10, 10, "center", 0, "center", 0 - 140, "image", entity_component_system, this.stage);
         this.end_text.visible = false;
         //end_text.skewX = -5;
         this.end_text.skewY = -15;
@@ -353,7 +353,45 @@ class GUIHandler {
 
   }
 
-
+    function victoryGenerator(){
+	switch(Math.floor((Math.random * 10) + 1)){
+	case 1:
+	    return "Excellent";
+	    break;
+	case 2:
+	    return "Amazing";
+	    break;
+	case 3:
+	    return "Spectacular";
+	    break;
+	case 4:
+	    return "Exceptional";
+	    break;
+	case 5:
+	    return "Magnificent";
+	    break;
+	case 6:
+	    return "Outstanding";
+	    break;
+	case 7:
+	    return "Great";
+	    break;
+	case 8:
+	    return "Awesome";
+	    break;
+	case 9:
+	    return "Incredible";
+	    break;
+	case 10:
+	    return "Wonderful";
+	    break;
+	default:
+	    return "Unbelievable";
+	    break;
+	}
+    }
+	   
+	   
 
 }
 
