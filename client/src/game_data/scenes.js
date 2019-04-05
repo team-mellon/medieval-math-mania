@@ -108,6 +108,17 @@ export const sceneData = [
               framerate: 6
             },
     fg_text: "Hint didn't load"
+  },
+
+  { // Start
+    color: "#919191",
+    bg_img: "res/login.png",
+    fg_img: {
+              images: ["res/title-text.png"],
+              frames: {width:1920, height:768, count:6, regX: 0, regY:0, spacing:0, margin:0},
+              framerate: 6
+            },
+    fg_text: ""
   }
 
 ];

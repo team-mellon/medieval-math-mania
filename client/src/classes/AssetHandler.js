@@ -12,7 +12,7 @@ class AssetHandler {
   }
 
   // Scale the image-like assets
-  scaleAssets (entity_component_system, current_scene, isMobile, scene_scale_Y, scene_scale_X, stage) {
+  static scaleAssets (entity_component_system, current_scene, isMobile, scene_scale_Y, scene_scale_X, stage) {
 
     if (current_scene == 3) {
 
@@ -99,7 +99,7 @@ class AssetHandler {
 
   }
 
-  createImage (location, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
+  static createImage (location, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
 
     let image = new createjs.Bitmap(location);
     stage.addChild(image);
@@ -112,7 +112,7 @@ class AssetHandler {
 
   }
 
-  createSprite (animation, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
+  static createSprite (animation, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
 
     let spriteSheet = new createjs.SpriteSheet(animation);
 
@@ -135,7 +135,7 @@ class AssetHandler {
 
   }
 
-  createText (num, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
+  static createText (num, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
 
     var text = new createjs.Text(num, style + " " + size + " " + font, color);
     stage.addChild(text);
@@ -148,7 +148,7 @@ class AssetHandler {
 
   }
 
-  createTextContainer (animation, words, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type, reg, entity_component_system, stage) { // }, handleClick) {
+  static createTextContainer (animation, words, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type, reg, entity_component_system, stage) { // }, handleClick) {
 
     var spriteSheet = new createjs.SpriteSheet(animation);
 
@@ -181,7 +181,7 @@ class AssetHandler {
 
   }
 
-  createButton (location, text, width, height, x_lock, x_location, y_lock, y_location, type, handleClick, entity_component_system, stage) {
+  static createButton (location, text, width, height, x_lock, x_location, y_lock, y_location, type, handleClick, entity_component_system, stage) {
 
     var image = new createjs.Bitmap(location);
     image.regX = width/2;
@@ -238,7 +238,7 @@ class AssetHandler {
 
   }
 
-  createAndPushEntity (entity_component_system, obj, obj_width, obj_height, obj_x_lock, obj_x_location, obj_y_lock, obj_y_location, obj_type) {
+  static createAndPushEntity (entity_component_system, obj, obj_width, obj_height, obj_x_lock, obj_x_location, obj_y_lock, obj_y_location, obj_type) {
 
     let entity_object = {
       object: obj,

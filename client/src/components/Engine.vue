@@ -1,4 +1,4 @@
-<template>
+this.level.structure_equation_banner<template>
   <div id="engineHolder">
 
     <canvas id="drawingCanvas" :style="style">alternate content</canvas>
@@ -16,8 +16,6 @@
 
     <!-- <div id="moduleHolder"> -->
       <!-- <UserInterface @pushToEcs="pushEcs" @pushToLcs="pushLcs"/> -->
-      <!-- <Scaling /> -->
-      <!-- <Gui /> -->
     <!-- </div> -->
 
   </div>
@@ -27,10 +25,14 @@
 
 import UserInterface from './UserInterface.vue';
 
+// Static classes
+import AssetHandler from '../classes/AssetHandler.js';
+import APIHandler from '../classes/APIHandler.js';
+
 import InputHandler from '../classes/InputHandler.js';
 import MobileHandler from '../classes/MobileHandler.js';
 import MusicHandler from '../classes/MusicHandler.js';
-import AssetHandler from '../classes/AssetHandler.js';
+import LevelHandler from '../classes/LevelHandler.js';
 
 import StatService from '../StatService.js';
 import LoginService from '../LoginService.js';
@@ -127,7 +129,7 @@ export default {
     this.input = new InputHandler();
     this.mobile = new MobileHandler();
     this.music = new MusicHandler();
-    this.assets = new AssetHandler();
+    this.level = new LevelHandler();
 
     window.addEventListener('resize', this.resize, false);
 
@@ -146,59 +148,7 @@ export default {
     this.lcs = []; // Level component system for scaling and eventually object storage
     this.gcs = []; // GUI component system for scaling and eventually object storage
 
-    // Animation
-    this.frame_counter = 0;
-    this.waiting_hit = false;
-    this.waiting_miss = false;
-    this.hide_knight = false;
-    this.hide_archer1 = false;
-    this.hide_archer2 = false;
-    this.hide_archer3 = false;
-    this.hide_archer4 = false;
-
-    // Gameplay
-    this.entry_is_correct;
-    this.hit = false;
-    this.miss_upper = false;
-    this.miss_lower = false;
-    this.upper = 101010101;
-    this.lower = 101010101;
-    this.generated = false;
-
-    this.fired = false;
-    this.fire_counter = 0;
-    this.hit_counter = 0;
-    this.miss_upper_counter = 0;
-    this.miss_lower_counter = 0;
-    this.h_counter = 0;
-    this.u_counter = 0;
-    this.l_counter = 0;
-    this.reload = false;
-    this.reload_counter = 0;
-    this.projectile_speed = 57;
-    this.projectile_x_speed = 0;
-
-    this.boss_fight = false;
-    this.play_tutorial = true;
-
     // var landscape_warning;
-
-    this.storage = 0;
-    this.factor = 0;
-    this.multiple = 0;
-    this.multiplier = 0;
-    this.digit = 2;
-    this.last_digit = 0;
-    this.adder = 1;
-
-    this.multiplicand = 0;
-    this.sign = " x "; //&#37
-    this.equal = " = ";
-    this.solution = 0;
-
-    this.history_list = [];
-
-    this.valid = true;
 
     //Setting properties for delays for sounds
     this.delayRe = new createjs.PlayPropsConfig().set({delay : 250});
@@ -224,20 +174,15 @@ export default {
     // SCENES //
     ////////////
 
-    this.current_scene = 0;
+    this.current_scene = 10;
     this.last_scene = 0;
 
-    this.num_scenes = 10;
+    this.num_scenes = 11;
 
     this.scenes = [
 
       { // Login
         custom:   function() {
-
-          	//putting this here because I dont know how else to initialize this as hidden
-          	progressBar.hidden = true;
-          	progressBackground.hidden = true;
-          	ldBg.hidden = true;
 
           	//registers Menu sounds
           	createjs.Sound.registerSound("res/sound_effects/menu.wav", "menu");
@@ -414,9 +359,9 @@ export default {
           // Creates username display text
           var multiplicand_div = document.createElement("div");
           multiplicand_div.id = "multiplicandText";
-          var multiplicand_text = document.createTextNode(this.multiplicand);
+          var multiplicand_text = document.createTextNode(this.level.multiplicand);
           multiplicand_div.appendChild(multiplicand_text);
-          var sign_text = document.createTextNode(this.sign);
+          var sign_text = document.createTextNode(this.level.sign);
           var entry_input;
           if (this.mobile.isMobile) {
 
@@ -458,10 +403,10 @@ export default {
 
           }
 
-          var equal_text = document.createTextNode(this.equal);
+          var equal_text = document.createTextNode(this.level.equal);
           var solution_div = document.createElement("div");
           solution_div.id = "solutionText";
-          var solution_text = document.createTextNode(this.solution);
+          var solution_text = document.createTextNode(this.level.solution);
           solution_div.appendChild(solution_text);
 
           // Creates username div to hold display text and input box
@@ -483,8 +428,8 @@ export default {
           history_div.id = "myDropdown";
           history_button.appendChild(button_text);
 
-          for (var x in this.history_list) {
-            var history_entry = document.createTextNode(this.history_list[x]);
+          for (var x in this.level.history_list) {
+            var history_entry = document.createTextNode(this.level.history_list[x]);
             var line_break = document.createElement("br");
             history_div.appendChild(history_entry);
             history_div.appendChild(line_break);
@@ -501,7 +446,7 @@ export default {
         	game_history_div.appendChild(history_dropdown);
 
           // Creates Tutorial display text
-        	if (this.play_tutorial) {
+        	if (this.level.play_tutorial) {
         	  var tutorial_label = document.createTextNode("Tutorial");
         	  var br1 = document.createElement("br");
         	  var tutorial_text = document.createElement("span");
@@ -534,11 +479,11 @@ export default {
           scene_html.appendChild(game_entry_form);
           scene_html.appendChild(game_history_form);
 
-        	if (this.play_tutorial) {
+        	if (this.level.play_tutorial) {
         		scene_html.appendChild(tutorial_div);
           }
 
-          this.createLevel();
+          this.level.createLevel(this.stage, this.lcs);
           if (this.mobile.isMobile) {
 
           } else {
@@ -587,12 +532,12 @@ export default {
           time_input.id = "bossValue";
           time_input.setAttribute("type", "checkbox");
           time_input.setAttribute("name", "time");
-          if (this.boss_fight) {
+          if (this.level.boss_fight) {
             time_input.checked = true;
           } else {
             time_input.checked = false;
           }
-          time_input.addEventListener('change', this.setBoss);
+          time_input.addEventListener('change', this.level.setBoss);
 
           // Creates password div to hold display text and check box
           var settings_time_div = document.createElement("div");
@@ -606,12 +551,12 @@ export default {
         	tutorial_input.id = "tutorialValue";
         	tutorial_input.setAttribute("type", "checkbox");
         	tutorial_input.setAttribute("name", "tutorial");
-        	if (this.play_tutorial) {
+        	if (this.level.play_tutorial) {
         	  tutorial_input.checked = true;
         	} else {
         	  tutorial_input.checked = false;
         	}
-        	tutorial_input.addEventListener('change', this.setTutorial);
+        	tutorial_input.addEventListener('change', this.level.setTutorial);
 
           // Creates password div to hold display text and check box
           var settings_tutorial_div = document.createElement("div");
@@ -644,6 +589,17 @@ export default {
 
       { // Hint
         custom: function () { }.bind(this)
+      },
+
+      { // Start
+        custom: function () {
+
+        	//putting this here because I dont know how else to initialize this as hidden
+        	progressBar.hidden = true;
+        	progressBackground.hidden = true;
+        	ldBg.hidden = true;
+
+        }.bind(this)
       }
 
     ];
@@ -668,17 +624,15 @@ export default {
 
     this.num_levels = 20;
 
-    this.current_level = 1;
-
     this.levels = [
 
       { // City
         // Exactly one multiple of multiplicand in range, single digit multiplicand
         math: function () {
-          this.multiplicand = Math.floor(Math.random() * 7) + 2;
-          this.multiple = Math.floor(Math.random() * 7) + 2;
-          this.lower = (this.multiple * this.multiplicand) - Math.floor(this.multiplicand/2);
-          this.upper = (this.multiple * this.multiplicand) + Math.floor(this.multiplicand/2);
+          this.level.multiplicand = Math.floor(Math.random() * 7) + 2;
+          this.level.multiple = Math.floor(Math.random() * 7) + 2;
+          this.level.lower = (this.level.multiple * this.level.multiplicand) - Math.floor(this.level.multiplicand/2);
+          this.level.upper = (this.level.multiple * this.level.multiplicand) + Math.floor(this.level.multiplicand/2);
         }.bind(this),
         open: function () {
           this.indicatorFunction(1);
@@ -688,10 +642,10 @@ export default {
       { // Grasslands
         // No multiples of multiplicand in range, single digit multiplicand
         math: function () {
-          this.multiplicand = Math.floor(Math.random() * 7) + 2;
-          this.multiple = Math.floor(Math.random() * 7) + 2;
-          this.lower = (this.multiple * this.multiplicand) + 1;
-          this.upper = (this.multiple * (this.multiplicand+1)) - 1;
+          this.level.multiplicand = Math.floor(Math.random() * 7) + 2;
+          this.level.multiple = Math.floor(Math.random() * 7) + 2;
+          this.level.lower = (this.level.multiple * this.level.multiplicand) + 1;
+          this.level.upper = (this.level.multiple * (this.level.multiplicand+1)) - 1;
         }.bind(this),
         open: function () {
           this.indicatorFunction(2);
@@ -701,12 +655,12 @@ export default {
       { // Volcano
         // Starting number is a two-digit number, target range includes the value which is one tenth of the number, and is bounded by positive single-digit integers.
         math: function () {
-          this.multiplicand = Math.floor(Math.random() * 90)+ 10;
-          this.factor = (0.1) * this.multiplicand;
-          this.lower = Math.floor(this.factor);
-          this.upper = Math.ceil(this.factor);
-          if(this.lower == this.upper) {
-            this.upper++;
+          this.level.multiplicand = Math.floor(Math.random() * 90)+ 10;
+          this.level.factor = (0.1) * this.level.multiplicand;
+          this.level.lower = Math.floor(this.level.factor);
+          this.level.upper = Math.ceil(this.level.factor);
+          if(this.level.lower == this.level.upper) {
+            this.level.upper++;
           }
         }.bind(this),
         open: function () {
@@ -717,9 +671,9 @@ export default {
       { // Sea
         // Starting number is a two-digit number, target range goes from 0 to a single-digit positive integer.
         math: function () {
-          this.multiplicand = Math.floor(Math.random() * 90) + 10;
-          this.lower = 0;
-          this.upper = Math.floor(Math.random() * 7) + 2;
+          this.level.multiplicand = Math.floor(Math.random() * 90) + 10;
+          this.level.lower = 0;
+          this.level.upper = Math.floor(Math.random() * 7) + 2;
         }.bind(this),
         open: function () {
           this.indicatorFunction(4);
@@ -732,11 +686,11 @@ export default {
         The lower boundary is an integer at least 10 below the product and the upper boundary is an integer
         at least 10 above the product.*/
         math: function () {
-          this.multiplicand = Math.floor(Math.random() * 7) + 2;
-          this.multiple = Math.floor(Math.random() * 7) + 2;
-          this.storage = this.multiplicand * this.multiple * 10;
-          this.lower = this.storage - 10;
-          this.upper = this.storage + 10;
+          this.level.multiplicand = Math.floor(Math.random() * 7) + 2;
+          this.level.multiple = Math.floor(Math.random() * 7) + 2;
+          this.level.storage = this.level.multiplicand * this.level.multiple * 10;
+          this.level.lower = this.level.storage - 10;
+          this.level.upper = this.level.storage + 10;
         }.bind(this),
         open: function () {
           this.indicatorFunction(5);
@@ -748,10 +702,10 @@ export default {
       	and the range makes it so there is only one integer answer
       	(i.e. the lower bound is above 100n − n and the upper bound is below 100n + n.*/
         math: function () {
-      		this.multiplicand = Math.floor(Math.random() * 7) + 2;
-      		this.multiple = 100 * this.multiplicand;
-      		this.lower = this.multiple - Math.floor(this.multiplicand/2);
-      		this.upper = this.multiple + Math.floor(this.multiplicand/2);
+      		this.level.multiplicand = Math.floor(Math.random() * 7) + 2;
+      		this.level.multiple = 100 * this.level.multiplicand;
+      		this.level.lower = this.level.multiple - Math.floor(this.level.multiplicand/2);
+      		this.level.upper = this.level.multiple + Math.floor(this.level.multiplicand/2);
         }.bind(this),
         open: function () {
           this.indicatorFunction(6);
@@ -761,9 +715,9 @@ export default {
       { // Cave
         //Starting number is a two-digit number, target range contains 0 (flanked by single-digit integers)
         math: function () {
-      		this.multiplicand = Math.floor(Math.random() * 90) + 10;
-      		this.lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
-      		this.upper = Math.floor(Math.random() * 7) + 2;
+      		this.level.multiplicand = Math.floor(Math.random() * 90) + 10;
+      		this.level.lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
+      		this.level.upper = Math.floor(Math.random() * 7) + 2;
         }.bind(this),
         open: function () {
           this.indicatorFunction(7);
@@ -773,16 +727,16 @@ export default {
       { // Forest
         //Starting number is a two-digit number, target range numbers are both 3-digit, with no integer
         math: function () {
-      		this.multiplicand = Math.round((Math.random() * 90)) + 10;
-      		this.lower = (Math.round((Math.random() * 90)+ 10 * 11) / 10);
-      		if(this.lower % 1 == 0)
+      		this.level.multiplicand = Math.round((Math.random() * 90)) + 10;
+      		this.level.lower = (Math.round((Math.random() * 90)+ 10 * 11) / 10);
+      		if(this.level.lower % 1 == 0)
       		{
-      			this.lower += 0.7;
+      			this.level.lower += 0.7;
       		}
-      		this.upper = Math.round((this.lower * this.lower/8)*10 + this.lower/2) / 10;
-      		if(this.upper % 1 == 0)
+      		this.level.upper = Math.round((this.level.lower * this.level.lower/8)*10 + this.level.lower/2) / 10;
+      		if(this.level.upper % 1 == 0)
       		{
-      			this.upper += 0.4;
+      			this.level.upper += 0.4;
       		}
         }.bind(this),
         open: function () {
@@ -793,9 +747,9 @@ export default {
       { // Alpine
         //Starting number is a three-digit number, target range goes from 0 to a single-digit positive integer.
         math: function () {
-      		this.multiplicand = Math.floor((Math.random() * 900) + 100);
-      		this.lower = 0;
-      		this.upper = Math.floor(Math.random() * 7) + 2;
+      		this.level.multiplicand = Math.floor((Math.random() * 900) + 100);
+      		this.level.lower = 0;
+      		this.level.upper = Math.floor(Math.random() * 7) + 2;
         }.bind(this),
         open: function () {
           this.indicatorFunction(9);
@@ -806,9 +760,9 @@ export default {
         /*Starting number is a number between 0 and .1 with three decimal places. Lower bound of target
       	range is 1000 times the starting number, and upper bound is one more than the lower bound. */
         math: function () {
-      		this.multiplicand = Math.floor((Math.random() * 990) + 10) / 1000;
-      		this.lower = 1000 * this.multiplicand;
-      		this.upper = this.lower + 1;
+      		this.level.multiplicand = Math.floor((Math.random() * 990) + 10) / 1000;
+      		this.level.lower = 1000 * this.level.multiplicand;
+      		this.level.upper = this.level.lower + 1;
         }.bind(this),
         open: function () {
           this.indicatorFunction(10);
@@ -819,9 +773,9 @@ export default {
         /*Starting number is a number between 10 and 100 with one decimal place. Lower bound of target
       	range is 1000 times the starting number, and upper bound is one more than the lower bound.*/
         math: function () {
-      		this.multiplicand = Math.floor(Math.random() * 90 * 10 + 10) / 10;
-      		this.lower = 1000 * this.multiplicand;
-      		this.upper = this.lower + 1;
+      		this.level.multiplicand = Math.floor(Math.random() * 90 * 10 + 10) / 10;
+      		this.level.lower = 1000 * this.level.multiplicand;
+      		this.level.upper = this.level.lower + 1;
         }.bind(this),
         open: function () {
           this.indicatorFunction(11);
@@ -832,9 +786,9 @@ export default {
         /*Starting number is a whole number greater than 1,000,000. Target range contains the number which is .0001 times the size of the starting number.
       	The lower bound may be up to 50 less than this value and the upper bound may be up to 50 greater than this value.*/
         math: function () {
-      		this.multiplicand = Math.floor(Math.random() * 10000000);
-      		this.lower = (Math.floor(this.multiplicand * 0.0001)) - (Math.floor(Math.random() * 50) + 10);
-      		this.upper = (Math.floor(this.multiplicand * 0.0001)) + (Math.floor(Math.random() * 50) + 10);
+      		this.level.multiplicand = Math.floor(Math.random() * 10000000);
+      		this.level.lower = (Math.floor(this.level.multiplicand * 0.0001)) - (Math.floor(Math.random() * 50) + 10);
+      		this.level.upper = (Math.floor(this.level.multiplicand * 0.0001)) + (Math.floor(Math.random() * 50) + 10);
         }.bind(this),
         open: function () {
           this.indicatorFunction(12);
@@ -845,9 +799,9 @@ export default {
         /*Starting number is an integer less than 200. Target range contains the number which is half the value
       	with an overall range less than 10. */
         math: function () {
-      		this.multiplicand = Math.floor(Math.random() * 100 + 100);
-      		this.lower = Math.floor(this.multiplicand / 2) - 4;
-      		this.upper = Math.floor(this.multiplicand / 2) + 4;
+      		this.level.multiplicand = Math.floor(Math.random() * 100 + 100);
+      		this.level.lower = Math.floor(this.level.multiplicand / 2) - 4;
+      		this.level.upper = Math.floor(this.level.multiplicand / 2) + 4;
         }.bind(this),
         open: function () {
           this.indicatorFunction(13);
@@ -859,9 +813,9 @@ export default {
       	Target range has three-digit bounding numbers, does not contain an
       	integer multiple of the starting number, and the range of the interval is 1.*/
         math: function () {
-      		this.multiplicand = Math.floor(Math.random() * 90 + 9) / 10;
-      		this.lower = Math.floor(Math.random() * 900 + 100);
-      		this.upper = this.lower + 1;
+      		this.level.multiplicand = Math.floor(Math.random() * 90 + 9) / 10;
+      		this.level.lower = Math.floor(Math.random() * 900 + 100);
+      		this.level.upper = this.level.lower + 1;
         }.bind(this),
         open: function () {
           this.indicatorFunction(14);
@@ -872,9 +826,9 @@ export default {
         /*Starting number is a negative single-digit integer. Target range contains only positive values, one of
       	which is a multiple of the starting number.*/
         math: function ()  {
-      		this.multiplicand = -Math.abs(Math.floor(Math.random() * 7) + 2);
-      		this.lower = this.multiplicand * this.multiplicand;
-      		this.upper = this.lower + (Math.floor(Math.random() * 7) + 2);
+      		this.level.multiplicand = -Math.abs(Math.floor(Math.random() * 7) + 2);
+      		this.level.lower = this.level.multiplicand * this.level.multiplicand;
+      		this.level.upper = this.level.lower + (Math.floor(Math.random() * 7) + 2);
         }.bind(this),
         open: function () {
           this.indicatorFunction(15);
@@ -885,9 +839,9 @@ export default {
         /*Starting number is a positive two-digit integer. Target range is bounded by two-digit negative integers
         5 away from each other.*/
         math: function () {
-          this.multiplicand = Math.floor(Math.random() * 90 + 9);
-          this.lower = -Math.abs(Math.floor(Math.random() * 84) + 15);
-          this.upper = this.lower + 5;
+          this.level.multiplicand = Math.floor(Math.random() * 90 + 9);
+          this.level.lower = -Math.abs(Math.floor(Math.random() * 84) + 15);
+          this.level.upper = this.level.lower + 5;
         }.bind(this),
         open: function () {
           this.indicatorFunction(16);
@@ -898,9 +852,9 @@ export default {
         /*Starting number is a number between -100 and -10 with one decimal place. Target range bounds are
         any two integers between -20 and 0.*/
         math: function () {
-          this.multiplicand = -Math.abs(Math.floor(Math.random() * 90) + 10);
-          this.lower = -Math.abs(Math.floor(Math.random() * 10) + 10);
-          this.upper = -Math.abs(Math.floor(Math.random() * 10));
+          this.level.multiplicand = -Math.abs(Math.floor(Math.random() * 90) + 10);
+          this.level.lower = -Math.abs(Math.floor(Math.random() * 10) + 10);
+          this.level.upper = -Math.abs(Math.floor(Math.random() * 10));
         }.bind(this),
         open: function () {
           this.indicatorFunction(17);
@@ -911,9 +865,9 @@ export default {
         /*Starting number is a number between -100 and -10 with one decimal place. Target range bounds are
         any two integers between 0 and 20. */
         math: function () {
-          this.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
-          this.lower = Math.floor(Math.random() * 10);
-          this.upper = Math.floor(Math.random() * 10 + 10);
+          this.level.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
+          this.level.lower = Math.floor(Math.random() * 10);
+          this.level.upper = Math.floor(Math.random() * 10 + 10);
         }.bind(this),
         open: function () {
           this.indicatorFunction(18);
@@ -924,9 +878,9 @@ export default {
         /*Starting number is an integer between -100 and -10 with one decimal place. Target range bounds are
         positive numbers between 0 and 1 with two decimal places that are one hundredth apart. */
         math: function () {
-          this.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
-          this.lower = Math.floor((Math.random() * 90) + 9) / 100;
-          this.upper = Math.floor((this.lower + 0.01)* 100)/100;
+          this.level.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
+          this.level.lower = Math.floor((Math.random() * 90) + 9) / 100;
+          this.level.upper = Math.floor((this.level.lower + 0.01)* 100)/100;
         }.bind(this),
         open: function () {
           this.indicatorFunction(19);
@@ -937,9 +891,9 @@ export default {
         /*Starting number is any positive three digit integer. Target range is bounded by two numbers between
         -10 and -5, with three decimal places, and within one hundredth of each other. */
         math: function () {
-          this.multiplicand = Math.floor(Math.random() * 900) + 100;
-          this.lower = -Math.abs((Math.floor(Math.random() * 10000) + 5000) /1000);
-          this.upper = this.lower + 0.01;
+          this.level.multiplicand = Math.floor(Math.random() * 900) + 100;
+          this.level.lower = -Math.abs((Math.floor(Math.random() * 10000) + 5000) /1000);
+          this.level.upper = this.level.lower + 0.01;
         }.bind(this),
         open: function () {
           this.indicatorFunction(20);
@@ -967,7 +921,8 @@ export default {
     };
 
     this.stage = new createjs.Stage('drawingCanvas');           // Stage for drawing pictures and shapes
-    createjs.Touch.enable(this.stage);                          // Enable touch interaction for mobile
+    createjs.Touch.enable(this.stage);
+      // Enable touch interaction for mobile
     this.bg = new createjs.Shape();                             // Create a rectangle for clearing the screen
     this.bg_color = "#333333";                                  // Background color
     this.stage.addChild(this.bg);                               // Add rectangle to the stage
@@ -979,10 +934,10 @@ export default {
 
     this.landscape_warning = new createjs.Shape();
 
-    this.phone_rotation = this.assets.createSprite(this.phone_rotationS, 288, 288, "center", 0, "center", 0, "image", this.ecs, this.stage);
+    this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, 288, 288, "center", 0, "center", 0, "image", this.ecs, this.stage);
     this.stage.removeChild(this.phone_rotation);
 
-    createjs.Ticker.setFPS(60);                                 // Set FPS (could be depricated?)
+    createjs.Ticker.setFPS(30);                                 // Set FPS (could be depricated?)
     createjs.Ticker.addEventListener('tick', this.tick);        // Set tisk listener for use as game loop
 
     document.onkeydown = this.input.keyDown.bind(this.input);   // Add keydown listener
@@ -993,118 +948,6 @@ export default {
   },
 
   methods: {
-
-    async createUser(text) {
-
-      try {
-        await LoginService.registerUser(text, this.user);
-      } catch (err) {
-        this.error = err.message;
-        console.log(this.error);
-      }
-
-      try {
-        let stats = await StatService.findUserStats(text.uname);
-        console.log(stats.data);
-        this.user.hits = stats.data.hits;
-        this.user.highs = stats.data.highs;
-        this.user.lows = stats.data.lows;
-      } catch (err) {
-        this.error = err.message;
-        console.log(this.error);
-      }
-
-    },
-
-    async getUserData(text) {
-
-      try {
-        let stats = await StatService.findUserAccount(text);
-        console.log(stats.data);
-        this.user.username = stats.data.uname;
-        this.user.firstname = stats.data.fname;
-        this.user.lastname = stats.data.lname;
-      } catch (err) {
-        this.error = err.message;
-        console.log(this.error);
-      }
-
-      try {
-        let stats = await StatService.findUserStats(text);
-        console.log(stats.data);
-        this.user.hits = stats.data.hits;
-        this.user.highs = stats.data.highs;
-        this.user.lows = stats.data.lows;
-      } catch (err) {
-        this.error = err.message;
-        console.log(this.error);
-      }
-
-    },
-
-    async verifyUser(text) {
-
-      try {
-        await LoginService.loginUser(text, this.user);
-        console.log(this.user.authenticated);
-        // this.user = await LoginService.loginUser(text);
-        console.log("User: " + this.user.username);
-      } catch (err) {
-        this.error = err.message;
-        console.log(this.error);
-      }
-
-      try {
-        let stats = await StatService.findUserStats(text.uname);
-        console.log(stats.data);
-        this.user.hits = stats.data.hits;
-        this.user.highs = stats.data.highs;
-        this.user.lows = stats.data.lows;
-      } catch (err) {
-        this.error = err.message;
-        console.log(this.error);
-      }
-
-
-
-      // if (this.user.authenticated) {
-      //   this.changeScene(2);
-      // }
-
-      try {
-        this.posts = await LoginService.getUsers();
-      } catch (err) {
-        this.error = err.message;
-        console.log(this.error);
-      }
-
-    },
-
-    async updateStats(text) {
-
-      try {
-        let stats = await StatService.updateUserStats(text);
-        console.log(stats.data);
-        this.user.hits = stats.data.hits;
-        this.user.highs = stats.data.highs;
-        this.user.lows = stats.data.lows;
-      } catch (err) {
-        this.error = err.message;
-        console.log(this.error);
-      }
-
-    },
-
-    async signoutUser() {
-
-      try {
-        await LoginService.logoutUser();
-      } catch (err) {
-        this.error = err.message;
-        console.log(this.error);
-      }
-
-    },
 
     /////////////
     // SCALING //
@@ -1149,9 +992,9 @@ export default {
       this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
 
       if (this.current_scene == 3) {
-        this.assets.scaleAssets(this.lcs, this.current_scene, this.mobile.isMobile, this.scene_scale_Y, this.scene_scale_X, this.stage); // Scale scene appropriately
+        AssetHandler.scaleAssets(this.lcs, this.current_scene, this.mobile.isMobile, this.scene_scale_Y, this.scene_scale_X, this.stage); // Scale scene appropriately
       } // else {
-        this.assets.scaleAssets(this.ecs, this.current_scene, this.mobile.isMobile, this.scene_scale_Y, this.scene_scale_X, this.stage); // Scale scene appropriately
+        AssetHandler.scaleAssets(this.ecs, this.current_scene, this.mobile.isMobile, this.scene_scale_Y, this.scene_scale_X, this.stage); // Scale scene appropriately
       // }
       // this.scaleAssets(this.gcs, this.current_scene, this.mobile.isMobile, this.scene_scale_Y, this.scene_scale_X, this.stage); // Scale scene appropriately
 
@@ -1263,17 +1106,17 @@ export default {
       if (this.current_scene == 3 && this.pause_menu.visible == false) {
 
         // If the range is not generated
-      	if(!this.generated) {
+      	if(!this.level.generated) {
 
           // Generate the range
-      		this.levels[this.current_level - 1].math();
+      		this.levels[this.level.current_level - 1].math();
 
-          this.clearMultiplicandBanner();
+          this.level.clearMultiplicandBanner();
 
-          this.remakeMultiplierBanner();
-          this.remakeRangeBanner();
+          this.level.remakeMultiplierBanner();
+          this.level.remakeRangeBanner();
 
-      		this.generated = true;
+      		this.level.generated = true;
 
       	}
 
@@ -1286,43 +1129,69 @@ export default {
         // console.log(this.input.drag_up);
 
         // Enter or swipe up to check input
-        if ((this.input.keys[13] || this.input.drag_up) && this.catapult.paused) { // Enter or drag up swipe on mobile
+        if ((this.input.keys[13] || this.input.drag_up) && this.level.catapult.paused) { // Enter or drag up swipe on mobile
           console.log("Enter Pressed");
-          this.runInput();
+
+          // Reset drag_up bool;
+          this.input.drag_up = false;
+
+          this.level.runInput(this.mobile.isMobile);
+          this.clearHtml();
+          this.level.makeGameForm(this.mobile.isMobile);
+
         }
 
         // If on mobile
         if (this.mobile.isMobile) {
           // Check which digit is selected and highlight it
-          this.checkSelectedDigit();
+          this.level.checkSelectedDigit();
         }
 
         // Run through and finish animations that play once
-        this.updateSinglePlayAnimations();
+        this.level.updateSinglePlayAnimations();
 
         // Check for hit and miss and then run thier animations
-        this.runHitAnimations();
-        this.runMissAnimations();
+        this.level.runHitAnimations();
+        this.level.runMissAnimations();
 
         // Check to see if the tutorial should be displayed
-        this.checkTutorial();
+        this.level.checkTutorial();
 
         //If game over
-        if (this.hit_counter >= 3 && this.miss_upper_counter >= 1 && this.miss_lower_counter >= 1 && this.reload == false) {
+        if (this.level.hit_counter >= 3 && this.level.miss_upper_counter >= 1 && this.level.miss_lower_counter >= 1 && this.level.reload == false) {
+
+          // udpate global total
+          this.user.hits += this.level.hit_counter;
+          this.user.highs += this.level.miss_upper_counter;
+          this.user.lows += this.level.miss_lower_counter;
+
+          this.hit_text.text += this.level.hit_counter.toString();
+          this.low_text.text += this.level.miss_lower_counter.toString();
+          this.high_text.text += this.level.miss_upper_counter.toString();
+
           // Show the endgame screen
           this.createVictoryBanner();
+
+          // update database
+          this.updateStats({
+            user: this.user.username,
+            hits: this.user.hits,
+            highs: this.user.highs,
+            lows: this.user.lows
+          });
+
           // Also maybe check if boss level is active
-          // checkBossFight();
+          // this.level.checkBossFight();
         }
 
         // Hide bad guys when hit
-        this.hideBadGuys();
+        this.level.hideBadGuys();
 
         // Run the catapult animation
-        this.runCatapultAnimation();
+        this.level.runCatapultAnimation(this.scene_scale_Y);
 
         // Reload the catapult
-        this.reloadCatapult()
+        this.level.reloadCatapult(this.stage, this.scene_scale_Y)
 
       }
 
@@ -1331,7 +1200,7 @@ export default {
 
       // if (frame_counter > 9) {
         //
-        // reload_counter += frame_counter;
+        // this.level.reload_counter += frame_counter;
         // frame_counter = 0;
         //
       // }
@@ -1353,7 +1222,9 @@ export default {
       // If the current scene is the game load the special level assets
       if (this.current_scene == 3) {
 
-          this.loadLevel();
+          this.bg_color = levelData[this.level.current_level - 1].color;
+
+          this.level.loadLevel();
 
       }
 
@@ -1363,7 +1234,7 @@ export default {
       // Create the new scene
       this.createScene();
 
-      // this.visibleForm(true);
+      // this.level.visibleForm(true);
 
       // Resize everything for scaling
       this.resize();
@@ -1389,9 +1260,9 @@ export default {
       this.bg.graphics.clear()
       this.bg.graphics.beginFill(this.bg_color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
 
-      this.background = this.assets.createImage(sceneData[this.current_scene].bg_img, this.backgroundX, 1440, "center", 0, "center", 0, "image", this.ecs, this.stage);
-      this.background_left = this.assets.createImage(sceneData[this.current_scene].bg_img, this.backgroundX, 1440, "center", -this.backgroundX, "center", 0, "image", this.ecs, this.stage);
-      this.background_right = this.assets.createImage(sceneData[this.current_scene].bg_img, this.backgroundX, 1440, "center", this.backgroundX, "center", 0, "image", this.ecs, this.stage);
+      this.background = AssetHandler.createImage(sceneData[this.current_scene].bg_img, this.backgroundX, 1440, "center", 0, "center", 0, "image", this.ecs, this.stage);
+      this.background_left = AssetHandler.createImage(sceneData[this.current_scene].bg_img, this.backgroundX, 1440, "center", -this.backgroundX, "center", 0, "image", this.ecs, this.stage);
+      this.background_right = AssetHandler.createImage(sceneData[this.current_scene].bg_img, this.backgroundX, 1440, "center", this.backgroundX, "center", 0, "image", this.ecs, this.stage);
 
       switch (this.current_scene) {
         case 0:
@@ -1416,20 +1287,22 @@ export default {
           sceneData[this.current_scene].fg_text = "Username: " + this.user.username + "\n\nName: " + this.user.firstname + " " + this.user.lastname + "\n\n";
           break;
         case 9:
-          sceneData[this.current_scene].fg_text = levelData[this.current_level - 1].hint;
+          sceneData[this.current_scene].fg_text = levelData[this.level.current_level - 1].hint;
           break;
         default:
 
       }
 
-      if (this.current_scene != 8 && this.current_scene != 2 && this.current_scene != 3) {
-        this.foreground = this.assets.createTextContainer(sceneData[this.current_scene].fg_img, sceneData[this.current_scene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", sceneData[this.current_scene].fg_img.frames.width, sceneData[this.current_scene].fg_img.frames.height, "center", 0, "center", 0, "image", 0, this.ecs, this.stage);
+      if (this.current_scene != 8 && this.current_scene != 2 && this.current_scene != 3 && this.current_scene != 10) {
+        this.foreground = AssetHandler.createTextContainer(sceneData[this.current_scene].fg_img, sceneData[this.current_scene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", sceneData[this.current_scene].fg_img.frames.width, sceneData[this.current_scene].fg_img.frames.height, "center", 0, "center", 0, "image", 0, this.ecs, this.stage);
+      } else if (this.current_scene == 10) {
+        this.foreground = AssetHandler.createTextContainer(sceneData[this.current_scene].fg_img, sceneData[this.current_scene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", sceneData[this.current_scene].fg_img.frames.width, sceneData[this.current_scene].fg_img.frames.height, "center", 0, "top", this.buttonY + sceneData[this.current_scene].fg_img.frames.height / 2, "image", 0, this.ecs, this.stage);
       }
 
       if (this.current_scene == 2) {
-        this.background = this.assets.createImage("res/menu.png", this.backgroundX, this.backgroundY, "center", 0, "bottom", -this.backgroundY / 2, "image", this.ecs, this.stage);
-        this.background_left = this.assets.createImage("res/menu-left.png", this.backgroundX, this.backgroundY, "center", 0 - (this.backgroundX), "bottom", -this.backgroundY / 2, "image", this.ecs, this.stage);
-        this.background_right = this.assets.createImage("res/menu-right.png", this.backgroundX, this.backgroundY, "center", 0 + (this.backgroundX), "bottom", -this.backgroundY / 2, "image", this.ecs, this.stage);
+        this.background = AssetHandler.createImage("res/menu.png", this.backgroundX, this.backgroundY, "center", 0, "bottom", -this.backgroundY / 2, "image", this.ecs, this.stage);
+        this.background_left = AssetHandler.createImage("res/menu-left.png", this.backgroundX, this.backgroundY, "center", 0 - (this.backgroundX), "bottom", -this.backgroundY / 2, "image", this.ecs, this.stage);
+        this.background_right = AssetHandler.createImage("res/menu-right.png", this.backgroundX, this.backgroundY, "center", 0 + (this.backgroundX), "bottom", -this.backgroundY / 2, "image", this.ecs, this.stage);
       }
 
       this.scenes[this.current_scene].custom();
@@ -1453,9 +1326,9 @@ export default {
       // If the last scene was the game open with the pause screen
       if (this.last_scene == 3) {
 
-        this.pauseAnimation(true);
+        this.level.pauseAnimation(true);
         this.visibleButton(true);
-        this.visibleForm(false);
+        this.level.visibleForm(false);
 
       }
 
@@ -1489,10 +1362,10 @@ export default {
 
     indicatorFunction: function(newL) {
 
-      this.generated = false;
+      this.level.generated = false;
       createjs.Sound.play("select");
-      this.current_level = newL;
-      this.resetLevel();
+      this.level.current_level = newL;
+      this.level.resetLevel();
       this.changeScene(3);
 
     },
@@ -1510,7 +1383,7 @@ export default {
     			// scale_to_canvas(left_sword_button, "center", 0 - (this.buttonX/2 + 10) * scene_scale_Y, "center", 0 + (this.buttonY/2 + 140) * scene_scale_Y, "image");
     			// scale_to_canvas(right_sword_button, "center", 0 + (this.buttonX/2 + 50) * scene_scale_Y, "center", 0 + (this.buttonY/2 + 140) * scene_scale_Y, "image");
 
-    			this.left_sword_button = this.assets.createButton("res/sword-left.png", "Login", this.buttonX, this.buttonY, "center", -(this.buttonX/2 + 30), "center", (this.buttonY/2 + 200), "image", function() {
+    			this.left_sword_button = AssetHandler.createButton("res/sword-left.png", "Login", this.buttonX, this.buttonY, "center", -(this.buttonX/2 + 30), "center", (this.buttonY/2 + 200), "image", function() {
     				createjs.Sound.play("sword");
     				var key = document.getElementById('usernameInput').value;
             var text = {
@@ -1520,12 +1393,12 @@ export default {
             this.verifyUser(text);
     			}.bind(this), this.ecs, this.stage);
 
-    			this.right_sword_button = this.assets.createButton("res/sword-right.png", "Signup", this.buttonX, this.buttonY, "center", (this.buttonX/2 + 65), "center", (this.buttonY/2 + 200), "image", function() {
+    			this.right_sword_button = AssetHandler.createButton("res/sword-right.png", "Signup", this.buttonX, this.buttonY, "center", (this.buttonX/2 + 65), "center", (this.buttonY/2 + 200), "image", function() {
     				createjs.Sound.play("sword");
             this.changeScene(1);
     			}.bind(this), this.ecs, this.stage);
 
-    			this.secret_button = this.assets.createButton("res/secret_button.png", "", this.backgroundX, 1440, "center", 0, "center", 0, "image", function() {
+    			this.secret_button = AssetHandler.createButton("res/secret_button.png", "", this.backgroundX, 1440, "center", 0, "center", 0, "image", function() {
     				createjs.Sound.play("sword");
             this.changeScene(8);
     			}.bind(this), this.ecs, this.stage);
@@ -1544,7 +1417,7 @@ export default {
     		// 	scale_to_canvas(right_sword_button, "center", 0 + (this.buttonX/2 + 50) * scene_scale_Y, "center", 0 + (this.buttonY/2 + 140) * scene_scale_Y, "gui");
     		// } else {
 
-    			this.left_sword_button = this.assets.createButton("res/sword-left.png", "Signup", this.buttonX, this.buttonY, "center", -(this.buttonX/2 + 30), "center", (this.buttonY/2 + 200), "image", function() {
+    			this.left_sword_button = AssetHandler.createButton("res/sword-left.png", "Signup", this.buttonX, this.buttonY, "center", -(this.buttonX/2 + 30), "center", (this.buttonY/2 + 200), "image", function() {
     				createjs.Sound.play("sword");
     				var key = document.getElementById('usernameInput').value;
     				if( /*key in this.database.users ||*/ key == "" ) {
@@ -1578,7 +1451,7 @@ export default {
     				}
     			}.bind(this), this.ecs, this.stage);
 
-    		this.right_sword_button = this.assets.createButton("res/sword-right.png", "Cancel", this.buttonX, this.buttonY, "center", (this.buttonX/2 + 65), "center", (this.buttonY/2 + 200), "image", function() {
+    		this.right_sword_button = AssetHandler.createButton("res/sword-right.png", "Cancel", this.buttonX, this.buttonY, "center", (this.buttonX/2 + 65), "center", (this.buttonY/2 + 200), "image", function() {
     			// fieldInput_error.alpha = 0; // password_error.alpha = 0; // message.render = 0;
     			createjs.Sound.play("sword");
     			this.changeScene(0);
@@ -1597,12 +1470,12 @@ export default {
     			// 	scale_to_canvas(account_button, "right", 0 - (this.buttonX/2 + 10), "top", (this.buttonY/2 + 10), "gui");
     			// } else {
 
-    			this.play_button = this.assets.createButton("res/menu-button.png", "Play", this.buttonX, this.buttonY, "center", 0, "center", 0 - 200, "gui", function() { createjs.Sound.play("menu"); this.changeScene(8); }.bind(this), this.ecs, this.stage);
-    			this.stats_button = this.assets.createButton("res/menu-button.png", "Stats", this.buttonX, this.buttonY, "center", 0, "center", 0 - 100, "gui", function() { createjs.Sound.play("menu"); this.changeScene(4); this.getUserData(this.user.username); }.bind(this), this.ecs, this.stage);
-    			this.h2p_button = this.assets.createButton("res/menu-button.png", "How To Play", this.buttonX, this.buttonY, "center", 0, "center", 0 - 0, "gui", function() { createjs.Sound.play("menu"); this.changeScene(5); }.bind(this), this.ecs, this.stage);
-    			this.settings_button = this.assets.createButton("res/menu-button.png", "Settings", this.buttonX, this.buttonY, "center", 0, "center", 0 + 100, "gui", function() { createjs.Sound.play("menu"); this.changeScene(6); }.bind(this), this.ecs, this.stage);
-    			this.logout_button = this.assets.createButton("res/menu-button.png", "Logout", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "top", (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.user.authenticated = false; this.changeScene(0); this.signoutUser(); }.bind(this), this.ecs, this.stage);
-    			this.account_button = this.assets.createButton("res/menu-button.png", "Account", this.buttonX, this.buttonY, "right", 0 - (this.buttonX/2 + 10), "top", (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(7); this.getUserData(this.user.username); }.bind(this), this.ecs, this.stage);
+    			this.play_button = AssetHandler.createButton("res/menu-button.png", "Play", this.buttonX, this.buttonY, "center", 0, "center", 0 - 200, "gui", function() { createjs.Sound.play("menu"); this.changeScene(8); }.bind(this), this.ecs, this.stage);
+    			this.stats_button = AssetHandler.createButton("res/menu-button.png", "Stats", this.buttonX, this.buttonY, "center", 0, "center", 0 - 100, "gui", function() { createjs.Sound.play("menu"); this.changeScene(4); this.getUserData(this.user.username); }.bind(this), this.ecs, this.stage);
+    			this.h2p_button = AssetHandler.createButton("res/menu-button.png", "How To Play", this.buttonX, this.buttonY, "center", 0, "center", 0 - 0, "gui", function() { createjs.Sound.play("menu"); this.changeScene(5); }.bind(this), this.ecs, this.stage);
+    			this.settings_button = AssetHandler.createButton("res/menu-button.png", "Settings", this.buttonX, this.buttonY, "center", 0, "center", 0 + 100, "gui", function() { createjs.Sound.play("menu"); this.changeScene(6); }.bind(this), this.ecs, this.stage);
+    			this.logout_button = AssetHandler.createButton("res/menu-button.png", "Logout", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "top", (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.user.authenticated = false; this.changeScene(0); this.signoutUser(); }.bind(this), this.ecs, this.stage);
+    			this.account_button = AssetHandler.createButton("res/menu-button.png", "Account", this.buttonX, this.buttonY, "right", 0 - (this.buttonX/2 + 10), "top", (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(7); this.getUserData(this.user.username); }.bind(this), this.ecs, this.stage);
 
     			break;
 
@@ -1632,92 +1505,92 @@ export default {
     		//
     		// } else {
 
-    	    this.end_level_scene = this.assets.createImage("res/login_scroll.png", this.backgroundX, this.backgroundY, "center", 0, "center", 0, "image", this.ecs, this.stage);
+    	    this.end_level_scene = AssetHandler.createImage("res/login_scroll.png", this.backgroundX, this.backgroundY, "center", 0, "center", 0, "image", this.ecs, this.stage);
     	    this.end_level_scene.visible = false;
 
-    	    this.end_level_button = this.assets.createButton("res/login-button.png", "Next Level", this.buttonX, this.buttonY, "center", 0, "center", 0 + 250, "gui", function() { createjs.Sound.play("select"); this.changeScene(8); this.visibleForm(true);}.bind(this), this.ecs, this.stage);
+    	    this.end_level_button = AssetHandler.createButton("res/login-button.png", "Next Level", this.buttonX, this.buttonY, "center", 0, "center", 0 + 250, "gui", function() { createjs.Sound.play("select"); this.changeScene(8); this.level.visibleForm(true);}.bind(this), this.ecs, this.stage);
     	    this.end_level_button.visible = false;
     	    this.end_level_button.alpha = 0;
 
-    	    this.end_text = this.assets.createText("Good Job!!", "Oldstyle", "65px", "bold", "gold", 10, 10, "center", 0, "center", 0 - 140, "image", this.ecs, this.stage);
+    	    this.end_text = AssetHandler.createText("Good Job!!", "Oldstyle", "65px", "bold", "gold", 10, 10, "center", 0, "center", 0 - 140, "image", this.ecs, this.stage);
     	    this.end_text.visible = false;
     	    //end_text.skewX = -5;
     	    this.end_text.skewY = -15;
     	    this.end_text.textAlign = "center";
 
-    	    this.hit_text = this.assets.createText("Total Hits:      ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0, "image", this.ecs, this.stage);
+    	    this.hit_text = AssetHandler.createText("Total Hits:      ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0, "image", this.ecs, this.stage);
     	    this.hit_text.visible = false;
     	    this.hit_text.alpha = 0;
 
-    	    this.low_text = this.assets.createText("Total Lows:     ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0 + 40, "image", this.ecs, this.stage);
+    	    this.low_text = AssetHandler.createText("Total Lows:     ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0 + 40, "image", this.ecs, this.stage);
     	    this.low_text.visible = false;
     	    this.low_text.alpha = 0;
 
-    	    this.high_text = this.assets.createText("Total Highs:    ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0 + 80, "image", this.ecs, this.stage);
+    	    this.high_text = AssetHandler.createText("Total Highs:    ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0 + 80, "image", this.ecs, this.stage);
     	    this.high_text.visible = false;
     	    this.high_text.alpha = 0;
 
-    	    this.pause_menu = this.assets.createImage("res/hit-target-pause-menu.png", this.backgroundX, this.backgroundY, "center", 0, "center", 0, "image", this.ecs, this.stage);
+    	    this.pause_menu = AssetHandler.createImage("res/hit-target-pause-menu.png", this.backgroundX, this.backgroundY, "center", 0, "center", 0, "image", this.ecs, this.stage);
     	    this.pause_menu.visible = false;
 
-    	    this.close_button = this.assets.createButton("res/hit-target-pause-close-button.png", "", this.buttonX, this.buttonY, "center", 0 + 445, "center", 0 - 281, "gui", function() {
+    	    this.close_button = AssetHandler.createButton("res/hit-target-pause-close-button.png", "", this.buttonX, this.buttonY, "center", 0 + 445, "center", 0 - 281, "gui", function() {
     				createjs.Sound.play("menu");
-    				this.pauseAnimation(false);
+    				this.level.pauseAnimation(false);
     				this.visibleButton(false);
-    				this.visibleForm(true);
+    				this.level.visibleForm(true);
     	    }.bind(this), this.ecs, this.stage);
 
     	    this.close_button.visible = false;
 
-    	    this.main_menu_button = this.assets.createButton("res/hit-target-pause-button.png", "Main Menu", this.buttonX, this.buttonY, "center", 0, "center", 0 - 180, "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); this.visibleForm(true);}.bind(this), this.ecs, this.stage);
+    	    this.main_menu_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Main Menu", this.buttonX, this.buttonY, "center", 0, "center", 0 - 180, "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); this.level.visibleForm(true);}.bind(this), this.ecs, this.stage);
     	    this.main_menu_button.visible = false;
 
-    	    this.exit_level_button = this.assets.createButton("res/hit-target-pause-button.png", "Exit Level", this.buttonX, this.buttonY, "center", 0, "center", 0 - 110, "gui", function() { createjs.Sound.play("menu"); this.changeScene(8); this.visibleForm(true);}.bind(this), this.ecs, this.stage);
+    	    this.exit_level_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Exit Level", this.buttonX, this.buttonY, "center", 0, "center", 0 - 110, "gui", function() { createjs.Sound.play("menu"); this.changeScene(8); this.level.visibleForm(true);}.bind(this), this.ecs, this.stage);
     	    this.exit_level_button.visible = false;
 
-    	    this.settings_button = this.assets.createButton("res/hit-target-pause-button.png", "Settings", this.buttonX, this.buttonY, "center", 0, "center", 0 - 40, "gui", function() { createjs.Sound.play("menu"); this.changeScene(6); this.visibleForm(true);}.bind(this), this.ecs, this.stage);
+    	    this.settings_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Settings", this.buttonX, this.buttonY, "center", 0, "center", 0 - 40, "gui", function() { createjs.Sound.play("menu"); this.changeScene(6); this.level.visibleForm(true);}.bind(this), this.ecs, this.stage);
     	    this.settings_button.visible = false;
 
-    	    this.menu_button = this.assets.createButton("res/login-button.png", "Pause", this.buttonX, this.buttonY, "right", -(this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() {
+    	    this.menu_button = AssetHandler.createButton("res/login-button.png", "Pause", this.buttonX, this.buttonY, "right", -(this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() {
     				createjs.Sound.play("menu");
-    				this.pauseAnimation(true);
+    				this.level.pauseAnimation(true);
     				this.visibleButton(true);
-    				this.visibleForm(false);
+    				this.level.visibleForm(false);
     	    }.bind(this), this.ecs, this.stage);
 
-    	    this.hint_button = this.assets.createButton("res/hint-button.png", "Hint", 72, 72, "center", 0 - 313, "center", 0 + 194, "gui", function() { createjs.Sound.play("sword"); this.changeScene(9); this.visibleForm(true); }.bind(this), this.ecs, this.stage);
+    	    this.hint_button = AssetHandler.createButton("res/hint-button.png", "Hint", 72, 72, "center", 0 - 313, "center", 0 + 194, "gui", function() { createjs.Sound.play("sword"); this.changeScene(9); this.level.visibleForm(true); }.bind(this), this.ecs, this.stage);
     	    this.hint_button.visible = false;
 
     			if (this.mobile.isMobile) {
 
-    				this.ll_number_button = this.assets.createButton("res/number-button-ll.png", "", this.backgroundX, 288, "center", 0, "bottom", 0 - (288/2), "image", function() {
-    					if(this.digit > 0)
-    						this.digit--;
-    					if(this.digit < 0)
-    						this.digit = 0;
-    					console.log(this.digit);
+    				this.ll_number_button = AssetHandler.createButton("res/number-button-ll.png", "", this.backgroundX, 288, "center", 0, "bottom", 0 - (288/2), "image", function() {
+    					if(this.level.digit > 0)
+    						this.level.digit--;
+    					if(this.level.digit < 0)
+    						this.level.digit = 0;
+    					console.log(this.level.digit);
     				}.bind(this), this.ecs, this.stage);
 
-    				this.lr_number_button = this.assets.createButton("res/number-button-lr.png", "", this.backgroundX, 288, "center", 0, "bottom", 0 - (288/2), "image", function() {
-    					if(this.digit < 2)
-    						this.digit++;
-    					if(this.digit > 2)
-    						this.digit = 2;
+    				this.lr_number_button = AssetHandler.createButton("res/number-button-lr.png", "", this.backgroundX, 288, "center", 0, "bottom", 0 - (288/2), "image", function() {
+    					if(this.level.digit < 2)
+    						this.level.digit++;
+    					if(this.level.digit > 2)
+    						this.level.digit = 2;
     					console.log(digit);
     				}.bind(this), this.ecs, this.stage);
 
-    				this.rl_number_button = this.assets.createButton("res/number-button-rl.png", "", this.backgroundX, 288, "center", 0, "bottom", 0 - (288/2), "image", function() {
-    					this.multiplier -= this.adder;
-    					document.getElementById("hundredsPlace").textContent = Math.floor(this.multiplier/100 % 10);
-    					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(this.multiplier/10 % 10));
-    					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(this.multiplier % 10));
+    				this.rl_number_button = AssetHandler.createButton("res/number-button-rl.png", "", this.backgroundX, 288, "center", 0, "bottom", 0 - (288/2), "image", function() {
+    					this.level.multiplier -= this.level.adder;
+    					document.getElementById("hundredsPlace").textContent = Math.floor(this.level.multiplier/100 % 10);
+    					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(this.level.multiplier/10 % 10));
+    					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(this.level.multiplier % 10));
     				}.bind(this), this.ecs, this.stage);
 
-    				this.rr_number_button = this.assets.createButton("res/number-button-rr.png", "", this.backgroundX, 288, "center", 0, "bottom", 0 - (288/2), "image", function() {
-    					this.multiplier += this.adder;
-    					document.getElementById("hundredsPlace").textContent = Math.floor(this.multiplier/100 % 10);
-    					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(this.multiplier/10 % 10));
-    					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(this.multiplier % 10));
+    				this.rr_number_button = AssetHandler.createButton("res/number-button-rr.png", "", this.backgroundX, 288, "center", 0, "bottom", 0 - (288/2), "image", function() {
+    					this.level.multiplier += this.level.adder;
+    					document.getElementById("hundredsPlace").textContent = Math.floor(this.level.multiplier/100 % 10);
+    					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(this.level.multiplier/10 % 10));
+    					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(this.level.multiplier % 10));
     				}.bind(this), this.ecs, this.stage);
 
     			}
@@ -1726,25 +1599,25 @@ export default {
 
     		case 4:
 
-    			this.menu_button = this.assets.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), this.ecs, this.stage);
+    			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), this.ecs, this.stage);
 
     			break;
 
     		case 5:
 
-    			this.menu_button = this.assets.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), this.ecs, this.stage);
+    			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), this.ecs, this.stage);
 
     			break;
 
     		case 6:
 
-    			this.menu_button = this.assets.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.oneWayScene(); }.bind(this), this.ecs, this.stage);
+    			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.oneWayScene(); }.bind(this), this.ecs, this.stage);
 
     			break;
 
     		case 7:
 
-    			this.menu_button = this.assets.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), this.ecs, this.stage);
+    			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), this.ecs, this.stage);
 
     			break;
 
@@ -1762,20 +1635,20 @@ export default {
     				framerate: 3
     			};
 
-    			this.midground = this.assets.createImage("res/map.png", this.backgroundX, this.backgroundY, "center", 0, "center", 0, "image", this.ecs, this.stage);
-    			this.foreground = this.assets.createButton("res/map-banner.png", "Select a level", this.backgroundX, 108, "center", 0, "top", 0 + (108/2), "image", function() {}.bind(this), this.ecs, this.stage);
+    			this.midground = AssetHandler.createImage("res/map.png", this.backgroundX, this.backgroundY, "center", 0, "center", 0, "image", this.ecs, this.stage);
+    			this.foreground = AssetHandler.createButton("res/map-banner.png", "Select a level", this.backgroundX, 108, "center", 0, "top", 0 + (108/2), "image", function() {}.bind(this), this.ecs, this.stage);
 
-    			var reef = this.assets.createSprite(reefS, 120, 108, "center", -480 + 120 / 2, "center", 96 + 108 / 2, "image", this.ecs, this.stage);
+    			var reef = AssetHandler.createSprite(reefS, 120, 108, "center", -480 + 120 / 2, "center", 96 + 108 / 2, "image", this.ecs, this.stage);
     			reef.gotoAndPlay(0);
 
-    			var skyland = this.assets.createSprite(skylandS, 180, 120, "center", -243 + 180 / 2, "center", -246 + 120 / 2, "image", this.ecs, this.stage);
+    			var skyland = AssetHandler.createSprite(skylandS, 180, 120, "center", -243 + 180 / 2, "center", -246 + 120 / 2, "image", this.ecs, this.stage);
     			skyland.gotoAndPlay(0);
 
-    			this.menu_button = this.assets.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), this.ecs, this.stage);
+    			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), this.ecs, this.stage);
 
     			for (var i = 0; i < this.num_levels; i++) {
 
-    				var temp = this.assets.createButton("res/map-indicator.png", (i + 1).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", this.levels[i].open.bind(this), this.ecs, this.stage);
+    				var temp = AssetHandler.createButton("res/map-indicator.png", (i + 1).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", this.levels[i].open.bind(this), this.ecs, this.stage);
 
     				this.indicators.push(temp);
 
@@ -1785,33 +1658,40 @@ export default {
 
         case 9:
 
-    			this.menu_button = this.assets.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() {
+    			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() {
             createjs.Sound.play("menu");
             this.changeScene(3);
-            this.pauseAnimation(true);
+            this.level.pauseAnimation(true);
             this.visibleButton(true);
-            this.visibleForm(false);
+            this.level.visibleForm(false);
           }.bind(this), this.ecs, this.stage);
 
           break;
+
+    		case 10:
+
+    			this.logout_button = AssetHandler.createButton("res/login-button.png", "Login", this.buttonX, this.buttonY, "right", -(this.buttonX/2 + 10), "top", (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(0); }.bind(this), this.ecs, this.stage);
+    			this.play_button = AssetHandler.createButton("res/login-button.png", "Start", this.buttonX, this.buttonY, "center", 0, "bottom", - 5 * (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(8); }.bind(this), this.ecs, this.stage);
+
+    			break;
 
     		default:
 
     	}
 
-    	this.previous_indicator = this.assets.createImage("res/previous-indicator.png", 24, 24, "center", 0 - 50, "center", 0 + 194, "gui", this.ecs, this.stage);
+    	this.previous_indicator = AssetHandler.createImage("res/previous-indicator.png", 24, 24, "center", 0 - 50, "center", 0 + 194, "gui", this.ecs, this.stage);
       // this.previous_indicator.addEventListener("click", previousSound);
       this.previous_indicator.visible = false;
 
-    	this.pause_indicator = this.assets.createImage("res/pause-indicator.png", 24, 24, "center", 0, "center", 0 + 194, "gui", this.ecs, this.stage);
+    	this.pause_indicator = AssetHandler.createImage("res/pause-indicator.png", 24, 24, "center", 0, "center", 0 + 194, "gui", this.ecs, this.stage);
       // this.pause_indicator.addEventListener("click", playSound);
       this.pause_indicator.visible = false;
 
-    	this.next_indicator = this.assets.createImage("res/next-indicator.png", 24, 24, "center", 0 + 50, "center", 0 + 194, "gui", this.ecs, this.stage);
+    	this.next_indicator = AssetHandler.createImage("res/next-indicator.png", 24, 24, "center", 0 + 50, "center", 0 + 194, "gui", this.ecs, this.stage);
       // this.next_indicator.addEventListener("click", nextSound);
       this.next_indicator.visible = false;
 
-    	this.lute = this.assets.createImage("res/lute.png", 96, 96, "center", 0 + 313, "center", 0 + 194, "gui", this.ecs, this.stage);
+    	this.lute = AssetHandler.createImage("res/lute.png", 96, 96, "center", 0 + 313, "center", 0 + 194, "gui", this.ecs, this.stage);
     	// antiLute = createImage("res/antiLute.png", 96, 96, 2);
       // this.lute.addEventListener("click", muteSound);
       this.lute.visible = false;
@@ -1820,1182 +1700,8 @@ export default {
 
       this.landscape_warning = new createjs.Shape();
 
-      this.phone_rotation = this.assets.createSprite(this.phone_rotationS, 288, 288, "center", 0, "center", 0, "image", this.ecs, this.stage);
+      this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, 288, 288, "center", 0, "center", 0, "image", this.ecs, this.stage);
       this.stage.removeChild(this.phone_rotation);
-
-    },
-
-    ////////////
-    // LEVELS //
-    ////////////
-
-    loadLevel: function() {
-
-      this.bg_color = levelData[this.current_level - 1].color;
-
-      this.loadImage();
-
-      this.end_level_flagS = {
-        images: ["res/endgame-flag.png"],
-        frames: {width:1920, height:1440, count:12, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.numberlineS = {
-        images: ["res/numberline.png"],
-        frames: {width:1920, height:24, count:1, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.bossS = {
-        images: ["res/level" + this.current_level + "/boss.png"],
-        frames: {width:96, height:96, count:12, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.henchmanS = {
-        images: ["res/level" + this.current_level + "/henchman.png"],
-        frames: {width:96, height:96, count:12, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.projectileS = {
-        images: ["res/ammo.png"],
-        frames: {width:96, height:96, count:12, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.catapultS = {
-        images: ["res/catapult.png"],
-        frames: {width:288, height:384, count:12, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.centerS = {
-        images: ["res/level" + this.current_level + "/center.png"],
-        frames: {width:1920, height:1440, count:12, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.left_centerS = {
-        images: ["res/level" + this.current_level + "/left-center.png"],
-        frames: {width:1920, height:1440, count:6, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.right_centerS = {
-        images: ["res/level" + this.current_level + "/right-center.png"],
-        frames: {width:1920, height:1440, count:6, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.bannerS = {
-        images: ["res/banners.png"],
-        frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.range_bannerS = {
-        images: ["res/range-banner.png"],
-        frames: {width:192, height:126, count:1, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.equation_bannerS = {
-        images: ["res/equation-banner.png"],
-        frames: {width:300, height:78, count:1, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.history_bannerS = {
-        images: ["res/history-banner.png"],
-        frames: {width:192, height:126, count:1, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.bodyS = {
-        images: ["res/level" + this.current_level + "/body.png"],
-        frames: {width:1920, height:1440, count:6, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.leftS = {
-        images: ["res/level" + this.current_level + "/left.png"],
-        frames: {width:1920, height:1440, count:6, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.rightS = {
-        images: ["res/level" + this.current_level + "/right.png"],
-        frames: {width:1920, height:1440, count:6, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.facadeS = {
-        images: ["res/level" + this.current_level + "/facade.png"],
-        frames: {width:1920, height:1440, count:6, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.big_bossS = {
-        images: ["res/level" + this.current_level + "/big-boss.png"],
-        frames: {width:1920, height:768, count:1, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.firework_lowS = {
-        images: ["res/firework-low.png"],
-        frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.firework_hitS = {
-        images: ["res/firework-hit.png"],
-        frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.firework_highS = {
-        images: ["res/firework-high.png"],
-        frames: {width:1920, height:768, count:12, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.score_bannerS = {
-        images: ["res/score-banner.png"],
-        frames: {width:192, height:126, count:1, regX: 0, regY:0, spacing:0, margin:0},
-        framerate: 6
-      };
-
-      this.number_text = [];
-    },
-
-    loadImage: function() {
-
-    	this.preload = new createjs.LoadQueue();
-    	this.preload.on("progress", this.loading);
-      // preload.addEventListener("fileload", handleFileComplete);
-    	this.preload.loadFile("res/numberline.png");
-    	this.preload.loadFile("res/level" + this.current_level + "/boss.png");
-    	this.preload.loadFile("res/level" + this.current_level + "/henchman.png");
-    	this.preload.loadFile("res/ammo.png");
-    	this.preload.loadFile("res/catapult.png");
-    	this.preload.loadFile("res/level" + this.current_level + "/center.png");
-    	this.preload.loadFile("res/level" + this.current_level + "/left-center.png");
-    	this.preload.loadFile("res/level" + this.current_level + "/right-center.png");
-    	this.preload.loadFile("res/level" + this.current_level + "/body.png");
-    	this.preload.loadFile("res/level" + this.current_level + "/left.png");
-    	this.preload.loadFile("res/level" + this.current_level + "/right.png");
-    	this.preload.loadFile("res/level" + this.current_level + "/facade.png");
-    	this.preload.loadFile("res/level" + this.current_level + "/big-boss.png");
-    	//The 1 at the end on these makes it so only one instance can play at once
-    	createjs.Sound.registerSound("res/sound_effects/catapult_cocking.wav", "reload");
-    	createjs.Sound.registerSound("res/sound_effects/catapult_firing.wav", "firing");
-    	createjs.Sound.registerSound("res/sound_effects/victory.wav", "win", 1);
-    	createjs.Sound.registerSound("res/sound_effects/fire_lighting.wav", "light", 1);
-    	createjs.Sound.registerSound("res/sound_effects/crumbling.wav", "crumble");
-
-    },
-
-    // function handleFileComplete(event) {
-    //   document.body.appendChild(event.result);
-    // }
-
-    createLevel: function() {
-
-      // Level structure in background
-      this.structure_center = this.assets.createSprite(this.centerS, this.structureX, this.structureY, "center", 0, "bottom", -this.structureY / 2, "image", this.lcs, this.stage);
-      this.structure_left_center = this.assets.createSprite(this.left_centerS, this.structureX, this.structureY, "center", 0, "bottom", -this.structureY / 2, "image", this.lcs, this.stage);
-      this.structure_right_center = this.assets.createSprite(this.right_centerS, this.structureX, this.structureY, "center", 0, "bottom", -this.structureY / 2, "image", this.lcs, this.stage);
-
-      // Bad guys in midground
-      this.henchman_left_center = this.assets.createSprite(this.henchmanS, 96, 96, "center", 0 - (96/2 + 375), "bottom", -384, "image", this.lcs, this.stage);
-      this.henchman_left_center.gotoAndPlay(0);
-      this.boss = this.assets.createSprite(this.bossS, 96, 96, "center", 0, "bottom", -384, "image", this.lcs, this.stage);
-      this.boss.gotoAndPlay(0);
-      this.henchman_right_center = this.assets.createSprite(this.henchmanS, 96, 96, "center", 0 + (96/2 + 375), "bottom", -384, "image", this.lcs, this.stage);
-      this.henchman_right_center.gotoAndPlay(0);
-
-      // Level structure in foreground
-      this.structure_left = this.assets.createSprite(this.leftS, this.structureX, this.structureY, "center", 0, "bottom", -this.structureY / 2, "image", this.lcs, this.stage);
-      this.structure_right = this.assets.createSprite(this.rightS, this.structureX, this.structureY, "center", 0, "bottom", -this.structureY / 2, "image", this.lcs, this.stage);
-
-      this.henchman_left = this.assets.createSprite(this.henchmanS, 96, 96, "center", 0 - (96/2 + 705), "bottom", -207 + (24), "image", this.lcs, this.stage);
-      this.henchman_left.gotoAndPlay(0);
-      this.henchman_right = this.assets.createSprite(this.henchmanS, 96, 96, "center", 0 + (96/2 + 705), "bottom", -207 + (24), "image", this.lcs, this.stage);
-      this.henchman_right.gotoAndPlay(0);
-
-      this.structure_body = this.assets.createSprite(this.bodyS, this.structureX, this.structureY, "center", 0, "bottom", -this.structureY / 2, "image", this.lcs, this.stage);
-      // structure_banner = this.assets.createSprite(bannerS, this.structureX, this.structureY, "center", 0, "bottom", -this.structureY / 2, "image", this.lcs, this.stage);
-      this.structure_range = this.assets.createTextContainer(this.range_bannerS, "[ #, # ]", "Oldstyle", "32px", "normal", "Gold", 192, 126, "center", -378 + 192 / 2, "bottom", -336 + 126 / 2, "image", 0, this.lcs, this.stage);
-      this.structure_equation_banner = this.assets.createTextContainer(this.equation_bannerS, "# x              = #", "Oldstyle", "26px", "normal", "Gold", 300, 78, "center", -150 + 300 / 2, "bottom", -321 + 78 / 2, "image", 0, this.lcs, this.stage);
-      this.structure_history = this.assets.createTextContainer(this.history_bannerS, "History", "Oldstyle", "18px", "normal", "Gold", 192, 126, "center", 186 + 192 / 2, "bottom", -336 + 126 / 2, "image", 126 / 2, this.lcs, this.stage);
-      this.structure_facade = this.assets.createSprite(this.facadeS, this.structureX, this.structureY, "center", 0, "bottom", -this.structureY / 2, "image", this.lcs, this.stage);  // Level structure in foreground
-
-      this.firework_low = this.assets.createSprite(this.firework_lowS, this.structureX, this.structureY, "center", 0, "top", this.structureY / 2, "image", this.lcs, this.stage);
-      this.firework_hit = this.assets.createSprite(this.firework_hitS, this.structureX, this.structureY, "center", 0, "top", this.structureY / 2, "image", this.lcs, this.stage);
-      this.firework_high = this.assets.createSprite(this.firework_highS, this.structureX, this.structureY, "center", 0, "top", this.structureY / 2, "image", this.lcs, this.stage);
-
-      // Main character in foreground
-      this.projectile = this.assets.createSprite(this.projectileS, 96, 96, "center", 0, "bottom", 0 - (96/2 + 57), "image", this.lcs, this.stage);
-      this.projectile.gotoAndPlay(0);
-      this.catapult = this.assets.createSprite(this.catapultS, 288, 384, "center", 0, "bottom", 0 - (384/2 - 57), "image", this.lcs, this.stage);
-
-      // number_spacing = 10;
-      this.number_spacer = 25;
-
-      for(var i = -25; i <= 25; i++){
-
-      	var temp = this.assets.createText(i.toString(), "Arial", "16px", "bold", "black", this.structureX, this.structureY, "center", 0 - (((this.number_spacer * 48) + 5)), "top", 30, "image", this.lcs, this.stage);
-      	this.number_text.push(temp);
-        // number_spacing += 48;
-        this.number_spacer--;
-
-      }
-
-      this.structure_score = this.assets.createTextContainer(this.score_bannerS, "Total Lows: 0\nTotal High: 0\nTotal Hits: 0", "Oldstyle", "24px", "normal", "Gold", 192, 126, "left", (10 + 192 / 2), "bottom", -(10 + 126 / 2), "image", 126 / 2, this.lcs, this.stage);
-
-      this.end_level_flag = this.assets.createSprite(this.end_level_flagS, this.structureX, this.structureY, "center", 0, "center", 0, "image", this.lcs, this.stage);
-      this.end_level_flag.visible = false;
-
-    },
-
-    destroyLevel: function() {
-
-      for (var i = 0; i < lcs.length; i++) {
-
-        this.stage.removeChild(this.lcs[i].object)
-
-      }
-
-      this.lcs = [];
-
-    },
-
-    changeLevel: function(new_level) {
-
-      this.resetLevel();
-
-      this.current_level++;
-
-      if (this.current_level > this.num_levels) {
-        this.current_level = 1;
-      }
-
-      this.loadLevel();
-      this.destroyScene();
-      this.createScene();
-      this.resize();
-
-    },
-
-    myFunction: function(e) {
-
-      e.preventDefault();
-      document.getElementById("myDropdown").classList.toggle("show");
-
-    },
-
-    remakeRangeBanner: function() {
-
-      var range = "[ " + this.lower + ", " + this.upper + "]";
-
-      this.structure_range.text = range;
-
-    },
-
-    //////////
-    // GAME //
-    //////////
-
-    randomizeRangeAndMultiplier: function() {
-
-      // Generate new range
-      this.rand_num1 = Math.floor((Math.random() * 10) + 1);
-      this.rand_num2 = Math.floor((Math.random() * 100) + 1);
-      this.multiplicand = Math.floor(Math.random() * 11);
-      this.lower = this.rand_num1 * this.rand_num2;
-      this.upper = this.rand_num1 * (this.rand_num2 + 3);
-
-      var multip_div = document.getElementById("multiplicandText");
-      while (multip_div.firstChild) {
-        multip_div.removeChild(multip_div.firstChild);
-      }
-
-      var multip = document.createTextNode(this.multiplicand);
-      multip_div.appendChild(multip);
-
-    },
-
-    runInput: function() {
-
-      // Reset drag_up bool;
-      this.input.drag_up = false;
-
-      console.log("HIT: " + this.hit_counter);
-      console.log("MU" + this.miss_upper_counter);
-      console.log("ML" + this.miss_lower_counter);
-
-      // Need to check for input correctness here
-      // No letters or symbols only numbers
-
-      this.valid = true;
-
-      if (this.mobile.isMobile) {
-
-        for (var x in this.history_list) {
-          console.log(this.history_list[x]);
-          console.log(this.entry);
-          // if (multiplier == history_list[x]){
-          //   valid = false;
-          // }
-        }
-        if (this.valid) {
-
-          // Add to history
-          console.log(this.history_list);
-          this.history_list.push(this.multiplier);
-          var dropdown = document.getElementById("myDropdown");
-          var history_entry = document.createTextNode(this.multiplier);
-          var line_break = document.createElement("br");
-          dropdown.appendChild(history_entry);
-          dropdown.appendChild(line_break);
-
-          // Actual math
-          this.solution = this.multiplier * this.multiplicand;
-          console.log(this.solution);
-          this.solution = Math.floor10(this.solution, -1);
-          console.log(this.solution);
-
-          var solut_div = document.getElementById("solutionText");
-          while (solut_div.firstChild) {
-            solut_div.removeChild(solut_div.firstChild);
-          }
-
-          var solut = document.createTextNode(solution);
-          solut_div.appendChild(solut);
-
-        	this.structure_equation_banner.text = this.multiplicand.toString() + " x              = " + this.solution.toString();
-
-          // this.clearGameForm();
-
-          if (this.solution <= this.upper && this.solution >= this.lower) {
-            this.hit = true;
-            console.log("hit");
-            this.catapult.gotoAndPlay(0);
-            // Triggering other fired events
-            this.fired = true;
-          }
-          else if (this.solution > this.upper) {
-            this.miss_upper = true;
-            console.log("miss upper");
-            this.catapult.gotoAndPlay(0);
-            // Triggering other fired events
-            this.fired = true;
-          }
-          else if (this.solution < this.lower) {
-            this.miss_lower = true;
-            console.log("miss lower");
-            this.catapult.gotoAndPlay(0);
-            // Triggering other fired events
-            this.fired = true;
-          }
-
-          this.multiplier = 0;
-          document.getElementById("hundredsPlace").textContent = Math.floor(this.multiplier/100 % 10);
-          document.getElementById("tensPlace").textContent = Math.abs(Math.floor(this.multiplier/10 % 10));
-          document.getElementById("onesPlace").textContent = Math.abs(Math.floor(this.multiplier % 10));
-
-        }
-
-      } else {
-
-        // Parse entry
-        var entry = parseInt(document.getElementById("entryInput").value);
-        console.log("Entry type: " + typeof entry);
-        console.log("Entry: " + entry);
-
-        if ((typeof entry) == "number") {
-
-          if (Number.isNaN(entry)) {
-            this.entry_is_correct = false;
-
-          } else {
-            //this is where to add level specific rules should they prove neccesary, at the moment they are not
-            this.entry_is_correct = true;
-          }
-
-        } else {
-          this.entry_is_correct = false;
-        }
-        for (var x in this.history_list) {
-          // console.log(this.history_list[x]);
-          // console.log(this.entry);
-          //Commented out for sake of sprint
-          /*if (entry == history_list[x]) {
-            valid = false;
-          }*/
-        }
-        // Animate the catapult
-        if (this.entry_is_correct && this.valid) {
-
-          this.multiplier = document.getElementById("entryInput").value;
-
-          // Add to history
-          this.history_list.push(this.multiplier);
-          console.log(this.history_list);
-          var dropdown = document.getElementById("myDropdown");
-          var history_entry = document.createTextNode(this.multiplier);
-          var line_break = document.createElement("br");
-          dropdown.appendChild(history_entry);
-          dropdown.appendChild(line_break);
-
-
-          // Actual math
-          this.solution = this.multiplier * this.multiplicand;
-          console.log(this.solution);
-          this.solution = Math.round((this.solution + 0.00001) * 100) / 100;
-          console.log(this.solution);
-
-          var solut_div = document.getElementById("solutionText");
-          while (solut_div.firstChild) {
-            solut_div.removeChild(solut_div.firstChild);
-          }
-
-          var solut = document.createTextNode(this.solution);
-          solut_div.appendChild(solut);
-
-          this.structure_equation_banner.text = this.multiplicand.toString() + " x              = " + this.solution.toString();
-
-          // this.clearGameForm();
-
-          document.getElementById("entryInput").value = "";
-
-          if (this.solution <= this.upper && this.solution >= this.lower) {
-            //Plays reload sfx
-            createjs.Sound.play("firing");
-            createjs.Sound.play("reload", this.delayRe);
-            this.hit = true;
-            console.log("hit");
-            this.catapult.gotoAndPlay(0);
-            // Triggering other fired events
-            this.fired = true;
-            //plays sound for lighting fireball and hitting castle
-            createjs.Sound.play("light");
-            createjs.Sound.play("crumble", this.delayIn);
-          } else if (this.solution > this.upper) {
-            //Plays reload sfx
-            createjs.Sound.play("firing");
-            createjs.Sound.play("reload", this.delayRe);
-            this.miss_upper = true;
-            console.log("miss upper");
-            this.catapult.gotoAndPlay(0);
-            // Triggering other fired events
-            this.fired = true;
-            //plays sound for lighting fireball and hitting castle
-            createjs.Sound.play("light");
-            createjs.Sound.play("crumble", this.delayOut);
-          } else if (this.solution < this.lower) {
-            //Plays reload sfx
-            createjs.Sound.play("firing");
-            createjs.Sound.play("reload", this.delayRe);
-            this.miss_lower = true;
-            console.log("miss lower");
-            this.catapult.gotoAndPlay(0);
-            // Triggering other fired events
-            this.fired = true;
-            //plays sound for lighting fireball and hitting castle
-            createjs.Sound.play("light");
-            createjs.Sound.play("crumble", this.delayOut);
-          }
-        }
-
-        this.clearGameForm();
-
-      }
-
-      // console.log(projectile.alpha);
-
-    },
-
-    checkSelectedDigit: function() {
-
-      if (this.digit != this.last_digit) {
-
-        switch(this.digit) {
-
-          case 0:
-            this.adder = 100;
-            document.getElementById("hundredsPlace").style.color = "red";
-            document.getElementById("tensPlace").style.color = "black";
-            document.getElementById("onesPlace").style.color = "black";
-            break;
-          case 1:
-            this.adder = 10;
-            document.getElementById("hundredsPlace").style.color = "black";
-            document.getElementById("tensPlace").style.color = "red";
-            document.getElementById("onesPlace").style.color = "black";
-            break;
-          case 2:
-            this.adder = 1;
-            document.getElementById("hundredsPlace").style.color = "black";
-            document.getElementById("tensPlace").style.color = "black";
-            document.getElementById("onesPlace").style.color = "red";
-            break;
-
-        }
-
-        this.last_digit = this.digit;
-
-      }
-
-    },
-
-    updateSinglePlayAnimations: function() {
-
-      //Catapult or whatever it is in the scene
-      if (!this.catapult.paused && this.catapult.currentFrame == 11) {
-        this.catapult.stop();
-        this.reload = false;
-      }
-
-      if (!this.end_level_flag.paused && this.end_level_flag.currentFrame == 11) {
-        this.end_level_flag.stop();
-      }
-
-      // Structure in the scene
-      if (!this.structure_center.paused && this.structure_center.currentFrame == 11) {
-        this.structure_center.stop();
-      }
-      if (!this.structure_left_center.paused && this.structure_left_center.currentFrame == 5) {
-        this.structure_left_center.stop();
-      }
-      if (!this.structure_right_center.paused && this.structure_right_center.currentFrame == 5) {
-        this.structure_right_center.stop();
-      }
-      if (!this.structure_left.paused && this.structure_left.currentFrame == 5) {
-        this.structure_left.stop();
-      }
-      if (!this.structure_right.paused && this.structure_right.currentFrame == 5) {
-        this.structure_right.stop();
-      }
-
-      // Structure in the scene
-      if (!this.firework_low.paused && this.firework_low.currentFrame == 11) {
-        this.firework_low.gotoAndStop(0);
-      }
-      if (!this.firework_hit.paused && this.firework_hit.currentFrame == 11) {
-        this.firework_hit.gotoAndStop(0);
-      }
-      if (!this.firework_high.paused && this.firework_high.currentFrame == 11) {
-        this.firework_high.gotoAndStop(0);
-      }
-
-    },
-
-    runHitAnimations: function() {
-
-      if (this.hit) {
-
-        switch (this.hit_counter) {
-
-          case 0:
-            console.log("henchmanLC");
-            this.target_x = this.henchman_left_center.x;
-            this.projectile_x_speed = 12;
-            break;
-
-          case 1:
-            console.log("henchmanRC");
-            this.target_x = this.henchman_right_center.x;
-            this.projectile_x_speed = 12;
-            break;
-
-          case 2:
-            console.log("bossC");
-            this.target_x = this.boss.x;
-            this.projectile_x_speed = 0;
-            break;
-
-          default:
-            break;
-
-        }
-
-        this.hit = false;
-        this.waiting_hit = true;
-
-      }
-
-      if (this.waiting_hit) {
-
-        if (this.projectile_speed < 0 && this.projectile.y >= this.boss.y) {
-
-          switch (this.hit_counter) {
-
-            case 0:
-              this.hide_archer1 = true;
-              this.structure_left_center.gotoAndPlay(0);
-              break;
-
-            case 1:
-              this.hide_archer2 = true;
-              this.structure_right_center.gotoAndPlay(0);
-              break;
-
-            case 2:
-              this.hide_knight = true;
-              this.structure_center.gotoAndPlay(0);
-              break;
-
-            default:
-              break;
-
-          }
-
-          this.firework_hit.gotoAndPlay(0);
-          this.reload = true;
-          this.waiting_hit = false;
-          this.hit_counter++;
-          this.structure_score.text = "Total Lows: " + this.miss_lower_counter.toString() + "\nTotal High: " + this.miss_upper_counter.toString() + "\nTotal Hits: " + this.hit_counter.toString();
-
-        }
-
-      }
-
-    },
-
-    runMissAnimations: function() {
-
-      if (this.miss_lower) {
-
-        this.target_x = this.henchman_left.x;
-        this.projectile_x_speed = 20;
-        // miss_lower = false;
-        this.waiting_miss = true;
-
-      }
-
-      if (this.miss_upper) {
-
-        this.target_x = this.henchman_right.x;
-        this.projectile_x_speed = 20;
-        // miss_upper = false;
-        this.waiting_miss = true;
-
-      }
-
-      if (this.waiting_miss) {
-
-        if (this.miss_lower) {
-
-          if (this.projectile_speed < 0 && this.projectile.y >= this.boss.y) {
-
-            if (this.miss_lower_counter < 1) {
-
-              this.hide_archer3 = true;
-              this.structure_left.gotoAndPlay(0);
-
-            }
-
-            this.firework_low.gotoAndPlay(0);
-            this.reload = true;
-            this.miss_lower = false;
-            this.miss_lower_counter++;
-            this.structure_score.text = "Total Lows: " + this.miss_lower_counter.toString() + "\nTotal High: " + this.miss_upper_counter.toString() + "\nTotal Hits: " + this.hit_counter.toString();
-
-          }
-
-        }
-
-        if (this.miss_upper) {
-
-          if (this.projectile_speed < 0 && this.projectile.y >= this.boss.y) {
-
-            if (this.miss_upper_counter < 1) {
-
-              this.hide_archer4 = true;
-              this.structure_right.gotoAndPlay(0);
-
-            }
-
-            this.firework_high.gotoAndPlay(0);
-            this.reload = true;
-            this.miss_upper = false;
-            this.miss_upper_counter++;
-            this.structure_score.text = "Total Lows: " + this.miss_lower_counter.toString() + "\nTotal High: " + this.miss_upper_counter.toString() + "\nTotal Hits: " + this.hit_counter.toString();
-
-          }
-
-        }
-
-      }
-
-    },
-
-    checkTutorial: function() {
-
-      // Tutorial
-      if (this.play_tutorial) {
-
-        if (this.miss_lower_counter != 1) {
-
-          document.getElementById("tutorialText").textContent = "Try finding any multiplier that produces a solution below the range";
-
-        } else {
-
-          if (this.miss_upper_counter != 1) {
-
-            document.getElementById("tutorialText").textContent = "Try finding any multiplier that produces a solution above the range";
-
-          } else {
-
-            if (this.hit_counter != 3) {
-
-              document.getElementById("tutorialText").textContent = "Try finding 3 multipliers that produce solutions within the range";
-
-            } else {
-
-            }
-
-          }
-
-        }
-
-      }
-
-    },
-
-    createVictoryBanner: function() {
-
-      this.hit_text.text += this.hit_counter.toString();
-      this.low_text.text += this.miss_lower_counter.toString();
-      this.high_text.text += this.miss_upper_counter.toString();
-
-      this.visibleForm(false);
-      this.pauseAnimation(true);
-
-      this.end_level_button.visible = true;
-
-      createjs.Tween.get(this.end_level_flag).wait(2250).to({visible:true}).call(this.flagAnimation);
-
-      this.end_text.visible = true;
-      var tempX = this.scene_scale_X;
-      var tempY = this.scene_scale_Y;
-      this.end_text.scaleX = 0;
-      this.end_text.scaleY = 0;
-      createjs.Tween.get(this.end_text).wait(4250).to({scaleX:tempX ,scaleY:tempY}, 1000, createjs.Ease.quintIn);
-      createjs.Tween.get(this.end_text).wait(4250).to({rotation:360}, 1000);
-      this.hit_text.visible = true;
-      createjs.Tween.get(this.hit_text).wait(5750).to({alpha:1}, 500);
-
-      this.low_text.visible = true;
-      createjs.Tween.get(this.low_text).wait(6750).to({alpha:1}, 500);
-
-      this.high_text.visible = true;
-      createjs.Tween.get(this.high_text).wait(7750).to({alpha:1}, 500);
-
-      this.end_level_button.visible = true;
-      createjs.Tween.get(this.end_level_button).wait(8375).to({alpha:1}, 125);
-
-      this.menu_button.visible = false;
-      console.log("next level");
-
-      //plays victory tune
-      createjs.Sound.play("win", this.delayWin);
-
-      // udpate global total
-      this.user.hits += this.hit_counter;
-      this.user.highs += this.miss_upper_counter;
-      this.user.lows += this.miss_lower_counter;
-
-      this.target_x = 0;
-      this.hit = false;
-      this.miss_upper = false;
-      this.miss_lower = false;
-      this.hit_counter = 0;
-      this.miss_upper_counter = 0;
-      this.miss_lower_counter = 0;
-      this.projectile_x_speed = 0;
-
-      // update database
-      this.updateStats({
-        user: this.user.username,
-        hits: this.user.hits,
-        highs: this.user.highs,
-        lows: this.user.lows
-      });
-
-    },
-
-    hideBadGuys: function() {
-
-      //Mors omnibus tyrannis
-      if (this.hide_knight) {
-        this.boss.alpha = 0;
-      } else {
-        this.boss.alpha = 1;
-      }
-
-      if (this.hide_archer1) {
-        this.henchman_left_center.alpha = 0;
-      } else {
-        this.henchman_left_center.alpha = 1;
-      }
-
-      if (this.hide_archer2) {
-        this.henchman_right_center.alpha = 0;
-      } else {
-        this.henchman_right_center.alpha = 1;
-      }
-
-      if (this.hide_archer3) {
-        this.henchman_left.alpha = 0;
-      } else {
-        this.henchman_left.alpha = 1;
-      }
-
-      if (this.hide_archer4) {
-        this.henchman_right.alpha = 0;
-      } else {
-        this.henchman_right.alpha = 1;
-      }
-
-    },
-
-    runCatapultAnimation: function() {
-
-      //Catapult projectile animtion
-      if (this.fired == true) {
-        // if (frame_counter > 9) {
-        this.projectile.y -= this.projectile_speed * this.scene_scale_Y;
-        if (this.projectile.x < this.target_x) {
-          this.projectile.x += this.projectile_x_speed * this.scene_scale_Y;
-        } else if (this.projectile.x > this.target_x) {
-          this.projectile.x -= this.projectile_x_speed * this.scene_scale_Y;
-        }
-        this.projectile_speed -= 3;
-        // }
-      }
-
-    },
-
-    reloadCatapult: function() {
-
-      if (this.catapult.currentFrame == 11){
-        this.reload = false;
-      }
-
-      if (this.reload) {
-        console.log("reload");
-        this.fired = false;
-        this.projectile.alpha = 0;
-        this.projectile.x = this.stage.canvas.width / 2;
-        this.projectile.y = this.stage.canvas.height - (96/2 + 57) * this.scene_scale_Y;
-        this.projectile_speed = 57;
-      } else {
-        this.projectile.alpha = 1;
-      }
-
-    },
-
-    checkBossFight: function() {
-
-    //   if (boss_fight) {
-    //
-    //     big_boss = createSprite(big_bossS, this.structureX, this.structureY);
-    //     scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
-    //
-    //     console.log("boss");
-    //
-    //   } else {
-    //
-    //     changeLevel();
-    //
-    //   }
-
-    },
-
-    flagAnimation: function(){
-      this.end_level_flag.gotoAndPlay(0);
-    },
-
-    setBoss: function() {
-      this.boss_fight = document.getElementById("bossValue").checked;
-    },
-
-    setTutorial: function() {
-      this.play_tutorial = document.getElementById("tutorialValue").checked;
-    },
-
-    clearMultiplicandBanner: function() {
-
-      // Clear the multiplicand banner
-    	var multip_div = document.getElementById("multiplicandText");
-
-    	while (multip_div.firstChild) {
-
-    	   multip_div.removeChild(multip_div.firstChild);
-
-    	}
-
-      this.storage = 0;
-      this.factor = 0;
-      this.multiple = 0;
-      this.multiplier = 0;
-      this.digit = 2;
-      this.last_digit = 0;
-      this.adder = 1;
-
-      this.sign = " x "; //&#37
-      this.equal = " = ";
-      this.solution = 0;
-
-
-    },
-
-    remakeMultiplierBanner: function() {
-
-    	var multip_div = document.getElementById("multiplicandText");
-
-      // Remake multiplier for banner
-    	var multip = document.createTextNode(this.multiplicand);
-
-      // Append to the range banner
-    	multip_div.appendChild(multip);
-
-    	this.structure_equation_banner.text = this.multiplicand.toString() + " x              = " + this.solution.toString();
-
-    },
-
-    clearGameForm: function() {
-
-    	this.clearHtml();
-
-
-        // Creates username display text
-        var multiplicand_div = document.createElement("div");
-        multiplicand_div.id = "multiplicandText";
-        var multiplicand_text = document.createTextNode(this.multiplicand);
-        multiplicand_div.appendChild(multiplicand_text);
-        var sign_text = document.createTextNode(this.sign);
-        var entry_input;
-        if (this.mobile.isMobile) {
-
-          entry_input = document.createElement("div");
-          entry_input.id = "entryDisplay";
-          var hundreds = document.createElement("span");
-          hundreds.id = "hundredsPlace";
-          var hundreds_place = document.createTextNode("0");
-          hundreds.appendChild(hundreds_place);
-          var tens = document.createElement("span");
-          tens.id = "tensPlace";
-          var tens_place = document.createTextNode("0");
-          tens.appendChild(tens_place);
-          var ones = document.createElement("span");
-          ones.id = "onesPlace";
-          var ones_place = document.createTextNode("0");
-          ones.appendChild(ones_place);
-          entry_input.appendChild(hundreds);
-          entry_input.appendChild(tens);
-          entry_input.appendChild(ones);
-
-        } else {
-
-          entry_input = document.createElement("input");
-          entry_input.id = "entryInput";
-          entry_input.setAttribute("type", "number");
-          entry_input.setAttribute("placeholder", "###");
-          entry_input.setAttribute("value", "");
-          entry_input.setAttribute("maxlength", "3");
-          entry_input.setAttribute("size", "4");
-          entry_input.setAttribute("min", "-999");
-          entry_input.setAttribute("max", "999");
-          entry_input.setAttribute("name", "entry");
-          entry_input.addEventListener('keypress', function(event) {
-            if (event.keyCode == 13) {
-              event.preventDefault();
-            }
-          });
-
-        }
-
-        var equal_text = document.createTextNode(this.equal);
-        var solution_div = document.createElement("div");
-        solution_div.id = "solutionText";
-        var solution_text = document.createTextNode(this.solution);
-        solution_div.appendChild(solution_text);
-
-        // Creates username div to hold display text and input box
-        var game_entry_div = document.createElement("div");
-        game_entry_div.className = "login";
-        game_entry_div.appendChild(multiplicand_div);
-        game_entry_div.appendChild(sign_text);
-        game_entry_div.appendChild(entry_input);
-        game_entry_div.appendChild(equal_text);
-        game_entry_div.appendChild(solution_div);
-
-        // Creates username display text
-        var button_text = document.createTextNode("");
-        var history_button = document.createElement("button");
-        var history_div = document.createElement("div");
-        history_button.className = "dropbtn";
-        history_button.addEventListener('click', this.myFunction);
-        history_div.className = "dropdown-content";
-        history_div.id = "myDropdown";
-        history_button.appendChild(button_text);
-
-        for (var x in this.history_list) {
-          var history_entry = document.createTextNode(this.history_list[x]);
-          var line_break = document.createElement("br");
-          history_div.appendChild(history_entry);
-          history_div.appendChild(line_break);
-        }
-
-        var history_dropdown = document.createElement("div");
-        history_dropdown.className = "dropdown";
-        history_dropdown.appendChild(history_button);
-        history_dropdown.appendChild(history_div);
-
-        // Does a thing
-        var game_history_div = document.createElement("div");
-        game_history_div.className = "login";
-        game_history_div.appendChild(history_dropdown);
-
-        // Creates Tutorial display text
-        if (this.play_tutorial) {
-          var tutorial_label = document.createTextNode("Tutorial");
-          var br1 = document.createElement("br");
-          var tutorial_text = document.createElement("span");
-          tutorial_text.className = "tutorial";
-          tutorial_text.id = "tutorialText";
-          var tutorial_words = document.createTextNode("The tutorial is broken");
-          tutorial_text.appendChild(tutorial_words);
-          var tutorial_div = document.createElement("div");
-          tutorial_div.className = "tutorial_title";
-          tutorial_div.id = "tutorialDiv"
-          tutorial_div.appendChild(tutorial_label);
-          tutorial_div.appendChild(br1);
-          tutorial_div.appendChild(tutorial_text);
-        }
-
-        // Creates login form to hold username and password divs
-        var game_entry_form = document.createElement("form");
-        game_entry_form.id = "equationBanner";
-        // game_entry_form.className = "scrollMenu";
-        game_entry_form.appendChild(game_entry_div);
-
-        // Creates login form to hold username and password divs
-        var game_history_form = document.createElement("form");
-        game_history_form.id = "historyBanner";
-        // game_history_form.className = "scrollMenu";
-        game_history_form.appendChild(game_history_div);
-
-        // Injecting login form into existing html
-        var scene_html = document.getElementById("sceneHTML");
-        scene_html.appendChild(game_entry_form);
-        scene_html.appendChild(game_history_form);
-
-        if (this.play_tutorial) {
-          scene_html.appendChild(tutorial_div);
-        }
-
-    },
-
-    visibleForm: function(visible) {
-
-      if(visible) {
-    		var scene_html = document.getElementById("sceneHTML");
-    		scene_html.hidden = false;
-      } else {
-    		var scene_html = document.getElementById("sceneHTML");
-    		scene_html.hidden = true;
-      }
-
-    },
-
-    //Loadbar for loading screen
-    loading: function(evt){
-      var progbar = document.getElementById("progressBar");
-      var perctext = document.getElementById("percentText");
-      progressBar.hidden= false;
-      progressBackground.hidden = false;
-      ldBg.hidden = false;
-      progbar.style.width = this.preload.progress * 100 + '%';
-      perctext.innerHTML = (Math.floor(this.preload.progress * 100)).toString() + '%';
-      if(this.preload.progress * 100  >= 100)
-      {
-    	  progressBar.hidden = true;
-    	  progressBackground.hidden = true;
-    	  ldBg.hidden = true;
-      }
-    },
-
-    resetLevel: function() {
-
-    	this.history_list = [];
-    	this.hide_knight = false;
-    	this.hide_archer1 = false;
-    	this.hide_archer2 = false;
-    	this.hide_archer3 = false;
-    	this.hide_archer4 = false;
-    	this.hit_counter = 0;
-    	this.miss_upper_counter = 0;
-    	this.miss_lower_counter = 0;
-
-    },
-
-    pauseAnimation: function(paused) {
-
-    	this.henchman_left.paused = paused;
-    	this.henchman_left_center.paused = paused;
-    	this.boss.paused = paused;
-    	this.henchman_right.paused = paused;
-    	this.henchman_right_center.paused = paused;
-    	this.projectile.paused = paused;
-
-      if(paused){
-
-    		this.structure_center.paused = true;
-    		this.structure_left_center.paused = true;
-    		this.structure_right_center.paused = true;
-    		this.structure_left.paused = true;
-    		this.structure_right.paused = true;
-    		this.firework_low.paused = true;
-        this.firework_hit.paused = true;
-        this.firework_high.paused = true;
-    		this.catapult.paused = true;
-
-      } else {
-
-    		if(this.structure_center.currentFrame != 0 && this.structure_center.currentFrame != 11)
-    	    this.structure_center.paused = false;
-
-    		if(this.structure_left_center.currentFrame != 0 && this.structure_left_center.currentFrame != 11)
-    	    this.structure_left_center.paused = false;
-
-    		if(this.structure_right_center.currentFrame != 0 && this.structure_right_center.currentFrame != 11)
-    	    this.structure_right_center.paused = false;
-
-    		if(this.structure_left.currentFrame != 0 && this.structure_left.currentFrame != 11)
-    	    this.structure_left.paused = false;
-
-    		if(this.structure_right.currentFrame != 0 && this.structure_right.currentFrame != 11)
-    	    this.structure_right.paused = false;
-
-    		if(this.catapult.currentFrame != 0 && this.catapult.currentFrame != 11)
-    			this.catapult.paused = false;
-
-    		if(this.firework_low.currentFrame != 0 && this.firework_low.currentFrame != 11)
-    	    this.firework_low.paused = false;
-
-    		if(this.firework_hit.currentFrame != 0 && this.firework_hit.currentFrame != 11)
-    	    this.firework_hit.paused = false;
-
-    		if(this.firework_high.currentFrame != 0 && this.firework_high.currentFrame != 11)
-    	    this.firework_high.paused = false;
-
-      }
 
     },
 
@@ -3035,6 +1741,94 @@ export default {
 
     },
 
+    ////////////
+    // LEVELS //
+    ////////////
+
+    // function handleFileComplete(event) {
+    //   document.body.appendChild(event.result);
+    // }
+
+    destroyLevel: function() {
+
+      for (var i = 0; i < lcs.length; i++) {
+
+        this.stage.removeChild(this.lcs[i].object)
+
+      }
+
+      this.lcs = [];
+
+    },
+
+    // changeLevel: function(new_level) {
+    //
+    //   this.level.resetLevel();
+    //
+    //   this.level.current_level++;
+    //
+    //   if (this.level.current_level > this.num_levels) {
+    //     this.level.current_level = 1;
+    //   }
+    //
+    //   this.bg_color = levelData[this.level.current_level - 1].color;
+    //
+    //   this.level.loadLevel();
+    //   this.destroyScene();
+    //   this.createScene();
+    //   this.resize();
+    //
+    // },
+
+    // ////////
+    // GAME //
+    // ////////
+
+    createVictoryBanner: function() {
+
+      this.level.visibleForm(false);
+      this.level.pauseAnimation(true);
+
+      this.end_level_button.visible = true;
+
+      createjs.Tween.get(this.end_level_flag).wait(2250).to({visible:true}).call(this.level.flagAnimation);
+
+      this.end_text.visible = true;
+      var tempX = this.scene_scale_X;
+      var tempY = this.scene_scale_Y;
+      this.end_text.scaleX = 0;
+      this.end_text.scaleY = 0;
+      createjs.Tween.get(this.end_text).wait(4250).to({scaleX:tempX ,scaleY:tempY}, 1000, createjs.Ease.quintIn);
+      createjs.Tween.get(this.end_text).wait(4250).to({rotation:360}, 1000);
+      this.hit_text.visible = true;
+      createjs.Tween.get(this.hit_text).wait(5750).to({alpha:1}, 500);
+
+      this.low_text.visible = true;
+      createjs.Tween.get(this.low_text).wait(6750).to({alpha:1}, 500);
+
+      this.high_text.visible = true;
+      createjs.Tween.get(this.high_text).wait(7750).to({alpha:1}, 500);
+
+      this.end_level_button.visible = true;
+      createjs.Tween.get(this.end_level_button).wait(8375).to({alpha:1}, 125);
+
+      this.menu_button.visible = false;
+      console.log("next level");
+
+      //plays victory tune
+      createjs.Sound.play("win", this.delayWin);
+
+      this.level.target_x = 0;
+      this.level.hit = false;
+      this.level.miss_upper = false;
+      this.level.miss_lower = false;
+      this.level.hit_counter = 0;
+      this.level.miss_upper_counter = 0;
+      this.level.miss_lower_counter = 0;
+      this.level.projectile_x_speed = 0;
+
+    },
+
     // Mutes the current song
     muteSound: function() {
 
@@ -3057,6 +1851,122 @@ export default {
         this.music.current_song.muted = !this.music.current_song.muted;
         this.music.muted = !this.music.muted;
       }
+    },
+
+    ///////////////////////
+    // DATABASE REQUESTS //
+    ///////////////////////
+
+    async createUser(text) {
+
+      try {
+        await LoginService.registerUser(text, this.user);
+      } catch (err) {
+        this.error = err.message;
+        console.log(this.error);
+      }
+
+      try {
+        let stats = await StatService.findUserStats(text.uname);
+        console.log(stats.data);
+        this.user.hits = stats.data.hits;
+        this.user.highs = stats.data.highs;
+        this.user.lows = stats.data.lows;
+      } catch (err) {
+        this.error = err.message;
+        console.log(this.error);
+      }
+
+    },
+
+    async getUserData(text) {
+
+      try {
+        let stats = await StatService.findUserAccount(text);
+        console.log(stats.data);
+        this.user.username = stats.data.uname;
+        this.user.firstname = stats.data.fname;
+        this.user.lastname = stats.data.lname;
+      } catch (err) {
+        this.error = err.message;
+        console.log(this.error);
+      }
+
+      try {
+        let stats = await StatService.findUserStats(text);
+        console.log(stats.data);
+        this.user.hits = stats.data.hits;
+        this.user.highs = stats.data.highs;
+        this.user.lows = stats.data.lows;
+      } catch (err) {
+        this.error = err.message;
+        console.log(this.error);
+      }
+
+    },
+
+    async verifyUser(text) {
+
+      try {
+        await LoginService.loginUser(text, this.user);
+        console.log(this.user.authenticated);
+        // this.user = await LoginService.loginUser(text);
+        console.log("User: " + this.user.username);
+      } catch (err) {
+        this.error = err.message;
+        console.log(this.error);
+      }
+
+      try {
+        let stats = await StatService.findUserStats(text.uname);
+        console.log(stats.data);
+        this.user.hits = stats.data.hits;
+        this.user.highs = stats.data.highs;
+        this.user.lows = stats.data.lows;
+      } catch (err) {
+        this.error = err.message;
+        console.log(this.error);
+      }
+
+
+
+      // if (this.user.authenticated) {
+      //   this.changeScene(2);
+      // }
+
+      try {
+        this.posts = await LoginService.getUsers();
+      } catch (err) {
+        this.error = err.message;
+        console.log(this.error);
+      }
+
+    },
+
+    async updateStats(text) {
+
+      try {
+        let stats = await StatService.updateUserStats(text);
+        console.log(stats.data);
+        this.user.hits = stats.data.hits;
+        this.user.highs = stats.data.highs;
+        this.user.lows = stats.data.lows;
+      } catch (err) {
+        this.error = err.message;
+        console.log(this.error);
+      }
+
+    },
+
+    async signoutUser() {
+
+      try {
+        await LoginService.logoutUser();
+      } catch (err) {
+        this.error = err.message;
+        console.log(this.error);
+      }
+
     }
 
   }
@@ -3087,12 +1997,6 @@ export default {
   height  : 100%;
   touch-action: none;
 } */
-
-#demoCanvas {
-  width   : 100%;
-  height  : 100%;
-  touch-action: none;
-}
 
 .ldscreen {
   position: absolute;
