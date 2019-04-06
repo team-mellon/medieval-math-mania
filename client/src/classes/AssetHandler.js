@@ -189,16 +189,18 @@ class AssetHandler {
 
 	var titleFrame = new createjs.Text("TITLE", "bold 16px Oldstyle", "white");
 	titleFrame.lineWidth = 210;
+	titleFrame.name = "titleFrame";
 	titleFrame.x = 7;
 	titleFrame.y = 7;
 
-	var descriptorFrame = new createjs.Text("DESCRIPTOR", "14px Oldstyle", "white");
-	descriptorFrame.lineWidth = 210;
-	descriptorFrame.x = 7;
-	descriptorFrame.y = 52;
+	var descripterFrame = new createjs.Text("DESCRIPTER", "14px Oldstyle", "white");
+	descripterFrame.lineWidth = 210;
+	descripterFrame.name = "descripterFrame";
+	descripterFrame.x = 7;
+	descripterFrame.y = 52;
 
 	var containerFrame = new createjs.Container();
-	containerFrame.addChild(squareFrame, titleFrame, descriptorFrame);
+	containerFrame.addChild(squareFrame, titleFrame, descripterFrame);
 	containerFrame.x = 100;
 	containerFrame.y = 100;
 	stage.addChild(containerFrame);
