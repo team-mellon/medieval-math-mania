@@ -36,7 +36,7 @@ import StatService from '../StatService.js';
 import LoginService from '../LoginService.js';
 
 // Game Data
-import { sceneData, indicatorCoordinates } from '../game_data/scenes.js';
+import { sceneData, indicatorCoordinates, levelDescripters } from '../game_data/scenes.js';
 import { levelData } from '../game_data/levels.js';
 
 export default {
@@ -968,6 +968,7 @@ export default {
 
     this.stage = new createjs.Stage('drawingCanvas');           // Stage for drawing pictures and shapes
     createjs.Touch.enable(this.stage);                          // Enable touch interaction for mobile
+    this.stage.enableMouseOver();				// Enable mouse events with scene objects
     this.bg = new createjs.Shape();                             // Create a rectangle for clearing the screen
     this.bg_color = "#333333";                                  // Background color
     this.stage.addChild(this.bg);                               // Add rectangle to the stage
@@ -1778,11 +1779,14 @@ export default {
     			for (var i = 0; i < this.num_levels; i++) {
 
     				var temp = this.assets.createButton("res/map-indicator.png", (i + 1).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", this.levels[i].open.bind(this), this.ecs, this.stage);
-
+				temp.on("mouseover", this.handleMouseEvent);
+				temp.on("mouseout", this.handleMouseEvent);
     				this.indicators.push(temp);
 
     			}
 
+			this.containerFrame = this.assets.createContainerFrame(210, 310, "center", 200, "center", 200, "gui", this.ecs, this.stage); 
+						
     			break;
 
         case 9:
@@ -3075,6 +3079,14 @@ export default {
 	  }
 	},
 
+    handleMouseEvent: function(evt) {
+    	if(evt.type == "mouseover"){
+	    console.log("level " + evt.target.text);
+	}
+
+        },
+	
+	
     // Mutes the current song
     muteSound: function() {
 
