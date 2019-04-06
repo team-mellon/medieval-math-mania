@@ -81,6 +81,8 @@ class LevelHandler {
     this.structureY = 1440;
 
     this.target_x = 0;
+	//Need to make setting for this
+	this.hints_on = true;
 
   }
 
@@ -347,7 +349,9 @@ class LevelHandler {
 
     // Need to check for input correctness here
     // No letters or symbols only numbers
-
+	if((miss_lower_counter > 3 || miss_upper_counter > 3) && hints_on) {
+		function() {this.changeScene(9); this.visibleForm(true); }.bind(this);
+	}
     this.valid = true;
 
     if (isMobile) {
