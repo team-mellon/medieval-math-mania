@@ -127,6 +127,8 @@ export default {
     // INITIIALIZATION //
     /////////////////////
 
+    this.containerFrame = {};
+
     this.input = new InputHandler();
     this.mobile = new MobileHandler();
     this.music = new MusicHandler();
@@ -1598,7 +1600,7 @@ export default {
 
     handleMouseEvent: function(evt) {
       if(evt.type == "mouseover"){
-      //console.log("level " + evt.target.text);
+      console.log(evt.target.toString());
       switch(Number(evt.target.text)){
         case 1:
              let temp = this.containerFrame.getChildByName("titleFrame");

@@ -190,7 +190,7 @@ class AssetHandler {
 
   }
 
-  createContainerFrame(width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage){
+  static createContainerFrame(width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage){
 
     var squareFrame = new createjs.Shape();
     squareFrame.graphics.beginFill("black").drawRect(0,0,220,320);
@@ -258,7 +258,7 @@ class AssetHandler {
     var label = new createjs.Text(text, "normal " + size + "px " + font, color);
     // label.name = "label";
 		var hit = new createjs.Shape();
-    hit.graphics.beginFill("#000").drawRect(0, 0, width, height);
+    hit.graphics.beginFill("#000").drawRect(-25, -25, width, height);
 		label.hitArea = hit;
     label.textAlign = "center";
     label.textBaseline = "middle";
