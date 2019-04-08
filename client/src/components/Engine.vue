@@ -843,6 +843,7 @@ export default {
         this.scene_scale_X = this.stage.canvas.width / this.max_scale_X;
         this.scene_scale_Y = this.stage.canvas.width / this.max_scale_X;
       } else if (this.screen_ratio > 2.5) { // wide screen
+        
         this.temp_max = this.stage.canvas.height;
         this.temp_scale = this.stage.canvas.width / this.max_scale_X;
         this.scene_scale_X = this.temp_scale * ( this.stage.canvas.height / this.temp_max );
