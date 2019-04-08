@@ -178,6 +178,11 @@ export default {
 
     this.added = false;
 
+    this.max_stored = false;
+
+    this.temp_scale = 1;
+    this.temp_max = 1440
+
     ////////////
     // SCENES //
     ////////////
@@ -840,10 +845,14 @@ export default {
 
       // Calculate the scene scaling
       if (this.screen_ratio < 2.5) { // tall screen
+        this.max_stored = false;
         this.scene_scale_X = this.stage.canvas.width / this.max_scale_X;
         this.scene_scale_Y = this.stage.canvas.width / this.max_scale_X;
       } else if (this.screen_ratio > 2.5) { // wide screen
-        this.temp_max = this.stage.canvas.height;
+        if(!this.max_stored) {
+          this.max_stored = true;
+          this.temp_max = this.stage.canvas.height;
+        }
         this.temp_scale = this.stage.canvas.width / this.max_scale_X;
         this.scene_scale_X = this.temp_scale * ( this.stage.canvas.height / this.temp_max );
         this.scene_scale_Y = this.temp_scale * ( this.stage.canvas.height / this.temp_max );
