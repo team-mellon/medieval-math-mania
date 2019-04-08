@@ -1596,46 +1596,6 @@ export default {
     //
     // },
 
-    victoryGenerator: function() {
-
-      switch(Math.floor((Math.random() * 10) + 1)){
-        case 1:
-            return "Excellent";
-            break;
-        case 2:
-            return "Amazing";
-            break;
-        case 3:
-            return "Spectacular";
-            break;
-        case 4:
-            return "Exceptional";
-            break;
-        case 5:
-            return "Magnificent";
-            break;
-        case 6:
-            return "Outstanding";
-            break;
-        case 7:
-            return "Great";
-            break;
-        case 8:
-            return "Awesome";
-            break;
-        case 9:
-            return "Incredible";
-            break;
-        case 10:
-            return "Wonderful";
-            break;
-        default:
-            return "Unbelievable";
-            break;
-      }
-
-    },
-
     handleMouseEvent: function(evt) {
       if(evt.type == "mouseover"){
       //console.log("level " + evt.target.text);

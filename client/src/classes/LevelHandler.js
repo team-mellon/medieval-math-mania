@@ -18,6 +18,9 @@ class LevelHandler {
     this.structureX = 1920;
     this.structureY = 1440;
 
+    this.backgroundX = 1920;
+    this.backgroundY = 768;
+
     this.preload = new createjs.LoadQueue();
     this.preload.on("progress", this.loading.bind(this));
 
@@ -330,7 +333,9 @@ class LevelHandler {
     this.end_level_button.visible = false;
     this.end_level_button.alpha = 0;
 
-    this.end_text = AssetHandler.createText("Good Job!!", "Oldstyle", "65px", "bold", "gold", 10, 10, "center", 0, "center", 0 - 140, "image", lcs, stage);
+    var sting = this.victoryGenerator();  // temp fix for sending victory string to function
+
+    this.end_text = AssetHandler.createText(sting, "Oldstyle", "65px", "bold", "gold", 10, 10, "center", 0, "center", 0 - 140, "image", lcs, stage);
     this.end_text.visible = false;
     //end_text.skewX = -5;
     this.end_text.skewY = -15;
@@ -1317,6 +1322,46 @@ class LevelHandler {
   //
   //   }
   // }
+
+  victoryGenerator () {
+
+    switch(Math.floor((Math.random() * 10) + 1)){
+      case 1:
+          return "Excellent";
+          break;
+      case 2:
+          return "Amazing";
+          break;
+      case 3:
+          return "Spectacular";
+          break;
+      case 4:
+          return "Exceptional";
+          break;
+      case 5:
+          return "Magnificent";
+          break;
+      case 6:
+          return "Outstanding";
+          break;
+      case 7:
+          return "Great";
+          break;
+      case 8:
+          return "Awesome";
+          break;
+      case 9:
+          return "Incredible";
+          break;
+      case 10:
+          return "Wonderful";
+          break;
+      default:
+          return "Unbelievable";
+          break;
+    }
+
+  }
 
   visibleButton (visible) {
 
