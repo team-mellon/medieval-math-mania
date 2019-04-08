@@ -12,6 +12,12 @@ class LevelHandler {
 
   constructor() {
 
+    this.buttonX = 216;
+    this.buttonY = 72;
+
+    this.structureX = 1920;
+    this.structureY = 1440;
+
     this.preload = new createjs.LoadQueue();
     this.preload.on("progress", this.loading.bind(this));
 
@@ -81,6 +87,8 @@ class LevelHandler {
     this.structureY = 1440;
 
     this.target_x = 0;
+
+    this.hint_shown = false;
 
   }
 
@@ -255,7 +263,7 @@ class LevelHandler {
 
   }
 
-  createLevel (stage, lcs) {
+  createLevel (stage, lcs, leave_to_map, leave_to_hint, leave_to_menu, leave_to_settings) {
 
     // Level structure in background
     this.structure_center = AssetHandler.createSprite(this.centerS, this.centerS.frames.width, this.centerS.frames.height, "center", -360 + (this.centerS.frames.width / 2), "bottom", -897 + (this.centerS.frames.height / 2), "image", lcs, stage);
@@ -313,6 +321,73 @@ class LevelHandler {
     this.end_level_flag = AssetHandler.createSprite(this.end_level_flagS, this.structureX, this.structureY, "center", 0, "center", 0, "image", lcs, stage);
     this.end_level_flag.visible = false;
 
+    this.end_level_scene = AssetHandler.createImage("res/login_scroll.png", this.backgroundX, this.backgroundY, "center", 0, "center", 0, "image", lcs, stage);
+    this.end_level_scene.visible = false;
+
+    this.end_level_button = AssetHandler.createButton("res/login-button.png", "Next Level", this.buttonX, this.buttonY, "center", 0, "center", 0 + 250, "gui", leave_to_map, lcs, stage);
+    this.end_level_button.visible = false;
+    this.end_level_button.alpha = 0;
+
+    this.end_text = AssetHandler.createText("Good Job!!", "Oldstyle", "65px", "bold", "gold", 10, 10, "center", 0, "center", 0 - 140, "image", lcs, stage);
+    this.end_text.visible = false;
+    //end_text.skewX = -5;
+    this.end_text.skewY = -15;
+    this.end_text.textAlign = "center";
+
+    this.hit_text = AssetHandler.createText("Total Hits:      ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0, "image", lcs, stage);
+    this.hit_text.visible = false;
+    this.hit_text.alpha = 0;
+
+    this.low_text = AssetHandler.createText("Total Lows:     ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0 + 40, "image", lcs, stage);
+    this.low_text.visible = false;
+    this.low_text.alpha = 0;
+
+    this.high_text = AssetHandler.createText("Total Highs:    ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0 + 80, "image", lcs, stage);
+    this.high_text.visible = false;
+    this.high_text.alpha = 0;
+
+    this.pause_menu = AssetHandler.createImage("res/hit-target-pause-menu.png", this.backgroundX, this.backgroundY, "center", 0, "center", 0, "image", lcs, stage);
+    this.pause_menu.visible = false;
+
+    this.close_button = AssetHandler.createButton("res/hit-target-pause-close-button.png", "", this.buttonX, this.buttonY, "center", 0 + 445, "center", 0 - 281, "gui", function() {
+      createjs.Sound.play("menu");
+      this.pauseAnimation(false);
+      this.visibleButton(false);
+      this.visibleForm(true);
+    }.bind(this), lcs, stage);
+    this.close_button.visible = false;
+
+    this.main_menu_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Main Menu", this.buttonX, this.buttonY, "center", 0, "center", 0 - 180, "gui", leave_to_menu, lcs, stage);
+    this.main_menu_button.visible = false;
+
+    this.exit_level_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Exit Level", this.buttonX, this.buttonY, "center", 0, "center", 0 - 110, "gui", leave_to_map, lcs, stage);
+    this.exit_level_button.visible = false;
+
+    this.settings_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Settings", this.buttonX, this.buttonY, "center", 0, "center", 0 - 40, "gui", leave_to_settings, lcs, stage);
+    this.settings_button.visible = false;
+
+    this.hint_button = AssetHandler.createButton("res/hint-button.png", "Hint", 72, 72, "center", 0 - 313, "center", 0 + 194, "gui", leave_to_hint, lcs, stage);
+    this.hint_button.visible = false;
+
+    this.previous_indicator = AssetHandler.createImage("res/previous-indicator.png", 24, 24, "center", 0 - 50, "center", 0 + 194, "gui", lcs, stage);
+    // this.previous_indicator.addEventListener("click", previousSound);
+    this.previous_indicator.visible = false;
+
+    this.pause_indicator = AssetHandler.createImage("res/pause-indicator.png", 24, 24, "center", 0, "center", 0 + 194, "gui", lcs, stage);
+    // this.pause_indicator.addEventListener("click", playSound);
+    this.pause_indicator.visible = false;
+
+    this.next_indicator = AssetHandler.createImage("res/next-indicator.png", 24, 24, "center", 0 + 50, "center", 0 + 194, "gui", lcs, stage);
+    // this.next_indicator.addEventListener("click", nextSound);
+    this.next_indicator.visible = false;
+
+    this.lute = AssetHandler.createImage("res/lute.png", 96, 96, "center", 0 + 313, "center", 0 + 194, "gui", lcs, stage);
+    // antiLute = createImage("res/antiLute.png", 96, 96, 2);
+    // this.lute.addEventListener("click", muteSound);
+    this.lute.visible = false;
+    // antiLute.visible = false;
+    // antiLute.hidden = true;
+
   }
 
 
@@ -339,7 +414,7 @@ class LevelHandler {
 
   }
 
-  runInput (isMobile) {
+  runInput (isMobile, leave_to_hint) {
 
     console.log("HIT: " + this.hit_counter);
     console.log("MU" + this.miss_upper_counter);
@@ -666,13 +741,15 @@ class LevelHandler {
         this.hit_counter++;
         this.structure_score.text = "Total Lows: " + this.miss_lower_counter.toString() + "\nTotal High: " + this.miss_upper_counter.toString() + "\nTotal Hits: " + this.hit_counter.toString();
 
+
+
       }
 
     }
 
   }
 
-  runMissAnimations () {
+  runMissAnimations (leave_to_hint) {
 
     if (this.miss_lower) {
 
@@ -736,6 +813,11 @@ class LevelHandler {
 
       }
 
+      if (this.miss_lower_counter > 3 || this.miss_upper_counter > 3 && !this.hint_shown) {
+        this.hint_shown = true;
+        leave_to_hint();
+      }
+
     }
 
   }
@@ -780,15 +862,19 @@ class LevelHandler {
 
     this.end_level_button.visible = true;
 
-    createjs.Tween.get(this.end_level_flag).wait(2250).to({visible:true}).call(this.flagAnimation);
+    createjs.Tween.get(this.end_level_flag).wait(2250).to({visible:true}).call(this.flagAnimation.bind(this));
 
     this.end_text.visible = true;
+
     var tempX = scene_scale_X;
     var tempY = scene_scale_Y;
+
     this.end_text.scaleX = 0;
     this.end_text.scaleY = 0;
+
     createjs.Tween.get(this.end_text).wait(4250).to({scaleX:tempX ,scaleY:tempY}, 1000, createjs.Ease.quintIn);
     createjs.Tween.get(this.end_text).wait(4250).to({rotation:360}, 1000);
+
     this.hit_text.visible = true;
     createjs.Tween.get(this.hit_text).wait(5750).to({alpha:1}, 500);
 
@@ -800,9 +886,6 @@ class LevelHandler {
 
     this.end_level_button.visible = true;
     createjs.Tween.get(this.end_level_button).wait(8375).to({alpha:1}, 125);
-
-    this.menu_button.visible = false;
-    console.log("next level");
 
     //plays victory tune
     createjs.Sound.play("win", this.delayWin);
@@ -967,7 +1050,6 @@ class LevelHandler {
   }
 
   makeGameForm (isMobile) {
-
 
       // Creates username display text
       var multiplicand_div = document.createElement("div");
@@ -1202,30 +1284,75 @@ class LevelHandler {
 
   }
 
-  // Mutes the current song
-  muteSound (stage) {
+  // // Mutes the current song
+  // muteSound (stage, music) {
+  //
+  //   if (!music.sound_off) {
+  //
+  //     console.log(this.lute.src);
+  //
+  //     if(!music.muted)
+  //     {
+  //       stage.removeChild(this.lute);
+  //       this.lute = new createImage("res/antiLute.png", this.luteX, this.luteY);
+  //       lute.addEventListener("click", music.muteSound);
+  //       this.scaleGUI();
+  //     }
+  //     else
+  //     {
+  //       stage.removeChild(this.lute);
+  //       this.lute = new createImage("res/lute.png", this.luteX, this.luteY);
+  //       this.lute.addEventListener("click", music.muteSound);
+  //       this.scaleGUI();
+  //     }
+  //
+  //     music.current_song.muted = !music.current_song.muted;
+  //     this.music.muted = !music.muted;
+  //
+  //   }
+  // }
 
-    if (!this.music.sound_off) {
-      console.log(this.lute.src);
-    if(!this.music.muted)
-    {
-      stage.removeChild(this.lute);
-      this.lute = new createImage("res/antiLute.png", this.luteX, this.luteY);
-      lute.addEventListener("click", this.music.muteSound);
-      this.scaleGUI();
+  visibleButton (visible) {
+
+    if(visible) {
+
+  		this.pause_menu.visible = true;
+  		this.close_button.visible = true;
+  		this.main_menu_button.visible = true;
+  		this.exit_level_button.visible = true;
+  		this.settings_button.visible = true;
+  		this.previous_indicator.visible = true;
+  		this.pause_indicator.visible = true;
+  		this.next_indicator.visible = true;
+  		this.lute.visible = true;
+  		//antiLute.visible = true;
+  		this.hint_button.visible = true;
+
+    } else {
+
+  		this.pause_menu.visible = false;
+  		this.close_button.visible = false;
+  		this.main_menu_button.visible = false;
+  		this.exit_level_button.visible = false;
+  		this.settings_button.visible = false;
+  		this.previous_indicator.visible = false;
+  		this.pause_indicator.visible = false;
+  		this.next_indicator.visible = false;
+  		this.lute.visible = false;
+  		//antiLute.visible = false;
+  		this.hint_button.visible = false;
+
     }
-    else
-    {
-      stage.removeChild(this.lute);
-      this.lute = new createImage("res/lute.png", this.luteX, this.luteY);
-      this.lute.addEventListener("click", this.music.muteSound);
-      this.scaleGUI();
-    }
-      this.music.current_song.muted = !this.music.current_song.muted;
-      this.music.muted = !this.music.muted;
-    }
+
   }
 
+  openPauseMenu () {
+
+    this.pauseAnimation(true);
+    this.visibleButton(true);
+    this.visibleForm(false);
+
+  }
 
 
 }

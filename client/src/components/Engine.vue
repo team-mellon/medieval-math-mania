@@ -27,6 +27,7 @@ import UserInterface from './UserInterface.vue';
 
 // Static classes
 import AssetHandler from '../classes/AssetHandler.js';
+import FormHandler from '../classes/FormHandler.js';
 import APIHandler from '../classes/APIHandler.js';
 
 import InputHandler from '../classes/InputHandler.js';
@@ -150,6 +151,11 @@ export default {
 
     // var landscape_warning;
 
+    //registers Menu sounds
+    createjs.Sound.registerSound("res/sound_effects/menu.wav", "menu");
+    createjs.Sound.registerSound("res/sound_effects/select.wav", "select");
+    createjs.Sound.registerSound("res/sound_effects/sword.wav", "sword");
+
     //Setting properties for delays for sounds
     this.delayRe = new createjs.PlayPropsConfig().set({delay : 250});
     this.delayIn = new createjs.PlayPropsConfig().set({delay : 500});
@@ -165,6 +171,8 @@ export default {
 
     this.scene_scale_X = 1.0;
     this.scene_scale_Y = 1.0;
+
+    this.screen_ratio = this.max_scale_X / this.max_scale_Y
 
     this.scene_margin_X = 0.0;
 
@@ -184,169 +192,17 @@ export default {
       { // Login
         custom:   function() {
 
-          	//registers Menu sounds
-          	createjs.Sound.registerSound("res/sound_effects/menu.wav", "menu");
-          	createjs.Sound.registerSound("res/sound_effects/select.wav", "select");
-          	createjs.Sound.registerSound("res/sound_effects/sword.wav", "sword");
+          FormHandler.createLoginForm();
 
-            // Creates username display label and input box
-            var username_text = document.createTextNode("Username");
-            var username_input = document.createElement("input");
-            username_input.id = "usernameInput";
-            username_input.setAttribute("type", "text");
-            username_input.setAttribute("name", "uname");
-
-            // Creates username div to hold display text and input box
-            var login_username_div = document.createElement("div");
-            login_username_div.className = "login";
-            login_username_div.appendChild(username_text);
-            // Creates line break for form div spacing
-            login_username_div.appendChild(document.createElement("br"));
-            login_username_div.appendChild(username_input);
-
-            // Creates password display label and input box
-            var password_text = document.createTextNode("Password");
-            var password_input = document.createElement("input");
-            password_input.id = "passwordInput";
-            password_input.setAttribute("type", "password");
-            password_input.setAttribute("name", "pass");
-
-            // Creates password div to hold display text and input box
-            var login_password_div = document.createElement("div");
-            login_password_div.className = "login";
-            login_password_div.appendChild(password_text);
-            // Creates line break for form div spacing
-            login_password_div.appendChild(document.createElement("br"));
-            login_password_div.appendChild(password_input);
-
-            // Creates password display text and input box
-            var error_text = document.createTextNode("");
-
-            var error_div = document.createElement("div");
-            error_div.id = "errorText";
-            error_div.appendChild(error_text);
-
-            // Creates login form to hold username and password divs
-            var login_form = document.createElement("form");
-            login_form.id = "loginForm";
-            login_form.className = "scrollMenu";
-            login_form.appendChild(login_username_div);
-            // Creates line break for form div spacing
-            login_form.appendChild(document.createElement("br"));
-            login_form.appendChild(login_password_div);
-            // Creates line break for form div spacing
-            login_form.appendChild(document.createElement("br"));
-            login_form.appendChild(error_div);
-
-            // Injecting login form into existing html
-            var scene_html = document.getElementById("sceneHTML");
-            scene_html.appendChild(login_form);
-
-          }.bind(this)
+        }.bind(this)
       },
 
       { // Signup
         custom:   function() {
-            // Creates firstname display label and input box
-            var firstname_text = document.createTextNode("Firstname:");
-            var firstname_input = document.createElement("input");
-            firstname_input.id = "firstnameInput";
-            firstname_input.setAttribute("type", "text");
-            firstname_input.setAttribute("name", "fname");
 
-            // Creates firstname div to hold display text and input box
-            var signup_firstname_div = document.createElement("div");
-            signup_firstname_div.className = "signup";
-            signup_firstname_div.appendChild(firstname_text);
-            signup_firstname_div.appendChild(firstname_input);
+          FormHandler.createSignupForm();
 
-            // Creates lastname display text and input box
-            var lastname_text = document.createTextNode("Lastname:");
-            var lastname_input = document.createElement("input");
-            lastname_input.id = "lastnameInput";
-            lastname_input.setAttribute("type", "text");
-            lastname_input.setAttribute("name", "lname");
-
-            // Creates lastname div to hold display text and input box
-            var signup_lastname_div = document.createElement("div");
-            signup_lastname_div.className = "signup";
-            signup_lastname_div.appendChild(lastname_text);
-            signup_lastname_div.appendChild(lastname_input);
-
-            // Creates line break for form div spacing
-            var br1 = document.createElement("br");
-
-            // Creates username display text and input box
-            var username_text = document.createTextNode("Username:");
-            var username_input = document.createElement("input");
-            username_input.id = "usernameInput";
-            username_input.setAttribute("type", "text");
-            username_input.setAttribute("name", "uname");
-
-            // Creates username div to hold display text and input box
-            var signup_username_div = document.createElement("div");
-            signup_username_div.className = "signup";
-            signup_username_div.appendChild(username_text);
-            signup_username_div.appendChild(username_input);
-
-            // Creates line break for form div spacing
-            var br2 = document.createElement("br");
-
-            // Creates password display text and input box
-            var password_text = document.createTextNode("Password:");
-            var password_input = document.createElement("input");
-            password_input.id = "passwordInput";
-            password_input.setAttribute("type", "password");
-            password_input.setAttribute("name", "pass");
-
-            // Creates password div to hold display text and input box
-            var signup_password_div = document.createElement("div");
-            signup_password_div.className = "signup";
-            signup_password_div.appendChild(password_text);
-            signup_password_div.appendChild(password_input);
-
-            // Creates confirm display text and input box
-            var confirm_text = document.createTextNode("Confirm:");
-            var confirm_input = document.createElement("input");
-            confirm_input.id = "confirmInput";
-            confirm_input.setAttribute("type", "password");
-            confirm_input.setAttribute("name", "confirm");
-
-            // Creates confirm div to hold display text and input box
-            var signup_confirm_div = document.createElement("div");
-            signup_confirm_div.className = "signup";
-            signup_confirm_div.appendChild(confirm_text);
-            signup_confirm_div.appendChild(confirm_input);
-
-            // Creates line break for form div spacing
-            var br3 = document.createElement("br");
-
-            // Creates password display text and input box
-            var error_text = document.createTextNode("");
-
-            var error_div = document.createElement("div");
-            error_div.id = "errorText";
-            error_div.appendChild(error_text);
-
-            // Creates signup form to hold firstname, lastname, username, password and confirm divs
-            var signup_form = document.createElement("form");
-            signup_form.id = "signupForm";
-            signup_form.className = "scrollMenu";
-            signup_form.appendChild(signup_firstname_div);
-            signup_form.appendChild(signup_lastname_div);
-            signup_form.appendChild(br1);
-            signup_form.appendChild(signup_username_div);
-            signup_form.appendChild(br2);
-            signup_form.appendChild(signup_password_div);
-            signup_form.appendChild(signup_confirm_div);
-            signup_form.appendChild(br3);
-            signup_form.appendChild(error_div);
-
-            //Injecting signup form into existing html
-            var scene_html = document.getElementById("sceneHTML");
-            scene_html.appendChild(signup_form);
-
-          }.bind(this)
+        }.bind(this)
       },
 
       { // Menu
@@ -483,7 +339,12 @@ export default {
         		scene_html.appendChild(tutorial_div);
           }
 
-          this.level.createLevel(this.stage, this.lcs);
+          this.level.createLevel(this.stage, this.lcs,
+            function() { createjs.Sound.play("select"); this.changeScene(8); this.level.visibleForm(true); }.bind(this),
+            function() { createjs.Sound.play("sword"); this.changeScene(9); this.level.visibleForm(true); }.bind(this),
+            function() { createjs.Sound.play("menu"); this.changeScene(2); this.level.visibleForm(true); }.bind(this),
+            function() { createjs.Sound.play("menu"); this.changeScene(6); this.level.visibleForm(true); }.bind(this),
+          );
           if (this.mobile.isMobile) {
 
           } else {
@@ -963,6 +824,8 @@ export default {
       this.stage.canvas.width = window.innerWidth;
       this.stage.canvas.height = window.innerHeight;
 
+      this.screen_ratio = this.stage.canvas.width / this.stage.canvas.height;
+
       if (window.innerWidth < 600) {
         // gui_scale = 3;
       } else if (window.innerWidth < 900) {
@@ -976,17 +839,21 @@ export default {
       this.bg.graphics.beginFill(this.bg_color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
 
       // Calculate the scene scaling
-      this.scene_scale_X = this.stage.canvas.width / this.max_scale_X;
-      this.scene_scale_Y = this.stage.canvas.width / this.max_scale_X;
-      // this.scene_scale_X = ( this.max_scale_Y - ( this.max_scale_Y - this.stage.canvas.height ) ) / this.max_scale_Y;
-      // this.scene_scale_Y = ( this.max_scale_Y - ( this.max_scale_Y - this.stage.canvas.height ) ) / this.max_scale_Y;
+      if (this.screen_ratio < 2.5) {
+        this.scene_scale_X = this.stage.canvas.width / this.max_scale_X;
+        this.scene_scale_Y = this.stage.canvas.width / this.max_scale_X;
+      } else if (this.screen_ratio > 2.5) {
+        this.scene_scale_X = ( this.stage.canvas.width / this.max_scale_X ) * this.stage.canvas.height / this.max_scale_Y;
+        this.scene_scale_Y = ( this.stage.canvas.width / this.max_scale_X ) * this.stage.canvas.height / this.max_scale_Y;
+      }
 
       // Calculate the scene margin in a given direction
       this.scene_margin_X = ( this.stage.canvas.width - this.max_scale_X ) / 2;
 
       // Log screen scaling for debugging purposes
-      console.log(this.scene_scale_X);
-      console.log(this.scene_scale_Y);
+      // console.log(this.scene_scale_X);
+      // console.log(this.scene_scale_Y);
+      console.log(this.screen_ratio);
 
       this.landscape_warning.graphics.clear()
       this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
@@ -1103,7 +970,7 @@ export default {
 
       //Calls external function to generate ranges for each level, this is reset when each level is selected on level select
 
-      if (this.current_scene == 3 && this.pause_menu.visible == false) {
+      if (this.current_scene == 3 && this.level.pause_menu.visible == false) {
 
         // If the range is not generated
       	if(!this.level.generated) {
@@ -1152,7 +1019,7 @@ export default {
 
         // Check for hit and miss and then run thier animations
         this.level.runHitAnimations();
-        this.level.runMissAnimations();
+        this.level.runMissAnimations( function() { createjs.Sound.play("menu"); this.changeScene(9); }.bind(this) );
 
         // Check to see if the tutorial should be displayed
         this.level.checkTutorial();
@@ -1165,12 +1032,14 @@ export default {
           this.user.highs += this.level.miss_upper_counter;
           this.user.lows += this.level.miss_lower_counter;
 
-          this.hit_text.text += this.level.hit_counter.toString();
-          this.low_text.text += this.level.miss_lower_counter.toString();
-          this.high_text.text += this.level.miss_upper_counter.toString();
+          this.level.hit_text.text += this.level.hit_counter.toString();
+          this.level.low_text.text += this.level.miss_lower_counter.toString();
+          this.level.high_text.text += this.level.miss_upper_counter.toString();
+
+          this.menu_button.visible = false;
 
           // Show the endgame screen
-          this.createVictoryBanner();
+          this.level.createVictoryBanner(this.scene_scale_X, this.scene_scale_Y);
 
           // update database
           this.updateStats({
@@ -1224,7 +1093,13 @@ export default {
 
           this.bg_color = levelData[this.level.current_level - 1].color;
 
-          this.level.loadLevel();
+          if (!this.level.generated) {
+            this.level.loadLevel();
+          } else {
+            this.level.makeGameForm(this.mobile.isMobile);
+            this.level.remakeMultiplierBanner();
+            this.level.remakeRangeBanner();
+          }
 
       }
 
@@ -1244,6 +1119,7 @@ export default {
     changeScene: function(new_scene) {
 
       // Set the current scene to the new scene
+
       this.last_scene = this.current_scene;
       this.current_scene = new_scene;
       console.log("Last Scene: " + this.last_scene);
@@ -1265,6 +1141,7 @@ export default {
       this.background_right = AssetHandler.createImage(sceneData[this.current_scene].bg_img, this.backgroundX, 1440, "center", this.backgroundX, "center", 0, "image", this.ecs, this.stage);
 
       switch (this.current_scene) {
+
         case 0:
           // scenes[this.current_scene].fg_text] = "Login:\n\nSignup:\n\n";
           sceneData[this.current_scene].fg_text = "";
@@ -1296,7 +1173,7 @@ export default {
       if (this.current_scene != 8 && this.current_scene != 2 && this.current_scene != 3 && this.current_scene != 10) {
         this.foreground = AssetHandler.createTextContainer(sceneData[this.current_scene].fg_img, sceneData[this.current_scene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", sceneData[this.current_scene].fg_img.frames.width, sceneData[this.current_scene].fg_img.frames.height, "center", 0, "center", 0, "image", 0, this.ecs, this.stage);
       } else if (this.current_scene == 10) {
-        this.foreground = AssetHandler.createTextContainer(sceneData[this.current_scene].fg_img, sceneData[this.current_scene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", sceneData[this.current_scene].fg_img.frames.width, sceneData[this.current_scene].fg_img.frames.height, "center", 0, "top", this.buttonY + sceneData[this.current_scene].fg_img.frames.height / 2, "image", 0, this.ecs, this.stage);
+        this.foreground = AssetHandler.createImage("res/title-text.png", 1635, 480, "center", 0, "top", 144 + 480 / 2, "image", this.ecs, this.stage);
       }
 
       if (this.current_scene == 2) {
@@ -1326,9 +1203,19 @@ export default {
       // If the last scene was the game open with the pause screen
       if (this.last_scene == 3) {
 
-        this.level.pauseAnimation(true);
-        this.visibleButton(true);
-        this.level.visibleForm(false);
+        this.menu_button.visible = false;
+
+        this.level.openPauseMenu();
+
+        // this.level.pauseAnimation(true);
+        // this.level.visibleButton(true);
+        // this.level.visibleForm(false);
+
+        console.log(this.level.upper);
+
+        this.level.makeGameForm(this.mobile.isMobile);
+        this.level.remakeMultiplierBanner();
+        this.level.remakeRangeBanner();
 
       }
 
@@ -1398,10 +1285,10 @@ export default {
             this.changeScene(1);
     			}.bind(this), this.ecs, this.stage);
 
-    			this.secret_button = AssetHandler.createButton("res/secret_button.png", "", this.backgroundX, 1440, "center", 0, "center", 0, "image", function() {
-    				createjs.Sound.play("sword");
-            this.changeScene(8);
-    			}.bind(this), this.ecs, this.stage);
+    			// this.secret_button = AssetHandler.createButton("res/secret_button.png", "", this.backgroundX, 1440, "center", 0, "center", 0, "image", function() {
+    			// 	createjs.Sound.play("sword");
+          //   this.changeScene(8);
+    			// }.bind(this), this.ecs, this.stage);
 
     			// if (mobile) {
     			// 	scale_to_canvas(left_sword_button, "center", 0 - (this.buttonX/2 + 30) * scene_scale_Y, "center", 0 + (this.buttonY/2 + 200) * scene_scale_Y, "smallgui");
@@ -1409,7 +1296,6 @@ export default {
     			// } else {
 
     			break;
-
     		case 1:
 
     		// if (mobile) {
@@ -1417,47 +1303,47 @@ export default {
     		// 	scale_to_canvas(right_sword_button, "center", 0 + (this.buttonX/2 + 50) * scene_scale_Y, "center", 0 + (this.buttonY/2 + 140) * scene_scale_Y, "gui");
     		// } else {
 
-    			this.left_sword_button = AssetHandler.createButton("res/sword-left.png", "Signup", this.buttonX, this.buttonY, "center", -(this.buttonX/2 + 30), "center", (this.buttonY/2 + 200), "image", function() {
-    				createjs.Sound.play("sword");
-    				var key = document.getElementById('usernameInput').value;
-    				if( /*key in this.database.users ||*/ key == "" ) {
-    					document.getElementById('errorText').textContent = "Invalid username";
-    				}	else {
-    					if(document.getElementById('firstnameInput').value == "") {
-    						document.getElementById('errorText').textContent = "Invalid firstname";
-    					} else {
-    						if(document.getElementById('lastnameInput').value == "") {
-    							document.getElementById('errorText').textContent = "Invalid lastname";
-    						} else {
-    							if(document.getElementById('passwordInput').value == "") {
-    								document.getElementById('errorText').textContent = "Invalid password";
-    							} else {
-    								if(document.getElementById('passwordInput').value != document.getElementById('confirmInput').value) {
-    									document.getElementById('errorText').textContent = "Passwords do not match";
-    								} else {
-                      var text = {
-                        "uname": document.getElementById('usernameInput').value,
-                        "pass": document.getElementById('passwordInput').value,
-                        "fname": document.getElementById('firstnameInput').value,
-                        "lname": document.getElementById('lastnameInput').value,
-                        "confirm": document.getElementById('confirmInput').value
-                      };
-                      this.createUser(text);
-    									this.changeScene(2);
-    								}
-    							}
-    						}
-    					}
-    				}
+    		this.left_sword_button = AssetHandler.createButton("res/sword-left.png", "Cancel", this.buttonX, this.buttonY, "center", -(this.buttonX/2 + 30), "center", (this.buttonY/2 + 200), "image", function() {
+            // fieldInput_error.alpha = 0; // password_error.alpha = 0; // message.render = 0;
+      			createjs.Sound.play("sword");
+      			this.changeScene(0);
     			}.bind(this), this.ecs, this.stage);
 
-    		this.right_sword_button = AssetHandler.createButton("res/sword-right.png", "Cancel", this.buttonX, this.buttonY, "center", (this.buttonX/2 + 65), "center", (this.buttonY/2 + 200), "image", function() {
-    			// fieldInput_error.alpha = 0; // password_error.alpha = 0; // message.render = 0;
-    			createjs.Sound.play("sword");
-    			this.changeScene(0);
+    		this.right_sword_button = AssetHandler.createButton("res/sword-right.png", "Signup", this.buttonX, this.buttonY, "center", (this.buttonX/2 + 65), "center", (this.buttonY/2 + 200), "image", function() {
+          createjs.Sound.play("sword");
+          var key = document.getElementById('usernameInput').value;
+          if( /*key in this.database.users ||*/ key == "" ) {
+            document.getElementById('errorText').textContent = "Invalid username";
+          }	else {
+            if(document.getElementById('firstnameInput').value == "") {
+              document.getElementById('errorText').textContent = "Invalid firstname";
+            } else {
+              if(document.getElementById('lastnameInput').value == "") {
+                document.getElementById('errorText').textContent = "Invalid lastname";
+              } else {
+                if(document.getElementById('passwordInput').value == "") {
+                  document.getElementById('errorText').textContent = "Invalid password";
+                } else {
+                  if(document.getElementById('passwordInput').value != document.getElementById('confirmInput').value) {
+                    document.getElementById('errorText').textContent = "Passwords do not match";
+                  } else {
+                    var text = {
+                      "uname": document.getElementById('usernameInput').value,
+                      "pass": document.getElementById('passwordInput').value,
+                      "fname": document.getElementById('firstnameInput').value,
+                      "lname": document.getElementById('lastnameInput').value,
+                      "confirm": document.getElementById('confirmInput').value
+                    };
+                    this.createUser(text);
+                    this.changeScene(2);
+                  }
+                }
+              }
+            }
+          }
     		}.bind(this), this.ecs, this.stage);
 
-    		break;
+        break;
 
     		case 2:
 
@@ -1481,85 +1367,42 @@ export default {
 
     		case 3:
 
-    		// if (mobile) {
-    		//
-    		// 	scale_to_canvas(pause_menu, "center", 0, "center", 0, "image");
-    		// 	scale_to_canvas(close_button, "center", 0 + 445 * scene_scale_Y, "center", 0 - 281 * scene_scale_Y, "gui");
-    		// 	scale_to_canvas(main_menu_button, "center", 0, "center", 0 - 180 * scene_scale_Y, "gui");
-    		// 	scale_to_canvas(exit_level_button, "center", 0, "center", 0 - 110 * scene_scale_Y, "gui");
-    		// 	scale_to_canvas(settings_button, "center", 0, "center", 0 - 40 * scene_scale_Y, "gui");
-    		//
-    		// 	scale_to_canvas(end_level_scene, "center", 0, "center", 0, "image");
-    		// 	scale_to_canvas(end_level_button, "center", 0, "center", 0 + 250 * scene_scale_Y, "gui");
-    		// 	scale_to_canvas(end_text, "center", 0, "center", 0 - 140 * scene_scale_Y, "image");
-    		// 	scale_to_canvas(hit_text, "center", 0 - 120 * scene_scale_Y, "center", 0, "image");
-    		// 	scale_to_canvas(low_text, "center", 0 - 120 * scene_scale_Y, "center", 0 + 40 * scene_scale_Y, "image");
-    		// 	scale_to_canvas(high_text, "center", 0 - 120 * scene_scale_Y, "center", 0 + 80 * scene_scale_Y, "image");
-    		//
-    		// 	scale_to_canvas(hit_text_counter, "left", 30, "center", 0 + 225 * scene_scale_Y, "image");
-    		// 	scale_to_canvas(low_text_counter, "left", 30, "center", 0 + 280 * scene_scale_Y, "image");
-    		// 	scale_to_canvas(high_text_counter, "left", 30, "center", 0 + 300 * scene_scale_Y, "image");
-    		//
-    		// 	scale_to_canvas(menu_button, "right", 0 - (this.buttonX/2 + 10), "bottom", 0 - (this.buttonY/2 + 10), "gui");
-    		// 	scale_to_canvas(hint_button, "center", 0 - 313 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui");
-    		//
-    		// } else {
+      		// if (mobile) {
+          //
+      		// 	scale_to_canvas(pause_menu, "center", 0, "center", 0, "image");
+      		// 	scale_to_canvas(close_button, "center", 0 + 445 * scene_scale_Y, "center", 0 - 281 * scene_scale_Y, "gui");
+      		// 	scale_to_canvas(main_menu_button, "center", 0, "center", 0 - 180 * scene_scale_Y, "gui");
+      		// 	scale_to_canvas(exit_level_button, "center", 0, "center", 0 - 110 * scene_scale_Y, "gui");
+      		// 	scale_to_canvas(settings_button, "center", 0, "center", 0 - 40 * scene_scale_Y, "gui");
+          //
+      		// 	scale_to_canvas(end_level_scene, "center", 0, "center", 0, "image");
+      		// 	scale_to_canvas(end_level_button, "center", 0, "center", 0 + 250 * scene_scale_Y, "gui");
+      		// 	scale_to_canvas(end_text, "center", 0, "center", 0 - 140 * scene_scale_Y, "image");
+      		// 	scale_to_canvas(hit_text, "center", 0 - 120 * scene_scale_Y, "center", 0, "image");
+      		// 	scale_to_canvas(low_text, "center", 0 - 120 * scene_scale_Y, "center", 0 + 40 * scene_scale_Y, "image");
+      		// 	scale_to_canvas(high_text, "center", 0 - 120 * scene_scale_Y, "center", 0 + 80 * scene_scale_Y, "image");
+          //
+      		// 	scale_to_canvas(hit_text_counter, "left", 30, "center", 0 + 225 * scene_scale_Y, "image");
+      		// 	scale_to_canvas(low_text_counter, "left", 30, "center", 0 + 280 * scene_scale_Y, "image");
+      		// 	scale_to_canvas(high_text_counter, "left", 30, "center", 0 + 300 * scene_scale_Y, "image");
+          //
+      		// 	scale_to_canvas(menu_button, "right", 0 - (this.buttonX/2 + 10), "bottom", 0 - (this.buttonY/2 + 10), "gui");
+      		// 	scale_to_canvas(hint_button, "center", 0 - 313 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui");
+          //
+      		// } else {
 
-    	    this.end_level_scene = AssetHandler.createImage("res/login_scroll.png", this.backgroundX, this.backgroundY, "center", 0, "center", 0, "image", this.ecs, this.stage);
-    	    this.end_level_scene.visible = false;
+          this.menu_button = AssetHandler.createButton("res/login-button.png", "Pause", this.buttonX, this.buttonY, "right", -(this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() {
+            createjs.Sound.play("menu");
 
-    	    this.end_level_button = AssetHandler.createButton("res/login-button.png", "Next Level", this.buttonX, this.buttonY, "center", 0, "center", 0 + 250, "gui", function() { createjs.Sound.play("select"); this.changeScene(8); this.level.visibleForm(true);}.bind(this), this.ecs, this.stage);
-    	    this.end_level_button.visible = false;
-    	    this.end_level_button.alpha = 0;
+        		this.menu_button.visible = false;
 
-    	    this.end_text = AssetHandler.createText("Good Job!!", "Oldstyle", "65px", "bold", "gold", 10, 10, "center", 0, "center", 0 - 140, "image", this.ecs, this.stage);
-    	    this.end_text.visible = false;
-    	    //end_text.skewX = -5;
-    	    this.end_text.skewY = -15;
-    	    this.end_text.textAlign = "center";
+            this.level.openPauseMenu();
 
-    	    this.hit_text = AssetHandler.createText("Total Hits:      ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0, "image", this.ecs, this.stage);
-    	    this.hit_text.visible = false;
-    	    this.hit_text.alpha = 0;
+            // this.level.pauseAnimation(true);
+            // this.level.visibleButton(true);
+            // this.level.visibleForm(false);
 
-    	    this.low_text = AssetHandler.createText("Total Lows:     ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0 + 40, "image", this.ecs, this.stage);
-    	    this.low_text.visible = false;
-    	    this.low_text.alpha = 0;
-
-    	    this.high_text = AssetHandler.createText("Total Highs:    ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0 + 80, "image", this.ecs, this.stage);
-    	    this.high_text.visible = false;
-    	    this.high_text.alpha = 0;
-
-    	    this.pause_menu = AssetHandler.createImage("res/hit-target-pause-menu.png", this.backgroundX, this.backgroundY, "center", 0, "center", 0, "image", this.ecs, this.stage);
-    	    this.pause_menu.visible = false;
-
-    	    this.close_button = AssetHandler.createButton("res/hit-target-pause-close-button.png", "", this.buttonX, this.buttonY, "center", 0 + 445, "center", 0 - 281, "gui", function() {
-    				createjs.Sound.play("menu");
-    				this.level.pauseAnimation(false);
-    				this.visibleButton(false);
-    				this.level.visibleForm(true);
-    	    }.bind(this), this.ecs, this.stage);
-
-    	    this.close_button.visible = false;
-
-    	    this.main_menu_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Main Menu", this.buttonX, this.buttonY, "center", 0, "center", 0 - 180, "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); this.level.visibleForm(true);}.bind(this), this.ecs, this.stage);
-    	    this.main_menu_button.visible = false;
-
-    	    this.exit_level_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Exit Level", this.buttonX, this.buttonY, "center", 0, "center", 0 - 110, "gui", function() { createjs.Sound.play("menu"); this.changeScene(8); this.level.visibleForm(true);}.bind(this), this.ecs, this.stage);
-    	    this.exit_level_button.visible = false;
-
-    	    this.settings_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Settings", this.buttonX, this.buttonY, "center", 0, "center", 0 - 40, "gui", function() { createjs.Sound.play("menu"); this.changeScene(6); this.level.visibleForm(true);}.bind(this), this.ecs, this.stage);
-    	    this.settings_button.visible = false;
-
-    	    this.menu_button = AssetHandler.createButton("res/login-button.png", "Pause", this.buttonX, this.buttonY, "right", -(this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() {
-    				createjs.Sound.play("menu");
-    				this.level.pauseAnimation(true);
-    				this.visibleButton(true);
-    				this.level.visibleForm(false);
-    	    }.bind(this), this.ecs, this.stage);
-
-    	    this.hint_button = AssetHandler.createButton("res/hint-button.png", "Hint", 72, 72, "center", 0 - 313, "center", 0 + 194, "gui", function() { createjs.Sound.play("sword"); this.changeScene(9); this.level.visibleForm(true); }.bind(this), this.ecs, this.stage);
-    	    this.hint_button.visible = false;
+          }.bind(this), this.ecs, this.stage);
 
     			if (this.mobile.isMobile) {
 
@@ -1644,7 +1487,11 @@ export default {
     			var skyland = AssetHandler.createSprite(skylandS, 180, 120, "center", -243 + 180 / 2, "center", -246 + 120 / 2, "image", this.ecs, this.stage);
     			skyland.gotoAndPlay(0);
 
-    			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), this.ecs, this.stage);
+          if (this.user.authenticated) {
+
+  			     this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), this.ecs, this.stage);
+
+          }
 
     			for (var i = 0; i < this.num_levels; i++) {
 
@@ -1661,9 +1508,15 @@ export default {
     			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() {
             createjs.Sound.play("menu");
             this.changeScene(3);
-            this.level.pauseAnimation(true);
-            this.visibleButton(true);
-            this.level.visibleForm(false);
+
+        		this.menu_button.visible = false;
+
+            this.level.openPauseMenu();
+
+            // this.level.pauseAnimation(true);
+            // this.level.visibleButton(true);
+            // this.level.visibleForm(false);
+
           }.bind(this), this.ecs, this.stage);
 
           break;
@@ -1671,7 +1524,7 @@ export default {
     		case 10:
 
     			this.logout_button = AssetHandler.createButton("res/login-button.png", "Login", this.buttonX, this.buttonY, "right", -(this.buttonX/2 + 10), "top", (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(0); }.bind(this), this.ecs, this.stage);
-    			this.play_button = AssetHandler.createButton("res/login-button.png", "Start", this.buttonX, this.buttonY, "center", 0, "bottom", - 5 * (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(8); }.bind(this), this.ecs, this.stage);
+    			this.play_button = AssetHandler.createButton("res/login-button.png", "Start", this.buttonX, this.buttonY, "center", 0, "bottom", - 2.5 * (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(8); }.bind(this), this.ecs, this.stage);
 
     			break;
 
@@ -1679,65 +1532,10 @@ export default {
 
     	}
 
-    	this.previous_indicator = AssetHandler.createImage("res/previous-indicator.png", 24, 24, "center", 0 - 50, "center", 0 + 194, "gui", this.ecs, this.stage);
-      // this.previous_indicator.addEventListener("click", previousSound);
-      this.previous_indicator.visible = false;
-
-    	this.pause_indicator = AssetHandler.createImage("res/pause-indicator.png", 24, 24, "center", 0, "center", 0 + 194, "gui", this.ecs, this.stage);
-      // this.pause_indicator.addEventListener("click", playSound);
-      this.pause_indicator.visible = false;
-
-    	this.next_indicator = AssetHandler.createImage("res/next-indicator.png", 24, 24, "center", 0 + 50, "center", 0 + 194, "gui", this.ecs, this.stage);
-      // this.next_indicator.addEventListener("click", nextSound);
-      this.next_indicator.visible = false;
-
-    	this.lute = AssetHandler.createImage("res/lute.png", 96, 96, "center", 0 + 313, "center", 0 + 194, "gui", this.ecs, this.stage);
-    	// antiLute = createImage("res/antiLute.png", 96, 96, 2);
-      // this.lute.addEventListener("click", muteSound);
-      this.lute.visible = false;
-    	// antiLute.visible = false;
-    	// antiLute.hidden = true;
-
       this.landscape_warning = new createjs.Shape();
 
       this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, 288, 288, "center", 0, "center", 0, "image", this.ecs, this.stage);
       this.stage.removeChild(this.phone_rotation);
-
-    },
-
-    visibleButton: function(visible) {
-
-      if(visible) {
-
-    		this.menu_button.visible = false;
-    		this.pause_menu.visible = true;
-    		this.close_button.visible = true;
-    		this.main_menu_button.visible = true;
-    		this.exit_level_button.visible = true;
-    		this.settings_button.visible = true;
-    		this.previous_indicator.visible = true;
-    		this.pause_indicator.visible = true;
-    		this.next_indicator.visible = true;
-    		this.lute.visible = true;
-    		//antiLute.visible = true;
-    		this.hint_button.visible = true;
-
-      } else {
-
-    		this.menu_button.visible = true;
-    		this.pause_menu.visible = false;
-    		this.close_button.visible = false;
-    		this.main_menu_button.visible = false;
-    		this.exit_level_button.visible = false;
-    		this.settings_button.visible = false;
-    		this.previous_indicator.visible = false;
-    		this.pause_indicator.visible = false;
-    		this.next_indicator.visible = false;
-    		this.lute.visible = false;
-    		//antiLute.visible = false;
-    		this.hint_button.visible = false;
-
-      }
 
     },
 
@@ -1780,79 +1578,6 @@ export default {
     //
     // },
 
-    // ////////
-    // GAME //
-    // ////////
-
-    createVictoryBanner: function() {
-
-      this.level.visibleForm(false);
-      this.level.pauseAnimation(true);
-
-      this.end_level_button.visible = true;
-
-      createjs.Tween.get(this.end_level_flag).wait(2250).to({visible:true}).call(this.level.flagAnimation);
-
-      this.end_text.visible = true;
-      var tempX = this.scene_scale_X;
-      var tempY = this.scene_scale_Y;
-      this.end_text.scaleX = 0;
-      this.end_text.scaleY = 0;
-      createjs.Tween.get(this.end_text).wait(4250).to({scaleX:tempX ,scaleY:tempY}, 1000, createjs.Ease.quintIn);
-      createjs.Tween.get(this.end_text).wait(4250).to({rotation:360}, 1000);
-      this.hit_text.visible = true;
-      createjs.Tween.get(this.hit_text).wait(5750).to({alpha:1}, 500);
-
-      this.low_text.visible = true;
-      createjs.Tween.get(this.low_text).wait(6750).to({alpha:1}, 500);
-
-      this.high_text.visible = true;
-      createjs.Tween.get(this.high_text).wait(7750).to({alpha:1}, 500);
-
-      this.end_level_button.visible = true;
-      createjs.Tween.get(this.end_level_button).wait(8375).to({alpha:1}, 125);
-
-      this.menu_button.visible = false;
-      console.log("next level");
-
-      //plays victory tune
-      createjs.Sound.play("win", this.delayWin);
-
-      this.level.target_x = 0;
-      this.level.hit = false;
-      this.level.miss_upper = false;
-      this.level.miss_lower = false;
-      this.level.hit_counter = 0;
-      this.level.miss_upper_counter = 0;
-      this.level.miss_lower_counter = 0;
-      this.level.projectile_x_speed = 0;
-
-    },
-
-    // Mutes the current song
-    muteSound: function() {
-
-      if (!this.music.sound_off) {
-        console.log(this.lute.src);
-      if(!this.music.muted)
-      {
-        this.stage.removeChild(this.lute);
-        this.lute = new createImage("res/antiLute.png", this.luteX, this.luteY);
-        lute.addEventListener("click", this.music.muteSound);
-        this.scaleGUI();
-      }
-      else
-      {
-        this.stage.removeChild(this.lute);
-        this.lute = new createImage("res/lute.png", this.luteX, this.luteY);
-        this.lute.addEventListener("click", this.music.muteSound);
-        this.scaleGUI();
-      }
-        this.music.current_song.muted = !this.music.current_song.muted;
-        this.music.muted = !this.music.muted;
-      }
-    },
-
     ///////////////////////
     // DATABASE REQUESTS //
     ///////////////////////
@@ -1860,21 +1585,29 @@ export default {
     async createUser(text) {
 
       try {
+
         await LoginService.registerUser(text, this.user);
+
       } catch (err) {
+
         this.error = err.message;
         console.log(this.error);
+
       }
 
       try {
+
         let stats = await StatService.findUserStats(text.uname);
         console.log(stats.data);
         this.user.hits = stats.data.hits;
         this.user.highs = stats.data.highs;
         this.user.lows = stats.data.lows;
+
       } catch (err) {
+
         this.error = err.message;
         console.log(this.error);
+
       }
 
     },
@@ -1882,25 +1615,33 @@ export default {
     async getUserData(text) {
 
       try {
+
         let stats = await StatService.findUserAccount(text);
         console.log(stats.data);
         this.user.username = stats.data.uname;
         this.user.firstname = stats.data.fname;
         this.user.lastname = stats.data.lname;
+
       } catch (err) {
+
         this.error = err.message;
         console.log(this.error);
+
       }
 
       try {
+
         let stats = await StatService.findUserStats(text);
         console.log(stats.data);
         this.user.hits = stats.data.hits;
         this.user.highs = stats.data.highs;
         this.user.lows = stats.data.lows;
+
       } catch (err) {
+
         this.error = err.message;
         console.log(this.error);
+
       }
 
     },
@@ -1908,27 +1649,33 @@ export default {
     async verifyUser(text) {
 
       try {
+
         await LoginService.loginUser(text, this.user);
         console.log(this.user.authenticated);
         // this.user = await LoginService.loginUser(text);
         console.log("User: " + this.user.username);
+
       } catch (err) {
+
         this.error = err.message;
         console.log(this.error);
+
       }
 
       try {
+
         let stats = await StatService.findUserStats(text.uname);
         console.log(stats.data);
         this.user.hits = stats.data.hits;
         this.user.highs = stats.data.highs;
         this.user.lows = stats.data.lows;
+
       } catch (err) {
+
         this.error = err.message;
         console.log(this.error);
+
       }
-
-
 
       // if (this.user.authenticated) {
       //   this.changeScene(2);
@@ -1946,14 +1693,18 @@ export default {
     async updateStats(text) {
 
       try {
+
         let stats = await StatService.updateUserStats(text);
         console.log(stats.data);
         this.user.hits = stats.data.hits;
         this.user.highs = stats.data.highs;
         this.user.lows = stats.data.lows;
+
       } catch (err) {
+
         this.error = err.message;
         console.log(this.error);
+
       }
 
     },
@@ -1961,10 +1712,14 @@ export default {
     async signoutUser() {
 
       try {
+
         await LoginService.logoutUser();
+
       } catch (err) {
+
         this.error = err.message;
         console.log(this.error);
+
       }
 
     }

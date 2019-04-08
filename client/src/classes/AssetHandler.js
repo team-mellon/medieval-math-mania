@@ -19,7 +19,7 @@ class AssetHandler {
       var x_position = (284 * scene_scale_Y).toString() + "px";
       var y_position = (960 * scene_scale_Y).toString() + "px";
 
-      console.log(x_position);
+      // console.log(x_position);
 
       var game_entry_form = document.getElementById("equationBanner");
       game_entry_form.style.bottom = x_position;
@@ -27,7 +27,7 @@ class AssetHandler {
 
     }
 
-    console.log("ECS length: " + entity_component_system.length);
+    // console.log("ECS length: " + entity_component_system.length);
 
     for (var i = 0; i < entity_component_system.length; i++) {
 
@@ -102,6 +102,15 @@ class AssetHandler {
   static createImage (location, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
 
     let image = new createjs.Bitmap(location);
+
+    // let listener = image.on("error", function(evt, data) {
+    //   console.log("'" + evt.src + "' failed to load");
+    // });
+    //
+    // let listener2 = image.on("complete", function(evt) {
+    //   console.log("Spritesheet loading complete. Check for errors.");
+    // });
+
     stage.addChild(image);
     image.regX = width/2;
     image.regY = height/2;
@@ -189,7 +198,8 @@ class AssetHandler {
 
     var color = "#DAA520";
     var size = "24";
-    var font = "Blackadder";
+    // var font = "Blackadder";
+    var font = "Oldstyle";
 
     if (
       text == "Login" || text == "Signup" ||

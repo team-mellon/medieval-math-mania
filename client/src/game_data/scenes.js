@@ -115,7 +115,7 @@ export const sceneData = [
     bg_img: "res/login.png",
     fg_img: {
               images: ["res/title-text.png"],
-              frames: {width:1920, height:768, count:6, regX: 0, regY:0, spacing:0, margin:0},
+              frames: {width:1635, height:480, count:1, regX: 0, regY:0, spacing:0, margin:0},
               framerate: 6
             },
     fg_text: ""
