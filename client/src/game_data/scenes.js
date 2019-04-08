@@ -140,22 +140,22 @@ export const indicatorCoordinates = [
 export const levelDescripters = [
 
     {title: "TYRANT'S TOWER", description: "castle clash was taken"},  //level 1
-    {title: "GRIM GRASSLANDS", description: "grass orcs"}, // level 2
+    {title: "GRIM GRASSLANDS", description: "Let the Orcs come as thick as summer-moths round a candle!"}, // level 2
     {title: "VICIOUS VOLCANO", description: "mount doom was taken"}, //level 3
     {title: "CALAMITY COVE", description: "pirates of the carribean"},  //level 4
     {title: "MYSTIC MOUNTAINS", description: "led zepplin songs are cool"},  //level 5
     {title: "PERILOUS PEAK", description: "we should have just copied donkey kong levels"},  // level 6
-    {title: "CREEPY CAVERNS", description: "cave description"},  //level 7
-    {title: "FRANTIC FOREST", description: "forest description"},  //level 8
-    {title: "ARCTIC ALPINE", description: "alpine description"},  // level 9
-    {title: "WANDERING WOODS", description: "woods description"}, //level 10
+    {title: "CREEPY CAVERNS", description: "Echooo echoo echo"},  //level 7
+    {title: "FRANTIC FOREST", description: "Potentially a donkey kong level, not really sure"},  //level 8
+    {title: "ARCTIC ALPINE", description: "Welcome to the hemalayas! Snow cone?"},  // level 9
+    {title: "WANDERING WOODS", description: "Follow the spiders"}, //level 10
     {title: "STAGNANT SWAMP", description: "GET OUT OF MY SWAMP!!!"},  //level 11
-    {title: "DESOLATE DEADLANDS", description: "mad max look-alikes"},  //level 12
-    {title: "FLOATING FORTRESS", description: "floating island"},  //level 13
+    {title: "DESOLATE DEADLANDS", description: "rocky horror picture show"},  //level 12
+    {title: "FLOATING FORTRESS", description: "shutter island, but in the air"},  //level 13
     {title: "DEADLY DEPTHS", description: "not coral because reasons?"},  //level 14
     {title: "FERAL FUNGUS", description: "there is a fungus amongus"},  //level 15
     {title: "TORTUROUS TUNDRA", description: "russia"},  //level 16
-    {title: "TUMULTUOUS TARPITS", description: "that's how the dinosaurs died"},  //level 17
+    {title: "TUMULTUOUS TARPITS", description: "That's how the dinosaurs died"},  //level 17
     {title: "DRACONIAN DESERT", description: "crab people. need I say more"},   //level 18
     {title: "BOREAL BACKWOODS", description: "better than taiga"},  //level 19
     {title: "REAWAKENED RUINS", description: "finally the last one"}  //level 20

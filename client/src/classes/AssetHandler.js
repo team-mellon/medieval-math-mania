@@ -183,18 +183,18 @@ class AssetHandler {
 
     createContainerFrame(width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage){
 	var squareFrame = new createjs.Shape();
-	squareFrame.graphics.beginFill("black").drawRect(0,0,210,310);
+	squareFrame.graphics.beginFill("black").drawRect(0,0,220,320);
 	squareFrame.name = "squareFrame";
 	squareFrame.alpha = 0.8;
 
-	var titleFrame = new createjs.Text("TITLE", "bold 16px Oldstyle", "white");
-	titleFrame.lineWidth = 210;
+	var titleFrame = new createjs.Text("TITLE", "bold 19px Oldstyle", "white");
+	titleFrame.lineWidth = 215;
 	titleFrame.name = "titleFrame";
 	titleFrame.x = 7;
 	titleFrame.y = 7;
 
-	var descripterFrame = new createjs.Text("DESCRIPTER", "14px Oldstyle", "white");
-	descripterFrame.lineWidth = 210;
+	var descripterFrame = new createjs.Text("DESCRIPTER", "17px Oldstyle", "white");
+	descripterFrame.lineWidth = 215;
 	descripterFrame.name = "descripterFrame";
 	descripterFrame.x = 7;
 	descripterFrame.y = 52;
