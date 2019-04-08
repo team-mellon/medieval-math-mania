@@ -1,4 +1,4 @@
-this.level.structure_equation_banner<template>
+<template>
   <div id="engineHolder">
 
     <canvas id="drawingCanvas" :style="style">alternate content</canvas>
@@ -39,7 +39,7 @@ import StatService from '../StatService.js';
 import LoginService from '../LoginService.js';
 
 // Game Data
-import { sceneData, indicatorCoordinates } from '../game_data/scenes.js';
+import { sceneData, indicatorCoordinates, levelDescripters } from '../game_data/scenes.js';
 import { levelData } from '../game_data/levels.js';
 
 export default {
@@ -782,8 +782,8 @@ export default {
     };
 
     this.stage = new createjs.Stage('drawingCanvas');           // Stage for drawing pictures and shapes
-    createjs.Touch.enable(this.stage);
-      // Enable touch interaction for mobile
+    createjs.Touch.enable(this.stage);                          // Enable touch interaction for mobile
+    this.stage.enableMouseOver();                               // Enable mouse events with scene objects
     this.bg = new createjs.Shape();                             // Create a rectangle for clearing the screen
     this.bg_color = "#333333";                                  // Background color
     this.stage.addChild(this.bg);                               // Add rectangle to the stage
@@ -839,12 +839,14 @@ export default {
       this.bg.graphics.beginFill(this.bg_color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
 
       // Calculate the scene scaling
-      if (this.screen_ratio < 2.5) {
+      if (this.screen_ratio < 2.5) { // tall screen
         this.scene_scale_X = this.stage.canvas.width / this.max_scale_X;
         this.scene_scale_Y = this.stage.canvas.width / this.max_scale_X;
-      } else if (this.screen_ratio > 2.5) {
-        this.scene_scale_X = ( this.stage.canvas.width / this.max_scale_X ) * this.stage.canvas.height / this.max_scale_Y;
-        this.scene_scale_Y = ( this.stage.canvas.width / this.max_scale_X ) * this.stage.canvas.height / this.max_scale_Y;
+      } else if (this.screen_ratio > 2.5) { // wide screen
+        this.temp_max = this.stage.canvas.height;
+        this.temp_scale = this.stage.canvas.width / this.max_scale_X;
+        this.scene_scale_X = this.temp_scale * ( this.stage.canvas.height / this.temp_max );
+        this.scene_scale_Y = this.temp_scale * ( this.stage.canvas.height / this.temp_max );
       }
 
       // Calculate the scene margin in a given direction
@@ -1137,6 +1139,8 @@ export default {
       this.bg.graphics.beginFill(this.bg_color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
 
       this.background = AssetHandler.createImage(sceneData[this.current_scene].bg_img, this.backgroundX, 1440, "center", 0, "center", 0, "image", this.ecs, this.stage);
+      this.background_top = AssetHandler.createImage(sceneData[this.current_scene].bg_img, this.backgroundX, 1440, "center", 0, "center", -1440, "image", this.ecs, this.stage);
+      this.background_bottom = AssetHandler.createImage(sceneData[this.current_scene].bg_img, this.backgroundX, 1440, "center", 0, "center", 1440, "image", this.ecs, this.stage);
       this.background_left = AssetHandler.createImage(sceneData[this.current_scene].bg_img, this.backgroundX, 1440, "center", -this.backgroundX, "center", 0, "image", this.ecs, this.stage);
       this.background_right = AssetHandler.createImage(sceneData[this.current_scene].bg_img, this.backgroundX, 1440, "center", this.backgroundX, "center", 0, "image", this.ecs, this.stage);
 
@@ -1496,10 +1500,15 @@ export default {
     			for (var i = 0; i < this.num_levels; i++) {
 
     				var temp = AssetHandler.createButton("res/map-indicator.png", (i + 1).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", this.levels[i].open.bind(this), this.ecs, this.stage);
+            temp.on("mouseover", this.handleMouseEvent);
+    				temp.on("mouseout", this.handleMouseEvent);
 
     				this.indicators.push(temp);
 
     			}
+
+			    this.containerFrame = AssetHandler.createContainerFrame(210, 310, "center", 200, "center", 200, "gui", this.ecs, this.stage);
+			    this.containerFrame.visible = false;
 
     			break;
 
@@ -1577,6 +1586,242 @@ export default {
     //   this.resize();
     //
     // },
+
+    victoryGenerator: function() {
+
+      switch(Math.floor((Math.random() * 10) + 1)){
+        case 1:
+            return "Excellent";
+            break;
+        case 2:
+            return "Amazing";
+            break;
+        case 3:
+            return "Spectacular";
+            break;
+        case 4:
+            return "Exceptional";
+            break;
+        case 5:
+            return "Magnificent";
+            break;
+        case 6:
+            return "Outstanding";
+            break;
+        case 7:
+            return "Great";
+            break;
+        case 8:
+            return "Awesome";
+            break;
+        case 9:
+            return "Incredible";
+            break;
+        case 10:
+            return "Wonderful";
+            break;
+        default:
+            return "Unbelievable";
+            break;
+      }
+
+    },
+
+    handleMouseEvent: function(evt) {
+      if(evt.type == "mouseover"){
+      //console.log("level " + evt.target.text);
+      switch(Number(evt.target.text)){
+        case 1:
+             let temp = this.containerFrame.getChildByName("titleFrame");
+             temp.text = levelDescripters[0].title;
+             temp = this.containerFrame.getChildByName("descripterFrame");
+             temp.text = levelDescripters[0].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[0].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[0].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 2:
+             let temp1 = this.containerFrame.getChildByName("titleFrame");
+             temp1.text = levelDescripters[1].title;
+             temp1 = this.containerFrame.getChildByName("descripterFrame");
+             temp1.text = levelDescripters[1].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[1].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[1].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 3:
+             let temp2 = this.containerFrame.getChildByName("titleFrame");
+             temp2.text = levelDescripters[2].title;
+             temp2 = this.containerFrame.getChildByName("descripterFrame");
+             temp2.text = levelDescripters[2].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[2].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[2].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 4:
+             let temp3 = this.containerFrame.getChildByName("titleFrame");
+             temp3.text = levelDescripters[3].title;
+             temp3 = this.containerFrame.getChildByName("descripterFrame");
+             temp3.text = levelDescripters[3].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[3].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[3].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 5:
+             let temp4 = this.containerFrame.getChildByName("titleFrame");
+             temp4.text = levelDescripters[4].title;
+             temp4 = this.containerFrame.getChildByName("descripterFrame");
+             temp4.text = levelDescripters[4].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[4].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[4].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 6:
+             let temp5 = this.containerFrame.getChildByName("titleFrame");
+             temp5.text = levelDescripters[5].title;
+             temp5 = this.containerFrame.getChildByName("descripterFrame");
+             temp5.text = levelDescripters[5].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[5].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[5].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 7:
+             let temp6 = this.containerFrame.getChildByName("titleFrame");
+             temp6.text = levelDescripters[6].title;
+             temp6 = this.containerFrame.getChildByName("descripterFrame");
+             temp6.text = levelDescripters[6].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[6].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[6].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 8:
+             let temp7 = this.containerFrame.getChildByName("titleFrame");
+             temp7.text = levelDescripters[7].title;
+             temp7 = this.containerFrame.getChildByName("descripterFrame");
+             temp7.text = levelDescripters[7].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[7].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[7].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 9:
+             let temp8 = this.containerFrame.getChildByName("titleFrame");
+             temp8.text = levelDescripters[8].title;
+             temp8 = this.containerFrame.getChildByName("descripterFrame");
+             temp8.text = levelDescripters[8].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[8].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[8].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 10:
+             let temp9 = this.containerFrame.getChildByName("titleFrame");
+             temp9.text = levelDescripters[9].title;
+             temp9 = this.containerFrame.getChildByName("descripterFrame");
+             temp9.text = levelDescripters[9].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[9].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[9].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 11:
+             let temp10 = this.containerFrame.getChildByName("titleFrame");
+             temp10.text = levelDescripters[10].title;
+             temp10 = this.containerFrame.getChildByName("descripterFrame");
+             temp10.text = levelDescripters[10].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[10].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[10].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 12:
+             let temp11 = this.containerFrame.getChildByName("titleFrame");
+             temp11.text = levelDescripters[11].title;
+             temp11 = this.containerFrame.getChildByName("descripterFrame");
+             temp11.text = levelDescripters[11].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[11].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[11].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 13:
+             let temp12 = this.containerFrame.getChildByName("titleFrame");
+             temp12.text = levelDescripters[12].title;
+             temp12 = this.containerFrame.getChildByName("descripterFrame");
+             temp12.text = levelDescripters[12].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[12].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[12].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 14:
+             let temp13 = this.containerFrame.getChildByName("titleFrame");
+             temp13.text = levelDescripters[13].title;
+             temp13 = this.containerFrame.getChildByName("descripterFrame");
+             temp13.text = levelDescripters[13].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[13].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[13].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 15:
+             let temp14 = this.containerFrame.getChildByName("titleFrame");
+             temp14.text = levelDescripters[14].title;
+             temp14 = this.containerFrame.getChildByName("descripterFrame");
+             temp14.text = levelDescripters[14].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[14].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[14].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 16:
+             let temp15 = this.containerFrame.getChildByName("titleFrame");
+             temp15.text = levelDescripters[15].title;
+             temp15 = this.containerFrame.getChildByName("descripterFrame");
+             temp15.text = levelDescripters[15].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[15].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[15].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 17:
+             let temp16 = this.containerFrame.getChildByName("titleFrame");
+             temp16.text = levelDescripters[16].title;
+             temp16 = this.containerFrame.getChildByName("descripterFrame");
+             temp16.text = levelDescripters[16].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[16].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[16].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 18:
+             let temp17 = this.containerFrame.getChildByName("titleFrame");
+             temp17.text = levelDescripters[17].title;
+             temp17 = this.containerFrame.getChildByName("descripterFrame");
+             temp17.text = levelDescripters[17].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[17].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[17].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 19:
+             let temp18 = this.containerFrame.getChildByName("titleFrame");
+             temp18.text = levelDescripters[18].title;
+             temp18 = this.containerFrame.getChildByName("descripterFrame");
+             temp18.text = levelDescripters[18].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[18].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[18].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+        case 20:
+             let temp19 = this.containerFrame.getChildByName("titleFrame");
+             temp19.text = levelDescripters[19].title;
+             temp19 = this.containerFrame.getChildByName("descripterFrame");
+             temp19.text = levelDescripters[19].description;
+             this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[19].x + this.stage.canvas.width / 2 + 15;
+             this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[19].y + this.stage.canvas.height / 2 + 15;
+             this.containerFrame.visible = true;
+             break;
+
+          }
+      }
+
+      if(evt.type == "mouseout"){
+          this.containerFrame.visible = false;
+          this.containerFrame.x = 100;
+          this.containerFrame.y = 100;
+      }
+
+    },
 
     ///////////////////////
     // DATABASE REQUESTS //
@@ -1815,7 +2060,8 @@ export default {
   z-index: 1;
   text-align: center;
   font-family: "Blackadder";
-  font-size: 3vh;
+  /* font-size: 3vh; */
+  font-size: 1.75vw;
   color: saddlebrown;
   width: 500px;
 }
@@ -1875,11 +2121,12 @@ export default {
 
 input {
   width: 100%;
-  max-width: 200px;
+  /* max-width: 200px; */
+  max-width: 10em;
   box-sizing: border-box;
   border: none;
   font-family: "Blackadder";
-  font-size: 3vh;
+  font-size: 1.75vw;
   color: saddlebrown;
   border-bottom: 2px solid saddlebrown;
   background-color: blanchedalmond;
@@ -1967,13 +2214,15 @@ input::-webkit-outer-spin-button {
 
 .show {display: block;}
 
-@media only screen and (max-width: 900px) {
-  body {
+/* @media only screen and (max-width: 900px) { */
+  /* body { */
     /* font-size: 15vh; */
-  }
-  input {
+  /* } */
+
+  /* input {
     font-size: 7vh;
   }
+
   .scrollMenu {
     line-height: 75%;
     font-size: 7vh;
@@ -1997,16 +2246,16 @@ input::-webkit-outer-spin-button {
 
   #historyBanner {
     font-size: 5vh;
-  }
+  } */
 
-  #entryInput {
-    font-size: 5vh;
+  /* #entryInput { */
+    /* font-size: 5vh; */
     /* font-family: "Arial"; */
     /* width: 2.5em; */
     /* max-width: 50px */
     /* -moz-appearance:textfield !important; */
-  }
-}
+  /* } */
+/* } */
 
 
 </style>

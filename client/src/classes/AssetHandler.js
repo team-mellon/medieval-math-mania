@@ -190,7 +190,7 @@ class AssetHandler {
 
   }
 
-  createContainerFrame(width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage){
+  static createContainerFrame (width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage){
     var squareFrame = new createjs.Shape();
     squareFrame.graphics.beginFill("black").drawRect(0,0,210,310);
     squareFrame.name = "squareFrame";
@@ -217,6 +217,7 @@ class AssetHandler {
     this.createAndPushEntity(entity_component_system, containerFrame, width, height, x_lock, x_location, y_lock, y_location, type);
 
     return containerFrame;
+
   }
 
   static createButton (location, text, width, height, x_lock, x_location, y_lock, y_location, type, handleClick, entity_component_system, stage) {
@@ -255,6 +256,9 @@ class AssetHandler {
 
     var label = new createjs.Text(text, "normal " + size + "px " + font, color);
     // label.name = "label";
+		var hit = new createjs.Shape();
+    hit.graphics.beginFill("#000").drawRect(0, 0, width, height);
+		label.hitArea = hit;
     label.textAlign = "center";
     label.textBaseline = "middle";
     // label.x = 216/2;
