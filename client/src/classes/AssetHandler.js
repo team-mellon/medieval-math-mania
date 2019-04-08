@@ -190,6 +190,35 @@ class AssetHandler {
 
   }
 
+  createContainerFrame(width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage){
+    var squareFrame = new createjs.Shape();
+    squareFrame.graphics.beginFill("black").drawRect(0,0,210,310);
+    squareFrame.name = "squareFrame";
+    squareFrame.alpha = 0.8;
+
+    var titleFrame = new createjs.Text("TITLE", "bold 16px Oldstyle", "white");
+    titleFrame.lineWidth = 210;
+    titleFrame.name = "titleFrame";
+    titleFrame.x = 7;
+    titleFrame.y = 7;
+
+    var descripterFrame = new createjs.Text("DESCRIPTER", "14px Oldstyle", "white");
+    descripterFrame.lineWidth = 210;
+    descripterFrame.name = "descripterFrame";
+    descripterFrame.x = 7;
+    descripterFrame.y = 52;
+
+    var containerFrame = new createjs.Container();
+    containerFrame.addChild(squareFrame, titleFrame, descripterFrame);
+    containerFrame.x = 100;
+    containerFrame.y = 100;
+    stage.addChild(containerFrame);
+
+    this.createAndPushEntity(entity_component_system, containerFrame, width, height, x_lock, x_location, y_lock, y_location, type);
+
+    return containerFrame;
+  }
+
   static createButton (location, text, width, height, x_lock, x_location, y_lock, y_location, type, handleClick, entity_component_system, stage) {
 
     var image = new createjs.Bitmap(location);
