@@ -127,6 +127,8 @@ export default {
     // INITIIALIZATION //
     /////////////////////
 
+    this.containerFrame = {};
+
     this.input = new InputHandler();
     this.mobile = new MobileHandler();
     this.music = new MusicHandler();
