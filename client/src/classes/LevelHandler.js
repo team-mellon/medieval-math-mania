@@ -268,7 +268,7 @@ class LevelHandler {
 
   }
 
-  createLevel (stage, lcs, leave_to_map, leave_to_hint, leave_to_menu, leave_to_settings) {
+  createLevel (stage, lcs, leave_to_map, leave_to_hint, leave_to_menu, leave_to_settings, user_authentication) {
 
     // Level structure in background
     this.structure_center = AssetHandler.createSprite(this.centerS, this.centerS.frames.width, this.centerS.frames.height, "center", -360 + (this.centerS.frames.width / 2), "bottom", -897 + (this.centerS.frames.height / 2), "image", lcs, stage);
@@ -359,19 +359,17 @@ class LevelHandler {
     this.close_button = AssetHandler.createButton("res/hit-target-pause-close-button.png", "", this.buttonX, this.buttonY, "center", 0 + 445, "center", 0 - 281, "gui", function() {
       createjs.Sound.play("menu");
       this.pauseAnimation(false);
-      this.visibleButton(false);
+      this.visibleButton(false, user_authentication);
       this.visibleForm(true);
     }.bind(this), lcs, stage);
     this.close_button.visible = false;
 
-    this.main_menu_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Main Menu", this.buttonX, this.buttonY, "center", 0, "center", 0 - 180, "gui", leave_to_menu, lcs, stage);
-    this.main_menu_button.visible = false;
+    if (user_authentication) {
 
-    this.exit_level_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Exit Level", this.buttonX, this.buttonY, "center", 0, "center", 0 - 110, "gui", leave_to_map, lcs, stage);
-    this.exit_level_button.visible = false;
+      this.main_menu_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Main Menu", this.buttonX, this.buttonY, "center", 0, "center", 0 - 180, "gui", leave_to_menu, lcs, stage);
+      this.main_menu_button.visible = false;
 
-    this.settings_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Settings", this.buttonX, this.buttonY, "center", 0, "center", 0 - 40, "gui", leave_to_settings, lcs, stage);
-    this.settings_button.visible = false;
+    }
 
     this.hint_button = AssetHandler.createButton("res/hint-button.png", "Hint", 72, 72, "center", 0 - 313, "center", 0 + 194, "gui", leave_to_hint, lcs, stage);
     this.hint_button.visible = false;
@@ -396,6 +394,25 @@ class LevelHandler {
     // antiLute.hidden = true;
 
   }
+
+  // changeLevel: function(new_level) {
+  //
+  //   this.level.resetLevel();
+  //
+  //   this.level.current_level++;
+  //
+  //   if (this.level.current_level > this.num_levels) {
+  //     this.level.current_level = 1;
+  //   }
+  //
+  //   this.bg_color = levelData[this.level.current_level - 1].color;
+  //
+  //   this.level.loadLevel();
+  //   this.destroyScene();
+  //   this.createScene();
+  //   this.resize();
+  //
+  // },
 
 
   //////////
@@ -1363,13 +1380,15 @@ class LevelHandler {
 
   }
 
-  visibleButton (visible) {
+  visibleButton (visible, user_authentication) {
 
     if(visible) {
 
   		this.pause_menu.visible = true;
   		this.close_button.visible = true;
+      if (user_authentication) {
   		this.main_menu_button.visible = true;
+      }
   		this.exit_level_button.visible = true;
   		this.settings_button.visible = true;
   		this.previous_indicator.visible = true;
@@ -1383,7 +1402,9 @@ class LevelHandler {
 
   		this.pause_menu.visible = false;
   		this.close_button.visible = false;
+      if (user_authentication) {
   		this.main_menu_button.visible = false;
+      }
   		this.exit_level_button.visible = false;
   		this.settings_button.visible = false;
   		this.previous_indicator.visible = false;
@@ -1397,10 +1418,10 @@ class LevelHandler {
 
   }
 
-  openPauseMenu () {
+  openPauseMenu (user_authentication) {
 
     this.pauseAnimation(true);
-    this.visibleButton(true);
+    this.visibleButton(true, user_authentication);
     this.visibleForm(false);
 
   }

@@ -99,6 +99,70 @@ class AssetHandler {
 
   }
 
+  // // Scale the image-like assets
+  // scale_to_canvas: function(image, x_lock, x_location, y_lock, y_location, type) {
+  //
+  //   var x_start = stage.canvas.width / 2;
+  //   var y_start = stage.canvas.height / 2;
+  //
+  //   image.scaleX = scene_scale_X;
+  //   image.scaleY = scene_scale_Y;
+  //
+  //   if (mobile) {
+  //
+  //     switch (type) {
+  //
+  //       case "image":
+  //         break;
+  //
+  //       case "gui":
+  //         image.scale = 1.0;
+  //         break;
+  //
+  //       case "smallgui":
+  //         image.scale = 0.5;
+  //         break;
+  //     }
+  //
+  //   }
+  //
+  //   switch (x_lock) {
+  //
+  //     case "left":
+  //       var x_start = 0;
+  //       break;
+  //
+  //     case "center":
+  //       var x_start = stage.canvas.width / 2;
+  //       break;
+  //
+  //     case "right":
+  //       var x_start = stage.canvas.width;
+  //       break;
+  //
+  //   }
+  //
+  //   switch (y_lock) {
+  //
+  //     case "top":
+  //       var y_start = 0;
+  //       break;
+  //
+  //     case "center":
+  //       var y_start = stage.canvas.height / 2;
+  //       break;
+  //
+  //     case "bottom":
+  //       var y_start = stage.canvas.height;
+  //       break;
+  //
+  //   }
+  //
+  //   image.x = x_start + x_location;
+  //   image.y = y_start + y_location;
+  //
+  // },
+
   static createImage (location, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
 
     let image = new createjs.Bitmap(location);

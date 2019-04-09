@@ -349,6 +349,7 @@ export default {
             function() { createjs.Sound.play("sword"); this.changeScene(9); this.level.visibleForm(true); }.bind(this),
             function() { createjs.Sound.play("menu"); this.changeScene(2); this.level.visibleForm(true); }.bind(this),
             function() { createjs.Sound.play("menu"); this.changeScene(6); this.level.visibleForm(true); }.bind(this),
+            this.user.authenticated
           );
 
           if (this.mobile.isMobile) {
@@ -893,70 +894,6 @@ export default {
 
     },
 
-    // Scale the image-like assets
-    scale_to_canvas: function(image, x_lock, x_location, y_lock, y_location, type) {
-
-      var x_start = stage.canvas.width / 2;
-      var y_start = stage.canvas.height / 2;
-
-      image.scaleX = scene_scale_X;
-      image.scaleY = scene_scale_Y;
-
-      if (mobile) {
-
-        switch (type) {
-
-          case "image":
-            break;
-
-          case "gui":
-            image.scale = 1.0;
-            break;
-
-          case "smallgui":
-            image.scale = 0.5;
-            break;
-        }
-
-      }
-
-      switch (x_lock) {
-
-        case "left":
-          var x_start = 0;
-          break;
-
-        case "center":
-          var x_start = stage.canvas.width / 2;
-          break;
-
-        case "right":
-          var x_start = stage.canvas.width;
-          break;
-
-      }
-
-      switch (y_lock) {
-
-        case "top":
-          var y_start = 0;
-          break;
-
-        case "center":
-          var y_start = stage.canvas.height / 2;
-          break;
-
-        case "bottom":
-          var y_start = stage.canvas.height;
-          break;
-
-      }
-
-      image.x = x_start + x_location;
-      image.y = y_start + y_location;
-
-    },
-
     tick: function(event) {
 
       if (this.current_scene == 0) {
@@ -1231,7 +1168,7 @@ export default {
 
         this.menu_button.visible = false;
 
-        this.level.openPauseMenu();
+        this.level.openPauseMenu(user_authentication);
 
         // this.level.pauseAnimation(true);
         // this.level.visibleButton(true);
@@ -1385,7 +1322,7 @@ export default {
 
     			this.play_button = AssetHandler.createButton("res/menu-button.png", "Play", this.buttonX, this.buttonY, "center", 0, "center", 0 - 200, "gui", function() { createjs.Sound.play("menu"); this.changeScene(8); }.bind(this), this.ecs, this.stage);
     			this.stats_button = AssetHandler.createButton("res/menu-button.png", "Stats", this.buttonX, this.buttonY, "center", 0, "center", 0 - 100, "gui", function() { createjs.Sound.play("menu"); this.changeScene(4); this.getUserData(this.user.username); }.bind(this), this.ecs, this.stage);
-    			this.h2p_button = AssetHandler.createButton("res/menu-button.png", "How To Play", this.buttonX, this.buttonY, "center", 0, "center", 0 - 0, "gui", function() { createjs.Sound.play("menu"); this.changeScene(5); }.bind(this), this.ecs, this.stage);
+    			this.h2p_button = AssetHandler.createButton("res/menu-button.png", "How To Play", this.buttonX, this.buttonY, "center", 0, "center", 0 - 0, "gui", function() { createjs.Sound.play("menu"); this.indicatorFunction(0); }.bind(this), this.ecs, this.stage);
     			this.settings_button = AssetHandler.createButton("res/menu-button.png", "Settings", this.buttonX, this.buttonY, "center", 0, "center", 0 + 100, "gui", function() { createjs.Sound.play("menu"); this.changeScene(6); }.bind(this), this.ecs, this.stage);
     			this.logout_button = AssetHandler.createButton("res/menu-button.png", "Logout", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "top", (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.user.authenticated = false; this.changeScene(0); this.signoutUser(); }.bind(this), this.ecs, this.stage);
     			this.account_button = AssetHandler.createButton("res/menu-button.png", "Account", this.buttonX, this.buttonY, "right", 0 - (this.buttonX/2 + 10), "top", (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(7); this.getUserData(this.user.username); }.bind(this), this.ecs, this.stage);
@@ -1423,7 +1360,7 @@ export default {
 
         		this.menu_button.visible = false;
 
-            this.level.openPauseMenu();
+            this.level.openPauseMenu(user_authentication);
 
             // this.level.pauseAnimation(true);
             // this.level.visibleButton(true);
@@ -1518,6 +1455,10 @@ export default {
 
   			     this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), this.ecs, this.stage);
 
+          } else {
+
+  			     this.menu_button = AssetHandler.createButton("res/login-button.png", "How To Play", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.indicatorFunction(0); }.bind(this), this.ecs, this.stage);
+
           }
 
     			for (var i = 1; i < (this.num_levels + 1); i++) {
@@ -1580,10 +1521,6 @@ export default {
     // LEVELS //
     ////////////
 
-    // function handleFileComplete(event) {
-    //   document.body.appendChild(event.result);
-    // }
-
     destroyLevel: function() {
 
       for (var i = 0; i < lcs.length; i++) {
@@ -1595,25 +1532,6 @@ export default {
       this.lcs = [];
 
     },
-
-    // changeLevel: function(new_level) {
-    //
-    //   this.level.resetLevel();
-    //
-    //   this.level.current_level++;
-    //
-    //   if (this.level.current_level > this.num_levels) {
-    //     this.level.current_level = 1;
-    //   }
-    //
-    //   this.bg_color = levelData[this.level.current_level - 1].color;
-    //
-    //   this.level.loadLevel();
-    //   this.destroyScene();
-    //   this.createScene();
-    //   this.resize();
-    //
-    // },
 
     handleMouseEvent: function(evt) {
 
