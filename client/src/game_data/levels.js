@@ -1,5 +1,11 @@
 export const levelData = [
 
+  { // Tutorial
+    number: 0,
+    color: "#c9e6ff",
+    hint: "This ones easy!"
+  },
+
   { // City
     number: 1,
     color: "#c9e6ff",

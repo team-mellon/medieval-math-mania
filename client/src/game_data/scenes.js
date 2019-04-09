@@ -125,6 +125,7 @@ export const sceneData = [
 
 export const indicatorCoordinates = [
 
+  { x:    0, y:    0 }, // Tutorial
   { x:  -90, y:   72 }, // City
   {	x: -288, y:    0 }, // Grasslands
   {	x: -600, y:  192 }, // Volcano
@@ -148,8 +149,9 @@ export const indicatorCoordinates = [
 
 ];
 
-export const levelDescripters = [
+export const levelDescriptors = [
 
+    {title: "MENTOR'S MANOR", description: "tutorial level, this should never show"},  //level 0
     {title: "TYRANT'S TOWER", description: "castle clash was taken"},  //level 1
     {title: "GRIM GRASSLANDS", description: "Let the Orcs come as thick as summer-moths round a candle!"}, // level 2
     {title: "VICIOUS VOLCANO", description: "mount doom was taken"}, //level 3

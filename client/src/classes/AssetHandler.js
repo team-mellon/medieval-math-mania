@@ -190,7 +190,7 @@ class AssetHandler {
 
   }
 
-  createContainerFrame(width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage){
+  static createContainerFrame(width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage){
 
     var squareFrame = new createjs.Shape();
     squareFrame.graphics.beginFill("black").drawRect(0,0,220,320);
