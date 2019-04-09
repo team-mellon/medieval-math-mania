@@ -157,6 +157,42 @@ class AssetHandler {
 
   }
 
+
+    static createStatsContainer (asset, num, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
+	
+	var image = new createjs.Bitmap(asset);	
+	//stage.addChild(image);
+	image.regX = width/2;
+	image.regY = height/2;
+	image.scale = 0.50;
+	//image.x = 100;
+	//image.y = 100;
+
+    let listener = image.on("error", function(evt, data) {
+      console.log("'" + evt.src + "' failed to load");
+    });
+
+    let listener2 = image.on("complete", function(evt) {
+      console.log("Image loading complete. Check for errors.");
+    });
+	
+    var text = new createjs.Text(num, style + " " + size + " " + font, color);
+    //stage.addChild(text);
+	text.regX = 50;
+	text.regY = 100;
+	text.x = -250;
+
+	var container = new createjs.Container();
+	container.addChild(image, text);
+	stage.addChild(container);
+
+    this.createAndPushEntity(entity_component_system, container, width, height, x_lock, x_location, y_lock, y_location, type);
+
+    return text;
+
+  }    
+    
+
   static createTextContainer (animation, words, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type, reg, entity_component_system, stage) { // }, handleClick) {
 
     var spriteSheet = new createjs.SpriteSheet(animation);
