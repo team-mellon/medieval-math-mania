@@ -170,10 +170,30 @@ class AssetHandler {
 	container.addChild(text);
 	stage.addChild(container);
 
-
+	let count = 1;
 	for(var i = 0; i <= 195; i += 65){
 	    for(var j = 0; j < 5; j++){
-		let temp = new createjs.Bitmap(asset);
+		if(count == 1 && j == 1)
+		    var temp = new createjs.Bitmap("res/badge-level-2.png");
+		else if(count == 1 && j == 2)
+		    var temp = new createjs.Bitmap("res/badge-level-3.png");
+		else if(count == 1 && j == 4)
+		    var temp = new createjs.Bitmap("res/badge-level-5.png");
+		else if(count == 2 && j == 0)
+		    var temp = new createjs.Bitmap("res/badge-level-6.png");
+		else if(count == 2 && j == 1)
+		    var temp = new createjs.Bitmap("res/badge-level-7.png");
+		else if(count == 2 && j == 2)
+		    var temp = new createjs.Bitmap("res/badge-level-8.png");
+		else if(count == 2 && j == 3)
+		    var temp = new createjs.Bitmap("res/badge-level-9.png");
+		else if(count == 3 && j == 3)
+		    var temp = new createjs.Bitmap("res/badge-level-14.png");
+		else if(count == 3 && j == 4)
+		    var temp = new createjs.Bitmap("res/badge-level-15.png");
+		else
+		    var temp = new createjs.Bitmap(asset);
+		
 		temp.regX = width / 2;
 		temp.regY = height / 2;
 		temp.scale = 0.25;
@@ -182,6 +202,7 @@ class AssetHandler {
 		temp.y = -70 + i;
 		container.addChild(temp);
 	    }
+	    count++;
 	}
 /*
 	var image = new createjs.Bitmap(asset);	
