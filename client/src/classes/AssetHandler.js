@@ -324,7 +324,7 @@ class AssetHandler {
     var label = new createjs.Text(text, "normal " + size + "px " + font, color);
     // label.name = "label";
 		var hit = new createjs.Shape();
-    hit.graphics.beginFill("#000").drawRect(0, 0, width, height);
+    hit.graphics.beginFill("#000").drawRect(-25, -25, width, height);
 		label.hitArea = hit;
     label.textAlign = "center";
     label.textBaseline = "middle";
