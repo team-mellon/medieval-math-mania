@@ -277,7 +277,7 @@ class LevelHandler {
 
   }
 
-  createLevel (stage, leave_to_map, leave_to_hint, leave_to_menu, leave_to_settings, user_authentication) {
+  createLevel (stage, leave_to_map, leave_to_hint, leave_to_menu, leave_to_settings, user_authentication, menu_button) {
 
     console.log("LCS length: " + this.lcs.length);
     console.log(stage);
@@ -378,6 +378,7 @@ class LevelHandler {
       this.pauseAnimation(false);
       this.visibleButton(false, user_authentication);
       this.visibleForm(true);
+      menu_button();
     }.bind(this), this.lcs, stage);
     this.close_button.visible = false;
 

@@ -913,7 +913,8 @@ export default {
             function() { createjs.Sound.play("sword"); this.changeScene(9); this.level.visibleForm(true); }.bind(this),
             function() { createjs.Sound.play("menu"); this.changeScene(2); this.level.visibleForm(true); this.level.destroyLevel(this.stage); }.bind(this),
             function() { createjs.Sound.play("menu"); this.changeScene(6); this.level.visibleForm(true); }.bind(this),
-            this.user.authenticated
+            this.user.authenticated,
+            function() { this.menu_button.visible = true; }.bind(this)
           );
 
           break;
