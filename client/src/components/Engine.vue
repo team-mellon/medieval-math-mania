@@ -1692,7 +1692,7 @@ input::-webkit-outer-spin-button {
 .dropdown {
   position: relative;
   display: inline-block;
-  width: 130px;
+  width: 350px;
 }
 
 .dropdown-content {
@@ -1701,7 +1701,7 @@ input::-webkit-outer-spin-button {
   /* display: none; */
   position: absolute;
   background-color: none;
-  min-width: 130px;
+  min-width: 350px;
   overflow: auto;
   border: 0px solid #ddd;
   z-index: 1;

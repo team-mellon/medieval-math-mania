@@ -172,19 +172,19 @@ class LevelHandler {
 
     this.range_bannerS = {
       images: ["res/range-banner.png"],
-      frames: {width:192, height:126, count:1, regX: 0, regY:0, spacing:0, margin:0},
+      frames: {width:288, height:126, count:1, regX: 0, regY:0, spacing:0, margin:0},
       framerate: 6
     };
 
     this.equation_bannerS = {
       images: ["res/equation-banner.png"],
-      frames: {width:300, height:78, count:1, regX: 0, regY:0, spacing:0, margin:0},
+      frames: {width:444, height:78, count:1, regX: 0, regY:0, spacing:0, margin:0},
       framerate: 6
     };
 
     this.history_bannerS = {
       images: ["res/history-banner.png"],
-      frames: {width:192, height:126, count:1, regX: 0, regY:0, spacing:0, margin:0},
+      frames: {width:288, height:126, count:1, regX: 0, regY:0, spacing:0, margin:0},
       framerate: 6
     };
 
@@ -306,10 +306,10 @@ class LevelHandler {
 
     this.structure_body = AssetHandler.createSprite(this.bodyS, this.bodyS.frames.width, this.bodyS.frames.height, "center", 0, "bottom", -this.bodyS.frames.height / 2, "image", this.lcs, stage);
     // structure_banner = AssetHandler.createSprite(bannerS, this.structureX, this.structureY, "center", 0, "bottom", -this.structureY / 2, "image", this.lcs, stage);
-    this.structure_range = AssetHandler.createTextContainer(this.range_bannerS, "[ #, # ]", "Oldstyle", "32px", "normal", "Gold", 192, 126, "center", -378 + 192 / 2, "bottom", -336 + 126 / 2, "image", 0, this.lcs, stage);
+    this.structure_range = AssetHandler.createTextContainer(this.range_bannerS, "[ #, # ]", "Oldstyle", "32px", "normal", "Gold", 288, 126, "center", -522 + 288 / 2, "bottom", -336 + 126 / 2, "image", 0, this.lcs, stage);
     // this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x              = #", "Oldstyle", "26px", "normal", "Gold", 300, 78, "center", -150 + 300 / 2, "bottom", -321 + 78 / 2, "image", 0, this.lcs, stage);
-    this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x              = #", "Oldstyle", "26px", "normal", "Gold", 300, 78, "center", -150 + 300 / 2, "bottom", -321 + 78 / 2, "image", 0, this.lcs, stage);
-    this.structure_history = AssetHandler.createTextContainer(this.history_bannerS, "History", "Oldstyle", "18px", "normal", "Gold", 192, 126, "center", 186 + 192 / 2, "bottom", -336 + 126 / 2, "image", 126 / 2, this.lcs, stage);
+    this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x              = #", "Oldstyle", "26px", "normal", "Gold", 444, 78, "center", -222 + 444 / 2, "bottom", -321 + 78 / 2, "image", 0, this.lcs, stage);
+    this.structure_history = AssetHandler.createTextContainer(this.history_bannerS, "History", "Oldstyle", "18px", "normal", "Gold", 288, 126, "center", 234 + 288 / 2, "bottom", -336 + 126 / 2, "image", 126 / 2, this.lcs, stage);
     this.structure_facade = AssetHandler.createSprite(this.facadeS, this.facadeS.frames.width, this.facadeS.frames.height, "center", 0, "bottom", -this.facadeS.frames.height / 2, "image", this.lcs, stage);  // Level structure in foreground
 
     this.firework_low = AssetHandler.createSprite(this.firework_lowS, this.structureX, this.structureY, "center", 0, "top", this.structureY / 2, "image", this.lcs, stage);
