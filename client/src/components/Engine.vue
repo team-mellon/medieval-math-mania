@@ -921,7 +921,7 @@ export default {
 
         case 6: // Settings
 
-          FormHandler.createsettingsForm(
+          FormHandler.createSettingsForm(
             this.level.boss_fight,
             this.level.play_tutorial,
             this.level.setTutorial,
