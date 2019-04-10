@@ -3,6 +3,7 @@
 //////////////////
 
 import AssetHandler from './AssetHandler.js';
+import { tutorialSteps, tutorialCorrections } from '../game_data/tutorial.js';
 
 // import createjs from 'createjs';
 
@@ -11,6 +12,8 @@ class LevelHandler {
 
 
   constructor() {
+
+    this.lcs = []; // Level component system for scaling and eventually object storage
 
     this.buttonX = 216;
     this.buttonY = 72;
@@ -65,7 +68,7 @@ class LevelHandler {
     this.projectile_x_speed = 0;
 
     this.boss_fight = false;
-    this.play_tutorial = true;
+    this.play_tutorial = false;
 
     // var landscape_warning;
 
@@ -239,6 +242,12 @@ class LevelHandler {
       framerate: 6
     };
 
+    this.tutorial_menuS = {
+      images: ["res/tutorial-menu.png"],
+      frames: {width:900, height:300, count:1, regX: 0, regY:0, spacing:0, margin:0},
+      framerate: 6
+    };
+
     this.number_text = [];
 
   }
@@ -268,92 +277,100 @@ class LevelHandler {
 
   }
 
-  createLevel (stage, lcs, leave_to_map, leave_to_hint, leave_to_menu, leave_to_settings, user_authentication) {
+  createLevel (stage, leave_to_map, leave_to_hint, leave_to_menu, leave_to_settings, user_authentication) {
+
+    console.log("LCS length: " + this.lcs.length);
+    console.log(stage);
 
     // Level structure in background
-    this.structure_center = AssetHandler.createSprite(this.centerS, this.centerS.frames.width, this.centerS.frames.height, "center", -360 + (this.centerS.frames.width / 2), "bottom", -897 + (this.centerS.frames.height / 2), "image", lcs, stage);
-    this.structure_left_center = AssetHandler.createSprite(this.left_centerS, this.left_centerS.frames.width, this.left_centerS.frames.height, "center", -660 + (this.left_centerS.frames.width / 2), "bottom", -750 + (this.left_centerS.frames.height / 2), "image", lcs, stage);
-    this.structure_right_center = AssetHandler.createSprite(this.right_centerS, this.right_centerS.frames.width, this.right_centerS.frames.height, "center", 660 - (this.right_centerS.frames.width / 2), "bottom", -750 + (this.right_centerS.frames.height / 2), "image", lcs, stage);
+    this.structure_center = AssetHandler.createSprite(this.centerS, this.centerS.frames.width, this.centerS.frames.height, "center", -360 + (this.centerS.frames.width / 2), "bottom", -897 + (this.centerS.frames.height / 2), "image", this.lcs, stage);
+    this.structure_left_center = AssetHandler.createSprite(this.left_centerS, this.left_centerS.frames.width, this.left_centerS.frames.height, "center", -660 + (this.left_centerS.frames.width / 2), "bottom", -750 + (this.left_centerS.frames.height / 2), "image", this.lcs, stage);
+    this.structure_right_center = AssetHandler.createSprite(this.right_centerS, this.right_centerS.frames.width, this.right_centerS.frames.height, "center", 660 - (this.right_centerS.frames.width / 2), "bottom", -750 + (this.right_centerS.frames.height / 2), "image", this.lcs, stage);
 
     // Bad guys in midground
-    this.henchman_left_center = AssetHandler.createSprite(this.henchmanS, 96, 96, "center", 0 - (96/2 + 375), "bottom", -384, "image", lcs, stage);
+    this.henchman_left_center = AssetHandler.createSprite(this.henchmanS, 96, 96, "center", 0 - (96/2 + 375), "bottom", -384, "image", this.lcs, stage);
     this.henchman_left_center.gotoAndPlay(0);
-    this.boss = AssetHandler.createSprite(this.bossS, 96, 96, "center", 0, "bottom", -384, "image", lcs, stage);
+    this.boss = AssetHandler.createSprite(this.bossS, 96, 96, "center", 0, "bottom", -384, "image", this.lcs, stage);
     this.boss.gotoAndPlay(0);
-    this.henchman_right_center = AssetHandler.createSprite(this.henchmanS, 96, 96, "center", 0 + (96/2 + 375), "bottom", -384, "image", lcs, stage);
+    this.henchman_right_center = AssetHandler.createSprite(this.henchmanS, 96, 96, "center", 0 + (96/2 + 375), "bottom", -384, "image", this.lcs, stage);
     this.henchman_right_center.gotoAndPlay(0);
 
     // Level structure in foreground
-    this.structure_left = AssetHandler.createSprite(this.leftS, this.leftS.frames.width, this.leftS.frames.height, "center", -960 + (this.leftS.frames.width / 2), "bottom", -(this.leftS.frames.height / 2), "image", lcs, stage);
-    this.structure_right = AssetHandler.createSprite(this.rightS, this.rightS.frames.width, this.rightS.frames.height, "center", 960 - (this.rightS.frames.width / 2), "bottom", -(this.rightS.frames.height / 2), "image", lcs, stage);
+    this.structure_left = AssetHandler.createSprite(this.leftS, this.leftS.frames.width, this.leftS.frames.height, "center", -960 + (this.leftS.frames.width / 2), "bottom", -(this.leftS.frames.height / 2), "image", this.lcs, stage);
+    this.structure_right = AssetHandler.createSprite(this.rightS, this.rightS.frames.width, this.rightS.frames.height, "center", 960 - (this.rightS.frames.width / 2), "bottom", -(this.rightS.frames.height / 2), "image", this.lcs, stage);
 
-    this.henchman_left = AssetHandler.createSprite(this.henchmanS, 96, 96, "center", 0 - (96/2 + 705), "bottom", -207 + (24), "image", lcs, stage);
+    this.henchman_left = AssetHandler.createSprite(this.henchmanS, 96, 96, "center", 0 - (96/2 + 705), "bottom", -207 + (24), "image", this.lcs, stage);
     this.henchman_left.gotoAndPlay(0);
-    this.henchman_right = AssetHandler.createSprite(this.henchmanS, 96, 96, "center", 0 + (96/2 + 705), "bottom", -207 + (24), "image", lcs, stage);
+    this.henchman_right = AssetHandler.createSprite(this.henchmanS, 96, 96, "center", 0 + (96/2 + 705), "bottom", -207 + (24), "image", this.lcs, stage);
     this.henchman_right.gotoAndPlay(0);
 
-    this.structure_body = AssetHandler.createSprite(this.bodyS, this.bodyS.frames.width, this.bodyS.frames.height, "center", 0, "bottom", -this.bodyS.frames.height / 2, "image", lcs, stage);
-    // structure_banner = AssetHandler.createSprite(bannerS, this.structureX, this.structureY, "center", 0, "bottom", -this.structureY / 2, "image", lcs, stage);
-    this.structure_range = AssetHandler.createTextContainer(this.range_bannerS, "[ #, # ]", "Oldstyle", "32px", "normal", "Gold", 192, 126, "center", -378 + 192 / 2, "bottom", -336 + 126 / 2, "image", 0, lcs, stage);
-    // this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x              = #", "Oldstyle", "26px", "normal", "Gold", 300, 78, "center", -150 + 300 / 2, "bottom", -321 + 78 / 2, "image", 0, lcs, stage);
-    this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x              = #", "Oldstyle", "26px", "normal", "Gold", 300, 78, "center", -150 + 300 / 2, "bottom", -321 + 78 / 2, "image", 0, lcs, stage);
-    this.structure_history = AssetHandler.createTextContainer(this.history_bannerS, "History", "Oldstyle", "18px", "normal", "Gold", 192, 126, "center", 186 + 192 / 2, "bottom", -336 + 126 / 2, "image", 126 / 2, lcs, stage);
-    this.structure_facade = AssetHandler.createSprite(this.facadeS, this.facadeS.frames.width, this.facadeS.frames.height, "center", 0, "bottom", -this.facadeS.frames.height / 2, "image", lcs, stage);  // Level structure in foreground
+    this.structure_body = AssetHandler.createSprite(this.bodyS, this.bodyS.frames.width, this.bodyS.frames.height, "center", 0, "bottom", -this.bodyS.frames.height / 2, "image", this.lcs, stage);
+    // structure_banner = AssetHandler.createSprite(bannerS, this.structureX, this.structureY, "center", 0, "bottom", -this.structureY / 2, "image", this.lcs, stage);
+    this.structure_range = AssetHandler.createTextContainer(this.range_bannerS, "[ #, # ]", "Oldstyle", "32px", "normal", "Gold", 192, 126, "center", -378 + 192 / 2, "bottom", -336 + 126 / 2, "image", 0, this.lcs, stage);
+    // this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x              = #", "Oldstyle", "26px", "normal", "Gold", 300, 78, "center", -150 + 300 / 2, "bottom", -321 + 78 / 2, "image", 0, this.lcs, stage);
+    this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x              = #", "Oldstyle", "26px", "normal", "Gold", 300, 78, "center", -150 + 300 / 2, "bottom", -321 + 78 / 2, "image", 0, this.lcs, stage);
+    this.structure_history = AssetHandler.createTextContainer(this.history_bannerS, "History", "Oldstyle", "18px", "normal", "Gold", 192, 126, "center", 186 + 192 / 2, "bottom", -336 + 126 / 2, "image", 126 / 2, this.lcs, stage);
+    this.structure_facade = AssetHandler.createSprite(this.facadeS, this.facadeS.frames.width, this.facadeS.frames.height, "center", 0, "bottom", -this.facadeS.frames.height / 2, "image", this.lcs, stage);  // Level structure in foreground
 
-    this.firework_low = AssetHandler.createSprite(this.firework_lowS, this.structureX, this.structureY, "center", 0, "top", this.structureY / 2, "image", lcs, stage);
-    this.firework_hit = AssetHandler.createSprite(this.firework_hitS, this.structureX, this.structureY, "center", 0, "top", this.structureY / 2, "image", lcs, stage);
-    this.firework_high = AssetHandler.createSprite(this.firework_highS, this.structureX, this.structureY, "center", 0, "top", this.structureY / 2, "image", lcs, stage);
+    this.firework_low = AssetHandler.createSprite(this.firework_lowS, this.structureX, this.structureY, "center", 0, "top", this.structureY / 2, "image", this.lcs, stage);
+    this.firework_hit = AssetHandler.createSprite(this.firework_hitS, this.structureX, this.structureY, "center", 0, "top", this.structureY / 2, "image", this.lcs, stage);
+    this.firework_high = AssetHandler.createSprite(this.firework_highS, this.structureX, this.structureY, "center", 0, "top", this.structureY / 2, "image", this.lcs, stage);
 
     // Main character in foreground
-    this.projectile = AssetHandler.createSprite(this.projectileS, 96, 96, "center", 0, "bottom", 0 - (96/2 + 57), "image", lcs, stage);
+    this.projectile = AssetHandler.createSprite(this.projectileS, 96, 96, "center", 0, "bottom", 0 - (96/2 + 57), "image", this.lcs, stage);
     this.projectile.gotoAndPlay(0);
-    this.catapult = AssetHandler.createSprite(this.catapultS, 288, 384, "center", 0, "bottom", 0 - (384/2 - 57), "image", lcs, stage);
+    this.catapult = AssetHandler.createSprite(this.catapultS, 288, 384, "center", 0, "bottom", 0 - (384/2 - 57), "image", this.lcs, stage);
+
+    this.background = AssetHandler.createImage("res/numberline.png", this.backgroundX, 24, "center", 0, "top", 24 / 2, "image", this.lcs, stage);
 
     // number_spacing = 10;
     this.number_spacer = 25;
 
     for(var i = -25; i <= 25; i++){
 
-      var temp = AssetHandler.createText(i.toString(), "Arial", "16px", "bold", "black", this.structureX, this.structureY, "center", 0 - (((this.number_spacer * 48) + 5)), "top", 30, "image", lcs, stage);
+      var temp = AssetHandler.createText(i.toString(), "Arial", "16px", "bold", "black", this.structureX, this.structureY, "center", 0 - (((this.number_spacer * 48) + 5)), "top", 30, "image", this.lcs, stage);
       this.number_text.push(temp);
       // number_spacing += 48;
       this.number_spacer--;
 
     }
 
-    this.structure_score = AssetHandler.createTextContainer(this.score_bannerS, "Total Lows: 0\nTotal High: 0\nTotal Hits: 0", "Oldstyle", "24px", "normal", "Gold", 192, 126, "left", (10 + 192 / 2), "bottom", -(10 + 126 / 2), "image", 126 / 2, lcs, stage);
+    this.structure_score = AssetHandler.createTextContainer(this.score_bannerS, "Total Lows: 0\nTotal High: 0\nTotal Hits: 0", "Oldstyle", "24px", "normal", "Gold", 192, 126, "left", (10 + 192 / 2), "bottom", -(10 + 126 / 2), "image", 126 / 2, this.lcs, stage);
 
-    this.end_level_flag = AssetHandler.createSprite(this.end_level_flagS, this.structureX, this.structureY, "center", 0, "center", 0, "image", lcs, stage);
+    this.end_level_flag = AssetHandler.createSprite(this.end_level_flagS, this.structureX, this.structureY, "center", 0, "center", 0, "image", this.lcs, stage);
     this.end_level_flag.visible = false;
 
-    this.end_level_scene = AssetHandler.createImage("res/login_scroll.png", this.backgroundX, this.backgroundY, "center", 0, "center", 0, "image", lcs, stage);
+    this.end_level_scene = AssetHandler.createImage("res/login_scroll.png", this.backgroundX, this.backgroundY, "center", 0, "center", 0, "image", this.lcs, stage);
     this.end_level_scene.visible = false;
 
-    this.end_level_button = AssetHandler.createButton("res/login-button.png", "Next Level", this.buttonX, this.buttonY, "center", 0, "center", 0 + 250, "gui", leave_to_map, lcs, stage);
+    this.end_level_button = AssetHandler.createButton("res/login-button.png", "Next Level", this.buttonX, this.buttonY, "center", 0, "center", 0 + 250, "gui", leave_to_map, this.lcs, stage);
     this.end_level_button.visible = false;
     this.end_level_button.alpha = 0;
 
     var sting = this.victoryGenerator();  // temp fix for sending victory string to function
 
-    this.end_text = AssetHandler.createText(sting, "Oldstyle", "65px", "bold", "gold", 10, 10, "center", 0, "center", 0 - 140, "image", lcs, stage);
+    this.end_text = AssetHandler.createText(sting, "Oldstyle", "65px", "bold", "gold", 10, 10, "center", 0, "center", 0 - 140, "image", this.lcs, stage);
     this.end_text.visible = false;
     //end_text.skewX = -5;
     this.end_text.skewY = -15;
     this.end_text.textAlign = "center";
 
-    this.hit_text = AssetHandler.createText("Total Hits:      ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0, "image", lcs, stage);
+    this.hit_text = AssetHandler.createText("Total Hits:      ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0, "image", this.lcs, stage);
     this.hit_text.visible = false;
     this.hit_text.alpha = 0;
 
-    this.low_text = AssetHandler.createText("Total Lows:     ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0 + 40, "image", lcs, stage);
+    this.low_text = AssetHandler.createText("Total Lows:     ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0 + 40, "image", this.lcs, stage);
     this.low_text.visible = false;
     this.low_text.alpha = 0;
 
-    this.high_text = AssetHandler.createText("Total Highs:    ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0 + 80, "image", lcs, stage);
+    this.high_text = AssetHandler.createText("Total Highs:    ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0 + 80, "image", this.lcs, stage);
     this.high_text.visible = false;
     this.high_text.alpha = 0;
 
-    this.pause_menu = AssetHandler.createImage("res/hit-target-pause-menu.png", this.backgroundX, this.backgroundY, "center", 0, "center", 0, "image", lcs, stage);
+    this.tutorial_menu = AssetHandler.createTextContainer(this.tutorial_menuS, "The tutorial is broken", "Oldstyle", "32px", "normal", "Saddlebrown", 900, 300, "center", 0, "top", (300 / 2) + this.buttonY , "image", 100, this.lcs, stage);
+    this.tutorial_menu.visible = false;
+
+    this.pause_menu = AssetHandler.createImage("res/hit-target-pause-menu.png", this.backgroundX, this.backgroundY, "center", 0, "center", 0, "image", this.lcs, stage);
     this.pause_menu.visible = false;
 
     this.close_button = AssetHandler.createButton("res/hit-target-pause-close-button.png", "", this.buttonX, this.buttonY, "center", 0 + 445, "center", 0 - 281, "gui", function() {
@@ -361,32 +378,38 @@ class LevelHandler {
       this.pauseAnimation(false);
       this.visibleButton(false, user_authentication);
       this.visibleForm(true);
-    }.bind(this), lcs, stage);
+    }.bind(this), this.lcs, stage);
     this.close_button.visible = false;
+
+    this.exit_level_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Exit Level", this.buttonX, this.buttonY, "center", 0, "center", 0 - 180, "gui", leave_to_map, this.lcs, stage);
+    this.exit_level_button.visible = false;
+
+    this.settings_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Settings", this.buttonX, this.buttonY, "center", 0, "center", 0 - 110, "gui", leave_to_settings, this.lcs, stage);
+    this.settings_button.visible = false;
 
     if (user_authentication) {
 
-      this.main_menu_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Main Menu", this.buttonX, this.buttonY, "center", 0, "center", 0 - 180, "gui", leave_to_menu, lcs, stage);
+      this.main_menu_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Main Menu", this.buttonX, this.buttonY, "center", 0, "center", 0 - 40, "gui", leave_to_menu, this.lcs, stage);
       this.main_menu_button.visible = false;
 
     }
 
-    this.hint_button = AssetHandler.createButton("res/hint-button.png", "Hint", 72, 72, "center", 0 - 313, "center", 0 + 194, "gui", leave_to_hint, lcs, stage);
+    this.hint_button = AssetHandler.createButton("res/hint-button.png", "Hint", 72, 72, "center", 0 - 313, "center", 0 + 194, "gui", leave_to_hint, this.lcs, stage);
     this.hint_button.visible = false;
 
-    this.previous_indicator = AssetHandler.createImage("res/previous-indicator.png", 24, 24, "center", 0 - 50, "center", 0 + 194, "gui", lcs, stage);
+    this.previous_indicator = AssetHandler.createImage("res/previous-indicator.png", 24, 24, "center", 0 - 50, "center", 0 + 194, "gui", this.lcs, stage);
     // this.previous_indicator.addEventListener("click", previousSound);
     this.previous_indicator.visible = false;
 
-    this.pause_indicator = AssetHandler.createImage("res/pause-indicator.png", 24, 24, "center", 0, "center", 0 + 194, "gui", lcs, stage);
+    this.pause_indicator = AssetHandler.createImage("res/pause-indicator.png", 24, 24, "center", 0, "center", 0 + 194, "gui", this.lcs, stage);
     // this.pause_indicator.addEventListener("click", playSound);
     this.pause_indicator.visible = false;
 
-    this.next_indicator = AssetHandler.createImage("res/next-indicator.png", 24, 24, "center", 0 + 50, "center", 0 + 194, "gui", lcs, stage);
+    this.next_indicator = AssetHandler.createImage("res/next-indicator.png", 24, 24, "center", 0 + 50, "center", 0 + 194, "gui", this.lcs, stage);
     // this.next_indicator.addEventListener("click", nextSound);
     this.next_indicator.visible = false;
 
-    this.lute = AssetHandler.createImage("res/lute.png", 96, 96, "center", 0 + 313, "center", 0 + 194, "gui", lcs, stage);
+    this.lute = AssetHandler.createImage("res/lute.png", 96, 96, "center", 0 + 313, "center", 0 + 194, "gui", this.lcs, stage);
     // antiLute = createImage("res/antiLute.png", 96, 96, 2);
     // this.lute.addEventListener("click", muteSound);
     this.lute.visible = false;
@@ -414,29 +437,40 @@ class LevelHandler {
   //
   // },
 
+  destroyLevel (stage) {
+
+    for (var i = 0; i < this.lcs.length; i++) {
+
+      stage.removeChild(this.lcs[i].object)
+
+    }
+
+    this.lcs = [];
+
+  }
 
   //////////
   // GAME //
   //////////
 
-  randomizeRangeAndMultiplier () {
-
-    // Generate new range
-    this.rand_num1 = Math.floor((Math.random() * 10) + 1);
-    this.rand_num2 = Math.floor((Math.random() * 100) + 1);
-    this.multiplicand = Math.floor(Math.random() * 11);
-    this.lower = this.rand_num1 * this.rand_num2;
-    this.upper = this.rand_num1 * (this.rand_num2 + 3);
-
-    var multip_div = document.getElementById("multiplicandText");
-    while (multip_div.firstChild) {
-      multip_div.removeChild(multip_div.firstChild);
-    }
-
-    var multip = document.createTextNode(this.multiplicand);
-    multip_div.appendChild(multip);
-
-  }
+  // randomizeRangeAndMultiplier () {
+  //
+  //   // Generate new range
+  //   this.rand_num1 = Math.floor((Math.random() * 10) + 1);
+  //   this.rand_num2 = Math.floor((Math.random() * 100) + 1);
+  //   this.multiplicand = Math.floor(Math.random() * 11);
+  //   this.lower = this.rand_num1 * this.rand_num2;
+  //   this.upper = this.rand_num1 * (this.rand_num2 + 3);
+  //
+  //   var multip_div = document.getElementById("multiplicandText");
+  //   while (multip_div.firstChild) {
+  //     multip_div.removeChild(multip_div.firstChild);
+  //   }
+  //
+  //   var multip = document.createTextNode(this.multiplicand);
+  //   multip_div.appendChild(multip);
+  //
+  // }
 
   runInput (isMobile, leave_to_hint) {
 
@@ -458,11 +492,12 @@ class LevelHandler {
         //   valid = false;
         // }
       }
+
       if (this.valid) {
 
         // Add to history
         console.log(this.history_list);
-        this.history_list.push(this.multiplier);
+        this.history_list.unshift(this.multiplier);
         var dropdown = document.getElementById("myDropdown");
         var history_entry = document.createTextNode(this.multiplier);
         var line_break = document.createElement("br");
@@ -483,7 +518,9 @@ class LevelHandler {
         var solut = document.createTextNode(solution);
         solut_div.appendChild(solut);
 
-        this.structure_equation_banner.text = this.multiplicand.toString() + " x              = " + this.solution.toString();
+        this.remakeMultiplierBanner()
+
+        // this.structure_equation_banner.getChildAt(1).text = this.multiplicand.toString() + " x              = " + this.solution.toString();
 
         // this.makeGameForm();
 
@@ -550,7 +587,7 @@ class LevelHandler {
         this.multiplier = document.getElementById("entryInput").value;
 
         // Add to history
-        this.history_list.push(this.multiplier);
+        this.history_list.unshift(this.multiplier);
         console.log(this.history_list);
         var dropdown = document.getElementById("myDropdown");
         var history_entry = document.createTextNode(this.multiplier);
@@ -573,7 +610,9 @@ class LevelHandler {
         var solut = document.createTextNode(this.solution);
         solut_div.appendChild(solut);
 
-        this.structure_equation_banner.text = this.multiplicand.toString() + " x              = " + this.solution.toString();
+        this.remakeMultiplierBanner()
+
+        // this.structure_equation_banner.getChildAt(1).text = this.multiplicand.toString() + " x              = " + this.solution.toString();
 
         // this.makeGameForm();
 
@@ -853,29 +892,60 @@ class LevelHandler {
   checkTutorial () {
 
     // Tutorial
-    if (this.play_tutorial) {
+    if (this.play_tutorial || this.current_level == 0) {
 
-      if (this.miss_lower_counter != 1) {
+      this.tutorial_menu.visible = true;
+      // this.tutorial_menu.text = tutorialSteps[0]; // for a little bit
+      // this.tutorial_menu.text = tutorialSteps[1]; // also for a little bit but then show controls in succession
+      // this.tutorial_menu.text = tutorialSteps[2]; // then show this until first shot is made
 
-        document.getElementById("tutorialText").textContent = "Try finding any multiplier that produces a solution below the range";
+      if (this.miss_lower_counter < 1) {
 
-      } else {
+        if (this.miss_upper_counter > 0) {
 
-        if (this.miss_upper_counter != 1) {
+          this.miss_upper_counter = 0;
+          this.tutorial_menu.text = tutorialCorrections[0];
 
-          document.getElementById("tutorialText").textContent = "Try finding any multiplier that produces a solution above the range";
+        } else if (this.hit_counter > 0) {
 
-        } else {
-
-          if (this.hit_counter != 3) {
-
-            document.getElementById("tutorialText").textContent = "Try finding 3 multipliers that produce solutions within the range";
-
-          } else {
-
-          }
+          this.hit_counter = 0;
+          this.tutorial_menu.text = tutorialCorrections[1];
 
         }
+
+        // document.getElementById("tutorialText").textContent = "Try finding any multiplier that produces a solution below the range";
+
+      } else if (this.miss_upper_counter < 1) {
+
+        if (this.miss_lower_counter > 1) {
+
+          this.miss_lower_counter = 1;
+          this.tutorial_menu.text = tutorialCorrections[2];
+
+        } else if (this.hit_counter > 0) {
+
+          this.hit_counter = 0;
+          this.tutorial_menu.text = tutorialCorrections[3];
+
+        }
+
+        // document.getElementById("tutorialText").textContent = "Try finding any multiplier that produces a solution above the range";
+
+      } else if (this.hit_counter < 3) {
+
+        if (this.miss_lower_counter > 1) {
+
+          this.miss_lower_counter = 1;
+          this.tutorial_menu.text = tutorialCorrections[4];
+
+        } else if (this.miss_upper_counter > 1) {
+
+          this.miss_upper_counter = 1;
+          this.tutorial_menu.text = tutorialCorrections[5];
+
+        }
+
+        // document.getElementById("tutorialText").textContent = "Try finding 3 multipliers that produce solutions within the range";
 
       }
 
@@ -1065,7 +1135,7 @@ class LevelHandler {
     // Append to the range banner
     multip_div.appendChild(multip);
 
-    this.structure_equation_banner.text = this.multiplicand.toString() + " x              = " + this.solution.toString();
+    this.structure_equation_banner.getChildAt(1).text = this.multiplicand.toString() + " x              = " + this.solution.toString();
 
   }
 
@@ -1073,7 +1143,7 @@ class LevelHandler {
 
     var range = "[ " + this.lower + ", " + this.upper + "]";
 
-    this.structure_range.text = range;
+    this.structure_range.getChildAt(1).text = range;
 
   }
 
@@ -1386,11 +1456,11 @@ class LevelHandler {
 
   		this.pause_menu.visible = true;
   		this.close_button.visible = true;
-      if (user_authentication) {
-  		this.main_menu_button.visible = true;
-      }
   		this.exit_level_button.visible = true;
   		this.settings_button.visible = true;
+      if (user_authentication) {
+		    this.main_menu_button.visible = true;
+      }
   		this.previous_indicator.visible = true;
   		this.pause_indicator.visible = true;
   		this.next_indicator.visible = true;
@@ -1402,11 +1472,11 @@ class LevelHandler {
 
   		this.pause_menu.visible = false;
   		this.close_button.visible = false;
-      if (user_authentication) {
-  		this.main_menu_button.visible = false;
-      }
   		this.exit_level_button.visible = false;
   		this.settings_button.visible = false;
+      if (user_authentication) {
+		    this.main_menu_button.visible = false;
+      }
   		this.previous_indicator.visible = false;
   		this.pause_indicator.visible = false;
   		this.next_indicator.visible = false;

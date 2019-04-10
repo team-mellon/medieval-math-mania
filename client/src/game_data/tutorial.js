@@ -5,3 +5,12 @@ export const tutorialSteps = [
   "Next try to find a solution that is above the range.",
   "Now try to find 3 solutions within the range."
 ];
+
+export const tutorialCorrections = [
+  "Nice try, but that was above the range, try getting a solution below the range.",
+  "Good job, but that was within the range, try getting a solution below the range first.",
+  "Nice try, but that was below the range, try getting a solution above the range.",
+  "Good job, but that was within the range, try getting a solution above the range first.",
+  "Nice try, but that was below the range, try getting a solution within the range.",
+  "Nice try, but that was above the range, try getting a solution within the range."
+];

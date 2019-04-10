@@ -35,7 +35,7 @@ export const sceneData = [
 
   { // Game
     color: "#000000",
-    bg_img: "res/numberline.png",
+    bg_img: "",
     fg_img: {
               images: [""],
               frames: {width:0, height:0, count:0, regX: 0, regY:0, spacing:0, margin:0},

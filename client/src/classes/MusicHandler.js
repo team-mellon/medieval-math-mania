@@ -1,6 +1,6 @@
-///////////////////
-// MUSICEHANDLER //
-///////////////////
+//////////////////
+// MUSICHANDLER //
+//////////////////
 
 // Game Data
 import { playlistSources, playlistIDs } from '../game_data/music.js';

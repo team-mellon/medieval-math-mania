@@ -52,8 +52,12 @@ export default {
 
   data () {
     return {
+
+      // Authentication handling
       error: '',
       text: '',
+
+      // Current user data
       user: {
         authenticated: false,
         firstname: 'Place',
@@ -63,8 +67,16 @@ export default {
         highs: 101010101,
         lows: 101010101
       },
+
+      // Scaling for engine assets
+      scene_scale_X: 1.0,
+      scene_scale_X: 1.0,
+
+
       // w: 100,
       // h: 200,
+
+
       style: {
         background: '#aaa'
       }
@@ -76,10 +88,10 @@ export default {
     try {
 
       this.stats = await StatService.getStats();
-      console.log(this.stats);
+      // console.log(this.stats);
 
       this.users = await LoginService.getUsers();
-      console.log(this.users);
+      // console.log(this.users);
 
     } catch (err) {
 
@@ -127,6 +139,11 @@ export default {
     // INITIIALIZATION //
     /////////////////////
 
+    //putting this here because I dont know how else to initialize this as hidden
+    progressBar.hidden = true;
+    progressBackground.hidden = true;
+    ldBg.hidden = true;
+
     this.containerFrame = {};
 
     this.input = new InputHandler();
@@ -148,7 +165,6 @@ export default {
     // });
 
     this.ecs = []; // Entity component system for scaling and eventually object storage
-    this.lcs = []; // Level component system for scaling and eventually object storage
     this.gcs = []; // GUI component system for scaling and eventually object storage
 
     // var landscape_warning;
@@ -171,9 +187,6 @@ export default {
     this.max_scale_Y = 1440;
     this.max_scale_X = 1920;
 
-    this.scene_scale_X = 1.0;
-    this.scene_scale_Y = 1.0;
-
     this.screen_ratio = this.max_scale_X / this.max_scale_Y
 
     this.scene_margin_X = 0.0;
@@ -193,286 +206,6 @@ export default {
     this.last_scene = 0;
 
     this.num_scenes = 11;
-
-    this.scenes = [
-
-      { // Login
-        custom:   function() {
-
-          FormHandler.createLoginForm();
-
-        }.bind(this)
-      },
-
-      { // Signup
-        custom:   function() {
-
-          FormHandler.createSignupForm();
-
-        }.bind(this)
-      },
-
-      { // Menu
-        custom: function () { }.bind(this)
-      },
-
-      { // Game
-        custom: function() {
-
-          // Creates username display text
-          var multiplicand_div = document.createElement("div");
-          multiplicand_div.id = "multiplicandText";
-          var multiplicand_text = document.createTextNode(this.level.multiplicand);
-          multiplicand_div.appendChild(multiplicand_text);
-          var sign_text = document.createTextNode(this.level.sign);
-          var entry_input;
-          if (this.mobile.isMobile) {
-
-            entry_input = document.createElement("div");
-            entry_input.id = "entryDisplay";
-            var hundreds = document.createElement("span");
-            hundreds.id = "hundredsPlace";
-            var hundreds_place = document.createTextNode("0");
-            hundreds.appendChild(hundreds_place);
-            var tens = document.createElement("span");
-            tens.id = "tensPlace";
-            var tens_place = document.createTextNode("0");
-            tens.appendChild(tens_place);
-            var ones = document.createElement("span");
-            ones.id = "onesPlace";
-            var ones_place = document.createTextNode("0");
-            ones.appendChild(ones_place);
-            entry_input.appendChild(hundreds);
-            entry_input.appendChild(tens);
-            entry_input.appendChild(ones);
-
-          } else {
-
-            entry_input = document.createElement("input");
-            entry_input.id = "entryInput";
-            entry_input.setAttribute("type", "number");
-            entry_input.setAttribute("placeholder", "###");
-            entry_input.setAttribute("value", "");
-            entry_input.setAttribute("maxlength", "3");
-            entry_input.setAttribute("size", "4");
-            entry_input.setAttribute("min", "-999");
-            entry_input.setAttribute("max", "999");
-            entry_input.setAttribute("name", "entry");
-            entry_input.addEventListener('keypress', function(event) {
-              if (event.keyCode == 13) {
-                event.preventDefault();
-              }
-            });
-
-          }
-
-          var equal_text = document.createTextNode(this.level.equal);
-          var solution_div = document.createElement("div");
-          solution_div.id = "solutionText";
-          var solution_text = document.createTextNode(this.level.solution);
-          solution_div.appendChild(solution_text);
-
-          // Creates username div to hold display text and input box
-          var game_entry_div = document.createElement("div");
-          game_entry_div.className = "login";
-          game_entry_div.appendChild(multiplicand_div);
-          game_entry_div.appendChild(sign_text);
-          game_entry_div.appendChild(entry_input);
-          game_entry_div.appendChild(equal_text);
-          game_entry_div.appendChild(solution_div);
-
-          // Creates username display text
-          var button_text = document.createTextNode("");
-          var history_button = document.createElement("button");
-          var history_div = document.createElement("div");
-          history_button.className = "dropbtn";
-          history_button.addEventListener('click', this.myFunction);
-          history_div.className = "dropdown-content";
-          history_div.id = "myDropdown";
-          history_button.appendChild(button_text);
-
-          for (var x in this.level.history_list) {
-            var history_entry = document.createTextNode(this.level.history_list[x]);
-            var line_break = document.createElement("br");
-            history_div.appendChild(history_entry);
-            history_div.appendChild(line_break);
-          }
-
-          var history_dropdown = document.createElement("div");
-          history_dropdown.className = "dropdown";
-          history_dropdown.appendChild(history_button);
-          history_dropdown.appendChild(history_div);
-
-        	// Does a thing
-        	var game_history_div = document.createElement("div");
-        	game_history_div.className = "login";
-        	game_history_div.appendChild(history_dropdown);
-
-          // Creates Tutorial display text
-        	if (this.level.play_tutorial) {
-        	  var tutorial_label = document.createTextNode("Tutorial");
-        	  var br1 = document.createElement("br");
-        	  var tutorial_text = document.createElement("span");
-        	  tutorial_text.className = "tutorial";
-        	  tutorial_text.id = "tutorialText";
-        	  var tutorial_words = document.createTextNode("The tutorial is broken");
-        	  tutorial_text.appendChild(tutorial_words);
-        	  var tutorial_div = document.createElement("div");
-        	  tutorial_div.className = "tutorial_title";
-        	  tutorial_div.id = "tutorialDiv"
-        	  tutorial_div.appendChild(tutorial_label);
-        	  tutorial_div.appendChild(br1);
-        	  tutorial_div.appendChild(tutorial_text);
-          }
-
-          // Creates login form to hold username and password divs
-          var game_entry_form = document.createElement("form");
-          game_entry_form.id = "equationBanner";
-          // game_entry_form.className = "scrollMenu";
-          game_entry_form.appendChild(game_entry_div);
-
-          // Creates login form to hold username and password divs
-          var game_history_form = document.createElement("form");
-          game_history_form.id = "historyBanner";
-          // game_history_form.className = "scrollMenu";
-          game_history_form.appendChild(game_history_div);
-
-          // Injecting login form into existing html
-          var scene_html = document.getElementById("sceneHTML");
-          scene_html.appendChild(game_entry_form);
-          scene_html.appendChild(game_history_form);
-
-        	if (this.level.play_tutorial) {
-        		scene_html.appendChild(tutorial_div);
-          }
-
-          this.level.createLevel(this.stage, this.lcs,
-            function() { createjs.Sound.play("select"); this.changeScene(8); this.level.visibleForm(true); }.bind(this),
-            function() { createjs.Sound.play("sword"); this.changeScene(9); this.level.visibleForm(true); }.bind(this),
-            function() { createjs.Sound.play("menu"); this.changeScene(2); this.level.visibleForm(true); }.bind(this),
-            function() { createjs.Sound.play("menu"); this.changeScene(6); this.level.visibleForm(true); }.bind(this),
-            this.user.authenticated
-          );
-
-          if (this.mobile.isMobile) {
-
-          } else {
-            document.getElementById("entryInput").value = 0;
-          }
-          document.getElementById("myDropdown").classList.toggle("show");
-
-        }.bind(this)
-      },
-
-      { // Stats
-        custom: function () { }.bind(this)
-      },
-
-      { // How To Play
-        custom: function () { }.bind(this)
-      },
-
-      { // Settings
-
-        custom: function() {
-
-          // Creates username display text and input slider
-          var volume_text = document.createTextNode("Volume:");
-          var volume_input = document.createElement("input");  // document.getElementById("").value
-          volume_input.id = "volumeSlider";
-          volume_input.setAttribute("type", "range");
-          volume_input.setAttribute("name", "volume");
-          volume_input.setAttribute("min", "0");
-          volume_input.setAttribute("max", "1");
-          volume_input.setAttribute("step", "0.1");
-          volume_input.setAttribute("value", "0.5");
-          volume_input.setAttribute(oninput, "SetVolume(this.value)");
-          volume_input.setAttribute(onchange, "SetVolume(this.value)");
-          volume_input.addEventListener('change', this.setVolume);
-          volume_input.addEventListener('input', this.setVolume);
-          // Creates username div to hold display text and input slider
-          var settings_volume_div = document.createElement("div");
-          settings_volume_div.className = "login";
-          settings_volume_div.appendChild(volume_text);
-          settings_volume_div.appendChild(volume_input);
-
-          // Creates password display text and check box
-          var time_text = document.createTextNode("Time:");
-          var time_input = document.createElement("input");
-          time_input.id = "bossValue";
-          time_input.setAttribute("type", "checkbox");
-          time_input.setAttribute("name", "time");
-          if (this.level.boss_fight) {
-            time_input.checked = true;
-          } else {
-            time_input.checked = false;
-          }
-          time_input.addEventListener('change', this.level.setBoss);
-
-          // Creates password div to hold display text and check box
-          var settings_time_div = document.createElement("div");
-          settings_time_div.className = "login";
-          settings_time_div.appendChild(time_text);
-          settings_time_div.appendChild(time_input);
-
-        	// Creates password display text and check box
-        	var tutorial_text = document.createTextNode("Tutorial:");
-        	var tutorial_input = document.createElement("input");
-        	tutorial_input.id = "tutorialValue";
-        	tutorial_input.setAttribute("type", "checkbox");
-        	tutorial_input.setAttribute("name", "tutorial");
-        	if (this.level.play_tutorial) {
-        	  tutorial_input.checked = true;
-        	} else {
-        	  tutorial_input.checked = false;
-        	}
-        	tutorial_input.addEventListener('change', this.level.setTutorial);
-
-          // Creates password div to hold display text and check box
-          var settings_tutorial_div = document.createElement("div");
-          settings_tutorial_div.className = "login";
-          settings_tutorial_div.appendChild(tutorial_text);
-          settings_tutorial_div.appendChild(tutorial_input);
-
-          // Creates login form to hold username and password divs
-          var settings_form = document.createElement("form");
-          settings_form.id = "settingsForm";
-          settings_form.className = "scrollMenu";
-          settings_form.appendChild(settings_volume_div);
-          settings_form.appendChild(settings_time_div);
-          settings_form.appendChild(settings_tutorial_div);
-
-          // Injecting login form into existing html
-          var scene_html = document.getElementById("sceneHTML");
-          scene_html.appendChild(settings_form);
-
-        }.bind(this)
-      },
-
-      { // Account
-        custom: function () { }.bind(this)
-      },
-
-      { // Map
-        custom: function () { }.bind(this)
-      },
-
-      { // Hint
-        custom: function () { }.bind(this)
-      },
-
-      { // Start
-        custom: function () {
-
-        	//putting this here because I dont know how else to initialize this as hidden
-        	progressBar.hidden = true;
-        	progressBackground.hidden = true;
-        	ldBg.hidden = true;
-
-        }.bind(this)
-      }
-
-    ];
 
     /////////
     // GUI //
@@ -810,7 +543,7 @@ export default {
     this.stage.addChild(this.bg);                               // Add rectangle to the stage
 
     this.music.loadSound();                                     // Load sounds from file
-    console.log(this.music.playlist);
+    // console.log(this.music.playlist);
 
     this.createScene();                                         // Create scene assets
 
@@ -886,7 +619,7 @@ export default {
       this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
 
       if (this.current_scene == 3) {
-        AssetHandler.scaleAssets(this.lcs, this.current_scene, this.mobile.isMobile, this.scene_scale_Y, this.scene_scale_X, this.stage); // Scale scene appropriately
+        AssetHandler.scaleAssets(this.level.lcs, this.current_scene, this.mobile.isMobile, this.scene_scale_Y, this.scene_scale_X, this.stage); // Scale scene appropriately
       } // else {
         AssetHandler.scaleAssets(this.ecs, this.current_scene, this.mobile.isMobile, this.scene_scale_Y, this.scene_scale_X, this.stage); // Scale scene appropriately
       // }
@@ -988,7 +721,7 @@ export default {
         this.level.checkTutorial();
 
         //If game over
-        if (this.level.hit_counter >= 3 && this.level.miss_upper_counter >= 1 && this.level.miss_lower_counter >= 1 && this.level.reload == false) {
+        if (this.level.hit_counter >= 3 && this.level.miss_upper_counter >= 1 && this.level.miss_lower_counter >= 1 && this.level.reload == false && this.level.current_level != 0) {
 
           // udpate global total
           this.user.hits += this.level.hit_counter;
@@ -1119,7 +852,7 @@ export default {
           sceneData[this.current_scene].fg_text = "Hits: " + this.user.hits + "\n\nHighs: " + this.user.highs + "\n\nLows: " + this.user.lows + "\n\nTotal Misses: " + (this.user.highs + this.user.lows) + "\n\n";
           break;
         case 5:
-          sceneData[this.current_scene].fg_text = "How To Play:\nThe goal of the game is to get\none hit anywhere above the range,\none hit anywhere below the range,\nand three hits within the range";
+          sceneData[this.current_scene].fg_text = "How To Play: The goal of the game is to get one hit anywhere above the range, one hit anywhere below the range, and three hits within the range";
           break;
         case 6:
           // scenes[this.current_scene].fg_text = "Volume:\n\nTime:\n\nTutorial\n\n";
@@ -1147,7 +880,57 @@ export default {
         this.background_right = AssetHandler.createImage("res/menu-right.png", this.backgroundX, this.backgroundY, "center", 0 + (this.backgroundX), "bottom", -this.backgroundY / 2, "image", this.ecs, this.stage);
       }
 
-      this.scenes[this.current_scene].custom();
+      // Custom scene functionalities
+      switch (this.current_scene) {
+
+        case 0: // Login
+
+          FormHandler.createLoginForm();
+
+          break;
+
+        case 1: // Signup
+
+          FormHandler.createSignupForm();
+
+          break;
+
+        case 3: // Game
+
+          FormHandler.createGameForm(
+            this.level.multiplicand,
+            this.level.sign,
+            this.level.equal,
+            this.level.solution,
+            this.level.history_list,
+            this.level.play_tutorial,
+            this.mobile.isMobile,
+            this.myFunction
+          );
+
+          this.level.createLevel(this.stage,
+            function() { createjs.Sound.play("select"); this.changeScene(8); this.level.visibleForm(true); this.level.destroyLevel(this.stage); }.bind(this),
+            function() { createjs.Sound.play("sword"); this.changeScene(9); this.level.visibleForm(true); }.bind(this),
+            function() { createjs.Sound.play("menu"); this.changeScene(2); this.level.visibleForm(true); this.level.destroyLevel(this.stage); }.bind(this),
+            function() { createjs.Sound.play("menu"); this.changeScene(6); this.level.visibleForm(true); }.bind(this),
+            this.user.authenticated
+          );
+
+          break;
+
+        case 6: // Settings
+
+          FormHandler.createsettingsForm(
+            this.level.boss_fight,
+            this.level.play_tutorial,
+            this.level.setTutorial,
+            this.level.setBoss,
+            this.music.setVolume
+          );
+
+          break;
+
+      }
 
       this.createGUI();
 
@@ -1170,7 +953,7 @@ export default {
 
         this.menu_button.visible = false;
 
-        this.level.openPauseMenu(user_authentication);
+        this.level.openPauseMenu(this.user.authenticated);
 
         // this.level.pauseAnimation(true);
         // this.level.visibleButton(true);
@@ -1189,15 +972,11 @@ export default {
 
     destroyScene: function() {
 
-      // switch(last_scene) {
-      // 	case 0:
-      // 		break;
-      // 	default:
-      // }
-
       this.clearHtml();
 
       this.stage.removeAllChildren();
+
+      this.ecs = [];
 
     },
 
@@ -1362,7 +1141,7 @@ export default {
 
         		this.menu_button.visible = false;
 
-            this.level.openPauseMenu(user_authentication);
+            this.level.openPauseMenu(this.user.authenticated);
 
             // this.level.pauseAnimation(true);
             // this.level.visibleButton(true);
@@ -1466,6 +1245,7 @@ export default {
     			for (var i = 1; i < (this.num_levels + 1); i++) {
 
     				var temp = AssetHandler.createButton("res/map-indicator.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", this.levels[i].open.bind(this), this.ecs, this.stage);
+    				// var temp = AssetHandler.createButton("res/map-indicator.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", function (this) { this.indicatorFunction(i).bind(this) }, this.ecs, this.stage);
             temp.on("mouseover", this.handleMouseEvent);
     				temp.on("mouseout", this.handleMouseEvent);
 
@@ -1523,18 +1303,6 @@ export default {
     // LEVELS //
     ////////////
 
-    destroyLevel: function() {
-
-      for (var i = 0; i < lcs.length; i++) {
-
-        this.stage.removeChild(this.lcs[i].object)
-
-      }
-
-      this.lcs = [];
-
-    },
-
     handleMouseEvent: function(evt) {
 
       if(evt.type == "mouseover"){
@@ -1552,9 +1320,9 @@ export default {
 
       if(evt.type == "mouseout"){
 
-          this.containerFrame.visible = false;
-          this.containerFrame.x = 100;
-          this.containerFrame.y = 100;
+        this.containerFrame.visible = false;
+        this.containerFrame.x = 100;
+        this.containerFrame.y = 100;
 
       }
 
@@ -1773,7 +1541,7 @@ export default {
   transform: translate(-50%, -50%);
   background-color: LightGray;
   height: 50px;
-  width: 1000px;
+  width: 90%;
 	z-index: 2;
 }
 
@@ -1796,7 +1564,8 @@ export default {
   margin: 5px;
   z-index: 1;
   text-align: center;
-  font-family: "Blackadder";
+  /* font-family: "Blackadder"; */
+  font-family: "Oldstyle";
   /* font-size: 3vh; */
   font-size: 1.75vw;
   color: saddlebrown;
@@ -1862,7 +1631,8 @@ input {
   max-width: 10em;
   box-sizing: border-box;
   border: none;
-  font-family: "Blackadder";
+  /* font-family: "Blackadder"; */
+  font-family: "Oldstyle";
   font-size: 1.75vw;
   color: saddlebrown;
   border-bottom: 2px solid saddlebrown;

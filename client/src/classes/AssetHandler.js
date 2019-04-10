@@ -240,7 +240,9 @@ class AssetHandler {
     var text = new createjs.Text(words, style + " " + size + " " + font, color);
     text.textAlign = "center";
     text.textBaseline = "middle";
+    text.lineWidth = 700;
     text.regY = reg / 2;
+    // text.regY = text.getMeasuredHeight() / 2;
 
     var container = new createjs.Container();
     container.addChild(sprite, text);
@@ -250,7 +252,7 @@ class AssetHandler {
 
     this.createAndPushEntity(entity_component_system, container, width, height, x_lock, x_location, y_lock, y_location, type);
 
-    return text;
+    return container;
 
   }
 
