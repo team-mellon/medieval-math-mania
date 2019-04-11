@@ -1190,9 +1190,9 @@ export default {
 
     			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), this.ecs, this.stage);
 			let text = "Hits: " + this.user.hits + "\n\nHighs: " + this.user.highs + "\n\nLows: " + this.user.lows + "\n\nTotal Misses: " + (this.user.highs + this.user.lows) + "\n\n";
-			
+
 			this.statsContainer = AssetHandler.createStatsContainer("res/empty-badge.png", text, "Oldstyle", "32px", "normal", "black", 240, 240, "center", 0, "center", 0, "image", this.ecs, this.stage);
-			
+
     			break;
 
     		case 5:
@@ -1287,8 +1287,8 @@ export default {
 
     		case 10:
 
-    			this.logout_button = AssetHandler.createButton("res/login-button.png", "Login", this.buttonX, this.buttonY, "right", -(this.buttonX/2 + 10), "top", (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(0); }.bind(this), this.ecs, this.stage);
-    			this.play_button = AssetHandler.createButton("res/login-button.png", "Start", this.buttonX, this.buttonY, "center", 0, "bottom", - 2.5 * (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(8); }.bind(this), this.ecs, this.stage);
+    			this.logout_button = AssetHandler.createButton("res/login-button.png", "Login!", this.buttonX, this.buttonY, "right", -(this.buttonX/2 + 10), "top", (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(0); }.bind(this), this.ecs, this.stage);
+    			this.play_button = AssetHandler.createButton("res/login-button.png", "Start!", this.buttonX, this.buttonY, "center", 0, "bottom", - 2.5 * (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(8); }.bind(this), this.ecs, this.stage);
 
     			break;
 

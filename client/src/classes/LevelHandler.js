@@ -143,12 +143,12 @@ class LevelHandler {
     this.catapultS = {
       images: ["res/catapult.png"],
       frames: {width:288, height:384, count:12, regX: 0, regY:0, spacing:0, margin:0},
-      framerate: 6
+      framerate: 12
     };
 
     this.centerS = {
       images: ["res/level" + this.current_level + "/center.png"],
-      frames: {width:750, height:750, count:12, regX: 0, regY:0, spacing:0, margin:0},
+      frames: {width:750, height:750, count:6, regX: 0, regY:0, spacing:0, margin:0},
       framerate: 6
     };
 
@@ -486,18 +486,18 @@ class LevelHandler {
 
     if (isMobile) {
 
-      for (var x in this.history_list) {
-        console.log(this.history_list[x]);
-        console.log(this.entry);
+      // for (var x in this.history_list) {
+        // console.log(this.history_list[x]);
+        // console.log(this.entry);
         // if (multiplier == history_list[x]){
         //   valid = false;
         // }
-      }
+      // }
 
       if (this.valid) {
 
         // Add to history
-        console.log(this.history_list);
+        // console.log(this.history_list);
         this.history_list.unshift(this.multiplier);
         var dropdown = document.getElementById("myDropdown");
         var history_entry = document.createTextNode(this.multiplier);
@@ -574,14 +574,14 @@ class LevelHandler {
       } else {
         this.entry_is_correct = false;
       }
-      for (var x in this.history_list) {
+      // for (var x in this.history_list) {
         // console.log(this.history_list[x]);
         // console.log(this.entry);
         //Commented out for sake of sprint
         /*if (entry == history_list[x]) {
           valid = false;
         }*/
-      }
+      // }
       // Animate the catapult
       if (this.entry_is_correct && this.valid) {
 
@@ -589,7 +589,7 @@ class LevelHandler {
 
         // Add to history
         this.history_list.unshift(this.multiplier);
-        console.log(this.history_list);
+        // console.log(this.history_list);
         var dropdown = document.getElementById("myDropdown");
         var history_entry = document.createTextNode(this.multiplier);
         var line_break = document.createElement("br");
@@ -702,7 +702,7 @@ class LevelHandler {
     //Catapult or whatever it is in the scene
     if (!this.catapult.paused && this.catapult.currentFrame == 11) {
       this.catapult.stop();
-      this.reload = false;
+      // this.reload = false;
     }
 
     if (!this.end_level_flag.paused && this.end_level_flag.currentFrame == 11) {
@@ -710,7 +710,7 @@ class LevelHandler {
     }
 
     // Structure in the scene
-    if (!this.structure_center.paused && this.structure_center.currentFrame == 11) {
+    if (!this.structure_center.paused && this.structure_center.currentFrame == 5) {
       this.structure_center.stop();
     }
     if (!this.structure_left_center.paused && this.structure_left_center.currentFrame == 5) {
@@ -803,7 +803,7 @@ class LevelHandler {
         this.reload = true;
         this.waiting_hit = false;
         this.hit_counter++;
-        this.structure_score.text = "Total Lows: " + this.miss_lower_counter.toString() + "\nTotal High: " + this.miss_upper_counter.toString() + "\nTotal Hits: " + this.hit_counter.toString();
+        this.structure_score.getChildAt(1).text = "Total Lows: " + this.miss_lower_counter.toString() + "\nTotal High: " + this.miss_upper_counter.toString() + "\nTotal Hits: " + this.hit_counter.toString();
 
 
 
@@ -850,7 +850,7 @@ class LevelHandler {
           this.reload = true;
           this.miss_lower = false;
           this.miss_lower_counter++;
-          this.structure_score.text = "Total Lows: " + this.miss_lower_counter.toString() + "\nTotal High: " + this.miss_upper_counter.toString() + "\nTotal Hits: " + this.hit_counter.toString();
+          this.structure_score.getChildAt(1).text = "Total Lows: " + this.miss_lower_counter.toString() + "\nTotal High: " + this.miss_upper_counter.toString() + "\nTotal Hits: " + this.hit_counter.toString();
 
         }
 
@@ -871,16 +871,16 @@ class LevelHandler {
           this.reload = true;
           this.miss_upper = false;
           this.miss_upper_counter++;
-          this.structure_score.text = "Total Lows: " + this.miss_lower_counter.toString() + "\nTotal High: " + this.miss_upper_counter.toString() + "\nTotal Hits: " + this.hit_counter.toString();
+          this.structure_score.getChildAt(1).text = "Total Lows: " + this.miss_lower_counter.toString() + "\nTotal High: " + this.miss_upper_counter.toString() + "\nTotal Hits: " + this.hit_counter.toString();
 
         }
 
       }
 
-      if ((this.miss_lower_counter > 3 || this.miss_upper_counter > 3) && !this.hint_shown) {
-        this.hint_shown = true;
-        leave_to_hint();
-      }
+      // if ((this.miss_lower_counter > 3 || this.miss_upper_counter > 3) && !this.hint_shown) {
+      //   this.hint_shown = true;
+      //   leave_to_hint();
+      // }
 
       // if((miss_lower_counter > 3 || miss_upper_counter > 3) && hints_on) {
       //   function() {this.changeScene(9); this.visibleForm(true); }.bind(this);
@@ -1054,10 +1054,6 @@ class LevelHandler {
 
   reloadCatapult (stage, scene_scale_Y) {
 
-    if (this.catapult.currentFrame == 11){
-      this.reload = false;
-    }
-
     if (this.reload) {
       console.log("reload");
       this.fired = false;
@@ -1065,6 +1061,9 @@ class LevelHandler {
       this.projectile.x = stage.canvas.width / 2;
       this.projectile.y = stage.canvas.height - (96/2 + 57) * scene_scale_Y;
       this.projectile_speed = 57;
+      if (this.catapult.currentFrame == 11){
+        this.reload = false;
+      }
     } else {
       this.projectile.alpha = 1;
     }
@@ -1340,15 +1339,15 @@ class LevelHandler {
 
     if(paused){
 
-      this.structure_center.paused = true;
-      this.structure_left_center.paused = true;
-      this.structure_right_center.paused = true;
-      this.structure_left.paused = true;
-      this.structure_right.paused = true;
-      this.firework_low.paused = true;
-      this.firework_hit.paused = true;
-      this.firework_high.paused = true;
-      this.catapult.paused = true;
+      // this.structure_center.paused = true;
+      // this.structure_left_center.paused = true;
+      // this.structure_right_center.paused = true;
+      // this.structure_left.paused = true;
+      // this.structure_right.paused = true;
+      // this.firework_low.paused = true;
+      // this.firework_hit.paused = true;
+      // this.firework_high.paused = true;
+      // this.catapult.paused = true;
 
     } else {
 
