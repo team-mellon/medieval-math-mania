@@ -877,10 +877,10 @@ class LevelHandler {
 
       }
 
-      // if ((this.miss_lower_counter > 3 || this.miss_upper_counter > 3) && !this.hint_shown) {
-      //   this.hint_shown = true;
-      //   leave_to_hint();
-      // }
+      if ((this.miss_lower_counter > 3 || this.miss_upper_counter > 3) && !this.hint_shown) {
+        this.hint_shown = true;
+        leave_to_hint();
+      }
 
       // if((miss_lower_counter > 3 || miss_upper_counter > 3) && hints_on) {
       //   function() {this.changeScene(9); this.visibleForm(true); }.bind(this);

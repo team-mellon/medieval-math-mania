@@ -962,6 +962,7 @@ export default {
 
       } else if (this.current_scene == 3) {
 
+        this.menu_button.visible = true;
         this.level.makeGameForm(this.mobile.isMobile);
         this.level.remakeMultiplierBanner();
         this.level.remakeRangeBanner();
@@ -1268,8 +1269,6 @@ export default {
             createjs.Sound.play("menu");
             // this.changeScene(3);
             this.oneWayScene();
-
-        		this.menu_button.visible = false;
 
             console.log(this.level.multiplicand);
             console.log(this.level.lower);
