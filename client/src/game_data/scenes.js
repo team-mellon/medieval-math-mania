@@ -152,26 +152,26 @@ export const indicatorCoordinates = [
 export const levelDescriptors = [
 
     {title: "MENTOR'S MANOR", description: "tutorial level, this should never show"},  //level 0
-    {title: "TYRANT'S TOWER", description: "castle clash was taken"},  //level 1
-    {title: "GRIM GRASSLANDS", description: "Let the Orcs come as thick as summer-moths round a candle!"}, // level 2
-    {title: "VICIOUS VOLCANO", description: "mount doom was taken"}, //level 3
-    {title: "CALAMITY COVE", description: "pirates of the carribean"},  //level 4
-    {title: "MYSTIC MOUNTAINS", description: "led zepplin songs are cool"},  //level 5
-    {title: "PERILOUS PEAK", description: "we should have just copied donkey kong levels"},  // level 6
-    {title: "CREEPY CAVERNS", description: "Echooo echoo echo"},  //level 7
-    {title: "FRANTIC FOREST", description: "Potentially a donkey kong level, not really sure"},  //level 8
-    {title: "ARCTIC ALPINE", description: "Welcome to the hemalayas! Snow cone?"},  // level 9
-    {title: "WANDERING WOODS", description: "Follow the spiders"}, //level 10
-    {title: "STAGNANT SWAMP", description: "GET OUT OF MY SWAMP!!!"},  //level 11
-    {title: "DESOLATE DEADLANDS", description: "rocky horror picture show"},  //level 12
-    {title: "FLOATING FORTRESS", description: "shutter island, but in the air"},  //level 13
-    {title: "DEADLY DEPTHS", description: "not coral because reasons?"},  //level 14
-    {title: "FERAL FUNGUS", description: "there is a fungus amongus"},  //level 15
-    {title: "TORTUROUS TUNDRA", description: "russia"},  //level 16
-    {title: "TUMULTUOUS TARPITS", description: "That's how the dinosaurs died"},  //level 17
-    {title: "DRACONIAN DESERT", description: "crab people. need I say more"},   //level 18
-    {title: "BOREAL BACKWOODS", description: "better than taiga"},  //level 19
-    {title: "REAWAKENED RUINS", description: "finally the last one"}  //level 20
+    {title: "TYRANT'S TOWER", description: "King Darias III rules with an iron fist. Many have tried to overthrow this tyrant, but all have failed."},  //level 1
+    {title: "GRIM GRASSLANDS", description: "The grasslands are crawling with orcs. Travelers beware if you attempt to cross this land."}, // level 2
+    {title: "VICIOUS VOLCANO", description: "The lava people of volcan are said to be descendants of dragons. whether or not this is true, you should still keep your distance."}, //level 3
+    {title: "CALAMITY COVE", description: "There are many things to fear when crossing the ocean, but none compare to captain sturge and his pirate crew."},  //level 4
+    {title: "MYSTIC MOUNTAINS", description: "The mountain satyrs are not to keen on visitors. Be weary and watch your step."},  //level 5
+    {title: "PERILOUS PEAK", description: "The supreme guards of the mountain peak seem to be guarding something. No one knows what, and those who seek answers have never returned."},  // level 6
+    {title: "CREEPY CAVERNS", description: "The caves of the mountain run for miles. Be careful, there might be something lurking within."},  //level 7
+    {title: "FRANTIC FOREST", description: "It is very easy to get lost in the forest. Stay on the path or risk never returning."},  //level 8
+    {title: "ARCTIC ALPINE", description: "The yetis call this glacier home. They are not considered agressive, but travelers have been known to disappear."},  // level 9
+    {title: "WANDERING WOODS", description: "There is a wicked witch in these woods. Don't fall under her spells or you may never return"}, //level 10
+    {title: "STAGNANT SWAMP", description: "The swamp lands are rancid and not pleasant to traverse. There may be more than foul smells in this place."},  //level 11
+    {title: "DESOLATE DEADLANDS", description: "Tales of vampires have been spread all over this place. Whether or not you choose to believe is up to you."},  //level 12
+    {title: "FLOATING FORTRESS", description: "A city of gold in the sky, perposterous they say. If you are willing to travel far and wide perhaps you might see such a place."},  //level 13
+    {title: "DEADLY DEPTHS", description: "Mermaids have been luring sailors to their demise for years. don't be fooled by the siren's song."},  //level 14
+    {title: "FERAL FUNGUS", description: "The mushroom people have made a fine home for themselves here. I would still keep my distance though."},  //level 15
+    {title: "TORTUROUS TUNDRA", description: "These arctic lands are not safe. If you choose to travel this way, make sure to bundle up and stay warm."},  //level 16
+    {title: "TUMULTUOUS TARPITS", description: "Before people ruled these lands, giant creatures lived in these areas. The tarpits hold what remains of these creatures, but beware of bandits."},  //level 17
+    {title: "DRACONIAN DESERT", description: "Crossing a desert is dangerous. The draco crab creatures make this desert even more so."},   //level 18
+    {title: "BOREAL BACKWOODS", description: "You might have heard of minotaurs, but have you ever heard of a pamola? Traverse the backwoods and find out."},  //level 19
+    {title: "REAWAKENED RUINS", description: "An advanced civilization from long ago, or not so long ago. No one knows, but behind the rock guards are endless secrets."}  //level 20
 
 
 ];
