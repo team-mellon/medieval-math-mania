@@ -1,22 +1,34 @@
-///////////////////
-// MOBILEHANDLER //
-///////////////////
+////////////////////////////////////////////////////////////////////////////////
+// MOBILEHANDLER                                                              //
+////////////////////////////////////////////////////////////////////////////////
+// Handler for mobile variables. This encompasses things like whether or not  //
+// the current device is mobile and what orientation the device is in.        //
+////////////////////////////////////////////////////////////////////////////////
 
 class MobileHandler {
 
-
-
+  // Constructor to initialize mobile checking variables
   constructor() {
 
+    // Bool for checking if the current device is mobile
     this.isMobile = false;
+
+    // Bools for checking if the orientation of the current device is portrait
+    this.isPortrait = true;
+
+    // Bools for checking if the orientation of the current device is portrait
+    this.isLandscape = false;
 
   }
 
-
-
+  // Function that checks to see what the orientation is
   orientationCheck () {
 
+    // If window height is greater than width
     if (window.innerHeight > window.innerWidth && this.isMobile) {
+
+      this.isPortrait = true;
+      this.isLandscape = false;
 
       if(!this.added) {
 
@@ -30,6 +42,9 @@ class MobileHandler {
       }
 
     } else {
+
+      this.isPortrait = false;
+      this.isLandscape = true;
 
       if(this.added){
 

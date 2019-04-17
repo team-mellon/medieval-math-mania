@@ -1,8 +1,6 @@
 <template>
   <div id="engineHolder">
-
     <canvas id="drawingCanvas" :style="style">alternate content</canvas>
-    <!-- <canvas id="drawingCanvas" :width="w" :height="h" :style="style"></canvas> -->
 
     <div id="sceneHTML"></div>
 
@@ -14,27 +12,28 @@
       <span id="percentText">Loading</span>
     </div>
 
-    <!-- <div id="moduleHolder"> -->
-      <!-- <UserInterface @pushToEcs="pushEcs" @pushToLcs="pushLcs"/> -->
+    <!-- <canvas id="changingParametersBasedOnState" :width="w" :height="h" :style="style"></canvas> -->
+    <!-- <div id="childThatSendsBackData"> -->
+      <!-- <newChild @emittedChildEvent="runParentFunctionOnReturningObject" /> -->
     <!-- </div> -->
-
+    
   </div>
 </template>
 
 <script>
-
-import UserInterface from './UserInterface.vue';
 
 // Static classes
 import AssetHandler from '../classes/AssetHandler.js';
 import FormHandler from '../classes/FormHandler.js';
 import APIHandler from '../classes/APIHandler.js';
 
+// Normal classes
 import InputHandler from '../classes/InputHandler.js';
 import MobileHandler from '../classes/MobileHandler.js';
 import MusicHandler from '../classes/MusicHandler.js';
 import LevelHandler from '../classes/LevelHandler.js';
 
+// API classes
 import StatService from '../StatService.js';
 import LoginService from '../LoginService.js';
 
@@ -46,11 +45,8 @@ export default {
 
   name: 'Engine',
 
-  components: {
-    UserInterface
-  },
-
   data () {
+
     return {
 
       // Authentication handling
@@ -70,12 +66,10 @@ export default {
 
       // Scaling for engine assets
       scene_scale_X: 1.0,
-      scene_scale_X: 1.0,
-
+      scene_scale_Y: 1.0,
 
       // w: 100,
       // h: 200,
-
 
       style: {
         background: '#aaa'
@@ -121,19 +115,21 @@ export default {
 
   // iron out the fireball aiming and entrance into the scene more
 
-  		// custom input function may be useful
+	// custom input function may be useful
 
-  		// else if(key == "0" || key == "1" || key == "2" || key == "3" || key == "4" ||
-  		// 		key == "5" || key == "6" || key == "7" || key == "8" || key == "9" || key == ".") {
-  		// 	if(param.length < 3) {
-  		// 		param += key;
-  		// 		text1.text = param;
-  		// 		input = parseInt(param);
-  		// 	}
-  		// }
+	// else if(key == "0" || key == "1" || key == "2" || key == "3" || key == "4" ||
+	// 		key == "5" || key == "6" || key == "7" || key == "8" || key == "9" || key == ".") {
+	// 	if(param.length < 3) {
+	// 		param += key;
+	// 		text1.text = param;
+	// 		input = parseInt(param);
+	// 	}
+	// }
 
 
   mounted: function() {
+
+    // this.$emit('pushToEcs', entity_object)
 
     /////////////////////
     // INITIIALIZATION //
@@ -1141,7 +1137,7 @@ export default {
           this.menu_button = AssetHandler.createButton("res/login-button.png", "Pause", this.buttonX, this.buttonY, "right", -(this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() {
             createjs.Sound.play("menu");
 
-        		this.menu_button.visible = false;
+        		this.menu_button.visible = false
 
             this.level.openPauseMenu(this.user.authenticated);
 

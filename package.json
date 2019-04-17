@@ -17,11 +17,13 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
+    "flow-bin": "^0.97.0",
     "nodemon": "^1.18.10"
   },
   "scripts": {
     "start": "node server/index.js",
-    "dev": "nodemon server/index.js"
+    "dev": "nodemon server/index.js",
+    "flow": "flow"
   },
   "repository": {
     "type": "git",
