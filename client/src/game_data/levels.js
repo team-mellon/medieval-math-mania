@@ -32,7 +32,7 @@ export const levelData = [
 
   { // Mountains
     number: 5,
-    color: "#b3b3b3",
+    color: "#dbf8ff",
     hint: "Just keep trying more numbers until you get the range, going either higher or lower depending on what you need. You'll get it. If not reload the level for a new range."
   },
 
@@ -56,7 +56,7 @@ export const levelData = [
 
   { // Alpine
     number: 9,
-    color: "#dbf8ff",
+    color: "#b3b3b3",
     hint: "You are going to need some very small decimals for this one."
   },
 
