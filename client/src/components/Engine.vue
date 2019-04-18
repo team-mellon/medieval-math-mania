@@ -16,7 +16,7 @@
     <!-- <div id="childThatSendsBackData"> -->
       <!-- <newChild @emittedChildEvent="runParentFunctionOnReturningObject" /> -->
     <!-- </div> -->
-    
+
   </div>
 </template>
 
@@ -61,7 +61,8 @@ export default {
         username: 'CpnPlchlder',
         hits: 101010101,
         highs: 101010101,
-        lows: 101010101
+        lows: 101010101,
+        badges: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       },
 
       // Scaling for engine assets
@@ -95,6 +96,11 @@ export default {
     }
 
   },
+
+  // createUser(text, user)
+  // getUserData(text, user)
+  // verifyUser(text, user)
+  // updateStats(text, user)
 
   // Clear color of screen
     // color was r:0.78, b:1, g:0.98, a:1 (Babylon.Color4)
@@ -569,6 +575,36 @@ export default {
 
       this.mobile.mobileCheck.bind(this.mobile);
       this.mobile.orientationCheck.bind(this.mobile);
+
+      // If window height is greater than width
+      if (this.isPortrait == true && this.isMobile) {
+
+        if(!this.added) {
+
+          this.stage.addChild(this.landscape_warning);
+          this.stage.addChild(this.phone_rotation);
+          this.landscape_warning.graphics.clear()
+          this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
+          this.phone_rotation.gotoAndPlay(0);
+          scene_html = document.getElementById("sceneHTML");
+          scene_html.hidden = true;
+          this.added = true;
+
+        }
+
+      } else {
+
+        if(this.added){
+
+          this.stage.removeChild(this.landscape_warning);
+          this.stage.removeChild(this.phone_rotation);
+          scene_html = document.getElementById("sceneHTML");
+          scene_html.hidden = false;
+          this.added = false;
+
+        }
+
+      }
 
       // Resize the canvas element with new window size
       this.stage.canvas.width = window.innerWidth;
@@ -1186,7 +1222,7 @@ export default {
     		case 4:
 
     			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), this.ecs, this.stage);
-			let text = "Hits: " + this.user.hits + "\n\nHighs: " + this.user.highs + "\n\nLows: " + this.user.lows + "\n\nTotal Misses: " + (this.user.highs + this.user.lows) + "\n\n";
+			let text = "Hits: " + this.user.hits + "\n\nHighs: " + this.user.highs + "\n\nLows: " + this.user.lows + "\n\nTotal Misses: " + (this.user.highs + this.user.lows) + "\n\nBadges: " + this.user.badges + "\n\n";
 
 			this.statsContainer = AssetHandler.createStatsContainer("res/empty-badge.png", text, "Oldstyle", "32px", "normal", "black", 240, 240, "center", 0, "center", 0, "image", this.ecs, this.stage);
 
@@ -1294,7 +1330,7 @@ export default {
       this.landscape_warning = new createjs.Shape();
 
       this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, 288, 288, "center", 0, "center", 0, "image", this.ecs, this.stage);
-      this.stage.removeChild(this.phone_rotation);
+      // this.stage.removeChild(this.phone_rotation);
 
     },
 
@@ -1351,6 +1387,7 @@ export default {
         this.user.hits = stats.data.hits;
         this.user.highs = stats.data.highs;
         this.user.lows = stats.data.lows;
+        this.user.badges = stats.data.badges;
 
       } catch (err) {
 
@@ -1385,6 +1422,7 @@ export default {
         this.user.hits = stats.data.hits;
         this.user.highs = stats.data.highs;
         this.user.lows = stats.data.lows;
+        this.user.badges = stats.data.badges;
 
       } catch (err) {
 
@@ -1418,6 +1456,7 @@ export default {
         this.user.hits = stats.data.hits;
         this.user.highs = stats.data.highs;
         this.user.lows = stats.data.lows;
+        this.user.badges = stats.data.badges;
 
       } catch (err) {
 
@@ -1448,6 +1487,7 @@ export default {
         this.user.hits = stats.data.hits;
         this.user.highs = stats.data.highs;
         this.user.lows = stats.data.lows;
+        this.user.badges = stats.data.badges;
 
       } catch (err) {
 

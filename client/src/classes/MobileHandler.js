@@ -25,45 +25,28 @@ class MobileHandler {
   orientationCheck () {
 
     // If window height is greater than width
-    if (window.innerHeight > window.innerWidth && this.isMobile) {
+    if (window.innerHeight > window.innerWidth) {
 
+      // The orientation is portrait
       this.isPortrait = true;
       this.isLandscape = false;
 
-      if(!this.added) {
 
-        this.stage.addChild(this.landscape_warning);
-        this.stage.addChild(this.phone_rotation);
-        this.phone_rotation.gotoAndPlay(0);
-        scene_html = document.getElementById("sceneHTML");
-        scene_html.hidden = true;
-        this.added = true;
-
-      }
-
+    // If window width is greater than height
     } else {
 
+      // The orientation is landscape
       this.isPortrait = false;
       this.isLandscape = true;
-
-      if(this.added){
-
-        this.stage.removeChild(this.landscape_warning);
-        this.stage.removeChild(this.phone_rotation);
-        scene_html = document.getElementById("sceneHTML");
-        scene_html.hidden = false;
-        this.added = false;
-
-      }
 
     }
 
   }
 
-  // Check to see if the current device is mobile
+  // Function to check to see if the current device is mobile
   mobileCheck () {
 
-    // Print out the device if known, if not maybe store it in analytics but at least print it out
+    // Print out the device if known, if not known maybe store it for analytics but at least print it out
     switch (true) {
 
       case ( /Android/i.test(navigator.userAgent) ):      console.log("Android mobile device");       break;
@@ -87,8 +70,6 @@ class MobileHandler {
     }
 
   }
-
-
 
 }
 

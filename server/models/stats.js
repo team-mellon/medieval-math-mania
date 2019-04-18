@@ -17,6 +17,10 @@ const StatsSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  badges: {
+    type: Array,
+    default: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  },
   date: {
     type: Date,
     default: Date.now

@@ -1,15 +1,12 @@
-//////////////////
-// ASSETHANDLER //
-//////////////////
-
+////////////////////////////////////////////////////////////////////////////////
+// ASSETHANDLER                                                               //
+////////////////////////////////////////////////////////////////////////////////
+// Handler for async api calls. This encompasses database request like        //
+// creating a user, getting a user's data, verifying a user, updating a       //
+// database entry, and sigming out a user.                                    //
+////////////////////////////////////////////////////////////////////////////////
 
 class AssetHandler {
-
-
-
-  constructor() {
-
-  }
 
   // Scale the image-like assets
   static scaleAssets (entity_component_system, current_scene, isMobile, scene_scale_Y, scene_scale_X, stage) {
@@ -223,7 +220,7 @@ class AssetHandler {
 
 
     static createStatsContainer (asset, num, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
-	
+
     var text = new createjs.Text(num, style + " " + size + " " + font, color);
     //stage.addChild(text);
 	text.regX = 50;
@@ -257,7 +254,7 @@ class AssetHandler {
 		    var temp = new createjs.Bitmap("res/badge-level-15.png");
 		else
 		    var temp = new createjs.Bitmap(asset);
-		
+
 		temp.regX = width / 2;
 		temp.regY = height / 2;
 		temp.scale = 0.25;
@@ -269,7 +266,7 @@ class AssetHandler {
 	    count++;
 	}
 /*
-	var image = new createjs.Bitmap(asset);	
+	var image = new createjs.Bitmap(asset);
 	//stage.addChild(image);
 	image.regX = width/2;
 	image.regY = height/2;
@@ -282,8 +279,8 @@ class AssetHandler {
 
     return text;
 
-  }    
-    
+  }
+
 
   static createTextContainer (animation, words, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type, reg, entity_component_system, stage) { // }, handleClick) {
 
@@ -428,8 +425,6 @@ class AssetHandler {
     entity_component_system.push(entity_object);
 
   }
-
-
 
 }
 export default AssetHandler;
