@@ -767,14 +767,17 @@ export default {
           this.menu_button.visible = false;
 
           // Show the endgame screen
-          this.level.createVictoryBanner(this.scene_scale_X, this.scene_scale_Y);
+          this.level.createVictoryBanner(this.scene_scale_X, this.scene_scale_Y, this.user.badges);
+
+	  this.user.badges[(this.level.current_level - 1)] = 1;
 
           // update database
           this.updateStats({
             user: this.user.username,
             hits: this.user.hits,
             highs: this.user.highs,
-            lows: this.user.lows
+            lows: this.user.lows,
+	    badges: this.user.badges
           });
 
           // Also maybe check if boss level is active

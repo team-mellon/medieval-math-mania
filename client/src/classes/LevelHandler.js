@@ -958,7 +958,7 @@ class LevelHandler {
 
   }
 
-  createVictoryBanner (scene_scale_X, scene_scale_Y) {
+    createVictoryBanner (scene_scale_X, scene_scale_Y, arr) {
 
     this.visibleForm(false);
     this.pauseAnimation(true);
@@ -987,10 +987,13 @@ class LevelHandler {
     this.high_text.visible = true;
     createjs.Tween.get(this.high_text).wait(7750).to({alpha:1}, 500);
 
-      if(true){
-	  this.badge_text.visible = true;
-	  createjs.Tween.get(this.badge_text).wait(8750).to({alpha:1}, 500);
-      }
+	if(this.current_level != 0){
+	    if(arr[(this.current_level - 1)] == 0){
+		this.badge_text.visible = true;
+		createjs.Tween.get(this.badge_text).wait(8750).to({alpha:1}, 500);
+	    }
+	  
+	}
       
     this.end_level_button.visible = true;
     createjs.Tween.get(this.end_level_button).wait(9375).to({alpha:1}, 125);
