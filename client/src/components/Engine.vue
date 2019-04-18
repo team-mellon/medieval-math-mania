@@ -155,11 +155,11 @@ export default {
 
     window.addEventListener('resize', this.resize, false);
 
-    var el = document.getElementById("drawingCanvas");
-    el.addEventListener("touchstart", this.input.handleStart.bind(this.input), false);
-    el.addEventListener('touchend', this.input.handleEnd.bind(this.input), false);
-    // el.addEventListener("touchcancel", this.input.handleCancel, false);
-    // el.addEventListener("touchmove", this.input.handleMove, false);
+    this.drawingCanvas = document.getElementById("drawingCanvas");
+    drawingCanvas.addEventListener("touchstart", this.input.handleStart.bind(this.input), false);
+    drawingCanvas.addEventListener('touchend', this.input.handleEnd.bind(this.input), false);
+    // drawingCanvas.addEventListener("touchcancel", this.input.handleCancel, false);
+    // drawingCanvas.addEventListener("touchmove", this.input.handleMove, false);
     console.log("initialized.");
 
     // window.addEventListener('DOMContentLoaded', function() {                  // start game when DOM loads
@@ -203,6 +203,8 @@ export default {
     ////////////
     // SCENES //
     ////////////
+
+    this.scene_html;
 
     this.current_scene = 10;
     this.last_scene = 0;
@@ -573,11 +575,15 @@ export default {
     // Scale the stage
     resize: function() {
 
-      this.mobile.mobileCheck.bind(this.mobile);
-      this.mobile.orientationCheck.bind(this.mobile);
+      this.mobile.mobileCheck(console, navigator);
+      this.mobile.orientationCheck(console, window);
+
+      console.log(this.mobile.isPortrait + ":" + this.mobile.isMobile);
 
       // If window height is greater than width
-      if (this.isPortrait == true && this.isMobile) {
+      if (this.mobile.isPortrait && this.mobile.isMobile) {
+
+        console.log("Portrait and Mobile");
 
         if(!this.added) {
 
@@ -586,8 +592,8 @@ export default {
           this.landscape_warning.graphics.clear()
           this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
           this.phone_rotation.gotoAndPlay(0);
-          scene_html = document.getElementById("sceneHTML");
-          scene_html.hidden = true;
+          this.scene_html = document.getElementById("sceneHTML");
+          this.scene_html.hidden = true;
           this.added = true;
 
         }
@@ -598,8 +604,8 @@ export default {
 
           this.stage.removeChild(this.landscape_warning);
           this.stage.removeChild(this.phone_rotation);
-          scene_html = document.getElementById("sceneHTML");
-          scene_html.hidden = false;
+          this.scene_html = document.getElementById("sceneHTML");
+          this.scene_html.hidden = false;
           this.added = false;
 
         }
@@ -683,7 +689,9 @@ export default {
         var game_entry_form = document.getElementById("equationBanner");
         game_entry_form.style.bottom = y_position;
         game_entry_form.style.right = x_position;
-        document.getElementById("entryInput").focus();
+        if (!this.mobile.isMobile) {
+          document.getElementById("entryInput").focus();
+        }
 
         y_position = (310 * this.scene_scale_Y).toString() + "px";
         x_position = ( (960 - 282) * this.scene_scale_X).toString() + "px";
@@ -1016,11 +1024,11 @@ export default {
 
     clearHtml: function() {
 
-      var scene_html = document.getElementById("sceneHTML");
+      this.scene_html = document.getElementById("sceneHTML");
 
-      while (scene_html.firstChild) {
+      while (this.scene_html.firstChild) {
 
-        scene_html.removeChild(scene_html.firstChild);
+        this.scene_html.removeChild(this.scene_html.firstChild);
 
       }
 
@@ -1063,6 +1071,8 @@ export default {
     				createjs.Sound.play("sword");
             this.changeScene(1);
     			}.bind(this), this.ecs, this.stage);
+
+          this.menu_button = AssetHandler.createButton("res/login-button.png", "Back", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu");  this.changeScene(10); }.bind(this), this.ecs, this.stage);
 
     			// this.secret_button = AssetHandler.createButton("res/secret_button.png", "", this.backgroundX, 1440, "center", 0, "center", 0, "image", function() {
     			// 	createjs.Sound.play("sword");
@@ -1275,7 +1285,8 @@ export default {
 
           } else {
 
-  			     this.menu_button = AssetHandler.createButton("res/login-button.png", "How To Play", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.indicatorFunction(0); }.bind(this), this.ecs, this.stage);
+  			     this.menu_button = AssetHandler.createButton("res/login-button.png", "Back", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu");  this.changeScene(10); }.bind(this), this.ecs, this.stage);
+  			     this.menu_button = AssetHandler.createButton("res/login-button.png", "How To Play", this.buttonX, this.buttonY, "right", -(this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.indicatorFunction(0); }.bind(this), this.ecs, this.stage);
 
           }
 
@@ -1327,9 +1338,9 @@ export default {
 
     	}
 
-      this.landscape_warning = new createjs.Shape();
-
-      this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, 288, 288, "center", 0, "center", 0, "image", this.ecs, this.stage);
+      // this.landscape_warning = new createjs.Shape();
+      //
+      // this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, 288, 288, "center", 0, "center", 0, "image", this.ecs, this.stage);
       // this.stage.removeChild(this.phone_rotation);
 
     },
@@ -1531,277 +1542,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-
-#entryDisplay {
-  display: inline;
-}
-
-/* #renderCanvas {
-  width   : 100%;
-  height  : 100%;
-  touch-action: none;
-} */
-
-.ldscreen {
-  position: absolute;
-  transform: translate(0%, -100%);
-  background-color: #919191;
-  height: 100%;
-  width: 100%;
-	z-index: 3;
-}
-
-#loadingText {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: "Blackadder";
-  font-size: 15vh;
-  z-index: 2;
-  color: Gold;
-}
-
-#percentText {
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: "Oldstyle";
-  font-size: 10vh;
-  z-index: 2;
-  color: Gold;
-}
-
-.bgbar {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: LightGray;
-  height: 50px;
-  width: 90%;
-	z-index: 2;
-}
-
-.pgbar {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: Gold;
-  height: 100%;
-  width: 100%;
-	z-index: 2;
-}
-
-.scrollMenu {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 5px;
-  z-index: 1;
-  text-align: center;
-  /* font-family: "Blackadder"; */
-  font-family: "Oldstyle";
-  /* font-size: 3vh; */
-  font-size: 1.75vw;
-  color: saddlebrown;
-  width: 500px;
-}
-
-#equationBanner {
-  font-family: "Oldstyle";
-  color: transparent;
-  position: absolute;
-  transform: translate(50%, 50%);
-}
-
-#multiplicandText {
-  display: inline;
-}
-
-#solutionText {
-  display: inline;
-}
-
-#historyBanner {
-  font-family: "Oldstyle";
-  position: absolute;
-  transform: translate(50%, 50%);
-}
-
-.login {
-  /* display: block;
-  align-content: center; */
-}
-
-.signup {
-  display: inline-block;
-  align-content: center;
-}
-
-.tutorial_title {
-  font-family: "Blackadder";
-  color: saddlebrown;
-  position: absolute;
-  width: 20vw;
-  top: 15%;
-  left: 12.5%;
-  transform: translate(-50%, -50%);
-  margin: 5px;
-  font-size: 6vh;
-  /* line-height: 0.7; */
-}
-
-.tutorial {
-  font-family: "Oldstyle";
-  color: saddlebrown;
-  position: absolute;
-  width: 20vw;
-  font-size: 3vh;
-  /* line-height: 0.7; */
-}
-
-input {
-  width: 100%;
-  /* max-width: 200px; */
-  max-width: 10em;
-  box-sizing: border-box;
-  border: none;
-  /* font-family: "Blackadder"; */
-  font-family: "Oldstyle";
-  font-size: 1.75vw;
-  color: saddlebrown;
-  border-bottom: 2px solid saddlebrown;
-  background-color: blanchedalmond;
-}
-
-#entryInput {
-  font-family: "Oldstyle";
-  width: 2.5em;
-  font-size: 1.75vw;
-  -moz-appearance:textfield !important;
-}
-
-#errorText {
-  color: red;
-}
-
-input::-webkit-inner-spin-button,
-input::-webkit-outer-spin-button {
-  -webkit-appearance: none !important;;
-  margin: 0 !important;
-}
-
-.dropbtn {
-  background-color: transparent;
-  font-family: "Blackadder";
-  letter-spacing: 0px;
-  color: darkred;
-  /* padding: 5px 10px 3px 3px; */
-  /* font-size: 3vh; */
-  border: none;
-  /* cursor: pointer; */
-  /* border-radius: 30px; */
-  /* margin: 0px 82px; */
-}
-
-.dropbtn:hover, .dropbtn:focus {
-  background-color: none;
-}
-
-#myInput {
-  border-box: box-sizing;
-  /* background-image: url('searchicon.png'); */
-  background-position: 14px 12px;
-  background-repeat: no-repeat;
-  font-size: 16px;
-  padding: 14px 20px 12px 45px;
-  border: none;
-  border-bottom: 1px solid #ddd;
-}
-
-#myInput:focus {
-  outline: 3px solid #ddd;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-  width: 350px;
-}
-
-.dropdown-content {
-  color: Gold;
-  font-size: 2vh;
-  /* display: none; */
-  position: absolute;
-  background-color: none;
-  min-width: 350px;
-  overflow: auto;
-  border: 0px solid #ddd;
-  z-index: 1;
-  overflow-y: auto;
-  height: 60px;
-  text-align: center;
-}
-
-.dropdown-content a {
-  color: Gold;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: center;
-}
-
-.dropdown a:hover {background-color: #ddd;}
-
-.show {display: block;}
-
-/* @media only screen and (max-width: 900px) { */
-  /* body { */
-    /* font-size: 15vh; */
-  /* } */
-
-  /* input {
-    font-size: 7vh;
-  }
-
-  .scrollMenu {
-    line-height: 75%;
-    font-size: 7vh;
-  }
-
-  #equationBanner {
-    font-size: 5vh;
-  }
-
-  #multiplicandText {
-    font-size: 5vh;
-  }
-
-  #solutionText {
-    font-size: 5vh;
-  }
-
-  #historyText {
-    font-size: 5vh;
-  }
-
-  #historyBanner {
-    font-size: 5vh;
-  } */
-
-  /* #entryInput { */
-    /* font-size: 5vh; */
-    /* font-family: "Arial"; */
-    /* width: 2.5em; */
-    /* max-width: 50px */
-    /* -moz-appearance:textfield !important; */
-  /* } */
-/* } */
-
-
 </style>

@@ -22,7 +22,10 @@ class MobileHandler {
   }
 
   // Function that checks to see what the orientation is
-  orientationCheck () {
+  orientationCheck (console, window) {
+
+    // console.log(window.innerHeight + ":" + window.innerWidth);
+    console.log(":");
 
     // If window height is greater than width
     if (window.innerHeight > window.innerWidth) {
@@ -44,7 +47,7 @@ class MobileHandler {
   }
 
   // Function to check to see if the current device is mobile
-  mobileCheck () {
+  mobileCheck (console, navigator) {
 
     // Print out the device if known, if not known maybe store it for analytics but at least print it out
     switch (true) {

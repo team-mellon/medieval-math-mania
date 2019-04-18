@@ -47,4 +47,276 @@ html, body {
   padding : 0px;
 }
 
+
+#entryDisplay {
+  display: inline;
+}
+
+/* #renderCanvas {
+  width   : 100%;
+  height  : 100%;
+  touch-action: none;
+} */
+
+.ldscreen {
+  position: absolute;
+  transform: translate(0%, -100%);
+  background-color: #919191;
+  height: 100%;
+  width: 100%;
+	z-index: 3;
+}
+
+#loadingText {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Blackadder";
+  font-size: 15vh;
+  z-index: 2;
+  color: Gold;
+}
+
+#percentText {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Oldstyle";
+  font-size: 10vh;
+  z-index: 2;
+  color: Gold;
+}
+
+.bgbar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: LightGray;
+  height: 50px;
+  width: 90%;
+	z-index: 2;
+}
+
+.pgbar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: Gold;
+  height: 100%;
+  width: 100%;
+	z-index: 2;
+}
+
+.scrollMenu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 5px;
+  z-index: 1;
+  text-align: center;
+  /* font-family: "Blackadder"; */
+  font-family: "Oldstyle";
+  /* font-size: 3vh; */
+  font-size: 1.75vw;
+  color: saddlebrown;
+  width: 500px;
+}
+
+#equationBanner {
+  font-family: "Oldstyle";
+  color: transparent;
+  position: absolute;
+  transform: translate(50%, 50%);
+}
+
+#multiplicandText {
+  display: inline;
+}
+
+#solutionText {
+  display: inline;
+}
+
+#historyBanner {
+  font-family: "Oldstyle";
+  position: absolute;
+  transform: translate(50%, 50%);
+}
+
+.login {
+  /* display: block;
+  align-content: center; */
+}
+
+.signup {
+  display: inline-block;
+  align-content: center;
+}
+
+.tutorial_title {
+  font-family: "Blackadder";
+  color: saddlebrown;
+  position: absolute;
+  width: 20vw;
+  top: 15%;
+  left: 12.5%;
+  transform: translate(-50%, -50%);
+  margin: 5px;
+  font-size: 6vh;
+  /* line-height: 0.7; */
+}
+
+.tutorial {
+  font-family: "Oldstyle";
+  color: saddlebrown;
+  position: absolute;
+  width: 20vw;
+  font-size: 3vh;
+  /* line-height: 0.7; */
+}
+
+input {
+  width: 100%;
+  /* max-width: 200px; */
+  max-width: 10em;
+  box-sizing: border-box;
+  border: none;
+  /* font-family: "Blackadder"; */
+  font-family: "Oldstyle";
+  font-size: 1.75vw;
+  color: saddlebrown;
+  border-bottom: 2px solid saddlebrown;
+  background-color: blanchedalmond;
+}
+
+#entryInput {
+  font-family: "Oldstyle";
+  width: 2.5em;
+  font-size: 1.75vw;
+  -moz-appearance:textfield !important;
+}
+
+#errorText {
+  color: red;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none !important;;
+  margin: 0 !important;
+}
+
+.dropbtn {
+  background-color: transparent;
+  font-family: "Blackadder";
+  letter-spacing: 0px;
+  color: darkred;
+  /* padding: 5px 10px 3px 3px; */
+  /* font-size: 3vh; */
+  border: none;
+  /* cursor: pointer; */
+  /* border-radius: 30px; */
+  /* margin: 0px 82px; */
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: none;
+}
+
+#myInput {
+  border-box: box-sizing;
+  /* background-image: url('searchicon.png'); */
+  background-position: 14px 12px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 14px 20px 12px 45px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+
+#myInput:focus {
+  outline: 3px solid #ddd;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  width: 350px;
+}
+
+.dropdown-content {
+  color: Gold;
+  font-size: 2vh;
+  /* display: none; */
+  position: absolute;
+  background-color: none;
+  min-width: 350px;
+  overflow: auto;
+  border: 0px solid #ddd;
+  z-index: 1;
+  overflow-y: auto;
+  height: 60px;
+  text-align: center;
+}
+
+.dropdown-content a {
+  color: Gold;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+
+/* @media only screen and (max-width: 900px) { */
+  /* body { */
+    /* font-size: 15vh; */
+  /* } */
+
+  /* input {
+    font-size: 7vh;
+  }
+
+  .scrollMenu {
+    line-height: 75%;
+    font-size: 7vh;
+  }
+
+  #equationBanner {
+    font-size: 5vh;
+  }
+
+  #multiplicandText {
+    font-size: 5vh;
+  }
+
+  #solutionText {
+    font-size: 5vh;
+  }
+
+  #historyText {
+    font-size: 5vh;
+  }
+
+  #historyBanner {
+    font-size: 5vh;
+  } */
+
+  /* #entryInput { */
+    /* font-size: 5vh; */
+    /* font-family: "Arial"; */
+    /* width: 2.5em; */
+    /* max-width: 50px */
+    /* -moz-appearance:textfield !important; */
+  /* } */
+/* } */
+
 </style>
