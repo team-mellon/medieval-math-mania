@@ -219,7 +219,7 @@ class AssetHandler {
   }
 
 
-    static createStatsContainer (asset, num, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
+    static createStatsContainer (arr, asset, num, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
 
     var text = new createjs.Text(num, style + " " + size + " " + font, color);
     //stage.addChild(text);
@@ -230,7 +230,7 @@ class AssetHandler {
 	var container = new createjs.Container();
 	container.addChild(text);
 	stage.addChild(container);
-
+/*
 	let count = 1;
 	for(var i = 0; i <= 195; i += 65){
 	    for(var j = 0; j < 5; j++){
@@ -267,19 +267,19 @@ class AssetHandler {
 	}
 
 
-
+*/
 
 
 // NEW VERSION OF BADGES FOR STATS PAGE
 
-/*
+
 
 
 	let count = 0;
 	for(var i = 0; i <= 195; i += 65){
 	    for(var j = 0; j < 5; j++){
 	        if(arr[count] == 1)
-	            var temp = new createjs.Bitmap("res/badge-level-" + count + ".png");
+	            var temp = new createjs.Bitmap("res/badge-level-15.png");
 		else
 		    var temp = new createjs.Bitmap(asset);
 		    
@@ -298,7 +298,7 @@ class AssetHandler {
 
 
 
-*/
+
 
 
 
