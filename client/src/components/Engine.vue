@@ -1234,8 +1234,14 @@ export default {
 
     		case 4:
 
+		let temp = 0;
+		for(var i = 0; i < 20; i++){
+		    if(this.user.badges[i] == 1)
+		        temp++;
+		}
+
     			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), this.ecs, this.stage);
-			let text = "Hits: " + this.user.hits + "\n\nHighs: " + this.user.highs + "\n\nLows: " + this.user.lows + "\n\nTotal Misses: " + (this.user.highs + this.user.lows) + "\n\nBadges: " + this.user.badges + "\n\n";
+			let text = "Hits: " + this.user.hits + "\n\nHighs: " + this.user.highs + "\n\nLows: " + this.user.lows + "\n\nTotal Misses: " + (this.user.highs + this.user.lows) + "\n\nBadges: " + temp + "\n\n";
 
 			this.statsContainer = AssetHandler.createStatsContainer(this.user.badges, "res/empty-badge.png", text, "Oldstyle", "32px", "normal", "black", 240, 240, "center", 0, "center", 0, "image", this.ecs, this.stage);
 
