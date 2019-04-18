@@ -367,6 +367,10 @@ class LevelHandler {
     this.high_text.visible = false;
     this.high_text.alpha = 0;
 
+      this.badge_text = AssetHandler.createText("Congratulations!  You earned a badge", "Oldstyle", "32px", "", "gold", 10, 10, "center", 0 - 260, "center", 0 + 140, "image", this.lcs, stage);
+      this.badge_text.visible = false;
+      this.badge_text.alpha = 0;
+      
     this.tutorial_menu = AssetHandler.createTextContainer(this.tutorial_menuS, "The tutorial is broken", "Oldstyle", "32px", "normal", "Saddlebrown", 900, 300, "center", 0, "top", (300 / 2) + this.buttonY , "image", 100, this.lcs, stage);
     this.tutorial_menu.visible = false;
 
@@ -983,8 +987,13 @@ class LevelHandler {
     this.high_text.visible = true;
     createjs.Tween.get(this.high_text).wait(7750).to({alpha:1}, 500);
 
+      if(true){
+	  this.badge_text.visible = true;
+	  createjs.Tween.get(this.badge_text).wait(8750).to({alpha:1}, 500);
+      }
+      
     this.end_level_button.visible = true;
-    createjs.Tween.get(this.end_level_button).wait(8375).to({alpha:1}, 125);
+    createjs.Tween.get(this.end_level_button).wait(9375).to({alpha:1}, 125);
 
     //plays victory tune
     createjs.Sound.play("win", this.delayWin);

@@ -268,6 +268,49 @@ class AssetHandler {
 	    }
 	    count++;
 	}
+
+
+
+
+
+// NEW VERSION OF BADGES FOR STATS PAGE
+
+/*
+
+
+	let count = 0;
+	for(var i = 0; i <= 195; i += 65){
+	    for(var j = 0; j < 5; j++){
+	        if(arr[count] == 1)
+	            var temp = new createjs.Bitmap("res/badge-level-" + count + ".png");
+		else
+		    var temp = new createjs.Bitmap(asset);
+		    
+		temp.regX = width / 2;
+		temp.regY = height / 2;
+		temp.scale = 0.25;
+		temp.name = "badge " + (count + 1);
+		temp.x = j * 70;
+		temp.y = -70 + i;
+		container.addChild(temp);
+
+		count++;
+	    }
+	}
+
+
+
+
+*/
+
+
+
+
+
+
+
+
+	
 /*
 	var image = new createjs.Bitmap(asset);	
 	//stage.addChild(image);
