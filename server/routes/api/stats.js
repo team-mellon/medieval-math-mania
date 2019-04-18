@@ -41,6 +41,7 @@ router.post('/update', async (req, res) => {
   doc.hits = req.body.hits;
   doc.highs = req.body.highs;
   doc.lows = req.body.lows;
+  doc.badges = req.body.badges;
   await doc.save();
 
 });

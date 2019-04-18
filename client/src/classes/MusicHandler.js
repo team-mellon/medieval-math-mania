@@ -1,6 +1,10 @@
-//////////////////
-// MUSICHANDLER //
-//////////////////
+////////////////////////////////////////////////////////////////////////////////
+// MUSICHANDLER                                                               //
+////////////////////////////////////////////////////////////////////////////////
+// Handler for music controls calls. This encompasses loading sounds,         //
+// manipulating which song is playing, and manipulating the current songs     //
+// volume.                                                                    //
+////////////////////////////////////////////////////////////////////////////////
 
 // Game Data
 import { playlistSources, playlistIDs } from '../game_data/music.js';
@@ -10,6 +14,12 @@ import { playlistSources, playlistIDs } from '../game_data/music.js';
 class MusicHandler {
 
   constructor() {
+
+    // Bool for checking if the current song is paused
+    this.isPaused = true;
+
+    // Bool for checking if the current song is muted
+    this.isMuted = false;
 
     this.muted = false;
 

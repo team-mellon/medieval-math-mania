@@ -1,20 +1,17 @@
-//////////////////
-// FORMHANDLER //
-//////////////////
-
+////////////////////////////////////////////////////////////////////////////////
+// FORMHANDLER                                                                //
+////////////////////////////////////////////////////////////////////////////////
+// Handler for async api calls. This encompasses database request like        //
+// creating a user, getting a user's data, verifying a user, updating a       //
+// database entry, and sigming out a user.                                    //
+////////////////////////////////////////////////////////////////////////////////
 
 class FormHandler {
-
-
-
-  constructor() {
-
-  }
 
   static createLoginForm () {
 
     // Creates username div to hold display text and input box
-    var login_username_div = document.createElement("div");
+    var login_username_div = document.createElement("div"); // Create encompassing div
     login_username_div.className = "login";
 
     // Creates 'Username' label
@@ -33,38 +30,34 @@ class FormHandler {
 
 
     // Creates password display label and input box
-    var password_text = document.createTextNode("Password");
     var password_input = document.createElement("input");
     password_input.id = "passwordInput";
     password_input.setAttribute("type", "password");
     password_input.setAttribute("name", "pass");
 
-    // Creates password div to hold display text and input box
-    var login_password_div = document.createElement("div");
-    login_password_div.className = "login";
-    login_password_div.appendChild(password_text);
-    // Creates line break for form div spacing
-    login_password_div.appendChild(document.createElement("br"));
-    login_password_div.appendChild(password_input);
+    // Creates password div to hold label and input box
+    var login_password_div = document.createElement("div"); // Create encompassing div
+    login_password_div.className = "login"; // Div class
+    login_password_div.appendChild(document.createTextNode("Password")); // Add 'Password' label
+    login_password_div.appendChild(document.createElement("br")); // Add spacing
+    login_password_div.appendChild(password_input); // Add password input box
 
     // Creates password display text and input box
-    var error_text = document.createTextNode("");
-
-    var error_div = document.createElement("div");
+    var error_div = document.createElement("div"); // Create encompassing div
     error_div.id = "errorText";
-    error_div.appendChild(error_text);
+    error_div.appendChild(document.createTextNode(""));
 
-    // Creates login form to hold username and password divs
-    var login_form = document.createElement("form");
-    login_form.id = "loginForm";
-    login_form.className = "scrollMenu";
-    login_form.appendChild(login_username_div);
-    // Creates line break for form div spacing
-    login_form.appendChild(document.createElement("br"));
-    login_form.appendChild(login_password_div);
-    // Creates line break for form div spacing
-    login_form.appendChild(document.createElement("br"));
-    login_form.appendChild(error_div);
+
+
+    // Creates login form to hold username, password, and error divs
+    var login_form = document.createElement("form"); // Create encompassing div
+    login_form.id = "loginForm"; // Div id
+    login_form.className = "scrollMenu"; // Div class
+    login_form.appendChild(login_username_div); // Add username div
+    login_form.appendChild(document.createElement("br")); // Add spacing
+    login_form.appendChild(login_password_div); // Add password div
+    login_form.appendChild(document.createElement("br")); // Add spacing
+    login_form.appendChild(error_div); // Add error div
 
     // Injecting login form into existing html
     var scene_html = document.getElementById("sceneHTML");
@@ -82,7 +75,7 @@ class FormHandler {
     firstname_input.setAttribute("name", "fname");
 
     // Creates firstname div to hold display text and input box
-    var signup_firstname_div = document.createElement("div");
+    var signup_firstname_div = document.createElement("div"); // Create encompassing div
     signup_firstname_div.className = "signup";
     signup_firstname_div.appendChild(firstname_text);
     signup_firstname_div.appendChild(firstname_input);
@@ -95,7 +88,7 @@ class FormHandler {
     lastname_input.setAttribute("name", "lname");
 
     // Creates lastname div to hold display text and input box
-    var signup_lastname_div = document.createElement("div");
+    var signup_lastname_div = document.createElement("div"); // Create encompassing div
     signup_lastname_div.className = "signup";
     signup_lastname_div.appendChild(lastname_text);
     signup_lastname_div.appendChild(lastname_input);
@@ -111,7 +104,7 @@ class FormHandler {
     username_input.setAttribute("name", "uname");
 
     // Creates username div to hold display text and input box
-    var signup_username_div = document.createElement("div");
+    var signup_username_div = document.createElement("div"); // Create encompassing div
     signup_username_div.className = "signup";
     signup_username_div.appendChild(username_text);
     signup_username_div.appendChild(username_input);
@@ -127,7 +120,7 @@ class FormHandler {
     password_input.setAttribute("name", "pass");
 
     // Creates password div to hold display text and input box
-    var signup_password_div = document.createElement("div");
+    var signup_password_div = document.createElement("div"); // Create encompassing div
     signup_password_div.className = "signup";
     signup_password_div.appendChild(password_text);
     signup_password_div.appendChild(password_input);
@@ -140,7 +133,7 @@ class FormHandler {
     confirm_input.setAttribute("name", "confirm");
 
     // Creates confirm div to hold display text and input box
-    var signup_confirm_div = document.createElement("div");
+    var signup_confirm_div = document.createElement("div"); // Create encompassing div
     signup_confirm_div.className = "signup";
     signup_confirm_div.appendChild(confirm_text);
     signup_confirm_div.appendChild(confirm_input);
@@ -151,7 +144,7 @@ class FormHandler {
     // Creates password display text and input box
     var error_text = document.createTextNode("");
 
-    var error_div = document.createElement("div");
+    var error_div = document.createElement("div"); // Create encompassing div
     error_div.id = "errorText";
     error_div.appendChild(error_text);
 
@@ -178,7 +171,7 @@ class FormHandler {
   static createGameForm (multiplicand, sign, equal, solution, history_list, play_tutorial, isMobile, dropDownFunc) {
 
     // Creates username display text
-    var multiplicand_div = document.createElement("div");
+    var multiplicand_div = document.createElement("div"); // Create encompassing div
     multiplicand_div.id = "multiplicandText";
     var multiplicand_text = document.createTextNode(multiplicand);
     multiplicand_div.appendChild(multiplicand_text);
@@ -186,7 +179,7 @@ class FormHandler {
     var entry_input;
     if (isMobile) {
 
-      entry_input = document.createElement("div");
+      entry_input = document.createElement("div"); // Create encompassing div
       entry_input.id = "entryDisplay";
       var hundreds = document.createElement("span");
       hundreds.id = "hundredsPlace";
@@ -225,13 +218,13 @@ class FormHandler {
     }
 
     var equal_text = document.createTextNode(equal);
-    var solution_div = document.createElement("div");
+    var solution_div = document.createElement("div"); // Create encompassing div
     solution_div.id = "solutionText";
     var solution_text = document.createTextNode(solution);
     solution_div.appendChild(solution_text);
 
     // Creates username div to hold display text and input box
-    var game_entry_div = document.createElement("div");
+    var game_entry_div = document.createElement("div"); // Create encompassing div
     game_entry_div.className = "login";
     game_entry_div.appendChild(multiplicand_div);
     game_entry_div.appendChild(sign_text);
@@ -242,7 +235,7 @@ class FormHandler {
     // Creates username display text
     var button_text = document.createTextNode("");
     var history_button = document.createElement("button");
-    var history_div = document.createElement("div");
+    var history_div = document.createElement("div"); // Create encompassing div
     history_button.className = "dropbtn";
     history_button.addEventListener('click', dropDownFunc);
     history_div.className = "dropdown-content";
@@ -256,13 +249,13 @@ class FormHandler {
       history_div.appendChild(line_break);
     }
 
-    var history_dropdown = document.createElement("div");
+    var history_dropdown = document.createElement("div"); // Create encompassing div
     history_dropdown.className = "dropdown";
     history_dropdown.appendChild(history_button);
     history_dropdown.appendChild(history_div);
 
     // Does a thing
-    var game_history_div = document.createElement("div");
+    var game_history_div = document.createElement("div"); // Create encompassing div
     game_history_div.className = "login";
     game_history_div.appendChild(history_dropdown);
 
@@ -275,7 +268,7 @@ class FormHandler {
       tutorial_text.id = "tutorialText";
       var tutorial_words = document.createTextNode("The tutorial is broken");
       tutorial_text.appendChild(tutorial_words);
-      var tutorial_div = document.createElement("div");
+      var tutorial_div = document.createElement("div"); // Create encompassing div
       tutorial_div.className = "tutorial_title";
       tutorial_div.id = "tutorialDiv"
       tutorial_div.appendChild(tutorial_label);

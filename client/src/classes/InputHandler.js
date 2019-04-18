@@ -1,11 +1,13 @@
-//////////////////
-// INPUTHANDLER //
-//////////////////
+////////////////////////////////////////////////////////////////////////////////
+// INPUTHANDLER                                                               //
+////////////////////////////////////////////////////////////////////////////////
+// Handler for input calls. This encompasses key event handlers, and touch    //
+// event handlers.                                                            //
+////////////////////////////////////////////////////////////////////////////////
 
 class InputHandler {
 
-
-
+  // Constructor to initialize input checking variables
   constructor() {
 
     // Holds the states of all the keys
@@ -24,33 +26,23 @@ class InputHandler {
 
   }
 
-
-
-  //---------------//
-  // Key detection //
-  //---------------//
-
-  // Check all the keys to see if they are pressed
+  // Function that checks all the keys to see if they are pressed
   keyDown (evt) {
 
+    // Set incoming keycode to true
     this.keys[evt.keyCode] = true;
 
   }
 
-  // Check all the keys to see if they are released
+  // Function that checks all the keys to see if they are released
   keyUp (evt) {
 
+    // Delete the state at the incoming keycode location
     delete this.keys[evt.keyCode];
 
   }
 
-
-
-  //-----------------//
-  // Touch detection //
-  //-----------------//
-
-  // Touch start handler
+  // Function that detects the start of a touch event
   handleStart (evt) {
 
     // Prevent the default behavior of the event
@@ -65,7 +57,7 @@ class InputHandler {
 
   }
 
-  // Touch end handler
+  // Function that detects the end of a touch event
   handleEnd (evt) {
 
     // Prevent the default behavior of the event
@@ -77,18 +69,19 @@ class InputHandler {
 
     // Trigger bool to indicate drag event
     console.log("drag: " + (this.end_touch - this.start_touch));
+
+    // If the end of the touch minus the beginning of the touch is less than -100
     if (this.end_touch - this.start_touch < -100) {
-      console.log(this.drag_up);
+
+      // Register as a valid drag
       this.drag_up = true;
-      console.log(this.drag_up);
+
     }
 
     // Clear touch values
     this.start_touch = this.end_touch = 0;
 
   }
-
-
 
 }
 
