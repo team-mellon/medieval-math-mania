@@ -8,7 +8,12 @@
 class InputHandler {
 
   // Constructor to initialize input checking variables
-  constructor() {
+  constructor(drawingCanvas) {
+
+    drawingCanvas.addEventListener("touchstart", this.handleStart, false);
+    drawingCanvas.addEventListener('touchend', this.handleEnd, false);
+    drawingCanvas.addEventListener("touchcancel", this.handleCancel, false);
+    drawingCanvas.addEventListener("touchmove", this.handleMove, false);
 
     // Holds the states of all the keys
     this.keys = {};
@@ -80,6 +85,22 @@ class InputHandler {
 
     // Clear touch values
     this.start_touch = this.end_touch = 0;
+
+  }
+
+  // Function that detects the start of a touch event
+  handleCancel (evt) {
+
+    // Prevent the default behavior of the event
+    evt.preventDefault();
+
+  }
+
+  // Function that detects the end of a touch event
+  handleMove (evt) {
+
+    // Prevent the default behavior of the event
+    evt.preventDefault();
 
   }
 

@@ -89,12 +89,10 @@ class LevelHandler {
 
     this.valid = true;
 
-    this.structureX = 1920;
-    this.structureY = 1440;
-
     this.target_x = 0;
-	//Need to make setting for this
-	this.hints_on = true;
+
+  	//Need to make setting for this
+  	this.hints_on = true;
 
     this.hint_shown = false;
 
@@ -277,13 +275,13 @@ class LevelHandler {
 
   }
 
-  createLevel (stage, leave_to_map, leave_to_hint, leave_to_menu, leave_to_settings, user_authentication, menu_button) {
+  createLevel (stage, leave_to_map, leave_to_hint, leave_to_menu, leave_to_settings, user_authentication, menu_button, music) {
 
     console.log("LCS length: " + this.lcs.length);
     console.log(stage);
 
     // Level structure in background
-    this.structure_center = AssetHandler.createSprite(this.centerS, this.centerS.frames.width, this.centerS.frames.height, "center", -360 + (this.centerS.frames.width / 2), "bottom", -897 + (this.centerS.frames.height / 2), "image", this.lcs, stage);
+    this.structure_center = AssetHandler.createSprite(this.centerS, this.centerS.frames.width, this.centerS.frames.height, "center", -360 + (this.centerS.frames.width / 2), "bottom", -900 + (this.centerS.frames.height / 2), "image", this.lcs, stage);
     this.structure_left_center = AssetHandler.createSprite(this.left_centerS, this.left_centerS.frames.width, this.left_centerS.frames.height, "center", -660 + (this.left_centerS.frames.width / 2), "bottom", -750 + (this.left_centerS.frames.height / 2), "image", this.lcs, stage);
     this.structure_right_center = AssetHandler.createSprite(this.right_centerS, this.right_centerS.frames.width, this.right_centerS.frames.height, "center", 660 - (this.right_centerS.frames.width / 2), "bottom", -750 + (this.right_centerS.frames.height / 2), "image", this.lcs, stage);
 
@@ -323,14 +321,12 @@ class LevelHandler {
 
     this.background = AssetHandler.createImage("res/numberline.png", this.backgroundX, 24, "center", 0, "top", 24 / 2, "image", this.lcs, stage);
 
-    // number_spacing = 10;
     this.number_spacer = 25;
 
     for(var i = -25; i <= 25; i++){
 
       var temp = AssetHandler.createText(i.toString(), "Arial", "16px", "bold", "black", this.structureX, this.structureY, "center", 0 - (((this.number_spacer * 48) + 5)), "top", 30, "image", this.lcs, stage);
       this.number_text.push(temp);
-      // number_spacing += 48;
       this.number_spacer--;
 
     }
@@ -370,14 +366,14 @@ class LevelHandler {
       this.badge_text = AssetHandler.createText("Congratulations!  You earned a badge", "Oldstyle", "32px", "", "gold", 10, 10, "center", 0 - 260, "center", 0 + 140, "image", this.lcs, stage);
       this.badge_text.visible = false;
       this.badge_text.alpha = 0;
-      
+
     this.tutorial_menu = AssetHandler.createTextContainer(this.tutorial_menuS, "The tutorial is broken", "Oldstyle", "32px", "normal", "Saddlebrown", 900, 300, "center", 0, "top", (300 / 2) + this.buttonY , "image", 100, this.lcs, stage);
     this.tutorial_menu.visible = false;
 
     this.pause_menu = AssetHandler.createImage("res/hit-target-pause-menu.png", this.backgroundX, this.backgroundY, "center", 0, "center", 0, "image", this.lcs, stage);
     this.pause_menu.visible = false;
 
-    this.close_button = AssetHandler.createButton("res/hit-target-pause-close-button.png", "", this.buttonX, this.buttonY, "center", 0 + 445, "center", 0 - 281, "gui", function() {
+    this.close_button = AssetHandler.createButton("res/hit-target-pause-close-button.png", "", this.buttonX, this.buttonY, "center", 0 + 456, "center", 0 - 288, "gui", function() {
       createjs.Sound.play("menu");
       this.pauseAnimation(false);
       this.visibleButton(false, user_authentication);
@@ -403,20 +399,20 @@ class LevelHandler {
     this.hint_button.visible = false;
 
     this.previous_indicator = AssetHandler.createImage("res/previous-indicator.png", 24, 24, "center", 0 - 50, "center", 0 + 194, "gui", this.lcs, stage);
-    // this.previous_indicator.addEventListener("click", previousSound);
+    this.previous_indicator.addEventListener("click", function () { music.previousSound() });
     this.previous_indicator.visible = false;
 
     this.pause_indicator = AssetHandler.createImage("res/pause-indicator.png", 24, 24, "center", 0, "center", 0 + 194, "gui", this.lcs, stage);
-    // this.pause_indicator.addEventListener("click", playSound);
+    this.pause_indicator.addEventListener("click", function () { music.playSound() });
     this.pause_indicator.visible = false;
 
     this.next_indicator = AssetHandler.createImage("res/next-indicator.png", 24, 24, "center", 0 + 50, "center", 0 + 194, "gui", this.lcs, stage);
-    // this.next_indicator.addEventListener("click", nextSound);
+    this.next_indicator.addEventListener("click", function () { music.nextSound() });
     this.next_indicator.visible = false;
 
     this.lute = AssetHandler.createImage("res/lute.png", 96, 96, "center", 0 + 313, "center", 0 + 194, "gui", this.lcs, stage);
     // antiLute = createImage("res/antiLute.png", 96, 96, 2);
-    // this.lute.addEventListener("click", muteSound);
+    this.lute.addEventListener("click", function () { music.muteSound() });
     this.lute.visible = false;
     // antiLute.visible = false;
     // antiLute.hidden = true;
@@ -992,9 +988,9 @@ class LevelHandler {
 		this.badge_text.visible = true;
 		createjs.Tween.get(this.badge_text).wait(8750).to({alpha:1}, 500);
 	    }
-	  
+
 	}
-      
+
     this.end_level_button.visible = true;
     createjs.Tween.get(this.end_level_button).wait(9375).to({alpha:1}, 125);
 
@@ -1393,34 +1389,6 @@ class LevelHandler {
     }
 
   }
-
-  // // Mutes the current song
-  // muteSound (stage, music) {
-  //
-  //   if (!music.sound_off) {
-  //
-  //     console.log(this.lute.src);
-  //
-  //     if(!music.muted)
-  //     {
-  //       stage.removeChild(this.lute);
-  //       this.lute = new createImage("res/antiLute.png", this.luteX, this.luteY);
-  //       lute.addEventListener("click", music.muteSound);
-  //       this.scaleGUI();
-  //     }
-  //     else
-  //     {
-  //       stage.removeChild(this.lute);
-  //       this.lute = new createImage("res/lute.png", this.luteX, this.luteY);
-  //       this.lute.addEventListener("click", music.muteSound);
-  //       this.scaleGUI();
-  //     }
-  //
-  //     music.current_song.muted = !music.current_song.muted;
-  //     this.music.muted = !music.muted;
-  //
-  //   }
-  // }
 
   victoryGenerator () {
 
