@@ -34,8 +34,8 @@ import MusicHandler from '../classes/MusicHandler.js';
 import LevelHandler from '../classes/LevelHandler.js';
 
 // API classes
-import StatService from '../StatService.js';
-import LoginService from '../LoginService.js';
+// import StatService from '../StatService.js';
+// import LoginService from '../LoginService.js';
 
 // Game Data
 import { sceneData, indicatorCoordinates, levelDescriptors } from '../game_data/scenes.js';
@@ -50,7 +50,9 @@ export default {
     return {
 
       // Authentication handling
-      error: '',
+      async: {
+        error: ''
+      },
       text: '',
 
       // Current user data
@@ -95,17 +97,12 @@ export default {
   //
   //   } catch (err) {
   //
-  //     this.error = err.message;
-  //     console.log(this.error);
+  //     this.async.error = err.message;
+  //     console.log(this.async.error);
   //
   //   }
   //
   // },
-
-  // createUser(text, user)
-  // getUserData(text, user)
-  // verifyUser(text, user)
-  // updateStats(text, user)
 
   // Clear color of screen
     // color was r:0.78, b:1, g:0.98, a:1 (Babylon.Color4)
@@ -154,13 +151,16 @@ export default {
     // Grabbing the canvas to set touch controls
     this.drawingCanvas = document.getElementById("drawingCanvas");
 
+    // Grabbing the div that hold the html stuff
+    this.scene_html = document.getElementById("sceneHTML");
+
     // Initialize all the handlers
     this.input = new InputHandler(this.drawingCanvas);
     this.mobile = new MobileHandler();
     this.music = new MusicHandler(createjs);
     this.level = new LevelHandler();
 
-    console.log("initialized.");
+    // console.log("initialized.");
 
     // window.addEventListener('DOMContentLoaded', function() {                  // start game when DOM loads
     //   runGame('renderCanvas');
@@ -562,12 +562,8 @@ export default {
       this.mobile.mobileCheck(console, navigator);
       this.mobile.orientationCheck(console, window);
 
-      console.log(this.mobile.isPortrait + ":" + this.mobile.isMobile);
-
       // If window height is greater than width
       if (this.mobile.isPortrait && this.mobile.isMobile) {
-
-        console.log("Portrait and Mobile");
 
         if(!this.added) {
 
@@ -616,9 +612,11 @@ export default {
 
       // Calculate the scene scaling
       if (this.screen_ratio < 2.5) { // tall screen
+
         this.max_stored = false;
         this.scene_scale_X = this.stage.canvas.width / this.max_scale_X;
         this.scene_scale_Y = this.stage.canvas.width / this.max_scale_X;
+
       } else if (this.screen_ratio > 2.5) { // wide screen
         if(!this.max_stored) {
           this.max_stored = true;
@@ -764,13 +762,19 @@ export default {
 	  this.user.badges[(this.level.current_level - 1)] = 1;
 
           // update database
-          this.updateStats({
-            user: this.user.username,
-            hits: this.user.hits,
-            highs: this.user.highs,
-            lows: this.user.lows,
-	    badges: this.user.badges
-          });
+          APIHandler.updateStats(
+
+            {
+              user: this.user.username,
+              hits: this.user.hits,
+              highs: this.user.highs,
+              lows: this.user.lows,
+  	          badges: this.user.badges
+            },
+            this.user,
+            this.async
+
+          );
 
           // Also maybe check if boss level is active
           // this.level.checkBossFight();
@@ -825,7 +829,7 @@ export default {
             this.level.makeGameForm(this.mobile.isMobile);
             this.level.remakeMultiplierBanner();
             this.level.remakeRangeBanner();
-            
+
           }
 
       }
@@ -1055,7 +1059,7 @@ export default {
               "uname": document.getElementById('usernameInput').value,
               "pass": document.getElementById('passwordInput').value
             };
-            this.verifyUser(text);
+            APIHandler.verifyUser(text, this.user, this.async);
     			}.bind(this), this.ecs, this.stage);
 
     			this.right_sword_button = AssetHandler.createButton("res/sword-right.png", "Signup", this.buttonX, this.buttonY, "center", (this.buttonX/2 + 65), "center", (this.buttonY/2 + 200), "image", function() {
@@ -1114,7 +1118,7 @@ export default {
                       "lname": document.getElementById('lastnameInput').value,
                       "confirm": document.getElementById('confirmInput').value
                     };
-                    this.createUser(text);
+                    APIHandler.createUser(text, this.user, this.async);
                     this.changeScene(2);
                   }
                 }
@@ -1137,11 +1141,11 @@ export default {
     			// } else {
 
     			this.play_button = AssetHandler.createButton("res/menu-button.png", "Play", this.buttonX, this.buttonY, "center", 0, "center", 0 - 200, "gui", function() { createjs.Sound.play("menu"); this.changeScene(8); }.bind(this), this.ecs, this.stage);
-    			this.stats_button = AssetHandler.createButton("res/menu-button.png", "Stats", this.buttonX, this.buttonY, "center", 0, "center", 0 - 100, "gui", function() { createjs.Sound.play("menu"); this.changeScene(4); this.getUserData(this.user.username); }.bind(this), this.ecs, this.stage);
+    			this.stats_button = AssetHandler.createButton("res/menu-button.png", "Stats", this.buttonX, this.buttonY, "center", 0, "center", 0 - 100, "gui", function() { createjs.Sound.play("menu"); this.changeScene(4); APIHandler.getUserData(this.user.username, this.user, this.async); }.bind(this), this.ecs, this.stage);
     			this.h2p_button = AssetHandler.createButton("res/menu-button.png", "How To Play", this.buttonX, this.buttonY, "center", 0, "center", 0 - 0, "gui", function() { createjs.Sound.play("menu"); this.indicatorFunction(0); }.bind(this), this.ecs, this.stage);
     			this.settings_button = AssetHandler.createButton("res/menu-button.png", "Settings", this.buttonX, this.buttonY, "center", 0, "center", 0 + 100, "gui", function() { createjs.Sound.play("menu"); this.changeScene(6); }.bind(this), this.ecs, this.stage);
-    			this.logout_button = AssetHandler.createButton("res/menu-button.png", "Logout", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "top", (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.user.authenticated = false; this.changeScene(0); this.signoutUser(); }.bind(this), this.ecs, this.stage);
-    			this.account_button = AssetHandler.createButton("res/menu-button.png", "Account", this.buttonX, this.buttonY, "right", 0 - (this.buttonX/2 + 10), "top", (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(7); this.getUserData(this.user.username); }.bind(this), this.ecs, this.stage);
+    			this.logout_button = AssetHandler.createButton("res/menu-button.png", "Logout", this.buttonX, this.buttonY, "left", (this.buttonX/2 + 10), "top", (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.user.authenticated = false; this.changeScene(0); APIHandler.signoutUser(this.async); }.bind(this), this.ecs, this.stage);
+    			this.account_button = AssetHandler.createButton("res/menu-button.png", "Account", this.buttonX, this.buttonY, "right", 0 - (this.buttonX/2 + 10), "top", (this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(7); APIHandler.getUserData(this.user.username, this.user, this.async); }.bind(this), this.ecs, this.stage);
 
     			break;
 
@@ -1360,156 +1364,6 @@ export default {
         this.containerFrame.visible = false;
         this.containerFrame.x = 100;
         this.containerFrame.y = 100;
-
-      }
-
-    },
-
-    ///////////////////////
-    // DATABASE REQUESTS //
-    ///////////////////////
-
-    async createUser(text) {
-
-      try {
-
-        await LoginService.registerUser(text, this.user);
-
-      } catch (err) {
-
-        this.error = err.message;
-        console.log(this.error);
-
-      }
-
-      try {
-
-        let stats = await StatService.findUserStats(text.uname);
-        console.log(stats.data);
-        this.user.hits = stats.data.hits;
-        this.user.highs = stats.data.highs;
-        this.user.lows = stats.data.lows;
-        this.user.badges = stats.data.badges;
-
-      } catch (err) {
-
-        this.error = err.message;
-        console.log(this.error);
-
-      }
-
-    },
-
-    async getUserData(text) {
-
-      try {
-
-        let stats = await StatService.findUserAccount(text);
-        console.log(stats.data);
-        this.user.username = stats.data.uname;
-        this.user.firstname = stats.data.fname;
-        this.user.lastname = stats.data.lname;
-
-      } catch (err) {
-
-        this.error = err.message;
-        console.log(this.error);
-
-      }
-
-      try {
-
-        let stats = await StatService.findUserStats(text);
-        console.log(stats.data);
-        this.user.hits = stats.data.hits;
-        this.user.highs = stats.data.highs;
-        this.user.lows = stats.data.lows;
-        this.user.badges = stats.data.badges;
-
-      } catch (err) {
-
-        this.error = err.message;
-        console.log(this.error);
-
-      }
-
-    },
-
-    async verifyUser(text) {
-
-      try {
-
-        await LoginService.loginUser(text, this.user);
-        console.log(this.user.authenticated);
-        // this.user = await LoginService.loginUser(text);
-        console.log("User: " + this.user.username);
-
-      } catch (err) {
-
-        this.error = err.message;
-        console.log(this.error);
-
-      }
-
-      try {
-
-        let stats = await StatService.findUserStats(text.uname);
-        console.log(stats.data);
-        this.user.hits = stats.data.hits;
-        this.user.highs = stats.data.highs;
-        this.user.lows = stats.data.lows;
-        this.user.badges = stats.data.badges;
-
-      } catch (err) {
-
-        this.error = err.message;
-        console.log(this.error);
-
-      }
-
-      // if (this.user.authenticated) {
-      //   this.changeScene(2);
-      // }
-
-      try {
-        this.posts = await LoginService.getUsers();
-      } catch (err) {
-        this.error = err.message;
-        console.log(this.error);
-      }
-
-    },
-
-    async updateStats(text) {
-
-      try {
-
-        let stats = await StatService.updateUserStats(text);
-        console.log(stats.data);
-        this.user.hits = stats.data.hits;
-        this.user.highs = stats.data.highs;
-        this.user.lows = stats.data.lows;
-        this.user.badges = stats.data.badges;
-
-      } catch (err) {
-
-        this.error = err.message;
-        console.log(this.error);
-
-      }
-
-    },
-
-    async signoutUser() {
-
-      try {
-
-        await LoginService.logoutUser();
-
-      } catch (err) {
-
-        this.error = err.message;
-        console.log(this.error);
 
       }
 
