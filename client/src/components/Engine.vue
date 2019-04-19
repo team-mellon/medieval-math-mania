@@ -759,7 +759,7 @@ export default {
           // Show the endgame screen
           this.level.createVictoryBanner(this.scene_scale_X, this.scene_scale_Y, this.user.badges);
 
-	  this.user.badges[(this.level.current_level - 1)] = 1;
+	        this.user.badges[(this.level.current_level - 1)] = 1;
 
           // update database
           APIHandler.updateStats(
@@ -949,7 +949,8 @@ export default {
             function() { createjs.Sound.play("menu"); this.changeScene(2); this.level.visibleForm(true); this.level.destroyLevel(this.stage); }.bind(this),
             function() { createjs.Sound.play("menu"); this.changeScene(6); this.level.visibleForm(true); }.bind(this),
             this.user.authenticated,
-            function() { this.menu_button.visible = true; }.bind(this)
+            function() { this.menu_button.visible = true; }.bind(this),
+            this.music
           );
 
           break;
@@ -1284,6 +1285,8 @@ export default {
   			     this.menu_button = AssetHandler.createButton("res/login-button.png", "How To Play", this.buttonX, this.buttonY, "right", -(this.buttonX/2 + 10), "bottom", -(this.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.indicatorFunction(0); }.bind(this), this.ecs, this.stage);
 
           }
+
+          this.num_levels = 20;
 
     			for (var i = 1; i < (this.num_levels + 1); i++) {
 

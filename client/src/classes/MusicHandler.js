@@ -9,11 +9,9 @@
 // Game Data
 import { playlistSources, playlistIDs } from '../game_data/music.js';
 
-// import createjs from 'createjs';
-
 class MusicHandler {
 
-  constructor(createjs) {
+  constructor() {
 
     //registers Menu sounds
     createjs.Sound.registerSound("res/sound_effects/menu.wav", "menu");
@@ -52,68 +50,112 @@ class MusicHandler {
   }
 
   // Turns on music or plays the current song
-  playSound (createjs) {
+  playSound () {
 
     if (this.sound_off) { // runs once to start music
 
       this.current_song = createjs.Sound.play(this.playlist.ids[this.playlist.current]);
+
       this.current_song.on("complete", function() {
-          this.playlist.current++;
-          if (this.playlist.current >= this.playlist.size ) {
-            this.playlist.current = 0;
-          }
-          this.current_song.destroy();
-          this.current_song = createjs.Sound.play(this.playlist.ids[this.playlist.current]);
-  		this.current_song.volume = this.volume;
+        this.playlist.current++;
+        if (this.playlist.current >= this.playlist.size ) {
+          this.playlist.current = 0;
+        }s
+        this.current_song.destroy();
+        this.current_song = createjs.Sound.play(this.playlist.ids[this.playlist.current]);
+    		this.current_song.volume = this.volume;
+
       });
+
       this.sound_off = false;
 
     } else { // runs every other time to play and pause the current song
 
-    this.current_song.paused = !this.current_song.paused;
-  	this.current_song.volume = this.volume;
+      this.current_song.paused = !this.current_song.paused;
+    	this.current_song.volume = this.volume;
 
     }
 
   }
 
   // Plays the previous song
-  previousSound (createjs) {
+  previousSound () {
 
     if (!this.sound_off) {
+
       this.playlist.current--;
+
       if (this.playlist.current < 0 ) {
         this.playlist.current = this.playlist.size - 1;
       }
+
       this.current_song.destroy();
       this.current_song = createjs.Sound.play(this.playlist.ids[this.playlist.current]);
-  	this.current_song.volume = this.volume;
-  	this.current_song.muted = this.muted;
+    	this.current_song.volume = this.volume;
+    	this.current_song.muted = this.muted;
+
     }
 
   }
 
   // Plays the next song
-  nextSound (createjs) {
+  nextSound () {
 
     if (!this.sound_off) {
+
       this.playlist.current++;
+
       if (this.playlist.current >= this.playlist.size ) {
+
         this.playlist.current = 0;
+
       }
+
       this.current_song.destroy();
       this.current_song = createjs.Sound.play(this.playlist.ids[this.playlist.current]);
     	this.current_song.volume = this.volume;
     	this.current_song.muted = this.muted;
+
     }
 
   }
 
   // Sets the volume based on an incomimng value from 0-100
   setVolume () {
+
     this.volume = document.getElementById("volumeSlider").value;
     this.current_song.volume = this.volume;
     console.log(this.volume);
+
+  }
+
+  // Mutes the current song
+  muteSound (stage) {
+
+    if (!this.sound_off) {
+
+  //     console.log(this.lute.src);
+
+      if(!this.muted) {
+
+  //       stage.removeChild(this.lute);
+  //       this.lute = new createImage("res/antiLute.png", this.luteX, this.luteY);
+  //       lute.addEventListener("click", this.muteSound);
+  //       this.scaleGUI();
+
+      } else {
+
+  //       stage.removeChild(this.lute);
+  //       this.lute = new createImage("res/lute.png", this.luteX, this.luteY);
+  //       this.lute.addEventListener("click", this.muteSound);
+  //       this.scaleGUI();
+
+      }
+
+      this.current_song.muted = !this.current_song.muted;
+      this.this.muted = !this.muted;
+
+    }
   }
 
 }

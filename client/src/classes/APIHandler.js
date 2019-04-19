@@ -118,6 +118,7 @@ class APIHandler {
 
     try {
 
+      // Runs an async axios call to log in a user
       await LoginService.loginUser(text, user);
       console.log(user.authenticated);
       // user = await LoginService.loginUser(text);
@@ -171,8 +172,11 @@ class APIHandler {
 
     try {
 
+      // Runs an async axios call to find a user and update stats
       let stats = await StatService.updateUserStats(text);
-      console.log(stats.data);
+      // console.log(stats.data);
+
+      // Assign the stats to local variables
       user.hits = stats.data.hits;
       user.highs = stats.data.highs;
       user.lows = stats.data.lows;
@@ -192,6 +196,7 @@ class APIHandler {
 
     try {
 
+      // Runs an async axios call to log out a user
       await LoginService.logoutUser();
 
     } catch (err) {
