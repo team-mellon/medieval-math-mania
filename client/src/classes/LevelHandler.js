@@ -323,14 +323,12 @@ class LevelHandler {
 
     this.background = AssetHandler.createImage("res/numberline.png", this.backgroundX, 24, "center", 0, "top", 24 / 2, "image", this.lcs, stage);
 
-    // number_spacing = 10;
     this.number_spacer = 25;
 
     for(var i = -25; i <= 25; i++){
 
       var temp = AssetHandler.createText(i.toString(), "Arial", "16px", "bold", "black", this.structureX, this.structureY, "center", 0 - (((this.number_spacer * 48) + 5)), "top", 30, "image", this.lcs, stage);
       this.number_text.push(temp);
-      // number_spacing += 48;
       this.number_spacer--;
 
     }
@@ -370,7 +368,7 @@ class LevelHandler {
       this.badge_text = AssetHandler.createText("Congratulations!  You earned a badge", "Oldstyle", "32px", "", "gold", 10, 10, "center", 0 - 260, "center", 0 + 140, "image", this.lcs, stage);
       this.badge_text.visible = false;
       this.badge_text.alpha = 0;
-      
+
     this.tutorial_menu = AssetHandler.createTextContainer(this.tutorial_menuS, "The tutorial is broken", "Oldstyle", "32px", "normal", "Saddlebrown", 900, 300, "center", 0, "top", (300 / 2) + this.buttonY , "image", 100, this.lcs, stage);
     this.tutorial_menu.visible = false;
 
@@ -407,7 +405,7 @@ class LevelHandler {
     this.previous_indicator.visible = false;
 
     this.pause_indicator = AssetHandler.createImage("res/pause-indicator.png", 24, 24, "center", 0, "center", 0 + 194, "gui", this.lcs, stage);
-    // this.pause_indicator.addEventListener("click", playSound);
+    this.pause_indicator.addEventListener("click", function () { playSound(createjs); });
     this.pause_indicator.visible = false;
 
     this.next_indicator = AssetHandler.createImage("res/next-indicator.png", 24, 24, "center", 0 + 50, "center", 0 + 194, "gui", this.lcs, stage);
@@ -992,9 +990,9 @@ class LevelHandler {
 		this.badge_text.visible = true;
 		createjs.Tween.get(this.badge_text).wait(8750).to({alpha:1}, 500);
 	    }
-	  
+
 	}
-      
+
     this.end_level_button.visible = true;
     createjs.Tween.get(this.end_level_button).wait(9375).to({alpha:1}, 125);
 

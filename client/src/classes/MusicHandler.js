@@ -13,7 +13,12 @@ import { playlistSources, playlistIDs } from '../game_data/music.js';
 
 class MusicHandler {
 
-  constructor() {
+  constructor(createjs) {
+
+    //registers Menu sounds
+    createjs.Sound.registerSound("res/sound_effects/menu.wav", "menu");
+    createjs.Sound.registerSound("res/sound_effects/select.wav", "select");
+    createjs.Sound.registerSound("res/sound_effects/sword.wav", "sword");
 
     // Bool for checking if the current song is paused
     this.isPaused = true;
@@ -21,30 +26,24 @@ class MusicHandler {
     // Bool for checking if the current song is muted
     this.isMuted = false;
 
+    //
     this.muted = false;
 
     // Player to play playlist music
     this.playlist = {
-      size: 0,
-      sources: [],
-      ids: [],
+      size: playlistSources.length,
+      sources: playlistSources,
+      ids: playlistIDs,
       current: 0
     }
+
+    // console.log(this.music.playlist);
+
+    //
     this.sound_off = true;
 
     // Volume for
     this.volume = 0.5;
-
-  }
-
-  // Loads sounds when game starts
-  loadSound () {
-
-    this.playlist.size = playlistSources.length;
-    this.playlist.sources = playlistSources;
-    this.playlist.ids = playlistIDs;
-
-    this.playlist.size = this.playlist.sources.length;
 
     for (var i = 0; i < this.playlist.size; i++) {
       createjs.Sound.registerSound(this.playlist.sources[i], this.playlist.ids[i]);
@@ -53,7 +52,7 @@ class MusicHandler {
   }
 
   // Turns on music or plays the current song
-  playSound () {
+  playSound (createjs) {
 
     if (this.sound_off) { // runs once to start music
 
@@ -79,7 +78,7 @@ class MusicHandler {
   }
 
   // Plays the previous song
-  previousSound () {
+  previousSound (createjs) {
 
     if (!this.sound_off) {
       this.playlist.current--;
@@ -95,7 +94,7 @@ class MusicHandler {
   }
 
   // Plays the next song
-  nextSound () {
+  nextSound (createjs) {
 
     if (!this.sound_off) {
       this.playlist.current++;

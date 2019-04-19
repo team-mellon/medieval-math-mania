@@ -4,10 +4,10 @@
 
     <div id="sceneHTML"></div>
 
-    <div id="ldBg" class="ldscreen">
-      <span id="loadingText">Loading</span>
-      <div id="progressBackground" class="bgbar">
-        <div id="progressBar" class="pgbar"></div>
+    <div id="ldBg" class="ldscreen" hidden>
+      <span id="loadingText" hidden>Loading</span>
+      <div id="progressBackground" class="bgbar" hidden>
+        <div id="progressBar" class="pgbar" hidden></div>
       </div>
       <span id="percentText">Loading</span>
     </div>
@@ -72,30 +72,35 @@ export default {
       // w: 100,
       // h: 200,
 
+      animtions: {
+        // ecs: [], // Entity component system for scaling and eventually object storage
+        // gcs: [] // GUI component system for scaling and eventually object storage
+      },
+
       style: {
         background: '#aaa'
       }
     }
   },
 
-  async created() {
-
-    try {
-
-      this.stats = await StatService.getStats();
-      // console.log(this.stats);
-
-      this.users = await LoginService.getUsers();
-      // console.log(this.users);
-
-    } catch (err) {
-
-      this.error = err.message;
-      console.log(this.error);
-
-    }
-
-  },
+  // async created() {
+  //
+  //   try {
+  //
+  //     this.stats = await StatService.getStats();
+  //     console.log(this.stats);
+  //
+  //     this.users = await LoginService.getUsers();
+  //     console.log(this.users);
+  //
+  //   } catch (err) {
+  //
+  //     this.error = err.message;
+  //     console.log(this.error);
+  //
+  //   }
+  //
+  // },
 
   // createUser(text, user)
   // getUserData(text, user)
@@ -141,25 +146,20 @@ export default {
     // INITIIALIZATION //
     /////////////////////
 
-    //putting this here because I dont know how else to initialize this as hidden
-    progressBar.hidden = true;
-    progressBackground.hidden = true;
-    ldBg.hidden = true;
-
     this.containerFrame = {};
 
-    this.input = new InputHandler();
-    this.mobile = new MobileHandler();
-    this.music = new MusicHandler();
-    this.level = new LevelHandler();
-
+    // Set the window resize function to the one
     window.addEventListener('resize', this.resize, false);
 
+    // Grabbing the canvas to set touch controls
     this.drawingCanvas = document.getElementById("drawingCanvas");
-    drawingCanvas.addEventListener("touchstart", this.input.handleStart.bind(this.input), false);
-    drawingCanvas.addEventListener('touchend', this.input.handleEnd.bind(this.input), false);
-    // drawingCanvas.addEventListener("touchcancel", this.input.handleCancel, false);
-    // drawingCanvas.addEventListener("touchmove", this.input.handleMove, false);
+
+    // Initialize all the handlers
+    this.input = new InputHandler(this.drawingCanvas);
+    this.mobile = new MobileHandler();
+    this.music = new MusicHandler(createjs);
+    this.level = new LevelHandler();
+
     console.log("initialized.");
 
     // window.addEventListener('DOMContentLoaded', function() {                  // start game when DOM loads
@@ -170,11 +170,6 @@ export default {
     this.gcs = []; // GUI component system for scaling and eventually object storage
 
     // var landscape_warning;
-
-    //registers Menu sounds
-    createjs.Sound.registerSound("res/sound_effects/menu.wav", "menu");
-    createjs.Sound.registerSound("res/sound_effects/select.wav", "select");
-    createjs.Sound.registerSound("res/sound_effects/sword.wav", "sword");
 
     //Setting properties for delays for sounds
     this.delayRe = new createjs.PlayPropsConfig().set({delay : 250});
@@ -228,8 +223,6 @@ export default {
     ////////////
     // LEVELS //
     ////////////
-
-    this.num_levels = 20;
 
     this.levels = [
 
@@ -521,12 +514,6 @@ export default {
 
     ];
 
-    this.number_spacing = 10;
-    this.number_spacer = 25;
-
-    this.structureX = 1920;
-    this.structureY = 1440;
-
     ////////////
     // MOBILE //
     ////////////
@@ -545,9 +532,6 @@ export default {
     this.bg = new createjs.Shape();                             // Create a rectangle for clearing the screen
     this.bg_color = "#333333";                                  // Background color
     this.stage.addChild(this.bg);                               // Add rectangle to the stage
-
-    this.music.loadSound();                                     // Load sounds from file
-    // console.log(this.music.playlist);
 
     this.createScene();                                         // Create scene assets
 
@@ -833,11 +817,15 @@ export default {
           this.bg_color = levelData[this.level.current_level].color;
 
           if (!this.level.generated) {
+
             this.level.loadLevel();
+
           } else {
+
             this.level.makeGameForm(this.mobile.isMobile);
             this.level.remakeMultiplierBanner();
             this.level.remakeRangeBanner();
+            
           }
 
       }
