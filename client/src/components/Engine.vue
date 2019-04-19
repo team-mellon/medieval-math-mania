@@ -655,8 +655,63 @@ export default {
 
         // console.log(this.user.authenticated);
 
+        if (this.input.keys[13]) {
+
+          createjs.Sound.play("sword");
+
+          var key = document.getElementById('usernameInput').value;
+          
+          var text = {
+            "uname": document.getElementById('usernameInput').value,
+            "pass": document.getElementById('passwordInput').value
+          };
+
+          APIHandler.verifyUser(text, this.user, this.async);
+
+        }
+
         if (this.user.authenticated) {
           this.changeScene(2);
+        }
+
+      }
+
+      if (this.current_scene == 1) {
+
+        // console.log(this.user.authenticated);
+
+        if (this.input.keys[13]) {
+          createjs.Sound.play("sword");
+          var key = document.getElementById('usernameInput').value;
+          if( /*key in this.database.users ||*/ key == "" ) {
+            document.getElementById('errorText').textContent = "Invalid username";
+          }	else {
+            if(document.getElementById('firstnameInput').value == "") {
+              document.getElementById('errorText').textContent = "Invalid firstname";
+            } else {
+              if(document.getElementById('lastnameInput').value == "") {
+                document.getElementById('errorText').textContent = "Invalid lastname";
+              } else {
+                if(document.getElementById('passwordInput').value == "") {
+                  document.getElementById('errorText').textContent = "Invalid password";
+                } else {
+                  if(document.getElementById('passwordInput').value != document.getElementById('confirmInput').value) {
+                    document.getElementById('errorText').textContent = "Passwords do not match";
+                  } else {
+                    var text = {
+                      "uname": document.getElementById('usernameInput').value,
+                      "pass": document.getElementById('passwordInput').value,
+                      "fname": document.getElementById('firstnameInput').value,
+                      "lname": document.getElementById('lastnameInput').value,
+                      "confirm": document.getElementById('confirmInput').value
+                    };
+                    APIHandler.createUser(text, this.user, this.async);
+                    this.changeScene(2);
+                  }
+                }
+              }
+            }
+          }
         }
 
       }
