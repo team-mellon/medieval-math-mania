@@ -32,7 +32,7 @@ export const levelData = [
 
   { // Mountains
     number: 5,
-    color: "#dbf8ff",
+    color: "#5d5d5d",
     hint: "Just keep trying more numbers until you get the range, going either higher or lower depending on what you need. You'll get it. If not reload the level for a new range."
   },
 
@@ -44,7 +44,7 @@ export const levelData = [
 
   { // Cave
     number: 7,
-    color: "#010027",
+    color: "#26163b",
     hint: "To find a number that is too low, try a negative number (use the key next to the 0 to put a dash in front of a number)."
   },
 
@@ -56,7 +56,7 @@ export const levelData = [
 
   { // Alpine
     number: 9,
-    color: "#b3b3b3",
+    color: "#f8feff",
     hint: "You are going to need some very small decimals for this one."
   },
 
@@ -68,13 +68,13 @@ export const levelData = [
 
   { // Swamp
     number: 11,
-    color: "#292c2b",
+    color: "#454c3a",
     hint: "You are going to need some pretty big numbers for this problem, try at least 1000."
   },
 
   { // Deadlands
     number: 12,
-    color: "#231e25",
+    color: "#350c0c",
     hint: "Try using a tiny number starting with a decimal and some zeros before using other numbers."
   },
 

@@ -9,6 +9,8 @@ class GUIHandler {
 
   constructor() {
 
+    this.gcs = []; // GUI component system for scaling and eventually object storage
+
     this.indicators = [];
     this.indicator_counter = 0;
 

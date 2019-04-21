@@ -30,7 +30,7 @@ import APIHandler from '../classes/APIHandler.js';
 // Normal classes
 import InputHandler from '../classes/InputHandler.js';
 import MobileHandler from '../classes/MobileHandler.js';
-import MusicHandler from '../classes/MusicHandler.js';
+import SoundHandler from '../classes/SoundHandler.js';
 import LevelHandler from '../classes/LevelHandler.js';
 
 // API classes
@@ -157,7 +157,7 @@ export default {
     // Initialize all the handlers
     this.input = new InputHandler(this.drawingCanvas);
     this.mobile = new MobileHandler();
-    this.music = new MusicHandler(createjs);
+    this.music = new SoundHandler();
     this.level = new LevelHandler();
 
     // console.log("initialized.");
@@ -167,15 +167,8 @@ export default {
     // });
 
     this.ecs = []; // Entity component system for scaling and eventually object storage
-    this.gcs = []; // GUI component system for scaling and eventually object storage
 
     // var landscape_warning;
-
-    //Setting properties for delays for sounds
-    this.delayRe = new createjs.PlayPropsConfig().set({delay : 250});
-    this.delayIn = new createjs.PlayPropsConfig().set({delay : 500});
-    this.delayOut = new createjs.PlayPropsConfig().set({delay : 750});
-    this.delayWin = new createjs.PlayPropsConfig().set({delay : 2000});
 
     /////////////
     // SCALING //
@@ -660,7 +653,7 @@ export default {
           createjs.Sound.play("sword");
 
           var key = document.getElementById('usernameInput').value;
-          
+
           var text = {
             "uname": document.getElementById('usernameInput').value,
             "pass": document.getElementById('passwordInput').value

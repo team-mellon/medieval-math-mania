@@ -5,11 +5,7 @@
 import AssetHandler from './AssetHandler.js';
 import { tutorialSteps, tutorialCorrections } from '../game_data/tutorial.js';
 
-// import createjs from 'createjs';
-
 class LevelHandler {
-
-
 
   constructor() {
 
@@ -31,6 +27,7 @@ class LevelHandler {
     this.delayRe = new createjs.PlayPropsConfig().set({delay : 250});
     this.delayIn = new createjs.PlayPropsConfig().set({delay : 500});
     this.delayOut = new createjs.PlayPropsConfig().set({delay : 750});
+    this.delayWin = new createjs.PlayPropsConfig().set({delay : 2000});
 
     this.current_level = 1;
 

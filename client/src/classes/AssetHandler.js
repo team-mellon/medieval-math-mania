@@ -230,6 +230,7 @@ class AssetHandler {
 	var container = new createjs.Container();
 	container.addChild(text);
 	stage.addChild(container);
+
 /*
 	let count = 1;
 	for(var i = 0; i <= 195; i += 65){
@@ -265,8 +266,6 @@ class AssetHandler {
 	    }
 	    count++;
 	}
-
-
 */
 
 
@@ -282,7 +281,7 @@ class AssetHandler {
 	            var temp = new createjs.Bitmap("res/badge-level-15.png");
 		else
 		    var temp = new createjs.Bitmap(asset);
-		    
+
 		temp.regX = width / 2;
 		temp.regY = height / 2;
 		temp.scale = 0.25;
@@ -307,7 +306,7 @@ class AssetHandler {
 
 
 
-	
+
 /*
 	var image = new createjs.Bitmap(asset);
 	//stage.addChild(image);
