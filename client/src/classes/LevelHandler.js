@@ -2,23 +2,20 @@
 // LEVELHANDLER //
 //////////////////
 
+//
 import AssetHandler from './AssetHandler.js';
+
+//
 import { tutorialSteps, tutorialCorrections } from '../game_data/tutorial.js';
+
+// Global constants
+import constants from '../game_data/constants.js';
 
 class LevelHandler {
 
   constructor() {
 
     this.lcs = []; // Level component system for scaling and eventually object storage
-
-    this.buttonX = 216;
-    this.buttonY = 72;
-
-    this.structureX = 1920;
-    this.structureY = 1440;
-
-    this.backgroundX = 1920;
-    this.backgroundY = 768;
 
     this.preload = new createjs.LoadQueue();
     this.preload.on("progress", this.loading.bind(this));
@@ -92,6 +89,231 @@ class LevelHandler {
   	this.hints_on = true;
 
     this.hint_shown = false;
+
+    this.level_math = [
+
+      { // Tutorial
+        // Exactly one multiple of multiplicand in range, single digit multiplicand
+        math: function () {
+          this.multiplicand = 1;
+          this.lower = 5;
+          this.upper = 10;
+        }.bind(this)
+      },
+
+      { // City
+        // Exactly one multiple of multiplicand in range, single digit multiplicand
+        math: function () {
+          this.multiplicand = Math.floor(Math.random() * 7) + 2;
+          this.multiple = Math.floor(Math.random() * 7) + 2;
+          this.lower = (this.multiple * this.multiplicand) - Math.floor(this.multiplicand/2);
+          this.upper = (this.multiple * this.multiplicand) + Math.floor(this.multiplicand/2);
+        }.bind(this)
+      },
+
+      { // Grasslands
+        // No multiples of multiplicand in range, single digit multiplicand
+        math: function () {
+          this.multiplicand = Math.floor(Math.random() * 7) + 2;
+          this.multiple = Math.floor(Math.random() * 7) + 2;
+          this.lower = (this.multiple * this.multiplicand) + 1;
+          this.upper = (this.multiple * (this.multiplicand+1)) - 1;
+        }.bind(this)
+      },
+
+      { // Volcano
+        // Starting number is a two-digit number, target range includes the value which is one tenth of the number, and is bounded by positive single-digit integers.
+        math: function () {
+          this.multiplicand = Math.floor(Math.random() * 90)+ 10;
+          this.factor = (0.1) * this.multiplicand;
+          this.lower = Math.floor(this.factor);
+          this.upper = Math.ceil(this.factor);
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
+        }.bind(this)
+      },
+
+      { // Sea
+        // Starting number is a two-digit number, target range goes from 0 to a single-digit positive integer.
+        math: function () {
+          this.multiplicand = Math.floor(Math.random() * 90) + 10;
+          this.lower = 0;
+          this.upper = Math.floor(Math.random() * 7) + 2;
+        }.bind(this)
+      },
+
+      { // Mountains
+        /*Starting number is a single-digit number. For target range, choose another single-digit number,
+        multiply it by 10 times the starting number, and make sure that the target range contains that number.
+        The lower boundary is an integer at least 10 below the product and the upper boundary is an integer
+        at least 10 above the product.*/
+        math: function () {
+          this.multiplicand = Math.floor(Math.random() * 7) + 2;
+          this.multiple = Math.floor(Math.random() * 7) + 2;
+          this.storage = this.multiplicand * this.multiple * 10;
+          this.lower = this.storage - 10;
+          this.upper = this.storage + 10;
+        }.bind(this)
+      },
+
+      { // Summit
+        /*Starting number is a single-digit number n, target range contains 100n,
+        and the range makes it so there is only one integer answer
+        (i.e. the lower bound is above 100n − n and the upper bound is below 100n + n.*/
+        math: function () {
+          this.multiplicand = Math.floor(Math.random() * 7) + 2;
+          this.multiple = 100 * this.multiplicand;
+          this.lower = this.multiple - Math.floor(this.multiplicand/2);
+          this.upper = this.multiple + Math.floor(this.multiplicand/2);
+        }.bind(this)
+      },
+
+      { // Cave
+        //Starting number is a two-digit number, target range contains 0 (flanked by single-digit integers)
+        math: function () {
+          this.multiplicand = Math.floor(Math.random() * 90) + 10;
+          this.lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
+          this.upper = Math.floor(Math.random() * 7) + 2;
+        }.bind(this)
+      },
+
+      { // Forest
+        //Starting number is a two-digit number, target range numbers are both 3-digit, with no integer
+        math: function () {
+          this.multiplicand = Math.round((Math.random() * 90)) + 10;
+          this.lower = (Math.round((Math.random() * 90)+ 10 * 11) / 10);
+          if(this.lower % 1 == 0) {
+            this.lower += 0.7;
+          }
+          this.upper = Math.round((this.lower * this.lower/8)*10 + this.lower/2) / 10;
+          if(this.upper % 1 == 0) {
+            this.upper += 0.4;
+          }
+        }.bind(this)
+      },
+
+      { // Alpine
+        //Starting number is a three-digit number, target range goes from 0 to a single-digit positive integer.
+        math: function () {
+          this.multiplicand = Math.floor((Math.random() * 900) + 100);
+          this.lower = 0;
+          this.upper = Math.floor(Math.random() * 7) + 2;
+        }.bind(this)
+      },
+
+      { // Woods
+        /*Starting number is a number between 0 and .1 with three decimal places. Lower bound of target
+        range is 1000 times the starting number, and upper bound is one more than the lower bound. */
+        math: function () {
+          this.multiplicand = Math.floor((Math.random() * 990) + 10) / 1000;
+          this.lower = 1000 * this.multiplicand;
+          this.upper = this.lower + 1;
+        }.bind(this)
+      },
+
+      { // Swamp
+        /*Starting number is a number between 10 and 100 with one decimal place. Lower bound of target
+        range is 1000 times the starting number, and upper bound is one more than the lower bound.*/
+        math: function () {
+          this.multiplicand = Math.floor(Math.random() * 90 * 10 + 10) / 10;
+          this.lower = 1000 * this.multiplicand;
+          this.upper = this.lower + 1;
+        }.bind(this)
+      },
+
+      { // Deadlands
+        /*Starting number is a whole number greater than 1,000,000. Target range contains the number which is .0001 times the size of the starting number.
+        The lower bound may be up to 50 less than this value and the upper bound may be up to 50 greater than this value.*/
+        math: function () {
+          this.multiplicand = Math.floor(Math.random() * 10000000);
+          this.lower = (Math.floor(this.multiplicand * 0.0001)) - (Math.floor(Math.random() * 50) + 10);
+          this.upper = (Math.floor(this.multiplicand * 0.0001)) + (Math.floor(Math.random() * 50) + 10);
+        }.bind(this)
+      },
+
+      { // Sky
+        /*Starting number is an integer less than 200. Target range contains the number which is half the value
+        with an overall range less than 10. */
+        math: function () {
+          this.multiplicand = Math.floor(Math.random() * 100 + 100);
+          this.lower = Math.floor(this.multiplicand / 2) - 4;
+          this.upper = Math.floor(this.multiplicand / 2) + 4;
+        }.bind(this)
+      },
+
+      { // Underwater
+        /*Starting number is a number less than 10 with one decimal place.
+        Target range has three-digit bounding numbers, does not contain an
+        integer multiple of the starting number, and the range of the interval is 1.*/
+        math: function () {
+          this.multiplicand = Math.floor(Math.random() * 90 + 9) / 10;
+          this.lower = Math.floor(Math.random() * 900 + 100);
+          this.upper = this.lower + 1;
+        }.bind(this)
+      },
+
+      { // Fungi
+        /*Starting number is a negative single-digit integer. Target range contains only positive values, one of
+        which is a multiple of the starting number.*/
+        math: function ()  {
+          this.multiplicand = -Math.abs(Math.floor(Math.random() * 7) + 2);
+          this.lower = this.multiplicand * this.multiplicand;
+          this.upper = this.lower + (Math.floor(Math.random() * 7) + 2);
+        }.bind(this)
+      },
+
+      { // Tundra
+        /*Starting number is a positive two-digit integer. Target range is bounded by two-digit negative integers
+        5 away from each other.*/
+        math: function () {
+          this.multiplicand = Math.floor(Math.random() * 90 + 9);
+          this.lower = -Math.abs(Math.floor(Math.random() * 84) + 15);
+          this.upper = this.lower + 5;
+        }.bind(this)
+      },
+
+      { // Tarpit
+        /*Starting number is a number between -100 and -10 with one decimal place. Target range bounds are
+        any two integers between -20 and 0.*/
+        math: function () {
+          this.multiplicand = -Math.abs(Math.floor(Math.random() * 90) + 10);
+          this.lower = -Math.abs(Math.floor(Math.random() * 10) + 10);
+          this.upper = -Math.abs(Math.floor(Math.random() * 10));
+        }.bind(this)
+      },
+
+      { // Desert
+        /*Starting number is a number between -100 and -10 with one decimal place. Target range bounds are
+        any two integers between 0 and 20. */
+        math: function () {
+          this.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
+          this.lower = Math.floor(Math.random() * 10);
+          this.upper = Math.floor(Math.random() * 10 + 10);
+        }.bind(this)
+      },
+
+      { // Boreal
+        /*Starting number is an integer between -100 and -10 with one decimal place. Target range bounds are
+        positive numbers between 0 and 1 with two decimal places that are one hundredth apart. */
+        math: function () {
+          this.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
+          this.lower = Math.floor((Math.random() * 90) + 9) / 100;
+          this.upper = Math.floor((this.lower + 0.01)* 100)/100;
+        }.bind(this)
+      },
+
+      { // Monolith
+        /*Starting number is any positive three digit integer. Target range is bounded by two numbers between
+        -10 and -5, with three decimal places, and within one hundredth of each other. */
+        math: function () {
+          this.multiplicand = Math.floor(Math.random() * 900) + 100;
+          this.lower = -Math.abs((Math.floor(Math.random() * 10000) + 5000) /1000);
+          this.upper = this.lower + 0.01;
+        }.bind(this)
+      }
+
+    ];
 
   }
 
@@ -300,29 +522,29 @@ class LevelHandler {
     this.henchman_right.gotoAndPlay(0);
 
     this.structure_body = AssetHandler.createSprite(this.bodyS, this.bodyS.frames.width, this.bodyS.frames.height, "center", 0, "bottom", -this.bodyS.frames.height / 2, "image", this.lcs, stage);
-    // structure_banner = AssetHandler.createSprite(bannerS, this.structureX, this.structureY, "center", 0, "bottom", -this.structureY / 2, "image", this.lcs, stage);
+    // structure_banner = AssetHandler.createSprite(bannerS, constants.structureX, constants.structureY, "center", 0, "bottom", -constants.structureY / 2, "image", this.lcs, stage);
     this.structure_range = AssetHandler.createTextContainer(this.range_bannerS, "[ #, # ]", "Oldstyle", "32px", "normal", "Gold", 288, 126, "center", -522 + 288 / 2, "bottom", -336 + 126 / 2, "image", 0, this.lcs, stage);
     // this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x              = #", "Oldstyle", "26px", "normal", "Gold", 300, 78, "center", -150 + 300 / 2, "bottom", -321 + 78 / 2, "image", 0, this.lcs, stage);
     this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x              = #", "Oldstyle", "26px", "normal", "Gold", 444, 78, "center", -222 + 444 / 2, "bottom", -321 + 78 / 2, "image", 0, this.lcs, stage);
     this.structure_history = AssetHandler.createTextContainer(this.history_bannerS, "History", "Oldstyle", "18px", "normal", "Gold", 288, 126, "center", 234 + 288 / 2, "bottom", -336 + 126 / 2, "image", 126 / 2, this.lcs, stage);
     this.structure_facade = AssetHandler.createSprite(this.facadeS, this.facadeS.frames.width, this.facadeS.frames.height, "center", 0, "bottom", -this.facadeS.frames.height / 2, "image", this.lcs, stage);  // Level structure in foreground
 
-    this.firework_low = AssetHandler.createSprite(this.firework_lowS, this.structureX, this.structureY, "center", 0, "top", this.structureY / 2, "image", this.lcs, stage);
-    this.firework_hit = AssetHandler.createSprite(this.firework_hitS, this.structureX, this.structureY, "center", 0, "top", this.structureY / 2, "image", this.lcs, stage);
-    this.firework_high = AssetHandler.createSprite(this.firework_highS, this.structureX, this.structureY, "center", 0, "top", this.structureY / 2, "image", this.lcs, stage);
+    this.firework_low = AssetHandler.createSprite(this.firework_lowS, constants.structureX, constants.structureY, "center", 0, "top", constants.structureY / 2, "image", this.lcs, stage);
+    this.firework_hit = AssetHandler.createSprite(this.firework_hitS, constants.structureX, constants.structureY, "center", 0, "top", constants.structureY / 2, "image", this.lcs, stage);
+    this.firework_high = AssetHandler.createSprite(this.firework_highS, constants.structureX, constants.structureY, "center", 0, "top", constants.structureY / 2, "image", this.lcs, stage);
 
     // Main character in foreground
     this.projectile = AssetHandler.createSprite(this.projectileS, 96, 96, "center", 0, "bottom", 0 - (96/2 + 57), "image", this.lcs, stage);
     this.projectile.gotoAndPlay(0);
     this.catapult = AssetHandler.createSprite(this.catapultS, 288, 384, "center", 0, "bottom", 0 - (384/2 - 57), "image", this.lcs, stage);
 
-    this.background = AssetHandler.createImage("res/numberline.png", this.backgroundX, 24, "center", 0, "top", 24 / 2, "image", this.lcs, stage);
+    this.background = AssetHandler.createImage("res/numberline.png", constants.backgroundX, 24, "center", 0, "top", 24 / 2, "image", this.lcs, stage);
 
     this.number_spacer = 25;
 
     for(var i = -25; i <= 25; i++){
 
-      var temp = AssetHandler.createText(i.toString(), "Arial", "16px", "bold", "black", this.structureX, this.structureY, "center", 0 - (((this.number_spacer * 48) + 5)), "top", 30, "image", this.lcs, stage);
+      var temp = AssetHandler.createText(i.toString(), "Arial", "16px", "bold", "black", constants.structureX, constants.structureY, "center", 0 - (((this.number_spacer * 48) + 5)), "top", 30, "image", this.lcs, stage);
       this.number_text.push(temp);
       this.number_spacer--;
 
@@ -330,13 +552,13 @@ class LevelHandler {
 
     this.structure_score = AssetHandler.createTextContainer(this.score_bannerS, "Total Lows: 0\nTotal High: 0\nTotal Hits: 0", "Oldstyle", "24px", "normal", "Gold", 192, 126, "left", (10 + 192 / 2), "bottom", -(10 + 126 / 2), "image", 126 / 2, this.lcs, stage);
 
-    this.end_level_flag = AssetHandler.createSprite(this.end_level_flagS, this.structureX, this.structureY, "center", 0, "center", 0, "image", this.lcs, stage);
+    this.end_level_flag = AssetHandler.createSprite(this.end_level_flagS, constants.structureX, constants.structureY, "center", 0, "center", 0, "image", this.lcs, stage);
     this.end_level_flag.visible = false;
 
-    this.end_level_scene = AssetHandler.createImage("res/login_scroll.png", this.backgroundX, this.backgroundY, "center", 0, "center", 0, "image", this.lcs, stage);
+    this.end_level_scene = AssetHandler.createImage("res/login_scroll.png", constants.backgroundX, constants.backgroundY, "center", 0, "center", 0, "image", this.lcs, stage);
     this.end_level_scene.visible = false;
 
-    this.end_level_button = AssetHandler.createButton("res/login-button.png", "Next Level", this.buttonX, this.buttonY, "center", 0, "center", 0 + 250, "gui", leave_to_map, this.lcs, stage);
+    this.end_level_button = AssetHandler.createButton("res/login-button.png", "Next Level", constants.buttonX, constants.buttonY, "center", 0, "center", 0 + 250, "gui", leave_to_map, this.lcs, stage);
     this.end_level_button.visible = false;
     this.end_level_button.alpha = 0;
 
@@ -364,13 +586,13 @@ class LevelHandler {
       this.badge_text.visible = false;
       this.badge_text.alpha = 0;
 
-    this.tutorial_menu = AssetHandler.createTextContainer(this.tutorial_menuS, "The tutorial is broken", "Oldstyle", "32px", "normal", "Saddlebrown", 900, 300, "center", 0, "top", (300 / 2) + this.buttonY , "image", 100, this.lcs, stage);
+    this.tutorial_menu = AssetHandler.createTextContainer(this.tutorial_menuS, "The tutorial is broken", "Oldstyle", "32px", "normal", "Saddlebrown", 900, 300, "center", 0, "top", (300 / 2) + constants.buttonY , "image", 100, this.lcs, stage);
     this.tutorial_menu.visible = false;
 
-    this.pause_menu = AssetHandler.createImage("res/hit-target-pause-menu.png", this.backgroundX, this.backgroundY, "center", 0, "center", 0, "image", this.lcs, stage);
+    this.pause_menu = AssetHandler.createImage("res/hit-target-pause-menu.png", constants.backgroundX, constants.backgroundY, "center", 0, "center", 0, "image", this.lcs, stage);
     this.pause_menu.visible = false;
 
-    this.close_button = AssetHandler.createButton("res/hit-target-pause-close-button.png", "", this.buttonX, this.buttonY, "center", 0 + 456, "center", 0 - 288, "gui", function() {
+    this.close_button = AssetHandler.createButton("res/hit-target-pause-close-button.png", "", constants.buttonX, constants.buttonY, "center", 0 + 456, "center", 0 - 288, "gui", function() {
       createjs.Sound.play("menu");
       this.pauseAnimation(false);
       this.visibleButton(false, user_authentication);
@@ -379,15 +601,15 @@ class LevelHandler {
     }.bind(this), this.lcs, stage);
     this.close_button.visible = false;
 
-    this.exit_level_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Exit Level", this.buttonX, this.buttonY, "center", 0, "center", 0 - 180, "gui", leave_to_map, this.lcs, stage);
+    this.exit_level_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Exit Level", constants.buttonX, constants.buttonY, "center", 0, "center", 0 - 180, "gui", leave_to_map, this.lcs, stage);
     this.exit_level_button.visible = false;
 
-    this.settings_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Settings", this.buttonX, this.buttonY, "center", 0, "center", 0 - 110, "gui", leave_to_settings, this.lcs, stage);
+    this.settings_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Settings", constants.buttonX, constants.buttonY, "center", 0, "center", 0 - 110, "gui", leave_to_settings, this.lcs, stage);
     this.settings_button.visible = false;
 
     if (user_authentication) {
 
-      this.main_menu_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Main Menu", this.buttonX, this.buttonY, "center", 0, "center", 0 - 40, "gui", leave_to_menu, this.lcs, stage);
+      this.main_menu_button = AssetHandler.createButton("res/hit-target-pause-button.png", "Main Menu", constants.buttonX, constants.buttonY, "center", 0, "center", 0 - 40, "gui", leave_to_menu, this.lcs, stage);
       this.main_menu_button.visible = false;
 
     }
@@ -422,7 +644,7 @@ class LevelHandler {
   //
   //   this.level.current_level++;
   //
-  //   if (this.level.current_level > this.num_levels) {
+  //   if (this.level.current_level > constants.num_levels) {
   //     this.level.current_level = 1;
   //   }
   //
@@ -1079,7 +1301,7 @@ class LevelHandler {
 
   //   if (boss_fight) {
   //
-  //     big_boss = createSprite(big_bossS, this.structureX, this.structureY);
+  //     big_boss = createSprite(big_bossS, constants.structureX, constants.structureY);
   //     scale_image(big_boss, stage.canvas.width / 2, stage.canvas.height / 2);
   //
   //     console.log("boss");

@@ -6,10 +6,10 @@
 import AssetHandler from '../classes/AssetHandler.js';
 import APIHandler from '../classes/APIHandler.js';
 
-//
+// Scene data for gui
 import { indicatorCoordinates, levelDescriptors } from '../game_data/scenes.js';
 
-//
+// Global constants
 import constants from '../game_data/constants.js';
 
 class GUIHandler {
@@ -25,14 +25,14 @@ class GUIHandler {
 
   }
 
-  createGUI (entity_component_system, current_scene, stage, user, async, changeScene, oneWayScene, indicatorFunction, level, mobile, menubutton, num_levels, levels, scene_scale_Y) {
+  createGUI (entity_component_system, current_scene, stage, user, async, changeScene, oneWayScene, indicatorFunction, level, mobile, menubutton, levels, scale) {
 
   	switch(current_scene) {
 
   		case 0:
 
-  			// scale_to_canvas(left_sword_button, "center", 0 - (constants.buttonX/2 + 10) * scene_scale_Y, "center", 0 + (constants.buttonY/2 + 140) * scene_scale_Y, "image");
-  			// scale_to_canvas(right_sword_button, "center", 0 + (constants.buttonX/2 + 50) * scene_scale_Y, "center", 0 + (constants.buttonY/2 + 140) * scene_scale_Y, "image");
+  			// scale_to_canvas(left_sword_button, "center", 0 - (constants.buttonX/2 + 10) * scale.scene_scale_Y, "center", 0 + (constants.buttonY/2 + 140) * scale.scene_scale_Y, "image");
+  			// scale_to_canvas(right_sword_button, "center", 0 + (constants.buttonX/2 + 50) * scale.scene_scale_Y, "center", 0 + (constants.buttonY/2 + 140) * scale.scene_scale_Y, "image");
 
   			this.left_sword_button = AssetHandler.createButton("res/sword-left.png", "Login", constants.buttonX, constants.buttonY, "center", -(constants.buttonX/2 + 30), "center", (constants.buttonY/2 + 200), "image", function() {
   				createjs.Sound.play("sword");
@@ -57,16 +57,16 @@ class GUIHandler {
   			// }.bind(this), entity_component_system, stage);
 
   			// if (mobile) {
-  			// 	scale_to_canvas(left_sword_button, "center", 0 - (constants.buttonX/2 + 30) * scene_scale_Y, "center", 0 + (constants.buttonY/2 + 200) * scene_scale_Y, "smallgui");
-  			// 	scale_to_canvas(right_sword_button, "center", 0 + (constants.buttonX/2 + 65) * scene_scale_Y, "center", 0 + (constants.buttonY/2 + 200) * scene_scale_Y, "smallgui");
+  			// 	scale_to_canvas(left_sword_button, "center", 0 - (constants.buttonX/2 + 30) * scale.scene_scale_Y, "center", 0 + (constants.buttonY/2 + 200) * scale.scene_scale_Y, "smallgui");
+  			// 	scale_to_canvas(right_sword_button, "center", 0 + (constants.buttonX/2 + 65) * scale.scene_scale_Y, "center", 0 + (constants.buttonY/2 + 200) * scale.scene_scale_Y, "smallgui");
   			// } else {
 
   			break;
   		case 1:
 
   		// if (mobile) {
-  		// 	scale_to_canvas(left_sword_button, "center", 0 - (constants.buttonX/2 + 10) * scene_scale_Y, "center", 0 + (constants.buttonY/2 + 140) * scene_scale_Y, "gui");
-  		// 	scale_to_canvas(right_sword_button, "center", 0 + (constants.buttonX/2 + 50) * scene_scale_Y, "center", 0 + (constants.buttonY/2 + 140) * scene_scale_Y, "gui");
+  		// 	scale_to_canvas(left_sword_button, "center", 0 - (constants.buttonX/2 + 10) * scale.scene_scale_Y, "center", 0 + (constants.buttonY/2 + 140) * scale.scene_scale_Y, "gui");
+  		// 	scale_to_canvas(right_sword_button, "center", 0 + (constants.buttonX/2 + 50) * scale.scene_scale_Y, "center", 0 + (constants.buttonY/2 + 140) * scale.scene_scale_Y, "gui");
   		// } else {
 
   		this.left_sword_button = AssetHandler.createButton("res/sword-left.png", "Cancel", constants.buttonX, constants.buttonY, "center", -(constants.buttonX/2 + 30), "center", (constants.buttonY/2 + 200), "image", function() {
@@ -136,24 +136,24 @@ class GUIHandler {
     		// if (mobile) {
         //
     		// 	scale_to_canvas(pause_menu, "center", 0, "center", 0, "image");
-    		// 	scale_to_canvas(close_button, "center", 0 + 445 * scene_scale_Y, "center", 0 - 281 * scene_scale_Y, "gui");
-    		// 	scale_to_canvas(main_menu_button, "center", 0, "center", 0 - 180 * scene_scale_Y, "gui");
-    		// 	scale_to_canvas(exit_level_button, "center", 0, "center", 0 - 110 * scene_scale_Y, "gui");
-    		// 	scale_to_canvas(settings_button, "center", 0, "center", 0 - 40 * scene_scale_Y, "gui");
+    		// 	scale_to_canvas(close_button, "center", 0 + 445 * scale.scene_scale_Y, "center", 0 - 281 * scale.scene_scale_Y, "gui");
+    		// 	scale_to_canvas(main_menu_button, "center", 0, "center", 0 - 180 * scale.scene_scale_Y, "gui");
+    		// 	scale_to_canvas(exit_level_button, "center", 0, "center", 0 - 110 * scale.scene_scale_Y, "gui");
+    		// 	scale_to_canvas(settings_button, "center", 0, "center", 0 - 40 * scale.scene_scale_Y, "gui");
         //
     		// 	scale_to_canvas(end_level_scene, "center", 0, "center", 0, "image");
-    		// 	scale_to_canvas(end_level_button, "center", 0, "center", 0 + 250 * scene_scale_Y, "gui");
-    		// 	scale_to_canvas(end_text, "center", 0, "center", 0 - 140 * scene_scale_Y, "image");
-    		// 	scale_to_canvas(hit_text, "center", 0 - 120 * scene_scale_Y, "center", 0, "image");
-    		// 	scale_to_canvas(low_text, "center", 0 - 120 * scene_scale_Y, "center", 0 + 40 * scene_scale_Y, "image");
-    		// 	scale_to_canvas(high_text, "center", 0 - 120 * scene_scale_Y, "center", 0 + 80 * scene_scale_Y, "image");
+    		// 	scale_to_canvas(end_level_button, "center", 0, "center", 0 + 250 * scale.scene_scale_Y, "gui");
+    		// 	scale_to_canvas(end_text, "center", 0, "center", 0 - 140 * scale.scene_scale_Y, "image");
+    		// 	scale_to_canvas(hit_text, "center", 0 - 120 * scale.scene_scale_Y, "center", 0, "image");
+    		// 	scale_to_canvas(low_text, "center", 0 - 120 * scale.scene_scale_Y, "center", 0 + 40 * scale.scene_scale_Y, "image");
+    		// 	scale_to_canvas(high_text, "center", 0 - 120 * scale.scene_scale_Y, "center", 0 + 80 * scale.scene_scale_Y, "image");
         //
-    		// 	scale_to_canvas(hit_text_counter, "left", 30, "center", 0 + 225 * scene_scale_Y, "image");
-    		// 	scale_to_canvas(low_text_counter, "left", 30, "center", 0 + 280 * scene_scale_Y, "image");
-    		// 	scale_to_canvas(high_text_counter, "left", 30, "center", 0 + 300 * scene_scale_Y, "image");
+    		// 	scale_to_canvas(hit_text_counter, "left", 30, "center", 0 + 225 * scale.scene_scale_Y, "image");
+    		// 	scale_to_canvas(low_text_counter, "left", 30, "center", 0 + 280 * scale.scene_scale_Y, "image");
+    		// 	scale_to_canvas(high_text_counter, "left", 30, "center", 0 + 300 * scale.scene_scale_Y, "image");
         //
     		// 	scale_to_canvas(menu_button, "right", 0 - (constants.buttonX/2 + 10), "bottom", 0 - (constants.buttonY/2 + 10), "gui");
-    		// 	scale_to_canvas(hint_button, "center", 0 - 313 * scene_scale_Y, "center", 0 + 194 * scene_scale_Y, "gui");
+    		// 	scale_to_canvas(hint_button, "center", 0 - 313 * scale.scene_scale_Y, "center", 0 + 194 * scale.scene_scale_Y, "gui");
         //
     		// } else {
 
@@ -273,12 +273,12 @@ class GUIHandler {
 
         }
 
-  			for (var i = 1; i < (num_levels + 1); i++) {
+  			for (var i = 1; i < (constants.num_levels + 1); i++) {
 
   				var temp = AssetHandler.createButton("res/map-indicator.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", levels[i].open, entity_component_system, stage);
   				// var temp = AssetHandler.createButton("res/map-indicator.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", function (this) { indicatorFunction(i).bind(this) }, entity_component_system, stage);
-          temp.on("mouseover", function (evt) { this.handleMouseEvent(evt, stage, scene_scale_Y) }.bind(this));
-  				temp.on("mouseout", function (evt) { this.handleMouseEvent(evt, stage, scene_scale_Y) }.bind(this));
+          temp.on("mouseover", function (evt) { this.handleMouseEvent(evt, stage, scale.scene_scale_Y) }.bind(this));
+  				temp.on("mouseout", function (evt) { this.handleMouseEvent(evt, stage, scale.scene_scale_Y) }.bind(this));
 
   				this.indicators.push(temp);
 

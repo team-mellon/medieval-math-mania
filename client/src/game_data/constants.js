@@ -5,8 +5,9 @@ export default {
   backgroundX: 1920,
   backgroundY: 768,
   structureX: 1920,
-  structureY: 1440
-
+  structureY: 1440,
+  num_scenes: 11,
+  num_levels: 20,
 
 
 }
