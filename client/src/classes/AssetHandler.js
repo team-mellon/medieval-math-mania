@@ -67,26 +67,26 @@ class AssetHandler {
       entity_component_system[i].object.scaleX = scene_scale_X;
       entity_component_system[i].object.scaleY = scene_scale_Y;
 
-      if (isMobile) {
+      // if (isMobile) {
+      //
+      //   platform_scale = 1.5;
+      //
+      // }
 
-        platform_scale = 1.5;
-
-      }
-
-      switch (entity_component_system[i].type) {
-
-        case "image":
-          break;
-
-        case "gui":
-          // ecs[i].object.scale = 1.0;
-          break;
-
-        case "smallgui":
-          // ecs[i].object.scale = 0.5;
-          break;
-
-      }
+      // switch (entity_component_system[i].type) {
+      //
+      //   case "image":
+      //     break;
+      //
+      //   case "gui":
+      //     // ecs[i].object.scale = 1.0;
+      //     break;
+      //
+      //   case "smallgui":
+      //     // ecs[i].object.scale = 0.5;
+      //     break;
+      //
+      // }
 
       entity_component_system[i].object.x = x_start + entity_component_system[i].x_location * scene_scale_Y * platform_scale;
       entity_component_system[i].object.y = y_start + entity_component_system[i].y_location * scene_scale_Y * platform_scale;

@@ -662,6 +662,9 @@ export default {
         // Hide bad guys when hit
         this.level.hideBadGuys();
 
+        // Check if towers are down
+        this.level.towerAnimation();
+
         // Run the catapult animation
         this.level.runCatapultAnimation(this.scale.scene_scale_Y);
 
