@@ -93,6 +93,7 @@ class LevelHandler {
     this.hint_shown = false;
 
     this.step_run = [false, false, false, false, false];
+    this.tower_down = [false, false, false, false, false];
 
     this.level_math = [
 
@@ -955,18 +956,23 @@ class LevelHandler {
     // Structure in the scene
     if (!this.structure_center.paused && this.structure_center.currentFrame == 5) {
       this.structure_center.stop();
+      this.tower_down[0] = true;
     }
     if (!this.structure_left_center.paused && this.structure_left_center.currentFrame == 5) {
       this.structure_left_center.stop();
+      this.tower_down[1] = true;
     }
     if (!this.structure_right_center.paused && this.structure_right_center.currentFrame == 5) {
       this.structure_right_center.stop();
+      this.tower_down[2] = true;
     }
     if (!this.structure_left.paused && this.structure_left.currentFrame == 5) {
       this.structure_left.stop();
+      this.tower_down[3] = true;
     }
     if (!this.structure_right.paused && this.structure_right.currentFrame == 5) {
       this.structure_right.stop();
+      this.tower_down[4] = true;
     }
 
     // Structure in the scene
@@ -1332,6 +1338,31 @@ class LevelHandler {
       this.henchman_right.alpha = 0;
     } else {
       this.henchman_right.alpha = 1;
+    }
+
+  }
+
+
+  towerAnimation () {
+
+    if (this.tower_down[0]) {
+      this.structure_center.gotoAndStop(5);
+    }
+
+    if (this.tower_down[1]) {
+      this.structure_left_center.gotoAndStop(5);
+    }
+
+    if (this.tower_down[2]) {
+      this.structure_right_center.gotoAndStop(5);
+    }
+
+    if (this.tower_down[3]) {
+      this.structure_left.gotoAndStop(5);
+    }
+
+    if (this.tower_down[4]) {
+      this.structure_right.gotoAndStop(5);
     }
 
   }

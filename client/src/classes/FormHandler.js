@@ -18,8 +18,6 @@ class FormHandler {
     error_div.id = "errorText";
     error_div.appendChild(document.createTextNode(""));
 
-
-
     // Creates login form to hold username, password, and error divs
     var login_form = document.createElement("form"); // Create encompassing div
     login_form.id = "loginForm"; // Div id
@@ -112,13 +110,10 @@ class FormHandler {
       entry_input.setAttribute("max", "999");
       entry_input.setAttribute("name", "entry");
       entry_input.addEventListener('keypress', function(event) {
-
         if (event.keyCode == 13) {
           event.preventDefault();
         }
-
       });
-
 
     }
 
@@ -170,8 +165,11 @@ class FormHandler {
     if (isMobile) {
 
     } else {
+
       document.getElementById("entryInput").value = 0;
+
     }
+
     document.getElementById("myDropdown").classList.toggle("show");
 
   }

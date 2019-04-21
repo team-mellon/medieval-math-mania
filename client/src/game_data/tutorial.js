@@ -1,6 +1,6 @@
 export const tutorialSteps = [
   "The goal of the the game is to get one hit each above and below the range, and then proceed to get three hits within the range.",
-  "To attempt a solution, use the number keys, period, and minus sign to choose a multiplicand and the enter key to fire the catapult and check your solution.",
+  "Use the number keys, period, and minus sign to choose a multiplicand and the enter key to fire the catapult and check your solution.",
   "First try to find a solution that is below the range.",
   "Next try to find a solution that is above the range.",
   "Now try to find 3 solutions within the range.",

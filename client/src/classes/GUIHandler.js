@@ -172,7 +172,7 @@ class GUIHandler {
 
   			if (mobile.isMobile) {
 
-  				this.ll_number_button = AssetHandler.createButton("res/number-button-ll.png", "", constants.backgroundX, 288, "center", 0, "bottom", 0 - (288/2), "image", function() {
+  				this.ll_number_button = AssetHandler.createButton("res/number-button-ll.png", "", constants.backgroundX, 288, "center", -100, "bottom", 0 - (288/3), "image", function() {
   					if(level.digit > 0)
   						level.digit--;
   					if(level.digit < 0)
@@ -180,7 +180,7 @@ class GUIHandler {
   					console.log(level.digit);
   				}.bind(this), entity_component_system, stage);
 
-  				this.lr_number_button = AssetHandler.createButton("res/number-button-lr.png", "", constants.backgroundX, 288, "center", 0, "bottom", 0 - (288/2), "image", function() {
+  				this.lr_number_button = AssetHandler.createButton("res/number-button-lr.png", "", constants.backgroundX, 288, "center", -100, "bottom", 0 - (288/3), "image", function() {
   					if(level.digit < 2)
   						level.digit++;
   					if(level.digit > 2)
@@ -188,14 +188,14 @@ class GUIHandler {
   					console.log(digit);
   				}.bind(this), entity_component_system, stage);
 
-  				this.rl_number_button = AssetHandler.createButton("res/number-button-rl.png", "", constants.backgroundX, 288, "center", 0, "bottom", 0 - (288/2), "image", function() {
+  				this.rl_number_button = AssetHandler.createButton("res/number-button-rl.png", "", constants.backgroundX, 288, "center", 100, "bottom", 0 - (288/3), "image", function() {
   					level.multiplier -= level.adder;
   					document.getElementById("hundredsPlace").textContent = Math.floor(level.multiplier/100 % 10);
   					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(level.multiplier/10 % 10));
   					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(level.multiplier % 10));
   				}.bind(this), entity_component_system, stage);
 
-  				this.rr_number_button = AssetHandler.createButton("res/number-button-rr.png", "", constants.backgroundX, 288, "center", 0, "bottom", 0 - (288/2), "image", function() {
+  				this.rr_number_button = AssetHandler.createButton("res/number-button-rr.png", "", constants.backgroundX, 288, "center", 100, "bottom", 0 - (288/3), "image", function() {
   					level.multiplier += level.adder;
   					document.getElementById("hundredsPlace").textContent = Math.floor(level.multiplier/100 % 10);
   					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(level.multiplier/10 % 10));
