@@ -2,6 +2,13 @@
 // GUIHANDLER //
 ////////////////
 
+// Static classes
+import AssetHandler from '../classes/AssetHandler.js';
+import APIHandler from '../classes/APIHandler.js';
+
+//
+import { indicatorCoordinates, levelDescriptors } from '../game_data/scenes.js';
+
 //
 import constants from '../game_data/constants.js';
 
@@ -11,12 +18,14 @@ class GUIHandler {
 
     this.gcs = []; // GUI component system for scaling and eventually object storage
 
+    this.containerFrame = {};
+
     this.indicators = [];
     this.indicator_counter = 0;
 
   }
 
-  createGUI (entity_component_system, current_scene, createjs, stage, user, async) {
+  createGUI (entity_component_system, current_scene, stage, user, async, changeScene, oneWayScene, indicatorFunction, level, mobile, menubutton, num_levels, levels, scene_scale_Y) {
 
   	switch(current_scene) {
 
@@ -37,14 +46,14 @@ class GUIHandler {
 
   			this.right_sword_button = AssetHandler.createButton("res/sword-right.png", "Signup", constants.buttonX, constants.buttonY, "center", (constants.buttonX/2 + 65), "center", (constants.buttonY/2 + 200), "image", function() {
   				createjs.Sound.play("sword");
-          this.changeScene(1);
+          changeScene(1);
   			}.bind(this), entity_component_system, stage);
 
-        this.menu_button = AssetHandler.createButton("res/login-button.png", "Back", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu");  this.changeScene(10); }.bind(this), entity_component_system, stage);
+        this.menu_button = AssetHandler.createButton("res/login-button.png", "Back", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu");  changeScene(10); }.bind(this), entity_component_system, stage);
 
   			// this.secret_button = AssetHandler.createButton("res/secret_button.png", "", constants.backgroundX, 1440, "center", 0, "center", 0, "image", function() {
   			// 	createjs.Sound.play("sword");
-        //   this.changeScene(8);
+        //   changeScene(8);
   			// }.bind(this), entity_component_system, stage);
 
   			// if (mobile) {
@@ -63,7 +72,7 @@ class GUIHandler {
   		this.left_sword_button = AssetHandler.createButton("res/sword-left.png", "Cancel", constants.buttonX, constants.buttonY, "center", -(constants.buttonX/2 + 30), "center", (constants.buttonY/2 + 200), "image", function() {
           // fieldInput_error.alpha = 0; // password_error.alpha = 0; // message.render = 0;
     			createjs.Sound.play("sword");
-    			this.changeScene(0);
+    			changeScene(0);
   			}.bind(this), entity_component_system, stage);
 
   		this.right_sword_button = AssetHandler.createButton("res/sword-right.png", "Signup", constants.buttonX, constants.buttonY, "center", (constants.buttonX/2 + 65), "center", (constants.buttonY/2 + 200), "image", function() {
@@ -92,7 +101,7 @@ class GUIHandler {
                     "confirm": document.getElementById('confirmInput').value
                   };
                   APIHandler.createUser(text, user, async);
-                  this.changeScene(2);
+                  changeScene(2);
                 }
               }
             }
@@ -113,12 +122,12 @@ class GUIHandler {
   			// 	scale_to_canvas(account_button, "right", 0 - (constants.buttonX/2 + 10), "top", (constants.buttonY/2 + 10), "gui");
   			// } else {
 
-  			this.play_button = AssetHandler.createButton("res/menu-button.png", "Play", constants.buttonX, constants.buttonY, "center", 0, "center", 0 - 200, "gui", function() { createjs.Sound.play("menu"); this.changeScene(8); }.bind(this), entity_component_system, stage);
-  			this.stats_button = AssetHandler.createButton("res/menu-button.png", "Stats", constants.buttonX, constants.buttonY, "center", 0, "center", 0 - 100, "gui", function() { createjs.Sound.play("menu"); this.changeScene(4); APIHandler.getUserData(user.username, user, async); }.bind(this), entity_component_system, stage);
-  			this.h2p_button = AssetHandler.createButton("res/menu-button.png", "How To Play", constants.buttonX, constants.buttonY, "center", 0, "center", 0 - 0, "gui", function() { createjs.Sound.play("menu"); this.indicatorFunction(0); }.bind(this), entity_component_system, stage);
-  			this.settings_button = AssetHandler.createButton("res/menu-button.png", "Settings", constants.buttonX, constants.buttonY, "center", 0, "center", 0 + 100, "gui", function() { createjs.Sound.play("menu"); this.changeScene(6); }.bind(this), entity_component_system, stage);
-  			this.logout_button = AssetHandler.createButton("res/menu-button.png", "Logout", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "top", (constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); user.authenticated = false; this.changeScene(0); APIHandler.signoutUser(async); }.bind(this), entity_component_system, stage);
-  			this.account_button = AssetHandler.createButton("res/menu-button.png", "Account", constants.buttonX, constants.buttonY, "right", 0 - (constants.buttonX/2 + 10), "top", (constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(7); APIHandler.getUserData(user.username, user, async); }.bind(this), entity_component_system, stage);
+  			this.play_button = AssetHandler.createButton("res/menu-button.png", "Play", constants.buttonX, constants.buttonY, "center", 0, "center", 0 - 200, "gui", function() { createjs.Sound.play("menu"); changeScene(8); }.bind(this), entity_component_system, stage);
+  			this.stats_button = AssetHandler.createButton("res/menu-button.png", "Stats", constants.buttonX, constants.buttonY, "center", 0, "center", 0 - 100, "gui", function() { createjs.Sound.play("menu"); changeScene(4); APIHandler.getUserData(user.username, user, async); }.bind(this), entity_component_system, stage);
+  			this.h2p_button = AssetHandler.createButton("res/menu-button.png", "How To Play", constants.buttonX, constants.buttonY, "center", 0, "center", 0 - 0, "gui", function() { createjs.Sound.play("menu"); indicatorFunction(0); }.bind(this), entity_component_system, stage);
+  			this.settings_button = AssetHandler.createButton("res/menu-button.png", "Settings", constants.buttonX, constants.buttonY, "center", 0, "center", 0 + 100, "gui", function() { createjs.Sound.play("menu"); changeScene(6); }.bind(this), entity_component_system, stage);
+  			this.logout_button = AssetHandler.createButton("res/menu-button.png", "Logout", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "top", (constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); user.authenticated = false; changeScene(0); APIHandler.signoutUser(async); }.bind(this), entity_component_system, stage);
+  			this.account_button = AssetHandler.createButton("res/menu-button.png", "Account", constants.buttonX, constants.buttonY, "right", 0 - (constants.buttonX/2 + 10), "top", (constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(7); APIHandler.getUserData(user.username, user, async); }.bind(this), entity_component_system, stage);
 
   			break;
 
@@ -151,76 +160,82 @@ class GUIHandler {
         this.menu_button = AssetHandler.createButton("res/login-button.png", "Pause", constants.buttonX, constants.buttonY, "right", -(constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() {
           createjs.Sound.play("menu");
 
-      		this.menu_button.visible = false
+      		// menubutton.visible = false
 
-          this.level.openPauseMenu(user.authenticated);
+          level.openPauseMenu(user.authenticated);
 
-          // this.level.pauseAnimation(true);
-          // this.level.visibleButton(true);
-          // this.level.visibleForm(false);
+          // level.pauseAnimation(true);
+          // level.visibleButton(true);
+          // level.visibleForm(false);
 
         }.bind(this), entity_component_system, stage);
 
-  			if (this.mobile.isMobile) {
+  			if (mobile.isMobile) {
 
   				this.ll_number_button = AssetHandler.createButton("res/number-button-ll.png", "", constants.backgroundX, 288, "center", 0, "bottom", 0 - (288/2), "image", function() {
-  					if(this.level.digit > 0)
-  						this.level.digit--;
-  					if(this.level.digit < 0)
-  						this.level.digit = 0;
-  					console.log(this.level.digit);
+  					if(level.digit > 0)
+  						level.digit--;
+  					if(level.digit < 0)
+  						level.digit = 0;
+  					console.log(level.digit);
   				}.bind(this), entity_component_system, stage);
 
   				this.lr_number_button = AssetHandler.createButton("res/number-button-lr.png", "", constants.backgroundX, 288, "center", 0, "bottom", 0 - (288/2), "image", function() {
-  					if(this.level.digit < 2)
-  						this.level.digit++;
-  					if(this.level.digit > 2)
-  						this.level.digit = 2;
+  					if(level.digit < 2)
+  						level.digit++;
+  					if(level.digit > 2)
+  						level.digit = 2;
   					console.log(digit);
   				}.bind(this), entity_component_system, stage);
 
   				this.rl_number_button = AssetHandler.createButton("res/number-button-rl.png", "", constants.backgroundX, 288, "center", 0, "bottom", 0 - (288/2), "image", function() {
-  					this.level.multiplier -= this.level.adder;
-  					document.getElementById("hundredsPlace").textContent = Math.floor(this.level.multiplier/100 % 10);
-  					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(this.level.multiplier/10 % 10));
-  					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(this.level.multiplier % 10));
+  					level.multiplier -= level.adder;
+  					document.getElementById("hundredsPlace").textContent = Math.floor(level.multiplier/100 % 10);
+  					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(level.multiplier/10 % 10));
+  					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(level.multiplier % 10));
   				}.bind(this), entity_component_system, stage);
 
   				this.rr_number_button = AssetHandler.createButton("res/number-button-rr.png", "", constants.backgroundX, 288, "center", 0, "bottom", 0 - (288/2), "image", function() {
-  					this.level.multiplier += this.level.adder;
-  					document.getElementById("hundredsPlace").textContent = Math.floor(this.level.multiplier/100 % 10);
-  					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(this.level.multiplier/10 % 10));
-  					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(this.level.multiplier % 10));
+  					level.multiplier += level.adder;
+  					document.getElementById("hundredsPlace").textContent = Math.floor(level.multiplier/100 % 10);
+  					document.getElementById("tensPlace").textContent = Math.abs(Math.floor(level.multiplier/10 % 10));
+  					document.getElementById("onesPlace").textContent = Math.abs(Math.floor(level.multiplier % 10));
   				}.bind(this), entity_component_system, stage);
 
   			}
 
   			break;
 
-  		case 4:
+        case 4:
 
-  			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), entity_component_system, stage);
-  	let text = "Hits: " + user.hits + "\n\nHighs: " + user.highs + "\n\nLows: " + user.lows + "\n\nTotal Misses: " + (user.highs + user.lows) + "\n\nBadges: " + user.badges + "\n\n";
+      		let temp = 0;
+      		for(var i = 0; i < 20; i++){
+      		    if(user.badges[i] == 1)
+      		        temp++;
+      		}
 
-  	this.statsContainer = AssetHandler.createStatsContainer(user.badges, "res/empty-badge.png", text, "Oldstyle", "32px", "normal", "black", 240, 240, "center", 0, "center", 0, "image", entity_component_system, stage);
+    			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); }.bind(this), entity_component_system, stage);
+			    let text = "Hits: " + user.hits + "\n\nHighs: " + user.highs + "\n\nLows: " + user.lows + "\n\nTotal Misses: " + (user.highs + user.lows) + "\n\nBadges: " + temp + "\n\n";
 
-  			break;
+			    this.statsContainer = AssetHandler.createStatsContainer(user.badges, "res/empty-badge.png", text, "Oldstyle", "32px", "normal", "black", 240, 240, "center", 0, "center", 0, "image", entity_component_system, stage);
+
+    			break;
 
   		case 5:
 
-  			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), entity_component_system, stage);
+  			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); }.bind(this), entity_component_system, stage);
 
   			break;
 
   		case 6:
 
-  			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.oneWayScene(); }.bind(this), entity_component_system, stage);
+  			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); oneWayScene(); }.bind(this), entity_component_system, stage);
 
   			break;
 
   		case 7:
 
-  			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), entity_component_system, stage);
+  			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); }.bind(this), entity_component_system, stage);
 
   			break;
 
@@ -249,21 +264,21 @@ class GUIHandler {
 
         if (user.authenticated) {
 
-  		     this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(2); }.bind(this), entity_component_system, stage);
+  		     this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); }.bind(this), entity_component_system, stage);
 
         } else {
 
-  		     this.menu_button = AssetHandler.createButton("res/login-button.png", "Back", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu");  this.changeScene(10); }.bind(this), entity_component_system, stage);
-  		     this.menu_button = AssetHandler.createButton("res/login-button.png", "How To Play", constants.buttonX, constants.buttonY, "right", -(constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.indicatorFunction(0); }.bind(this), entity_component_system, stage);
+  		     this.menu_button = AssetHandler.createButton("res/login-button.png", "Back", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu");  changeScene(10); }.bind(this), entity_component_system, stage);
+  		     this.menu_button = AssetHandler.createButton("res/login-button.png", "How To Play", constants.buttonX, constants.buttonY, "right", -(constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); indicatorFunction(0); }.bind(this), entity_component_system, stage);
 
         }
 
-  			for (var i = 1; i < (this.num_levels + 1); i++) {
+  			for (var i = 1; i < (num_levels + 1); i++) {
 
-  				var temp = AssetHandler.createButton("res/map-indicator.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", this.levels[i].open.bind(this), entity_component_system, stage);
-  				// var temp = AssetHandler.createButton("res/map-indicator.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", function (this) { this.indicatorFunction(i).bind(this) }, entity_component_system, stage);
-          temp.on("mouseover", this.handleMouseEvent);
-  				temp.on("mouseout", this.handleMouseEvent);
+  				var temp = AssetHandler.createButton("res/map-indicator.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", levels[i].open, entity_component_system, stage);
+  				// var temp = AssetHandler.createButton("res/map-indicator.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", function (this) { indicatorFunction(i).bind(this) }, entity_component_system, stage);
+          temp.on("mouseover", function (evt) { this.handleMouseEvent(evt, stage, scene_scale_Y) }.bind(this));
+  				temp.on("mouseout", function (evt) { this.handleMouseEvent(evt, stage, scene_scale_Y) }.bind(this));
 
   				this.indicators.push(temp);
 
@@ -278,18 +293,14 @@ class GUIHandler {
 
   			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() {
           createjs.Sound.play("menu");
-          // this.changeScene(3);
-          this.oneWayScene();
+          // changeScene(3);
+          oneWayScene();
 
-          console.log(this.level.multiplicand);
-          console.log(this.level.lower);
-          console.log(this.level.upper);
+          // level.openPauseMenu();
 
-          // this.level.openPauseMenu();
-
-          // this.level.pauseAnimation(true);
-          // this.level.visibleButton(true);
-          // this.level.visibleForm(false);
+          // level.pauseAnimation(true);
+          // level.visibleButton(true);
+          // level.visibleForm(false);
 
         }.bind(this), entity_component_system, stage);
 
@@ -297,8 +308,8 @@ class GUIHandler {
 
   		case 10:
 
-  			this.logout_button = AssetHandler.createButton("res/login-button.png", "Login!", constants.buttonX, constants.buttonY, "right", -(constants.buttonX/2 + 10), "top", (constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(0); }.bind(this), entity_component_system, stage);
-  			this.play_button = AssetHandler.createButton("res/login-button.png", "Start!", constants.buttonX, constants.buttonY, "center", 0, "bottom", - 2.5 * (constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); this.changeScene(8); }.bind(this), entity_component_system, stage);
+  			this.logout_button = AssetHandler.createButton("res/login-button.png", "Login!", constants.buttonX, constants.buttonY, "right", -(constants.buttonX/2 + 10), "top", (constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(0); }.bind(this), entity_component_system, stage);
+  			this.play_button = AssetHandler.createButton("res/login-button.png", "Start!", constants.buttonX, constants.buttonY, "center", 0, "bottom", - 2.5 * (constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(8); }.bind(this), entity_component_system, stage);
 
   			break;
 
@@ -307,13 +318,13 @@ class GUIHandler {
   	}
 
     // this.landscape_warning = new createjs.Shape();
-    //
+
     // this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, 288, 288, "center", 0, "center", 0, "image", entity_component_system, stage);
     // stage.removeChild(this.phone_rotation);
 
   }
 
-  handleMouseEvent: function(evt) {
+  handleMouseEvent (evt, stage, scene_scale_Y) {
 
     if(evt.type == "mouseover"){
 
@@ -322,8 +333,8 @@ class GUIHandler {
       temp.text = levelDescriptors[evt.target.text].title;
       temp = this.containerFrame.getChildByName("descripterFrame");
       temp.text = levelDescriptors[evt.target.text].description;
-      this.containerFrame.x = this.scene_scale_Y * indicatorCoordinates[evt.target.text].x + this.stage.canvas.width / 2 + 15;
-      this.containerFrame.y = this.scene_scale_Y * indicatorCoordinates[evt.target.text].y + this.stage.canvas.height / 2 + 15;
+      this.containerFrame.x = scene_scale_Y * indicatorCoordinates[evt.target.text].x + stage.canvas.width / 2 + 15;
+      this.containerFrame.y = scene_scale_Y * indicatorCoordinates[evt.target.text].y + stage.canvas.height / 2 + 15;
       this.containerFrame.visible = true;
 
     }
