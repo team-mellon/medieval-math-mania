@@ -1,9 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 // ASSETHANDLER                                                               //
 ////////////////////////////////////////////////////////////////////////////////
-// Handler for async api calls. This encompasses database request like        //
-// creating a user, getting a user's data, verifying a user, updating a       //
-// database entry, and sigming out a user.                                    //
+// Handler for asset creation abd scaling calls. This encompasses creating    //
+// assets and scaling assets.                                                 //
 ////////////////////////////////////////////////////////////////////////////////
 
 class AssetHandler {
@@ -218,18 +217,17 @@ class AssetHandler {
 
   }
 
-
-    static createStatsContainer (arr, asset, num, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
+  static createStatsContainer (arr, asset, num, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
 
     var text = new createjs.Text(num, style + " " + size + " " + font, color);
     //stage.addChild(text);
-	text.regX = 50;
-	text.regY = 100;
-	text.x = -250;
+  	text.regX = 50;
+  	text.regY = 100;
+  	text.x = -250;
 
-	var container = new createjs.Container();
-	container.addChild(text);
-	stage.addChild(container);
+  	var container = new createjs.Container();
+  	container.addChild(text);
+  	stage.addChild(container);
 
 /*
 	let count = 1;
@@ -322,7 +320,6 @@ class AssetHandler {
     return text;
 
   }
-
 
   static createTextContainer (animation, words, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type, reg, entity_component_system, stage) { // }, handleClick) {
 
@@ -453,6 +450,7 @@ class AssetHandler {
 
   static createAndPushEntity (entity_component_system, obj, obj_width, obj_height, obj_x_lock, obj_x_location, obj_y_lock, obj_y_location, obj_type) {
 
+    // Create the object to go in the respective entity component system
     let entity_object = {
       object: obj,
       width: obj_width,
@@ -464,6 +462,7 @@ class AssetHandler {
       type: obj_type
     };
 
+    // Push into the respective ecs
     entity_component_system.push(entity_object);
 
   }

@@ -601,7 +601,7 @@ export default {
 
           this.level.runInput(this.mobile.isMobile);
           this.clearHtml();
-          this.level.makeGameForm(this.mobile.isMobile);
+          FormHandler.createGameForm(this.level.multiplicand, this.level.sign, this.level.equal, this.level.solution, this.level.history_list, this.level.play_tutorial, this.mobile.isMobile);
 
         }
 
@@ -705,13 +705,16 @@ export default {
 
           } else {
 
-            this.level.makeGameForm(this.mobile.isMobile);
+            FormHandler.createGameForm(this.level.multiplicand, this.level.sign, this.level.equal, this.level.solution, this.level.history_list, this.level.play_tutorial, this.mobile.isMobile);
             this.level.remakeMultiplierBanner();
             this.level.remakeRangeBanner();
 
           }
 
       }
+
+      // Clear HTML before creating a new scene
+      this.clearHtml();
 
       // Destroy the last scene
       this.destroyScene();
@@ -818,8 +821,7 @@ export default {
             this.level.solution,
             this.level.history_list,
             this.level.play_tutorial,
-            this.mobile.isMobile,
-            this.myFunction
+            this.mobile.isMobile
           );
 
           this.level.createLevel(this.stage,
@@ -878,7 +880,7 @@ export default {
       } else if (this.current_scene == 3) {
 
         this.gui.menu_button.visible = true;
-        this.level.makeGameForm(this.mobile.isMobile);
+        FormHandler.createGameForm(this.level.multiplicand, this.level.sign, this.level.equal, this.level.solution, this.level.history_list, this.level.play_tutorial, this.mobile.isMobile);
         this.level.remakeMultiplierBanner();
         this.level.remakeRangeBanner();
         this.level.structure_score.text = "Total Lows: " + this.level.miss_lower_counter.toString() + "\nTotal High: " + this.level.miss_upper_counter.toString() + "\nTotal Hits: " + this.level.hit_counter.toString();
@@ -888,8 +890,6 @@ export default {
     },
 
     destroyScene: function() {
-
-      this.clearHtml();
 
       this.stage.removeAllChildren();
 

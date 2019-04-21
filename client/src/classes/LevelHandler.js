@@ -26,6 +26,8 @@ class LevelHandler {
     this.delayOut = new createjs.PlayPropsConfig().set({delay : 750});
     this.delayWin = new createjs.PlayPropsConfig().set({delay : 2000});
 
+
+
     this.current_level = 1;
 
     // Animation
@@ -89,6 +91,8 @@ class LevelHandler {
   	this.hints_on = true;
 
     this.hint_shown = false;
+
+    this.step_run = [false, false, false, false, false];
 
     this.level_math = [
 
@@ -465,6 +469,18 @@ class LevelHandler {
       framerate: 6
     };
 
+    this.tutorial_numbpadS = {
+      images: ["res/numbpad.png"],
+      frames: {width:288, height:384, count:1, regX: 0, regY:0, spacing:0, margin:0},
+      framerate: 6
+    };
+
+    this.tutorial_enterkeyS = {
+      images: ["res/enter.png"],
+      frames: {width:192, height:192, count:1, regX: 0, regY:0, spacing:0, margin:0},
+      framerate: 6
+    };
+
     this.number_text = [];
 
   }
@@ -582,12 +598,20 @@ class LevelHandler {
     this.high_text.visible = false;
     this.high_text.alpha = 0;
 
-      this.badge_text = AssetHandler.createText("Congratulations!  You earned a badge", "Oldstyle", "32px", "", "gold", 10, 10, "center", 0 - 260, "center", 0 + 140, "image", this.lcs, stage);
-      this.badge_text.visible = false;
-      this.badge_text.alpha = 0;
+    this.badge_text = AssetHandler.createText("Congratulations!  You earned a badge", "Oldstyle", "32px", "", "gold", 10, 10, "center", 0 - 260, "center", 0 + 140, "image", this.lcs, stage);
+    this.badge_text.visible = false;
+    this.badge_text.alpha = 0;
 
     this.tutorial_menu = AssetHandler.createTextContainer(this.tutorial_menuS, "The tutorial is broken", "Oldstyle", "32px", "normal", "Saddlebrown", 900, 300, "center", 0, "top", (300 / 2) + constants.buttonY , "image", 100, this.lcs, stage);
     this.tutorial_menu.visible = false;
+
+    this.tutorial_numbpad = AssetHandler.createSprite(this.tutorial_numbpadS, 288, 384, "left", (288 / 2) + 100, "top", (384 / 2) + 100, "image", this.lcs, stage);
+    // this.tutorial_numbpad.visible = false;
+    this.tutorial_numbpad.alpha = 0;
+
+    this.tutorial_enterkey = AssetHandler.createSprite(this.tutorial_enterkeyS, 192, 192, "right", -(288 / 2) - 100, "top", (384 / 2) + 100, "image", this.lcs, stage);
+    // this.tutorial_enterkey.visible = false;
+    this.tutorial_enterkey.alpha = 0;
 
     this.pause_menu = AssetHandler.createImage("res/hit-target-pause-menu.png", constants.backgroundX, constants.backgroundY, "center", 0, "center", 0, "image", this.lcs, stage);
     this.pause_menu.visible = false;
@@ -1114,58 +1138,109 @@ class LevelHandler {
     // Tutorial
     if (this.play_tutorial || this.current_level == 0) {
 
-      this.tutorial_menu.visible = true;
-      // this.tutorial_menu.text = tutorialSteps[0]; // for a little bit
-      // this.tutorial_menu.text = tutorialSteps[1]; // also for a little bit but then show controls in succession
-      // this.tutorial_menu.text = tutorialSteps[2]; // then show this until first shot is made
+      if (!this.step_run[0]) {
 
-      if (this.miss_lower_counter < 1) {
+        this.tutorial_menu.visible = true;
 
-        if (this.miss_upper_counter > 0) {
+        createjs.Tween.get(this.tutorial_menu).wait(0).to({visible:true}).call(function () {
+          this.tutorial_menu.getChildAt(1).text = tutorialSteps[0];
+          this.tutorial_numbpad.visible = true;
+          this.tutorial_enterkey.visible = true;
+        }.bind(this));
 
-          this.miss_upper_counter = 0;
-          this.tutorial_menu.text = tutorialCorrections[0];
+        this.step_run[0] = true;
 
-        } else if (this.hit_counter > 0) {
+      } else if (!this.step_run[1]) {
 
-          this.hit_counter = 0;
-          this.tutorial_menu.text = tutorialCorrections[1];
+        createjs.Tween.get(this.tutorial_menu).wait(6000).to({visible:true}).call(function () {
+          this.tutorial_menu.getChildAt(1).text = tutorialSteps[1];
+        }.bind(this));
+
+        createjs.Tween.get(this.tutorial_numbpad).wait(6250).to({alpha:1}, 750).wait(7500).to({alpha:0}, 750); // Left side, Number pad
+        createjs.Tween.get(this.tutorial_enterkey).wait(7250).to({alpha:1}, 750).wait(7500).to({alpha:0}, 750); // Right side, Enter key
+
+        this.step_run[1] = true;
+
+      } else if (!this.step_run[2]) {
+
+        createjs.Tween.get(this.tutorial_menu).wait(15000).to({visible:true}).call(function () {
+          this.tutorial_menu.getChildAt(1).text = tutorialSteps[2];
+        }.bind(this));
+
+        this.step_run[2] = true;
+
+      } else if (!this.step_run[3]) {
+
+        if (this.miss_lower_counter < 1) {
+
+          if (this.miss_upper_counter > 0) {
+
+            this.miss_upper_counter = 0;
+            this.tutorial_menu.getChildAt(1).text = tutorialCorrections[0];
+
+          } else if (this.hit_counter > 0) {
+
+            this.hit_counter = 0;
+            this.tutorial_menu.getChildAt(1).text = tutorialCorrections[1];
+
+          }
+
+        } else {
+
+          this.step_run[3] = true;
+          this.tutorial_menu.getChildAt(1).text = tutorialSteps[3];
 
         }
 
-        // document.getElementById("tutorialText").textContent = "Try finding any multiplier that produces a solution below the range";
+      } else if (!this.step_run[4]) {
 
-      } else if (this.miss_upper_counter < 1) {
+        if (this.miss_upper_counter < 1) {
 
-        if (this.miss_lower_counter > 1) {
+          if (this.miss_lower_counter > 1) {
 
-          this.miss_lower_counter = 1;
-          this.tutorial_menu.text = tutorialCorrections[2];
+            this.miss_lower_counter = 1;
+            this.tutorial_menu.getChildAt(1).text = tutorialCorrections[2];
 
-        } else if (this.hit_counter > 0) {
+          } else if (this.hit_counter > 0) {
 
-          this.hit_counter = 0;
-          this.tutorial_menu.text = tutorialCorrections[3];
+            this.hit_counter = 0;
+            this.tutorial_menu.getChildAt(1).text = tutorialCorrections[3];
 
-        }
+          }
 
-        // document.getElementById("tutorialText").textContent = "Try finding any multiplier that produces a solution above the range";
+        } else {
 
-      } else if (this.hit_counter < 3) {
-
-        if (this.miss_lower_counter > 1) {
-
-          this.miss_lower_counter = 1;
-          this.tutorial_menu.text = tutorialCorrections[4];
-
-        } else if (this.miss_upper_counter > 1) {
-
-          this.miss_upper_counter = 1;
-          this.tutorial_menu.text = tutorialCorrections[5];
+          this.step_run[4] = true;
+          this.tutorial_menu.getChildAt(1).text = tutorialSteps[4];
 
         }
 
-        // document.getElementById("tutorialText").textContent = "Try finding 3 multipliers that produce solutions within the range";
+      } else if (!this.step_run[5]) {
+
+        if (this.hit_counter < 3) {
+
+          if (this.miss_lower_counter > 1) {
+
+            this.miss_lower_counter = 1;
+            this.tutorial_menu.getChildAt(1).text = tutorialCorrections[4];
+
+          } else if (this.miss_upper_counter > 1) {
+
+            this.miss_upper_counter = 1;
+            this.tutorial_menu.getChildAt(1).text = tutorialCorrections[5];
+
+          }
+
+        } else {
+
+          this.step_run[5] = true;
+          this.tutorial_menu.getChildAt(1).text = tutorialSteps[5];
+
+        }
+
+      } else {
+
+        // Maybe link to the first level or something
 
       }
 
@@ -1173,7 +1248,7 @@ class LevelHandler {
 
   }
 
-    createVictoryBanner (scene_scale_X, scene_scale_Y, arr) {
+  createVictoryBanner (scene_scale_X, scene_scale_Y, arr) {
 
     this.visibleForm(false);
     this.pauseAnimation(true);
@@ -1202,13 +1277,12 @@ class LevelHandler {
     this.high_text.visible = true;
     createjs.Tween.get(this.high_text).wait(7750).to({alpha:1}, 500);
 
-	if(this.current_level != 0){
+  	if(this.current_level != 0){
 	    if(arr[(this.current_level - 1)] == 0){
-		this.badge_text.visible = true;
-		createjs.Tween.get(this.badge_text).wait(8750).to({alpha:1}, 500);
+    		this.badge_text.visible = true;
+    		createjs.Tween.get(this.badge_text).wait(8750).to({alpha:1}, 500);
 	    }
-
-	}
+  	}
 
     this.end_level_button.visible = true;
     createjs.Tween.get(this.end_level_button).wait(9375).to({alpha:1}, 125);
@@ -1371,144 +1445,6 @@ class LevelHandler {
     var range = "[ " + this.lower + ", " + this.upper + "]";
 
     this.structure_range.getChildAt(1).text = range;
-
-  }
-
-  makeGameForm (isMobile) {
-
-      // Creates username display text
-      var multiplicand_div = document.createElement("div");
-      multiplicand_div.id = "multiplicandText";
-      var multiplicand_text = document.createTextNode(this.multiplicand);
-      multiplicand_div.appendChild(multiplicand_text);
-      var sign_text = document.createTextNode(this.sign);
-      var entry_input;
-      if (isMobile) {
-
-        entry_input = document.createElement("div");
-        entry_input.id = "entryDisplay";
-        var hundreds = document.createElement("span");
-        hundreds.id = "hundredsPlace";
-        var hundreds_place = document.createTextNode("0");
-        hundreds.appendChild(hundreds_place);
-        var tens = document.createElement("span");
-        tens.id = "tensPlace";
-        var tens_place = document.createTextNode("0");
-        tens.appendChild(tens_place);
-        var ones = document.createElement("span");
-        ones.id = "onesPlace";
-        var ones_place = document.createTextNode("0");
-        ones.appendChild(ones_place);
-        entry_input.appendChild(hundreds);
-        entry_input.appendChild(tens);
-        entry_input.appendChild(ones);
-
-      } else {
-
-        entry_input = document.createElement("input");
-        entry_input.id = "entryInput";
-        entry_input.setAttribute("type", "number");
-        entry_input.setAttribute("placeholder", "###");
-        entry_input.setAttribute("value", "");
-        entry_input.setAttribute("maxlength", "3");
-        entry_input.setAttribute("size", "4");
-        entry_input.setAttribute("min", "-999");
-        entry_input.setAttribute("max", "999");
-        entry_input.setAttribute("name", "entry");
-        entry_input.addEventListener('keypress', function(event) {
-          if (event.keyCode == 13) {
-            event.preventDefault();
-          }
-        });
-
-      }
-
-      var equal_text = document.createTextNode(this.equal);
-      var solution_div = document.createElement("div");
-      solution_div.id = "solutionText";
-      var solution_text = document.createTextNode(this.solution);
-      solution_div.appendChild(solution_text);
-
-      // Creates username div to hold display text and input box
-      var game_entry_div = document.createElement("div");
-      game_entry_div.className = "login";
-      game_entry_div.appendChild(multiplicand_div);
-      game_entry_div.appendChild(sign_text);
-      game_entry_div.appendChild(entry_input);
-      game_entry_div.appendChild(equal_text);
-      game_entry_div.appendChild(solution_div);
-
-      // Creates username display text
-      var button_text = document.createTextNode("");
-      var history_button = document.createElement("button");
-      var history_div = document.createElement("div");
-      history_button.className = "dropbtn";
-      history_button.addEventListener('click', this.myFunction);
-      history_div.className = "dropdown-content";
-      history_div.id = "myDropdown";
-      history_button.appendChild(button_text);
-
-      for (var x in this.history_list) {
-        var history_entry = document.createTextNode(this.history_list[x]);
-        var line_break = document.createElement("br");
-        history_div.appendChild(history_entry);
-        history_div.appendChild(line_break);
-      }
-
-      var history_dropdown = document.createElement("div");
-      history_dropdown.className = "dropdown";
-      history_dropdown.appendChild(history_button);
-      history_dropdown.appendChild(history_div);
-
-      // Does a thing
-      var game_history_div = document.createElement("div");
-      game_history_div.className = "login";
-      game_history_div.appendChild(history_dropdown);
-
-      // Creates Tutorial display text
-      if (this.play_tutorial) {
-        var tutorial_label = document.createTextNode("Tutorial");
-        var br1 = document.createElement("br");
-        var tutorial_text = document.createElement("span");
-        tutorial_text.className = "tutorial";
-        tutorial_text.id = "tutorialText";
-        var tutorial_words = document.createTextNode("The tutorial is broken");
-        tutorial_text.appendChild(tutorial_words);
-        var tutorial_div = document.createElement("div");
-        tutorial_div.className = "tutorial_title";
-        tutorial_div.id = "tutorialDiv"
-        tutorial_div.appendChild(tutorial_label);
-        tutorial_div.appendChild(br1);
-        tutorial_div.appendChild(tutorial_text);
-      }
-
-      // Creates login form to hold username and password divs
-      var game_entry_form = document.createElement("form");
-      game_entry_form.id = "equationBanner";
-      // game_entry_form.className = "scrollMenu";
-      game_entry_form.appendChild(game_entry_div);
-
-      // Creates login form to hold username and password divs
-      var game_history_form = document.createElement("form");
-      game_history_form.id = "historyBanner";
-      // game_history_form.className = "scrollMenu";
-      game_history_form.appendChild(game_history_div);
-
-      // Injecting login form into existing html
-      var scene_html = document.getElementById("sceneHTML");
-      scene_html.appendChild(game_entry_form);
-      scene_html.appendChild(game_history_form);
-
-      if (this.play_tutorial) {
-        scene_html.appendChild(tutorial_div);
-      }
-
-  }
-
-  myFunction (e) {
-
-    e.preventDefault();
-    document.getElementById("myDropdown").classList.toggle("show");
 
   }
 

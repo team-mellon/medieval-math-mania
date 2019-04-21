@@ -211,23 +211,6 @@ input::-webkit-outer-spin-button {
   margin: 0 !important;
 }
 
-.dropbtn {
-  background-color: transparent;
-  font-family: "Blackadder";
-  letter-spacing: 0px;
-  color: darkred;
-  /* padding: 5px 10px 3px 3px; */
-  /* font-size: 3vh; */
-  border: none;
-  /* cursor: pointer; */
-  /* border-radius: 30px; */
-  /* margin: 0px 82px; */
-}
-
-.dropbtn:hover, .dropbtn:focus {
-  background-color: none;
-}
-
 #myInput {
   border-box: box-sizing;
   /* background-image: url('searchicon.png'); */
