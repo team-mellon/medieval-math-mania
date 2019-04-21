@@ -10,10 +10,10 @@ class InputHandler {
   // Constructor to initialize input checking variables
   constructor(drawingCanvas) {
 
-    drawingCanvas.addEventListener("touchstart", this.handleStart, false);
-    drawingCanvas.addEventListener('touchend', this.handleEnd, false);
-    drawingCanvas.addEventListener("touchcancel", this.handleCancel, false);
-    drawingCanvas.addEventListener("touchmove", this.handleMove, false);
+    drawingCanvas.addEventListener("touchstart", this.handleStart.bind(this), false);
+    drawingCanvas.addEventListener('touchend', this.handleEnd.bind(this), false);
+    drawingCanvas.addEventListener("touchcancel", this.handleCancel.bind(this), false);
+    drawingCanvas.addEventListener("touchmove", this.handleMove.bind(this), false);
 
     // Holds the states of all the keys
     this.keys = {};
@@ -76,10 +76,11 @@ class InputHandler {
     console.log("drag: " + (this.end_touch - this.start_touch));
 
     // If the end of the touch minus the beginning of the touch is less than -100
-    if (this.end_touch - this.start_touch < -100) {
+    if ((this.end_touch - this.start_touch) < -100) {
 
       // Register as a valid drag
       this.drag_up = true;
+      // console.log(this.drag_up);
 
     }
 

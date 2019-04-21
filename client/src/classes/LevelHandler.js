@@ -540,7 +540,7 @@ class LevelHandler {
 
     this.structure_body = AssetHandler.createSprite(this.bodyS, this.bodyS.frames.width, this.bodyS.frames.height, "center", 0, "bottom", -this.bodyS.frames.height / 2, "image", this.lcs, stage);
     // structure_banner = AssetHandler.createSprite(bannerS, constants.structureX, constants.structureY, "center", 0, "bottom", -constants.structureY / 2, "image", this.lcs, stage);
-    this.structure_range = AssetHandler.createTextContainer(this.range_bannerS, "[ #, # ]", "Oldstyle", "32px", "normal", "Gold", 288, 126, "center", -522 + 288 / 2, "bottom", -336 + 126 / 2, "image", 0, this.lcs, stage);
+    this.structure_range = AssetHandler.createTextContainer(this.range_bannerS, "[ #, # ]", "Oldstyle", "32px", "normal", "Gold", 288, 126, "center", -234 - 288 / 2, "bottom", -336 + 126 / 2, "image", 0, this.lcs, stage);
     // this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x              = #", "Oldstyle", "26px", "normal", "Gold", 300, 78, "center", -150 + 300 / 2, "bottom", -321 + 78 / 2, "image", 0, this.lcs, stage);
     this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x              = #", "Oldstyle", "26px", "normal", "Gold", 444, 78, "center", -222 + 444 / 2, "bottom", -321 + 78 / 2, "image", 0, this.lcs, stage);
     this.structure_history = AssetHandler.createTextContainer(this.history_bannerS, "History", "Oldstyle", "18px", "normal", "Gold", 288, 126, "center", 234 + 288 / 2, "bottom", -336 + 126 / 2, "image", 126 / 2, this.lcs, stage);
@@ -639,8 +639,8 @@ class LevelHandler {
 
     }
 
-    this.hint_button = AssetHandler.createButton("res/hint-button.png", "Hint", 72, 72, "center", 0 - 313, "center", 0 + 194, "gui", leave_to_hint, this.lcs, stage);
-    this.hint_button.visible = false;
+    // this.hint_button = AssetHandler.createButton("res/hint-button.png", "Hint", 72, 72, "center", 0 - 313, "center", 0 + 194, "gui", leave_to_hint, this.lcs, stage);
+    // this.hint_button.visible = false;
 
     this.previous_indicator = AssetHandler.createImage("res/previous-indicator.png", 24, 24, "center", 0 - 50, "center", 0 + 194, "gui", this.lcs, stage);
     this.previous_indicator.addEventListener("click", function () { music.previousSound() });
@@ -730,73 +730,73 @@ class LevelHandler {
 
     if (isMobile) {
 
-      // for (var x in this.history_list) {
-        // console.log(this.history_list[x]);
-        // console.log(this.entry);
-        // if (multiplier == history_list[x]){
-        //   valid = false;
-        // }
+      // // for (var x in this.history_list) {
+      //   // console.log(this.history_list[x]);
+      //   // console.log(this.entry);
+      //   // if (multiplier == history_list[x]){
+      //   //   valid = false;
+      //   // }
+      // // }
+      //
+      // if (this.valid) {
+      //
+      //   // Add to history
+      //   // console.log(this.history_list);
+      //   this.history_list.unshift(this.multiplier);
+      //   var dropdown = document.getElementById("myDropdown");
+      //   var history_entry = document.createTextNode(this.multiplier);
+      //   var line_break = document.createElement("br");
+      //   dropdown.appendChild(history_entry);
+      //   dropdown.appendChild(line_break);
+      //
+      //   // Actual math
+      //   this.solution = this.multiplier * this.multiplicand;
+      //   console.log(this.solution);
+      //   this.solution = Math.floor10(this.solution, -1);
+      //   console.log(this.solution);
+      //
+      //   var solut_div = document.getElementById("solutionText");
+      //   while (solut_div.firstChild) {
+      //     solut_div.removeChild(solut_div.firstChild);
+      //   }
+      //
+      //   var solut = document.createTextNode(solution);
+      //   solut_div.appendChild(solut);
+      //
+      //   this.remakeMultiplierBanner()
+      //
+      //   // this.structure_equation_banner.getChildAt(1).text = this.multiplicand.toString() + " x              = " + this.solution.toString();
+      //
+      //   // this.makeGameForm();
+      //
+      //   if (this.solution <= this.upper && this.solution >= this.lower) {
+      //     this.hit = true;
+      //     console.log("hit");
+      //     this.catapult.gotoAndPlay(0);
+      //     // Triggering other fired events
+      //     this.fired = true;
+      //   }
+      //   else if (this.solution > this.upper) {
+      //     this.miss_upper = true;
+      //     console.log("miss upper");
+      //     this.catapult.gotoAndPlay(0);
+      //     // Triggering other fired events
+      //     this.fired = true;
+      //   }
+      //   else if (this.solution < this.lower) {
+      //     this.miss_lower = true;
+      //     console.log("miss lower");
+      //     this.catapult.gotoAndPlay(0);
+      //     // Triggering other fired events
+      //     this.fired = true;
+      //   }
+      //
+      //   this.multiplier = 0;
+      //   document.getElementById("hundredsPlace").textContent = Math.floor(this.multiplier/100 % 10);
+      //   document.getElementById("tensPlace").textContent = Math.abs(Math.floor(this.multiplier/10 % 10));
+      //   document.getElementById("onesPlace").textContent = Math.abs(Math.floor(this.multiplier % 10));
+      //
       // }
-
-      if (this.valid) {
-
-        // Add to history
-        // console.log(this.history_list);
-        this.history_list.unshift(this.multiplier);
-        var dropdown = document.getElementById("myDropdown");
-        var history_entry = document.createTextNode(this.multiplier);
-        var line_break = document.createElement("br");
-        dropdown.appendChild(history_entry);
-        dropdown.appendChild(line_break);
-
-        // Actual math
-        this.solution = this.multiplier * this.multiplicand;
-        console.log(this.solution);
-        this.solution = Math.floor10(this.solution, -1);
-        console.log(this.solution);
-
-        var solut_div = document.getElementById("solutionText");
-        while (solut_div.firstChild) {
-          solut_div.removeChild(solut_div.firstChild);
-        }
-
-        var solut = document.createTextNode(solution);
-        solut_div.appendChild(solut);
-
-        this.remakeMultiplierBanner()
-
-        // this.structure_equation_banner.getChildAt(1).text = this.multiplicand.toString() + " x              = " + this.solution.toString();
-
-        // this.makeGameForm();
-
-        if (this.solution <= this.upper && this.solution >= this.lower) {
-          this.hit = true;
-          console.log("hit");
-          this.catapult.gotoAndPlay(0);
-          // Triggering other fired events
-          this.fired = true;
-        }
-        else if (this.solution > this.upper) {
-          this.miss_upper = true;
-          console.log("miss upper");
-          this.catapult.gotoAndPlay(0);
-          // Triggering other fired events
-          this.fired = true;
-        }
-        else if (this.solution < this.lower) {
-          this.miss_lower = true;
-          console.log("miss lower");
-          this.catapult.gotoAndPlay(0);
-          // Triggering other fired events
-          this.fired = true;
-        }
-
-        this.multiplier = 0;
-        document.getElementById("hundredsPlace").textContent = Math.floor(this.multiplier/100 % 10);
-        document.getElementById("tensPlace").textContent = Math.abs(Math.floor(this.multiplier/10 % 10));
-        document.getElementById("onesPlace").textContent = Math.abs(Math.floor(this.multiplier % 10));
-
-      }
 
     } else {
 
@@ -1632,7 +1632,7 @@ class LevelHandler {
   		this.next_indicator.visible = true;
   		this.lute.visible = true;
   		//antiLute.visible = true;
-  		this.hint_button.visible = true;
+  		// this.hint_button.visible = true;
 
     } else {
 
@@ -1648,7 +1648,7 @@ class LevelHandler {
   		this.next_indicator.visible = false;
   		this.lute.visible = false;
   		//antiLute.visible = false;
-  		this.hint_button.visible = false;
+  		// this.hint_button.visible = false;
 
     }
 

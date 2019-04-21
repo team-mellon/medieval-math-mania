@@ -166,7 +166,7 @@ class FormHandler {
 
     } else {
 
-      document.getElementById("entryInput").value = 0;
+      // document.getElementById("entryInput").value = 0;
 
     }
 
