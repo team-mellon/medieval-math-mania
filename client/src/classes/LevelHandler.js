@@ -60,7 +60,7 @@ class LevelHandler {
     this.l_counter = 0;
     this.reload = false;
     this.reload_counter = 0;
-    this.projectile_speed = 57;
+    this.projectile_speed = 60;
     this.projectile_x_speed = 0;
 
     this.boss_fight = false;
@@ -113,6 +113,9 @@ class LevelHandler {
           this.multiple = Math.floor(Math.random() * 7) + 2;
           this.lower = (this.multiple * this.multiplicand) - Math.floor(this.multiplicand/2);
           this.upper = (this.multiple * this.multiplicand) + Math.floor(this.multiplicand/2);
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -123,6 +126,9 @@ class LevelHandler {
           this.multiple = Math.floor(Math.random() * 7) + 2;
           this.lower = (this.multiple * this.multiplicand) + 1;
           this.upper = (this.multiple * (this.multiplicand+1)) - 1;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -145,6 +151,9 @@ class LevelHandler {
           this.multiplicand = Math.floor(Math.random() * 90) + 10;
           this.lower = 0;
           this.upper = Math.floor(Math.random() * 7) + 2;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -159,6 +168,9 @@ class LevelHandler {
           this.storage = this.multiplicand * this.multiple * 10;
           this.lower = this.storage - 10;
           this.upper = this.storage + 10;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -171,6 +183,9 @@ class LevelHandler {
           this.multiple = 100 * this.multiplicand;
           this.lower = this.multiple - Math.floor(this.multiplicand/2);
           this.upper = this.multiple + Math.floor(this.multiplicand/2);
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -180,6 +195,9 @@ class LevelHandler {
           this.multiplicand = Math.floor(Math.random() * 90) + 10;
           this.lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
           this.upper = Math.floor(Math.random() * 7) + 2;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -195,6 +213,9 @@ class LevelHandler {
           if(this.upper % 1 == 0) {
             this.upper += 0.4;
           }
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -204,6 +225,9 @@ class LevelHandler {
           this.multiplicand = Math.floor((Math.random() * 900) + 100);
           this.lower = 0;
           this.upper = Math.floor(Math.random() * 7) + 2;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -214,6 +238,9 @@ class LevelHandler {
           this.multiplicand = Math.floor((Math.random() * 990) + 10) / 1000;
           this.lower = 1000 * this.multiplicand;
           this.upper = this.lower + 1;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -224,6 +251,9 @@ class LevelHandler {
           this.multiplicand = Math.floor(Math.random() * 90 * 10 + 10) / 10;
           this.lower = 1000 * this.multiplicand;
           this.upper = this.lower + 1;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -234,6 +264,9 @@ class LevelHandler {
           this.multiplicand = Math.floor(Math.random() * 10000000);
           this.lower = (Math.floor(this.multiplicand * 0.0001)) - (Math.floor(Math.random() * 50) + 10);
           this.upper = (Math.floor(this.multiplicand * 0.0001)) + (Math.floor(Math.random() * 50) + 10);
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -244,6 +277,9 @@ class LevelHandler {
           this.multiplicand = Math.floor(Math.random() * 100 + 100);
           this.lower = Math.floor(this.multiplicand / 2) - 4;
           this.upper = Math.floor(this.multiplicand / 2) + 4;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -255,6 +291,9 @@ class LevelHandler {
           this.multiplicand = Math.floor(Math.random() * 90 + 9) / 10;
           this.lower = Math.floor(Math.random() * 900 + 100);
           this.upper = this.lower + 1;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -265,6 +304,9 @@ class LevelHandler {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 7) + 2);
           this.lower = this.multiplicand * this.multiplicand;
           this.upper = this.lower + (Math.floor(Math.random() * 7) + 2);
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -275,6 +317,9 @@ class LevelHandler {
           this.multiplicand = Math.floor(Math.random() * 90 + 9);
           this.lower = -Math.abs(Math.floor(Math.random() * 84) + 15);
           this.upper = this.lower + 5;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -285,6 +330,9 @@ class LevelHandler {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90) + 10);
           this.lower = -Math.abs(Math.floor(Math.random() * 10) + 10);
           this.upper = -Math.abs(Math.floor(Math.random() * 10));
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -295,6 +343,9 @@ class LevelHandler {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
           this.lower = Math.floor(Math.random() * 10);
           this.upper = Math.floor(Math.random() * 10 + 10);
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -305,6 +356,9 @@ class LevelHandler {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
           this.lower = Math.floor((Math.random() * 90) + 9) / 100;
           this.upper = Math.floor((this.lower + 0.01)* 100)/100;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
@@ -315,6 +369,9 @@ class LevelHandler {
           this.multiplicand = Math.floor(Math.random() * 900) + 100;
           this.lower = -Math.abs((Math.floor(Math.random() * 10000) + 5000) /1000);
           this.upper = this.lower + 0.01;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       }
 
@@ -801,7 +858,7 @@ class LevelHandler {
     } else {
 
       // Parse entry
-      var entry = parseInt(document.getElementById("entryInput").value);
+      var entry = parseFloat(document.getElementById("entryInput").value);
       console.log("Entry type: " + typeof entry);
       console.log("Entry: " + entry);
 
@@ -818,22 +875,23 @@ class LevelHandler {
       } else {
         this.entry_is_correct = false;
       }
-      // for (var x in this.history_list) {
-        // console.log(this.history_list[x]);
-        // console.log(this.entry);
-        //Commented out for sake of sprint
-        /*if (entry == history_list[x]) {
-          valid = false;
-        }*/
-      // }
+       for (var x in this.history_list) {
+
+        //Check against history
+        if (entry == parseFloat(this.history_list[x])) {
+          this.valid = false;
+        }
+  }
       // Animate the catapult
+
       if (this.entry_is_correct && this.valid) {
 
         this.multiplier = document.getElementById("entryInput").value;
 
         // Add to history
+
         this.history_list.unshift(this.multiplier);
-        // console.log(this.history_list);
+         console.log(this.history_list);
         var dropdown = document.getElementById("myDropdown");
         var history_entry = document.createTextNode(this.multiplier);
         var line_break = document.createElement("br");
@@ -1392,7 +1450,7 @@ class LevelHandler {
       this.projectile.alpha = 0;
       this.projectile.x = stage.canvas.width / 2;
       this.projectile.y = stage.canvas.height - (96/2 + 57) * scene_scale_Y;
-      this.projectile_speed = 57;
+      this.projectile_speed = 60;
       if (this.catapult.currentFrame == 11){
         this.reload = false;
       }
@@ -1516,6 +1574,11 @@ class LevelHandler {
     this.hide_archer2 = false;
     this.hide_archer3 = false;
     this.hide_archer4 = false;
+    this.tower_down[0] = false;
+    this.tower_down[1] = false;
+    this.tower_down[2] = false;
+    this.tower_down[3] = false;
+    this.tower_down[4] = false;
     this.hit_counter = 0;
     this.miss_upper_counter = 0;
     this.miss_lower_counter = 0;
