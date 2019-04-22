@@ -21,12 +21,10 @@ class LevelHandler {
     this.preload.on("progress", this.loading.bind(this));
 
     //Setting properties for delays for sounds
-    this.delayRe = new createjs.PlayPropsConfig().set({delay : 250});
-    this.delayIn = new createjs.PlayPropsConfig().set({delay : 500});
-    this.delayOut = new createjs.PlayPropsConfig().set({delay : 750});
+    this.delayRe = new createjs.PlayPropsConfig().set({delay : 250});	//reload delay
+    this.delayIn = new createjs.PlayPropsConfig().set({delay : 550});	//inner crumble delay
+    this.delayOut = new createjs.PlayPropsConfig().set({delay : 800});	//outer crumble delay
     this.delayWin = new createjs.PlayPropsConfig().set({delay : 2000});
-
-
 
     this.current_level = 1;
 
@@ -112,7 +110,7 @@ class LevelHandler {
           this.multiplicand = Math.floor(Math.random() * 7) + 2;
           this.multiple = Math.floor(Math.random() * 7) + 2;
           this.lower = (this.multiple * this.multiplicand) - Math.floor(this.multiplicand/2);
-          this.upper = (this.multiple * this.multiplicand) + Math.floor(this.multiplicand/2);
+          this.upper = (this.multiple * this.multiplicand) + Math.ceil(this.multiplicand/2);
           if(this.lower == this.upper) {
             this.upper++;
           }
@@ -150,7 +148,7 @@ class LevelHandler {
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 90) + 10;
           this.lower = 0;
-          this.upper = Math.floor(Math.random() * 7) + 2;
+          this.upper = Math.ceil(Math.random() * 7) + 2;
           if(this.lower == this.upper) {
             this.upper++;
           }
@@ -182,7 +180,7 @@ class LevelHandler {
           this.multiplicand = Math.floor(Math.random() * 7) + 2;
           this.multiple = 100 * this.multiplicand;
           this.lower = this.multiple - Math.floor(this.multiplicand/2);
-          this.upper = this.multiple + Math.floor(this.multiplicand/2);
+          this.upper = this.multiple + Math.ceil(this.multiplicand/2);
           if(this.lower == this.upper) {
             this.upper++;
           }
@@ -263,7 +261,7 @@ class LevelHandler {
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 10000000);
           this.lower = (Math.floor(this.multiplicand * 0.0001)) - (Math.floor(Math.random() * 50) + 10);
-          this.upper = (Math.floor(this.multiplicand * 0.0001)) + (Math.floor(Math.random() * 50) + 10);
+          this.upper = (Math.ceil(this.multiplicand * 0.0001)) + (Math.floor(Math.random() * 50) + 10);
           if(this.lower == this.upper) {
             this.upper++;
           }
@@ -276,7 +274,7 @@ class LevelHandler {
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 100 + 100);
           this.lower = Math.floor(this.multiplicand / 2) - 4;
-          this.upper = Math.floor(this.multiplicand / 2) + 4;
+          this.upper = Math.ceil(this.multiplicand / 2) + 4;
           if(this.lower == this.upper) {
             this.upper++;
           }
@@ -303,7 +301,7 @@ class LevelHandler {
         math: function ()  {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 7) + 2);
           this.lower = this.multiplicand * this.multiplicand;
-          this.upper = this.lower + (Math.floor(Math.random() * 7) + 2);
+          this.upper = this.lower + (Math.ceil(Math.random() * 7) + 2);
           if(this.lower == this.upper) {
             this.upper++;
           }
@@ -329,7 +327,7 @@ class LevelHandler {
         math: function () {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90) + 10);
           this.lower = -Math.abs(Math.floor(Math.random() * 10) + 10);
-          this.upper = -Math.abs(Math.floor(Math.random() * 10));
+          this.upper = -Math.abs(Math.ceil(Math.random() * 10));
           if(this.lower == this.upper) {
             this.upper++;
           }
@@ -342,7 +340,7 @@ class LevelHandler {
         math: function () {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
           this.lower = Math.floor(Math.random() * 10);
-          this.upper = Math.floor(Math.random() * 10 + 10);
+          this.upper = Math.ceil(Math.random() * 10 + 10);
           if(this.lower == this.upper) {
             this.upper++;
           }
@@ -355,7 +353,7 @@ class LevelHandler {
         math: function () {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
           this.lower = Math.floor((Math.random() * 90) + 9) / 100;
-          this.upper = Math.floor((this.lower + 0.01)* 100)/100;
+          this.upper = Math.ceil((this.lower + 0.01)* 100)/100;
           if(this.lower == this.upper) {
             this.upper++;
           }

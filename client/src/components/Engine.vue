@@ -791,7 +791,7 @@ export default {
       if (this.current_scene != 8 && this.current_scene != 2 && this.current_scene != 3 && this.current_scene != 10) {
         this.foreground = AssetHandler.createTextContainer(sceneData[this.current_scene].fg_img, sceneData[this.current_scene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", sceneData[this.current_scene].fg_img.frames.width, sceneData[this.current_scene].fg_img.frames.height, "center", 0, "center", 0, "image", 0, this.ecs, this.stage);
       } else if (this.current_scene == 10) {
-        this.foreground = AssetHandler.createImage("res/title-text.png", 1635, 480, "center", 0, "top", 144 + 480 / 2, "image", this.ecs, this.stage);
+        this.foreground = AssetHandler.createImage("res/title-text.png", 1635, 480, "center", 0, "top", 48 + 480 / 2, "image", this.ecs, this.stage);
       }
 
       if (this.current_scene == 2) {
