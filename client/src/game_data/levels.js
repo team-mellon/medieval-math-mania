@@ -3,7 +3,7 @@ export const levelData = [
   { // Tutorial
     number: 0,
     color: "#c9e6ff",
-    hint: "This ones easy!"
+    hint: "This ones easy, if you can't think of another number to get in the range think of what comes after the one you got but before the next intger, think in terms of money, $0.50 for example"
   },
 
   { // City
@@ -93,37 +93,37 @@ export const levelData = [
   { // Fungi
     number: 15,
     color: "#3b0a30",
-    hint: "Try a negative number"
+    hint: "Try a negative number, there should be at least one integer that will get you within the range"
   },
 
   { // Tundra
     number: 16,
     color: "#ccf1ff",
-    hint: "Try a negative number"
+    hint: "Try a negative number, if you havent been"
   },
 
   { // Tarpit
     number: 17,
     color: "#5d5661",
-    hint: "Try a negative number"
+    hint: "The goal is slight reduction of a negative number, which will be the same as a positive number in terms of multiplication."
   },
 
   { // Desert
     number: 18,
     color: "#7ed0ff",
-    hint: "Try a negative number"
+    hint: "Think what do you multiply with a negative to get a positive?"
   },
 
   { // Boreal
     number: 19,
     color: "#556968", // "#010027",
-    hint: "Try a negative number"
+    hint: "Think what do you multiply with a negative to get a positive? It will need to be very small to get inside the range"
   },
 
   { // Monolith
     number: 20,
     color: "#56727d",
-    hint: "Try a negative number"
+    hint: "Try a negative number, you will need a very small negative decimal to get this one, the target is very small so think in hundreths and lower"
   }
 
 ];

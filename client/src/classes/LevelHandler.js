@@ -97,7 +97,7 @@ class LevelHandler {
 
     this.level_math = [
 
-      { // Tutorial
+      { // Tutorial 0
         // Exactly one multiple of multiplicand in range, single digit multiplicand
         math: function () {
           this.multiplicand = 1;
@@ -106,17 +106,17 @@ class LevelHandler {
         }.bind(this)
       },
 
-      { // City
+      { // City 1
         // Exactly one multiple of multiplicand in range, single digit multiplicand
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 7) + 2;
           this.multiple = Math.floor(Math.random() * 7) + 2;
           this.lower = (this.multiple * this.multiplicand) - Math.floor(this.multiplicand/2);
-          this.upper = (this.multiple * this.multiplicand) + Math.floor(this.multiplicand/2);
+          this.upper = (this.multiple * this.multiplicand) + Math.ceil(this.multiplicand/2);
         }.bind(this)
       },
 
-      { // Grasslands
+      { // Grasslands 2
         // No multiples of multiplicand in range, single digit multiplicand
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 7) + 2;
@@ -126,7 +126,7 @@ class LevelHandler {
         }.bind(this)
       },
 
-      { // Volcano
+      { // Volcano 3
         // Starting number is a two-digit number, target range includes the value which is one tenth of the number, and is bounded by positive single-digit integers.
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 90)+ 10;
@@ -139,16 +139,16 @@ class LevelHandler {
         }.bind(this)
       },
 
-      { // Sea
+      { // Sea 4
         // Starting number is a two-digit number, target range goes from 0 to a single-digit positive integer.
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 90) + 10;
           this.lower = 0;
-          this.upper = Math.floor(Math.random() * 7) + 2;
+          this.upper = Math.ceil(Math.random() * 7) + 2;
         }.bind(this)
       },
 
-      { // Mountains
+      { // Mountains 5
         /*Starting number is a single-digit number. For target range, choose another single-digit number,
         multiply it by 10 times the starting number, and make sure that the target range contains that number.
         The lower boundary is an integer at least 10 below the product and the upper boundary is an integer
@@ -162,7 +162,7 @@ class LevelHandler {
         }.bind(this)
       },
 
-      { // Summit
+      { // Summit 6
         /*Starting number is a single-digit number n, target range contains 100n,
         and the range makes it so there is only one integer answer
         (i.e. the lower bound is above 100n − n and the upper bound is below 100n + n.*/
@@ -170,11 +170,11 @@ class LevelHandler {
           this.multiplicand = Math.floor(Math.random() * 7) + 2;
           this.multiple = 100 * this.multiplicand;
           this.lower = this.multiple - Math.floor(this.multiplicand/2);
-          this.upper = this.multiple + Math.floor(this.multiplicand/2);
+          this.upper = this.multiple + Math.ceil(this.multiplicand/2);
         }.bind(this)
       },
 
-      { // Cave
+      { // Cave 7
         //Starting number is a two-digit number, target range contains 0 (flanked by single-digit integers)
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 90) + 10;
@@ -183,7 +183,7 @@ class LevelHandler {
         }.bind(this)
       },
 
-      { // Forest
+      { // Forest 8
         //Starting number is a two-digit number, target range numbers are both 3-digit, with no integer
         math: function () {
           this.multiplicand = Math.round((Math.random() * 90)) + 10;
@@ -198,7 +198,7 @@ class LevelHandler {
         }.bind(this)
       },
 
-      { // Alpine
+      { // Alpine 9
         //Starting number is a three-digit number, target range goes from 0 to a single-digit positive integer.
         math: function () {
           this.multiplicand = Math.floor((Math.random() * 900) + 100);
@@ -207,7 +207,7 @@ class LevelHandler {
         }.bind(this)
       },
 
-      { // Woods
+      { // Woods 10
         /*Starting number is a number between 0 and .1 with three decimal places. Lower bound of target
         range is 1000 times the starting number, and upper bound is one more than the lower bound. */
         math: function () {
@@ -217,7 +217,7 @@ class LevelHandler {
         }.bind(this)
       },
 
-      { // Swamp
+      { // Swamp 11
         /*Starting number is a number between 10 and 100 with one decimal place. Lower bound of target
         range is 1000 times the starting number, and upper bound is one more than the lower bound.*/
         math: function () {
@@ -227,27 +227,27 @@ class LevelHandler {
         }.bind(this)
       },
 
-      { // Deadlands
+      { // Deadlands 12
         /*Starting number is a whole number greater than 1,000,000. Target range contains the number which is .0001 times the size of the starting number.
         The lower bound may be up to 50 less than this value and the upper bound may be up to 50 greater than this value.*/
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 10000000);
           this.lower = (Math.floor(this.multiplicand * 0.0001)) - (Math.floor(Math.random() * 50) + 10);
-          this.upper = (Math.floor(this.multiplicand * 0.0001)) + (Math.floor(Math.random() * 50) + 10);
+          this.upper = (Math.ceil(this.multiplicand * 0.0001)) + (Math.ceil(Math.random() * 50) + 10);
         }.bind(this)
       },
 
-      { // Sky
+      { // Sky 13
         /*Starting number is an integer less than 200. Target range contains the number which is half the value
         with an overall range less than 10. */
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 100 + 100);
           this.lower = Math.floor(this.multiplicand / 2) - 4;
-          this.upper = Math.floor(this.multiplicand / 2) + 4;
+          this.upper = Math.ceil(this.multiplicand / 2) + 4;
         }.bind(this)
       },
 
-      { // Underwater
+      { // Underwater 14
         /*Starting number is a number less than 10 with one decimal place.
         Target range has three-digit bounding numbers, does not contain an
         integer multiple of the starting number, and the range of the interval is 1.*/
@@ -258,17 +258,17 @@ class LevelHandler {
         }.bind(this)
       },
 
-      { // Fungi
+      { // Fungi 15
         /*Starting number is a negative single-digit integer. Target range contains only positive values, one of
         which is a multiple of the starting number.*/
         math: function ()  {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 7) + 2);
           this.lower = this.multiplicand * this.multiplicand;
-          this.upper = this.lower + (Math.floor(Math.random() * 7) + 2);
+          this.upper = this.lower + (Math.ceil(Math.random() * 7) + 2);
         }.bind(this)
       },
 
-      { // Tundra
+      { // Tundra 16
         /*Starting number is a positive two-digit integer. Target range is bounded by two-digit negative integers
         5 away from each other.*/
         math: function () {
@@ -278,37 +278,37 @@ class LevelHandler {
         }.bind(this)
       },
 
-      { // Tarpit
+      { // Tarpit 17
         /*Starting number is a number between -100 and -10 with one decimal place. Target range bounds are
         any two integers between -20 and 0.*/
         math: function () {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90) + 10);
           this.lower = -Math.abs(Math.floor(Math.random() * 10) + 10);
-          this.upper = -Math.abs(Math.floor(Math.random() * 10));
+          this.upper = -Math.abs(Math.ceil(Math.random() * 10));
         }.bind(this)
       },
 
-      { // Desert
+      { // Desert 18
         /*Starting number is a number between -100 and -10 with one decimal place. Target range bounds are
         any two integers between 0 and 20. */
         math: function () {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
           this.lower = Math.floor(Math.random() * 10);
-          this.upper = Math.floor(Math.random() * 10 + 10);
+          this.upper = Math.ceil(Math.random() * 10 + 10);
         }.bind(this)
       },
 
-      { // Boreal
+      { // Boreal 19
         /*Starting number is an integer between -100 and -10 with one decimal place. Target range bounds are
         positive numbers between 0 and 1 with two decimal places that are one hundredth apart. */
         math: function () {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
           this.lower = Math.floor((Math.random() * 90) + 9) / 100;
-          this.upper = Math.floor((this.lower + 0.01)* 100)/100;
+          this.upper = Math.ceil((this.lower + 0.01)* 100)/100;
         }.bind(this)
       },
 
-      { // Monolith
+      { // Monolith 20
         /*Starting number is any positive three digit integer. Target range is bounded by two numbers between
         -10 and -5, with three decimal places, and within one hundredth of each other. */
         math: function () {
