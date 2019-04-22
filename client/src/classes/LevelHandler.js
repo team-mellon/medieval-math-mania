@@ -21,9 +21,9 @@ class LevelHandler {
     this.preload.on("progress", this.loading.bind(this));
 
     //Setting properties for delays for sounds
-    this.delayRe = new createjs.PlayPropsConfig().set({delay : 250});	//reload delay
-    this.delayIn = new createjs.PlayPropsConfig().set({delay : 550});	//inner crumble delay
-    this.delayOut = new createjs.PlayPropsConfig().set({delay : 800});	//outer crumble delay
+    this.delayRe = new createjs.PlayPropsConfig().set({delay : 250});
+    this.delayIn = new createjs.PlayPropsConfig().set({delay : 500});
+    this.delayOut = new createjs.PlayPropsConfig().set({delay : 750});
     this.delayWin = new createjs.PlayPropsConfig().set({delay : 2000});
 
 
@@ -60,7 +60,7 @@ class LevelHandler {
     this.l_counter = 0;
     this.reload = false;
     this.reload_counter = 0;
-    this.projectile_speed = 57;
+    this.projectile_speed = 60;
     this.projectile_x_speed = 0;
 
     this.boss_fight = false;
@@ -97,7 +97,7 @@ class LevelHandler {
 
     this.level_math = [
 
-      { // Tutorial 0
+      { // Tutorial
         // Exactly one multiple of multiplicand in range, single digit multiplicand
         math: function () {
           this.multiplicand = 1;
@@ -106,27 +106,33 @@ class LevelHandler {
         }.bind(this)
       },
 
-      { // City 1
+      { // City
         // Exactly one multiple of multiplicand in range, single digit multiplicand
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 7) + 2;
           this.multiple = Math.floor(Math.random() * 7) + 2;
           this.lower = (this.multiple * this.multiplicand) - Math.floor(this.multiplicand/2);
-          this.upper = (this.multiple * this.multiplicand) + Math.ceil(this.multiplicand/2);
+          this.upper = (this.multiple * this.multiplicand) + Math.floor(this.multiplicand/2);
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Grasslands 2
+      { // Grasslands
         // No multiples of multiplicand in range, single digit multiplicand
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 7) + 2;
           this.multiple = Math.floor(Math.random() * 7) + 2;
           this.lower = (this.multiple * this.multiplicand) + 1;
           this.upper = (this.multiple * (this.multiplicand+1)) - 1;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Volcano 3
+      { // Volcano
         // Starting number is a two-digit number, target range includes the value which is one tenth of the number, and is bounded by positive single-digit integers.
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 90)+ 10;
@@ -139,16 +145,19 @@ class LevelHandler {
         }.bind(this)
       },
 
-      { // Sea 4
+      { // Sea
         // Starting number is a two-digit number, target range goes from 0 to a single-digit positive integer.
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 90) + 10;
           this.lower = 0;
-          this.upper = Math.ceil(Math.random() * 7) + 2;
+          this.upper = Math.floor(Math.random() * 7) + 2;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Mountains 5
+      { // Mountains
         /*Starting number is a single-digit number. For target range, choose another single-digit number,
         multiply it by 10 times the starting number, and make sure that the target range contains that number.
         The lower boundary is an integer at least 10 below the product and the upper boundary is an integer
@@ -159,10 +168,13 @@ class LevelHandler {
           this.storage = this.multiplicand * this.multiple * 10;
           this.lower = this.storage - 10;
           this.upper = this.storage + 10;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Summit 6
+      { // Summit
         /*Starting number is a single-digit number n, target range contains 100n,
         and the range makes it so there is only one integer answer
         (i.e. the lower bound is above 100n − n and the upper bound is below 100n + n.*/
@@ -170,20 +182,26 @@ class LevelHandler {
           this.multiplicand = Math.floor(Math.random() * 7) + 2;
           this.multiple = 100 * this.multiplicand;
           this.lower = this.multiple - Math.floor(this.multiplicand/2);
-          this.upper = this.multiple + Math.ceil(this.multiplicand/2);
+          this.upper = this.multiple + Math.floor(this.multiplicand/2);
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Cave 7
+      { // Cave
         //Starting number is a two-digit number, target range contains 0 (flanked by single-digit integers)
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 90) + 10;
           this.lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
           this.upper = Math.floor(Math.random() * 7) + 2;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Forest 8
+      { // Forest
         //Starting number is a two-digit number, target range numbers are both 3-digit, with no integer
         math: function () {
           this.multiplicand = Math.round((Math.random() * 90)) + 10;
@@ -195,59 +213,77 @@ class LevelHandler {
           if(this.upper % 1 == 0) {
             this.upper += 0.4;
           }
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Alpine 9
+      { // Alpine
         //Starting number is a three-digit number, target range goes from 0 to a single-digit positive integer.
         math: function () {
           this.multiplicand = Math.floor((Math.random() * 900) + 100);
           this.lower = 0;
           this.upper = Math.floor(Math.random() * 7) + 2;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Woods 10
+      { // Woods
         /*Starting number is a number between 0 and .1 with three decimal places. Lower bound of target
         range is 1000 times the starting number, and upper bound is one more than the lower bound. */
         math: function () {
           this.multiplicand = Math.floor((Math.random() * 990) + 10) / 1000;
           this.lower = 1000 * this.multiplicand;
           this.upper = this.lower + 1;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Swamp 11
+      { // Swamp
         /*Starting number is a number between 10 and 100 with one decimal place. Lower bound of target
         range is 1000 times the starting number, and upper bound is one more than the lower bound.*/
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 90 * 10 + 10) / 10;
           this.lower = 1000 * this.multiplicand;
           this.upper = this.lower + 1;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Deadlands 12
+      { // Deadlands
         /*Starting number is a whole number greater than 1,000,000. Target range contains the number which is .0001 times the size of the starting number.
         The lower bound may be up to 50 less than this value and the upper bound may be up to 50 greater than this value.*/
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 10000000);
           this.lower = (Math.floor(this.multiplicand * 0.0001)) - (Math.floor(Math.random() * 50) + 10);
-          this.upper = (Math.ceil(this.multiplicand * 0.0001)) + (Math.ceil(Math.random() * 50) + 10);
+          this.upper = (Math.floor(this.multiplicand * 0.0001)) + (Math.floor(Math.random() * 50) + 10);
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Sky 13
+      { // Sky
         /*Starting number is an integer less than 200. Target range contains the number which is half the value
         with an overall range less than 10. */
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 100 + 100);
           this.lower = Math.floor(this.multiplicand / 2) - 4;
-          this.upper = Math.ceil(this.multiplicand / 2) + 4;
+          this.upper = Math.floor(this.multiplicand / 2) + 4;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Underwater 14
+      { // Underwater
         /*Starting number is a number less than 10 with one decimal place.
         Target range has three-digit bounding numbers, does not contain an
         integer multiple of the starting number, and the range of the interval is 1.*/
@@ -255,66 +291,87 @@ class LevelHandler {
           this.multiplicand = Math.floor(Math.random() * 90 + 9) / 10;
           this.lower = Math.floor(Math.random() * 900 + 100);
           this.upper = this.lower + 1;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Fungi 15
+      { // Fungi
         /*Starting number is a negative single-digit integer. Target range contains only positive values, one of
         which is a multiple of the starting number.*/
         math: function ()  {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 7) + 2);
           this.lower = this.multiplicand * this.multiplicand;
-          this.upper = this.lower + (Math.ceil(Math.random() * 7) + 2);
+          this.upper = this.lower + (Math.floor(Math.random() * 7) + 2);
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Tundra 16
+      { // Tundra
         /*Starting number is a positive two-digit integer. Target range is bounded by two-digit negative integers
         5 away from each other.*/
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 90 + 9);
           this.lower = -Math.abs(Math.floor(Math.random() * 84) + 15);
           this.upper = this.lower + 5;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Tarpit 17
+      { // Tarpit
         /*Starting number is a number between -100 and -10 with one decimal place. Target range bounds are
         any two integers between -20 and 0.*/
         math: function () {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90) + 10);
           this.lower = -Math.abs(Math.floor(Math.random() * 10) + 10);
-          this.upper = -Math.abs(Math.ceil(Math.random() * 10));
+          this.upper = -Math.abs(Math.floor(Math.random() * 10));
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Desert 18
+      { // Desert
         /*Starting number is a number between -100 and -10 with one decimal place. Target range bounds are
         any two integers between 0 and 20. */
         math: function () {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
           this.lower = Math.floor(Math.random() * 10);
-          this.upper = Math.ceil(Math.random() * 10 + 10);
+          this.upper = Math.floor(Math.random() * 10 + 10);
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Boreal 19
+      { // Boreal
         /*Starting number is an integer between -100 and -10 with one decimal place. Target range bounds are
         positive numbers between 0 and 1 with two decimal places that are one hundredth apart. */
         math: function () {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
           this.lower = Math.floor((Math.random() * 90) + 9) / 100;
-          this.upper = Math.ceil((this.lower + 0.01)* 100)/100;
+          this.upper = Math.floor((this.lower + 0.01)* 100)/100;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       },
 
-      { // Monolith 20
+      { // Monolith
         /*Starting number is any positive three digit integer. Target range is bounded by two numbers between
         -10 and -5, with three decimal places, and within one hundredth of each other. */
         math: function () {
           this.multiplicand = Math.floor(Math.random() * 900) + 100;
           this.lower = -Math.abs((Math.floor(Math.random() * 10000) + 5000) /1000);
           this.upper = this.lower + 0.01;
+          if(this.lower == this.upper) {
+            this.upper++;
+          }
         }.bind(this)
       }
 
@@ -801,7 +858,7 @@ class LevelHandler {
     } else {
 
       // Parse entry
-      var entry = parseInt(document.getElementById("entryInput").value);
+      var entry = parseFloat(document.getElementById("entryInput").value);
       console.log("Entry type: " + typeof entry);
       console.log("Entry: " + entry);
 
@@ -818,22 +875,23 @@ class LevelHandler {
       } else {
         this.entry_is_correct = false;
       }
-      // for (var x in this.history_list) {
-        // console.log(this.history_list[x]);
-        // console.log(this.entry);
-        //Commented out for sake of sprint
-        /*if (entry == history_list[x]) {
-          valid = false;
-        }*/
-      // }
+       for (var x in this.history_list) {
+
+        //Check against history
+        if (entry == parseFloat(this.history_list[x])) {
+          this.valid = false;
+        }
+  }
       // Animate the catapult
+
       if (this.entry_is_correct && this.valid) {
 
         this.multiplier = document.getElementById("entryInput").value;
 
         // Add to history
+
         this.history_list.unshift(this.multiplier);
-        // console.log(this.history_list);
+         console.log(this.history_list);
         var dropdown = document.getElementById("myDropdown");
         var history_entry = document.createTextNode(this.multiplier);
         var line_break = document.createElement("br");
@@ -1392,7 +1450,7 @@ class LevelHandler {
       this.projectile.alpha = 0;
       this.projectile.x = stage.canvas.width / 2;
       this.projectile.y = stage.canvas.height - (96/2 + 57) * scene_scale_Y;
-      this.projectile_speed = 57;
+      this.projectile_speed = 60;
       if (this.catapult.currentFrame == 11){
         this.reload = false;
       }
@@ -1516,6 +1574,11 @@ class LevelHandler {
     this.hide_archer2 = false;
     this.hide_archer3 = false;
     this.hide_archer4 = false;
+    this.tower_down[0] = false;
+    this.tower_down[1] = false;
+    this.tower_down[2] = false;
+    this.tower_down[3] = false;
+    this.tower_down[4] = false;
     this.hit_counter = 0;
     this.miss_upper_counter = 0;
     this.miss_lower_counter = 0;
