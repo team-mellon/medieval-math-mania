@@ -21,9 +21,9 @@ class LevelHandler {
     this.preload.on("progress", this.loading.bind(this));
 
     //Setting properties for delays for sounds
-    this.delayRe = new createjs.PlayPropsConfig().set({delay : 250});
-    this.delayIn = new createjs.PlayPropsConfig().set({delay : 500});
-    this.delayOut = new createjs.PlayPropsConfig().set({delay : 750});
+    this.delayRe = new createjs.PlayPropsConfig().set({delay : 250});	//reload delay
+    this.delayIn = new createjs.PlayPropsConfig().set({delay : 550});	//inner crumble delay
+    this.delayOut = new createjs.PlayPropsConfig().set({delay : 800});	//outer crumble delay
     this.delayWin = new createjs.PlayPropsConfig().set({delay : 2000});
 
 
