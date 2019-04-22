@@ -219,7 +219,7 @@ class GUIHandler {
     			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); }.bind(this), entity_component_system, stage);
 			    let text = "Hits: " + user.hits + "\n\nHighs: " + user.highs + "\n\nLows: " + user.lows + "\n\nTotal Misses: " + (user.highs + user.lows) + "\n\nBadges: " + temp + "\n\n";
 
-			    this.statsContainer = AssetHandler.createStatsContainer(user.badges, "res/empty-badge.png", text, "Oldstyle", "32px", "normal", "black", 240, 240, "center", 0, "center", 0, "image", entity_component_system, stage);
+			    this.statsContainer = AssetHandler.createStatsContainer(user.badges, "res/badges/empty-badge.png", text, "Oldstyle", "32px", "normal", "black", 240, 240, "center", 0, "center", 0, "image", entity_component_system, stage);
 
     			break;
 
