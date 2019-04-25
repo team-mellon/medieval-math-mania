@@ -1,4 +1,5 @@
-dbPassword = 'mongodb+srv://belloq:'+ encodeURIComponent('1234') + '@medival-math-mania-dodmo.mongodb.net/test?retryWrites=true';
+var DATABASE_URL = process.env.DATABASE_URL || 'http://localhost'
+dbPassword = `mongodb://${DATABASE_URL}/test?retryWrites=true`;
 
 module.exports = {
     mongoURI: dbPassword

@@ -127,3 +127,133 @@ export const levelData = [
   }
 
 ];
+
+export const levels = [
+
+  { // Tutorial
+    open: function () {
+      this.indicatorFunction(0);
+    }.bind(this)
+  },
+
+  { // City
+    open: function () {
+      this.indicatorFunction(1);
+    }.bind(this)
+  },
+
+  { // Grasslands
+    open: function () {
+      this.indicatorFunction(2);
+    }.bind(this)
+  },
+
+  { // Volcano
+    open: function () {
+      this.indicatorFunction(3);
+    }.bind(this)
+  },
+
+  { // Sea
+    open: function () {
+      this.indicatorFunction(4);
+    }.bind(this)
+  },
+
+  { // Mountains
+    open: function () {
+      this.indicatorFunction(5);
+    }.bind(this)
+  },
+
+  { // Summit
+    open: function () {
+      this.indicatorFunction(6);
+    }.bind(this)
+  },
+
+  { // Cave
+    open: function () {
+      this.indicatorFunction(7);
+    }.bind(this)
+  },
+
+  { // Forest
+    open: function () {
+      this.indicatorFunction(8);
+    }.bind(this)
+  },
+
+  { // Alpine
+    open: function () {
+      this.indicatorFunction(9);
+    }.bind(this)
+  },
+
+  { // Woods
+    open: function () {
+      this.indicatorFunction(10);
+    }.bind(this)
+  },
+
+  { // Swamp
+    open: function () {
+      this.indicatorFunction(11);
+    }.bind(this)
+  },
+
+  { // Deadlands
+    open: function () {
+      this.indicatorFunction(12);
+    }.bind(this)
+  },
+
+  { // Sky
+    open: function () {
+      this.indicatorFunction(13);
+    }.bind(this)
+  },
+
+  { // Underwater
+    open: function () {
+      this.indicatorFunction(14);
+    }.bind(this)
+  },
+
+  { // Fungi
+    open: function () {
+      this.indicatorFunction(15);
+    }.bind(this)
+  },
+
+  { // Tundra
+    open: function () {
+      this.indicatorFunction(16);
+    }.bind(this)
+  },
+
+  { // Tarpit
+    open: function () {
+      this.indicatorFunction(17);
+    }.bind(this)
+  },
+
+  { // Desert
+    open: function () {
+      this.indicatorFunction(18);
+    }.bind(this)
+  },
+
+  { // Boreal
+    open: function () {
+      this.indicatorFunction(19);
+    }.bind(this)
+  },
+
+  { // Monolith
+    open: function () {
+      this.indicatorFunction(20);
+    }.bind(this)
+  }
+
+];

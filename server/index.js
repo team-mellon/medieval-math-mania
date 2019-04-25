@@ -65,14 +65,16 @@ app.use('/api/stats', stats);
 app.use('/api/login', login);
 
 // Handle production
-if (process.env.NODE_ENV === 'production') {
+// if (process.env.NODE_ENV === 'production') {
   // Static folder
+console.log(__dirname);
+
   app.use(express.static(__dirname + '/public/'));
 
   // Handle SPA
   app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
-}
+// }
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8081;
 
 app.listen(port, () => console.log(`Server started on port ${port}`));

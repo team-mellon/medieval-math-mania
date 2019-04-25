@@ -255,9 +255,6 @@ class GUIHandler {
   				framerate: 3
   			};
 
-  			this.midground = AssetHandler.createImage("res/map.png", constants.backgroundX, constants.backgroundY, "center", 0, "center", 0, "image", entity_component_system, stage);
-  			this.foreground = AssetHandler.createButton("res/map-banner.png", "Select a level", constants.backgroundX, 108, "center", 0, "top", 0 + (108/2), "image", function() {}.bind(this), entity_component_system, stage);
-
   			var reef = AssetHandler.createSprite(reefS, 120, 108, "center", -480 + 120 / 2, "center", 96 + 108 / 2, "image", entity_component_system, stage);
   			reef.gotoAndPlay(0);
 

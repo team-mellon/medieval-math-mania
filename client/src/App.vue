@@ -52,65 +52,6 @@ html, body {
   display: inline;
 }
 
-/* #renderCanvas {
-  width   : 100%;
-  height  : 100%;
-  touch-action: none;
-} */
-
-.ldscreen {
-  position: absolute;
-  transform: translate(0%, -100%);
-  background-color: #919191;
-  height: 100%;
-  width: 100%;
-	z-index: 3;
-}
-
-#loadingText {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: "Blackadder";
-  font-size: 15vh;
-  z-index: 2;
-  color: Gold;
-}
-
-#percentText {
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: "Oldstyle";
-  font-size: 10vh;
-  z-index: 2;
-  color: Gold;
-}
-
-.bgbar {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: LightGray;
-  height: 50px;
-  width: 90%;
-	z-index: 2;
-}
-
-.pgbar {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: Gold;
-  height: 100%;
-  width: 100%;
-	z-index: 2;
-}
-
 .scrollMenu {
   position: absolute;
   top: 50%;

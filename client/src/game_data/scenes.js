@@ -2,9 +2,9 @@ export const sceneData = [
 
   { // Login
     color: "#919191",
-    bg_img: "res/login.png",
+    bg_img: "login",
     fg_img: {
-              images: ["res/login_scroll.png"],
+              images: ["login-scroll"],
               frames: {width:750, height:600, count:6, regX: 0, regY:0, spacing:0, margin:0},
               framerate: 6
             },
@@ -13,9 +13,9 @@ export const sceneData = [
 
   { // Signup
     color: "#919191",
-    bg_img: "res/login.png",
+    bg_img: "login",
     fg_img: {
-              images: ["res/login_scroll.png"],
+              images: ["login-scroll"],
               frames: {width:750, height:600, count:6, regX: 0, regY:0, spacing:0, margin:0},
               framerate: 6
             },
@@ -46,9 +46,9 @@ export const sceneData = [
 
   { // Stats
     color: "#919191",
-    bg_img: "res/login.png",
+    bg_img: "login",
     fg_img: {
-              images: ["res/login_scroll.png"],
+              images: ["login-scroll"],
               frames: {width:750, height:600, count:6, regX: 0, regY:0, spacing:0, margin:0},
               framerate: 6
             },
@@ -57,9 +57,9 @@ export const sceneData = [
 
   { // How To Play
     color: "#919191",
-    bg_img: "res/login.png",
+    bg_img: "login",
     fg_img: {
-              images: ["res/login_scroll.png"],
+              images: ["login-scroll"],
               frames: {width:750, height:600, count:6, regX: 0, regY:0, spacing:0, margin:0},
               framerate: 6
             },
@@ -68,9 +68,9 @@ export const sceneData = [
 
   { // Settings
     color: "#919191",
-    bg_img: "res/login.png",
+    bg_img: "login",
     fg_img: {
-              images: ["res/login_scroll.png"],
+              images: ["login-scroll"],
               frames: {width:750, height:600, count:6, regX: 0, regY:0, spacing:0, margin:0},
               framerate: 6
             },
@@ -79,9 +79,9 @@ export const sceneData = [
 
   { // Account
     color: "#919191",
-    bg_img: "res/login.png",
+    bg_img: "login",
     fg_img: {
-              images: ["res/login_scroll.png"],
+              images: ["login-scroll"],
               frames: {width:750, height:600, count:6, regX: 0, regY:0, spacing:0, margin:0},
               framerate: 6
             },
@@ -90,9 +90,9 @@ export const sceneData = [
 
   { // Map
     color: "#919191",
-    bg_img: "res/login.png",
+    bg_img: "login",
     fg_img: {
-              images: ["res/map.png"],
+              images: ["map"],
               frames: {width:750, height:600, count:6, regX: 0, regY:0, spacing:0, margin:0},
               framerate: 6
             },
@@ -101,9 +101,9 @@ export const sceneData = [
 
   { // Hint
     color: "#919191",
-    bg_img: "res/login.png",
+    bg_img: "login",
     fg_img: {
-              images: ["res/login_scroll.png"],
+              images: ["login-scroll"],
               frames: {width:750, height:600, count:6, regX: 0, regY:0, spacing:0, margin:0},
               framerate: 6
             },
@@ -112,9 +112,9 @@ export const sceneData = [
 
   { // Start
     color: "#919191",
-    bg_img: "res/login.png",
+    bg_img: "login",
     fg_img: {
-              images: ["res/title-text.png"],
+              images: ["title-text"],
               frames: {width:1635, height:480, count:1, regX: 0, regY:0, spacing:0, margin:0},
               framerate: 6
             },
@@ -122,6 +122,54 @@ export const sceneData = [
   }
 
 ];
+
+export const sceneManifest = [
+
+  { src:"res/login.png", id:"login" },
+  { src:"res/title-text.png", id:"title-text" },
+  { src:"res/login_scroll.png", id:"login-scroll" },
+  { src:"res/map.png", id:"map" },
+  { src:"res/map-banner.png", id:"map-banner"},
+  { src:"res/menu.png", id:"menu" },
+  { src:"res/menu-lefts.png", id:"menu-left" },
+  { src:"res/menu-right.png", id:"menu-right" }
+
+]
+
+export const sceneManifests = [
+  [
+    { src:"res/login.png", id:"title-bg" },
+    { src:"res/title-text.png", id:"title-text" }
+  ],
+  [
+    { src:"res/login.png", id:"login-bg" },
+    { src:"res/login_scroll.png", id:"login-scroll" },
+  ],
+  [
+    { src:"res/login.png", id:"signup-bg" },
+    { src:"res/login_scroll.png", id:"signup-scroll" },
+  ],
+  [
+    { src:"res/menu.png", id:"menu" },
+    { src:"res/menu-lefts.png", id:"menu-left" },
+    { src:"res/menu-right.png", id:"menu-right" }
+  ],
+  [
+    { src:"res/login.png", id:"map-bg" },
+    { src:"res/map.png", id:"map" },
+    { src:"res/map-banner.png", id:"map-banner"},
+  ],
+  [
+    { src:"res/login.png", id:"login" },
+    { src:"res/title-text.png", id:"title-text" },
+    { src:"res/login_scroll.png", id:"login-scroll" },
+    { src:"res/map.png", id:"map" },
+    { src:"res/map-banner.png", id:"map-banner"},
+    { src:"res/menu.png", id:"menu" },
+    { src:"res/menu-lefts.png", id:"menu-left" },
+    { src:"res/menu-right.png", id:"menu-right" }
+  ],
+]
 
 export const indicatorCoordinates = [
 
