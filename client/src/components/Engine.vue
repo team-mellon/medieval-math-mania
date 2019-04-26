@@ -62,7 +62,7 @@ export default {
         hits: 0,
         highs: 0,
         lows: 0,
-        badges: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        badges: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       },
 
       scale: {
@@ -565,7 +565,7 @@ export default {
           this.gui.menu_button.visible = false;
 
           // Show the endgame screen
-          this.level.createVictoryBanner(this.scene_scale_X, this.scale.scene_scale_Y, this.user.badges);
+          this.level.createVictoryBanner(this.scene_scale_X, this.scale.scene_scale_Y, this.user.badges, this.user.authenticated);
 
 	        this.user.badges[(this.level.current_level - 1)] = 1;
 
@@ -824,9 +824,12 @@ export default {
       }
 
       if (this.current_scene != 8 && this.current_scene != 2 && this.current_scene != 3 && this.current_scene != 10) {
-        var temp = sceneData[this.current_scene].fg_img;
-        temp.images[0] = this.menu_loading_queue.getResult(sceneData[this.current_scene].fg_img.images[0]);
-        this.foreground = AssetHandler.createTextContainer(temp, sceneData[this.current_scene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", sceneData[this.current_scene].fg_img.frames.width, sceneData[this.current_scene].fg_img.frames.height, "center", 0, "center", 0, "image", 0, this.ecs, this.stage);
+        var temp_fg_img = {
+          images: [this.menu_loading_queue.getResult(sceneData[this.current_scene].fg_img.images[0])],
+          frames: sceneData[this.current_scene].fg_img.frames,
+          framerate: sceneData[this.current_scene].fg_img.framerate
+        };
+        this.foreground = AssetHandler.createTextContainer(temp_fg_img, sceneData[this.current_scene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", sceneData[this.current_scene].fg_img.frames.width, sceneData[this.current_scene].fg_img.frames.height, "center", 0, "center", 0, "image", 0, this.ecs, this.stage);
       } else if (this.current_scene == 10) {
         this.foreground = AssetHandler.createImage(this.menu_loading_queue.getResult("title-text"), 1635, 480, "center", 0, "top", 48 + 480 / 2, "image", this.ecs, this.stage);
       } else if (this.current_scene == 8) {
