@@ -67,7 +67,7 @@ app.use('/api/login', login);
 // Handle production
 // if (process.env.NODE_ENV === 'production') {
   // Static folder
-console.log(__dirname);
+// console.log(process.env.HOST);
 
   app.use(express.static(__dirname + '/public/'));
 

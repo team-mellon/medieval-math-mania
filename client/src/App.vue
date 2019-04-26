@@ -76,10 +76,12 @@ html, body {
 }
 
 #multiplicandText {
+  font-size: 1.0vh;
   display: inline;
 }
 
 #solutionText {
+  font-size: 1.0vh;
   display: inline;
 }
 

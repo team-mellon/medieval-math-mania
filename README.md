@@ -44,8 +44,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 #### Build & Run:
 
-    sudo docker build -t hit-target:v1 .
-    sudo docker run -d -p 80:80 hit-target:v1
+    docker run -d -p 27017-27019:27017-27019 --name mongodb mongo:4.0.4
+    docker-compose build
+    docker-compose up
 
 Then visit 'localhost' or '0.0.0.0' in a browser URL bar to see the game build
 

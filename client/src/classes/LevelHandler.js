@@ -80,6 +80,7 @@ class LevelHandler {
     this.solution = 0;
 
     this.history_list = [];
+    this.history_list2 = [];
 
     this.valid = true;
 
@@ -596,8 +597,8 @@ class LevelHandler {
     this.structure_body = AssetHandler.createSprite(this.bodyS, this.bodyS.frames.width, this.bodyS.frames.height, "center", 0, "bottom", -this.bodyS.frames.height / 2, "image", this.lcs, stage);
     // structure_banner = AssetHandler.createSprite(bannerS, constants.structureX, constants.structureY, "center", 0, "bottom", -constants.structureY / 2, "image", this.lcs, stage);
     this.structure_range = AssetHandler.createTextContainer(this.range_bannerS, "[ #, # ]", "Oldstyle", "32px", "normal", "Gold", 288, 126, "center", -234 - 288 / 2, "bottom", -336 + 126 / 2, "image", 0, this.lcs, stage);
-    // this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x              = #", "Oldstyle", "26px", "normal", "Gold", 300, 78, "center", -150 + 300 / 2, "bottom", -321 + 78 / 2, "image", 0, this.lcs, stage);
-    this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x              = #", "Oldstyle", "26px", "normal", "Gold", 444, 78, "center", -222 + 444 / 2, "bottom", -321 + 78 / 2, "image", 0, this.lcs, stage);
+    // this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x                  = #", "Oldstyle", "26px", "normal", "Gold", 300, 78, "center", -150 + 300 / 2, "bottom", -321 + 78 / 2, "image", 0, this.lcs, stage);
+    this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x                  = #", "Oldstyle", "26px", "normal", "Gold", 444, 78, "center", -222 + 444 / 2, "bottom", -321 + 78 / 2, "image", 0, this.lcs, stage);
     this.structure_history = AssetHandler.createTextContainer(this.history_bannerS, "History", "Oldstyle", "18px", "normal", "Gold", 288, 126, "center", 234 + 288 / 2, "bottom", -336 + 126 / 2, "image", 126 / 2, this.lcs, stage);
     this.structure_facade = AssetHandler.createSprite(this.facadeS, this.facadeS.frames.width, this.facadeS.frames.height, "center", 0, "bottom", -this.facadeS.frames.height / 2, "image", this.lcs, stage);  // Level structure in foreground
 
@@ -820,7 +821,7 @@ class LevelHandler {
       //
       //   this.remakeMultiplierBanner()
       //
-      //   // this.structure_equation_banner.getChildAt(1).text = this.multiplicand.toString() + " x              = " + this.solution.toString();
+      //   // this.structure_equation_banner.getChildAt(1).text = this.multiplicand.toString() + " x                  = " + this.solution.toString();
       //
       //   // this.makeGameForm();
       //
@@ -873,13 +874,13 @@ class LevelHandler {
       } else {
         this.entry_is_correct = false;
       }
-       for (var x in this.history_list) {
+     for (var x in this.history_list) {
 
         //Check against history
         if (entry == parseFloat(this.history_list[x])) {
           this.valid = false;
         }
-  }
+      }
       // Animate the catapult
 
       if (this.entry_is_correct && this.valid) {
@@ -889,19 +890,21 @@ class LevelHandler {
         // Add to history
 
         this.history_list.unshift(this.multiplier);
-         console.log(this.history_list);
-        var dropdown = document.getElementById("myDropdown");
-        var history_entry = document.createTextNode(this.multiplier);
-        var line_break = document.createElement("br");
-        dropdown.appendChild(history_entry);
-        dropdown.appendChild(line_break);
-
+        console.log(this.history_list);
 
         // Actual math
         this.solution = this.multiplier * this.multiplicand;
         console.log(this.solution);
         this.solution = Math.round((this.solution + 0.00001) * 100) / 100;
         console.log(this.solution);
+
+        this.history_list2.unshift(this.multiplicand + "x" + this.multiplier + "=" + this.solution);
+        console.log(this.history_list2);
+        var dropdown = document.getElementById("myDropdown");
+        var equation = this.multiplicand + "x" + this.multiplier + "=" + this.solution;
+        var history_entry = document.createTextNode(equation);
+        dropdown.appendChild(history_entry);
+        dropdown.appendChild(document.createElement("br"));
 
         var solut_div = document.getElementById("solutionText");
         while (solut_div.firstChild) {
@@ -913,7 +916,7 @@ class LevelHandler {
 
         this.remakeMultiplierBanner()
 
-        // this.structure_equation_banner.getChildAt(1).text = this.multiplicand.toString() + " x              = " + this.solution.toString();
+        // this.structure_equation_banner.getChildAt(1).text = this.multiplicand.toString() + " x                  = " + this.solution.toString();
 
         // this.makeGameForm();
 
@@ -1523,7 +1526,7 @@ class LevelHandler {
     // Append to the range banner
     multip_div.appendChild(multip);
 
-    this.structure_equation_banner.getChildAt(1).text = this.multiplicand.toString() + " x              = " + this.solution.toString();
+    this.structure_equation_banner.getChildAt(1).text = this.multiplicand.toString() + " x                  = " + this.solution.toString();
 
   }
 
@@ -1567,6 +1570,7 @@ class LevelHandler {
   resetLevel () {
 
     this.history_list = [];
+    this.history_list2 = [];
     this.hide_knight = false;
     this.hide_archer1 = false;
     this.hide_archer2 = false;

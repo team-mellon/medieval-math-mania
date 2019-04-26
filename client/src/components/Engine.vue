@@ -59,9 +59,9 @@ export default {
         firstname: 'Place',
         lastname: 'Holder',
         username: 'CpnPlchlder',
-        hits: 101010101,
-        highs: 101010101,
-        lows: 101010101,
+        hits: 0,
+        highs: 0,
+        lows: 0,
         badges: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
       },
 
@@ -82,7 +82,7 @@ export default {
       // w: 100,
       // h: 200,
 
-      animtions: {
+      animations: {
         // ecs: [], // Entity component system for scaling and eventually object storage
         // gcs: [] // GUI component system for scaling and eventually object storage
       },
@@ -395,9 +395,11 @@ export default {
         this.loaded = true;
 
         if(this.menu_loading_queue.progress * 100  >= 100) {
+
           progressBar.hidden = true;
           progressBackground.hidden = true;
           ldBg.hidden = true;
+
         }
 
       }
@@ -528,7 +530,7 @@ export default {
 
           this.level.runInput(this.mobile.isMobile);
           this.clearHtml();
-          FormHandler.createGameForm(this.level.multiplicand, this.level.sign, this.level.equal, this.level.solution, this.level.history_list, this.level.play_tutorial, this.mobile.isMobile);
+          FormHandler.createGameForm(this.level.multiplicand, this.level.sign, this.level.equal, this.level.solution, this.level.history_list2, this.level.play_tutorial, this.mobile.isMobile);
 
         }
 
@@ -741,7 +743,7 @@ export default {
 
           } else {
 
-            FormHandler.createGameForm(this.level.multiplicand, this.level.sign, this.level.equal, this.level.solution, this.level.history_list, this.level.play_tutorial, this.mobile.isMobile);
+            FormHandler.createGameForm(this.level.multiplicand, this.level.sign, this.level.equal, this.level.solution, this.level.history_list2, this.level.play_tutorial, this.mobile.isMobile);
             this.level.remakeMultiplierBanner();
             this.level.remakeRangeBanner();
 
@@ -860,7 +862,7 @@ export default {
             this.level.sign,
             this.level.equal,
             this.level.solution,
-            this.level.history_list,
+            this.level.history_list2,
             this.level.play_tutorial,
             this.mobile.isMobile
           );
@@ -921,7 +923,7 @@ export default {
       } else if (this.current_scene == 3) {
 
         this.gui.menu_button.visible = true;
-        FormHandler.createGameForm(this.level.multiplicand, this.level.sign, this.level.equal, this.level.solution, this.level.history_list, this.level.play_tutorial, this.mobile.isMobile);
+        FormHandler.createGameForm(this.level.multiplicand, this.level.sign, this.level.equal, this.level.solution, this.level.history_list2, this.level.play_tutorial, this.mobile.isMobile);
         this.level.remakeMultiplierBanner();
         this.level.remakeRangeBanner();
         this.level.structure_score.text = "Total Lows: " + this.level.miss_lower_counter.toString() + "\nTotal High: " + this.level.miss_upper_counter.toString() + "\nTotal Hits: " + this.level.hit_counter.toString();
