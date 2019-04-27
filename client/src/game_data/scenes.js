@@ -136,6 +136,15 @@ export const sceneManifest = [
 
 ]
 
+export const guiManifest = [
+
+  { src:"res/sword-left.png", id:"sword-left" },
+  { src:"res/sword-right.png", id:"sword-right" },
+  { src:"res/login-button.png", id:"login-button" },
+  { src:"res/menu-button.png", id:"menu-button" }
+
+]
+
 export const sceneManifests = [
   [
     { src:"res/login.png", id:"title-bg" },

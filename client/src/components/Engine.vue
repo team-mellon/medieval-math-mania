@@ -23,16 +23,16 @@
 <script>
 
 // Static classes
-import AssetHandler from '../classes/AssetHandler.js';
-import FormHandler from '../classes/FormHandler.js';
-import APIHandler from '../classes/APIHandler.js';
+import AssetHandler from '../handlers/AssetHandler.js';
+import FormHandler from '../handlers/FormHandler.js';
+import APIHandler from '../handlers/APIHandler.js';
 
 // Normal classes
-import InputHandler from '../classes/InputHandler.js';
-import MobileHandler from '../classes/MobileHandler.js';
-import SoundHandler from '../classes/SoundHandler.js';
-import GUIHandler from '../classes/GUIHandler.js';
-import LevelHandler from '../classes/LevelHandler.js';
+import InputHandler from '../handlers/InputHandler.js';
+import MobileHandler from '../handlers/MobileHandler.js';
+import SoundHandler from '../handlers/SoundHandler.js';
+import GUIHandler from '../handlers/GUIHandler.js';
+import LevelHandler from '../handlers/LevelHandler.js';
 
 // Game Data
 import constants from '../game_data/constants.js';
@@ -472,7 +472,7 @@ export default {
       if (this.current_scene == 3) {
 
         var y_position = (284 * this.scale.scene_scale_Y).toString() + "px";
-        var x_position = (960 * this.scale.scene_scale_Y).toString() + "px";
+        var x_position = ((window.innerWidth / 2) + (0) * this.scale.scene_scale_Y).toString() + "px";
 
         // console.log(x_position);
 
@@ -483,8 +483,8 @@ export default {
           document.getElementById("entryInput").focus();
         }
 
-        y_position = (310 * this.scale.scene_scale_Y).toString() + "px";
-        x_position = ( (960 - 282) * this.scene_scale_X).toString() + "px";
+        y_position = (300 * this.scale.scene_scale_Y).toString() + "px";
+        x_position = ( (window.innerWidth / 2) - (234 + 288 / 2) * this.scene_scale_X).toString() + "px";
 
         // console.log(x_position);
 
@@ -987,16 +987,6 @@ export default {
   }
 
 }
-
-// function loadImage() {
-//   var preload = new createjs.LoadQueue();
-//   preload.addEventListener("fileload", handleFileComplete);
-//   preload.loadFile("assets/preloadjs-bg-center.png");
-// }
-//
-// function handleFileComplete(event) {
-//   document.body.appendChild(event.result);
-// }
 
 </script>
 

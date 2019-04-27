@@ -4,7 +4,7 @@ export const tutorialSteps = [
   "First try to find a solution that is below the range.",
   "Next try to find a solution that is above the range.",
   "Now try to find 3 solutions within the range.",
-  "Congratulations! You've completed the tutorial level!"
+  "Congratulations! You've completed the tutorial level! Now exit through the pause menu and start playing Medieval math Mania!"
 ];
 
 export const tutorialCorrections = [
