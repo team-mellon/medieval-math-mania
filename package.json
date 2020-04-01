@@ -4,6 +4,14 @@
   "private": true,
   "description": "Math game to help children with their multiplication skills",
   "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js",
+    "flow": "flow",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
@@ -31,14 +39,6 @@
     "eslint-plugin-vue": "^5.0.0",
     "vue-template-compiler": "^2.5.21",
     "webpack-cli": "^3.3.11"
-  },
-  "scripts": {
-    "start": "node server/index.js",
-    "dev": "nodemon server/index.js",
-    "flow": "flow",
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
   },
   "repository": {
     "type": "git",
