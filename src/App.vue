@@ -12,6 +12,13 @@ export default {
   name: 'app',
   components: {
     Engine
+  },
+  mounted: function() {
+    if (document.getElementById('create-js-import')) return; // was already loaded
+    var scriptTag = document.createElement('script');
+    scriptTag.src = 'https://code.createjs.com/1.0.0/createjs.min.js';
+    scriptTag.id = 'create-js-import';
+    document.getElementsByTagName('head')[0].appendChild(scriptTag);
   }
 }
 
