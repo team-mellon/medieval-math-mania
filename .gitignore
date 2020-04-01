@@ -25,5 +25,7 @@ yarn-error.log*
 404.html
 firebase.json
 
+/bugs
+
 #server client stuff
 # /client

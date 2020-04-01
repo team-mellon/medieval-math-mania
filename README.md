@@ -47,7 +47,37 @@ Visit the IP of your machine on port 8081 to visit the site
     sudo docker container ls
     sudo docker stop <CONTAINER ID> -->
 
+## Client Readme
 
+# client
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your tests
+```
+npm run test
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## About the project
 
