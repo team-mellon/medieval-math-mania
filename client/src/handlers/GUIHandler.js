@@ -308,7 +308,7 @@ class GUIHandler {
   		case 10:
 
   			this.logout_button = AssetHandler.createButton("res/login-button.png", "Login!", constants.buttonX, constants.buttonY, "right", -(constants.buttonX/2 + 10), "top", (constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(0); }.bind(this), entity_component_system, stage);
-  			this.play_button = AssetHandler.createButton("res/login-button.png", "Start!", constants.buttonX, constants.buttonY, "center", 0, "bottom", - 2.5 * (constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(8); }.bind(this), entity_component_system, stage);
+  			this.play_button = AssetHandler.createButton("res/login-button.png", "Start!!", constants.buttonX, constants.buttonY, "center", 0, "bottom", - 2.5 * (constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(8); }.bind(this), entity_component_system, stage);
 
   			break;
 
