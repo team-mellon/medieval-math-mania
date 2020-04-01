@@ -210,14 +210,14 @@ class GUIHandler {
 
         case 4:
 
-      		let temp = 0;
+      		let counter = 0;
       		for(var i = 0; i < 20; i++){
       		    if(user.badges[i] == 1)
-      		        temp++;
+      		        counter++;
       		}
 
     			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10), "gui", function() { createjs.Sound.play("menu"); changeScene(2); }.bind(this), entity_component_system, stage);
-			    let text = "Hits: " + user.hits + "\n\nHighs: " + user.highs + "\n\nLows: " + user.lows + "\n\nTotal Misses: " + (user.highs + user.lows) + "\n\nBadges: " + temp + "\n\n";
+			    let text = "Hits: " + user.hits + "\n\nHighs: " + user.highs + "\n\nLows: " + user.lows + "\n\nTotal Misses: " + (user.highs + user.lows) + "\n\nBadges: " + counter + "\n\n";
 
 			    this.statsContainer = AssetHandler.createStatsContainer(user.badges, "res/badges/empty-badge.png", text, "Oldstyle", "32px", "normal", "black", 240, 240, "center", 0, "center", 0, "image", entity_component_system, stage);
 
@@ -274,12 +274,12 @@ class GUIHandler {
 
   			for (var i = 1; i < (constants.num_levels + 1); i++) {
 
-  				var temp = AssetHandler.createButton("res/map-indicator.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", levels[i].open, entity_component_system, stage);
-  				// var temp = AssetHandler.createButton("res/map-indicator.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", function (this) { indicatorFunction(i).bind(this) }, entity_component_system, stage);
-          temp.on("mouseover", function (evt) { this.handleMouseEvent(evt, stage, scale.scene_scale_Y) }.bind(this));
-  				temp.on("mouseout", function (evt) { this.handleMouseEvent(evt, stage, scale.scene_scale_Y) }.bind(this));
+  				var indicator = AssetHandler.createButton("res/map-indicator.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", levels[i].open, entity_component_system, stage);
+  				// var indicator = AssetHandler.createButton("res/map-indicator.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", function (this) { indicatorFunction(i).bind(this) }, entity_component_system, stage);
+          indicator.on("mouseover", function (evt) { this.handleMouseEvent(evt, stage, scale.scene_scale_Y) }.bind(this));
+  				indicator.on("mouseout", function (evt) { this.handleMouseEvent(evt, stage, scale.scene_scale_Y) }.bind(this));
 
-  				this.indicators.push(temp);
+  				this.indicators.push(indicator);
 
   			}
 
@@ -323,30 +323,30 @@ class GUIHandler {
 
   }
 
-  handleMouseEvent (evt, stage, scene_scale_Y) {
+	handleMouseEvent (evt, stage, scene_scale_Y) {
 
-    if(evt.type == "mouseover"){
+		if(evt.type == "mouseover"){
 
-      console.log("level " + evt.target.text);
-      let temp = this.containerFrame.getChildByName("titleFrame");
-      temp.text = levelDescriptors[evt.target.text].title;
-      temp = this.containerFrame.getChildByName("descripterFrame");
-      temp.text = levelDescriptors[evt.target.text].description;
-      this.containerFrame.x = scene_scale_Y * indicatorCoordinates[evt.target.text].x + stage.canvas.width / 2 + 15;
-      this.containerFrame.y = scene_scale_Y * indicatorCoordinates[evt.target.text].y + stage.canvas.height / 2 + 15;
-      this.containerFrame.visible = true;
+			console.log("level " + evt.target.text);
+			let titleFrameElement = this.containerFrame.getChildByName("titleFrame");
+			titleFrameElement.text = levelDescriptors[evt.target.text].title;
+			titleFrameElement = this.containerFrame.getChildByName("descripterFrame");
+			titleFrameElement.text = levelDescriptors[evt.target.text].description;
+			this.containerFrame.x = scene_scale_Y * indicatorCoordinates[evt.target.text].x + stage.canvas.width / 2 + 15;
+			this.containerFrame.y = scene_scale_Y * indicatorCoordinates[evt.target.text].y + stage.canvas.height / 2 + 15;
+			this.containerFrame.visible = true;
 
-    }
+		}
 
-    if(evt.type == "mouseout"){
+		if(evt.type == "mouseout"){
 
-      this.containerFrame.visible = false;
-      this.containerFrame.x = 100;
-      this.containerFrame.y = 100;
+			this.containerFrame.visible = false;
+			this.containerFrame.x = 100;
+			this.containerFrame.y = 100;
 
-    }
+		}
 
-  }
+	}
 
 }
 
