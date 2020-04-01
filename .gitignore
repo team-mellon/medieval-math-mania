@@ -27,5 +27,7 @@ firebase.json
 
 /bugs
 
+/server/public
+
 #server client stuff
 # /client
