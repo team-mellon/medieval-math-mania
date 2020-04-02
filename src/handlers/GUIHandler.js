@@ -276,6 +276,8 @@ class GUIHandler {
 
 				if (i === level.current_level) {
 					var indicator = AssetHandler.createButton("res/map-indicator-current.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", levels[i].open, entity_component_system, stage);
+				} else if (level.visitedLevels[i]) {
+					var indicator = AssetHandler.createButton("res/map-indicator-visited.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", levels[i].open, entity_component_system, stage);
 				} else {
 					var indicator = AssetHandler.createButton("res/map-indicator.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", levels[i].open, entity_component_system, stage);
 				}

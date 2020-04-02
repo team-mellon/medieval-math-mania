@@ -966,6 +966,7 @@ export default {
       this.level.generated = false;
       createjs.Sound.play("select");
       this.level.current_level = newL;
+      this.level.visitedLevels[newL] = true;
       this.level.resetLevel();
       this.changeScene(3);
 

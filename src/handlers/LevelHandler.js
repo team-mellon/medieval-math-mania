@@ -27,6 +27,10 @@ class LevelHandler {
     this.delayWin = new createjs.PlayPropsConfig().set({delay : 2000});
 
     this.current_level = 1;
+    this.visitedLevels = [];
+    for (var i = 0; i < constants.num_levels; i++) {
+      this.visitedLevels.push(false);
+    }
 
     // Animation
     this.frame_counter = 0;
