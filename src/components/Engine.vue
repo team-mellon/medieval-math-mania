@@ -478,19 +478,19 @@ export default {
       if (this.current_scene == 3 && this.level.pause_menu.visible == false) {
 
         // If the range is not generated
-      	if(!this.level.generated) {
+        if(!this.level.generated) {
 
           // Generate the range
-      		this.level.level_math[this.level.current_level].math();
+          this.level.level_math[this.level.current_level].math();
 
           this.level.clearMultiplicandBanner();
 
           this.level.remakeMultiplierBanner();
           this.level.remakeRangeBanner();
 
-      		this.level.generated = true;
+          this.level.generated = true;
 
-      	}
+        }
 
         // Key checks at the beginning of the update loop
         // Spacebar to randomize the range
@@ -546,7 +546,7 @@ export default {
           // Show the endgame screen
           this.level.createVictoryBanner(this.scene_scale_X, this.scale.scene_scale_Y, this.user.badges, this.user.authenticated);
 
-	        this.user.badges[(this.level.current_level - 1)] = 1;
+          this.user.badges[(this.level.current_level - 1)] = 1;
 
           // update database
           APIHandler.updateStats(
@@ -556,7 +556,7 @@ export default {
               hits: this.user.hits,
               highs: this.user.highs,
               lows: this.user.lows,
-  	          badges: this.user.badges
+              badges: this.user.badges
             },
             this.user,
             this.async
@@ -599,7 +599,7 @@ export default {
       this.second_title = new createjs.Bitmap(this.loadingQueue.getResult("image"));
       // console.log(this.second_title);
       this.preloaded = true;
-      console.log("Loaded!");
+      // console.log("Loaded!");
       //OR samething
       //var bg = new createjs.Bitmap(images['image']);
     },
@@ -685,7 +685,7 @@ export default {
       // Log screen scaling for debugging purposes
       // console.log(this.scene_scale_X);
       // console.log(this.scale.scene_scale_Y);
-      console.log(this.screen_ratio);
+      // console.log(this.screen_ratio);
 
       this.landscape_warning.graphics.clear()
       this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
@@ -779,8 +779,8 @@ export default {
 
       this.last_scene = this.current_scene;
       this.current_scene = new_scene;
-      console.log("Last Scene: " + this.last_scene);
-      console.log("Current Scene: " + this.current_scene);
+      // console.log("Last Scene: " + this.last_scene);
+      // console.log("Current Scene: " + this.current_scene);
 
       // Load the scene
       this.loadCurrentScene();

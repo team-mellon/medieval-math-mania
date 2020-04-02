@@ -55,7 +55,7 @@ class InputHandler {
 
     // Logs the touch start location for drag calculations
     this.start_touch = evt.changedTouches[0].screenY
-    console.log("start: " + this.start_touch);
+    // console.log("start: " + this.start_touch);
 
     // Trigger bool to indicate touch event
     this.touch = true;
@@ -70,10 +70,10 @@ class InputHandler {
 
     // Logs the touch end location for drag calculations
     this.end_touch = evt.changedTouches[0].screenY
-    console.log("end: " + this.end_touch);
+    // console.log("end: " + this.end_touch);
 
     // Trigger bool to indicate drag event
-    console.log("drag: " + (this.end_touch - this.start_touch));
+    // console.log("drag: " + (this.end_touch - this.start_touch));
 
     // If the end of the touch minus the beginning of the touch is less than -100
     if ((this.end_touch - this.start_touch) < -100) {
