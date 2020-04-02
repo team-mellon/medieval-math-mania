@@ -546,6 +546,8 @@ export default {
           // Show the endgame screen
           this.level.createVictoryBanner(this.scene_scale_X, this.scale.scene_scale_Y, this.user.badges, this.user.authenticated);
 
+
+          this.level.visitedLevels[this.level.current_level] = true;
           this.user.badges[(this.level.current_level - 1)] = 1;
 
           // update database
@@ -966,7 +968,6 @@ export default {
       this.level.generated = false;
       createjs.Sound.play("select");
       this.level.current_level = newL;
-      this.level.visitedLevels[newL] = true;
       this.level.resetLevel();
       this.changeScene(3);
 
