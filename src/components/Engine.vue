@@ -1,14 +1,8 @@
-"map"<template>
+<template>
   <div id="engineHolder">
     <canvas id="drawingCanvas" :style="style">alternate content</canvas>
 
-    <div id="ldBg" class="ldscreen" hidden>
-      <span id="loadingText" hidden>Loading</span>
-      <div id="progressBackground" class="bgbar" hidden>
-        <div id="progressBar" class="pgbar" hidden></div>
-      </div>
-      <span id="percentText">Loading</span>
-    </div>
+    <Loader v-bind:loading-queue="loadingQueue" @loaded="handleComplete" />
 
     <div id="sceneHTML"></div>
 
@@ -21,6 +15,8 @@
 </template>
 
 <script>
+
+import Loader from './Loader.vue'
 
 // Static classes
 import AssetHandler from '../handlers/AssetHandler.js';
@@ -43,9 +39,20 @@ export default {
 
   name: 'Engine',
 
+  components: {
+    Loader
+  },
+
   data () {
 
     return {
+
+      loadingQueue: null,
+
+      // Authentication handling
+      async: {
+        error: ''
+      },
 
       // Authentication handling
       async: {
@@ -156,13 +163,13 @@ export default {
     this.preloaded = false;
     this.loaded = false;
 
-    this.menu_loading_queue = new createjs.LoadQueue();
-    this.menu_loading_queue.on("progress", this.handleProgress.bind(this));
-    // this.menu_loading_queue.onComplete = this.handleComplete;
-    this.menu_loading_queue.on("complete", this.handleComplete.bind(this));
-    // this.menu_loading_queue.addEventListener("fileload", handleFileComplete);
+    this.loadingQueue = new createjs.LoadQueue();
+    // this.loadingQueue.on("progress", this.handleProgress.bind(this));
+    // this.loadingQueue.onComplete = this.handleComplete;
+    // this.loadingQueue.on("complete", this.handleComplete.bind(this));
+    // this.loadingQueue.addEventListener("fileload", handleFileComplete);
 
-    this.menu_loading_queue.loadManifest(sceneManifest);
+    this.loadingQueue.loadManifest(sceneManifest);
 
     // Set the window resize function to the one
     window.addEventListener('resize', this.resize, false);
@@ -394,13 +401,13 @@ export default {
         this.resize(); // Resize to set initial scale
         this.loaded = true;
 
-        if(this.menu_loading_queue.progress * 100  >= 100) {
+        // if(this.loadingQueue.progress * 100  >= 100) {
 
-          progressBar.hidden = true;
-          progressBackground.hidden = true;
-          ldBg.hidden = true;
+        //   progressBar.hidden = true;
+        //   progressBackground.hidden = true;
+        //   ldBg.hidden = true;
 
-        }
+        // }
 
       }
 
@@ -408,7 +415,7 @@ export default {
 
         // console.log(this.user.authenticated);
 
-        if (this.input.keys[13]) {
+        if (this.input.keys[13]) {  // Enter key
 
           createjs.Sound.play("sword");
 
@@ -617,7 +624,7 @@ export default {
     },
 
     handleComplete: function(event) {
-      this.second_title = new createjs.Bitmap(this.menu_loading_queue.getResult("image"));
+      this.second_title = new createjs.Bitmap(this.loadingQueue.getResult("image"));
       // console.log(this.second_title);
       this.preloaded = true;
       console.log("Loaded!");
@@ -787,11 +794,11 @@ export default {
       this.bg.graphics.clear()
       this.bg.graphics.beginFill(this.bg_color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
 
-      this.background = AssetHandler.createImage(this.menu_loading_queue.getResult(sceneData[this.current_scene].bg_img), constants.backgroundX, 1440, "center", 0, "center", 0, "image", this.ecs, this.stage);
-      this.background_top = AssetHandler.createImage(this.menu_loading_queue.getResult(sceneData[this.current_scene].bg_img), constants.backgroundX, 1440, "center", 0, "center", -1440, "image", this.ecs, this.stage);
-      this.background_bottom = AssetHandler.createImage(this.menu_loading_queue.getResult(sceneData[this.current_scene].bg_img), constants.backgroundX, 1440, "center", 0, "center", 1440, "image", this.ecs, this.stage);
-      this.background_left = AssetHandler.createImage(this.menu_loading_queue.getResult(sceneData[this.current_scene].bg_img), constants.backgroundX, 1440, "center", -constants.backgroundX, "center", 0, "image", this.ecs, this.stage);
-      this.background_right = AssetHandler.createImage(this.menu_loading_queue.getResult(sceneData[this.current_scene].bg_img), constants.backgroundX, 1440, "center", constants.backgroundX, "center", 0, "image", this.ecs, this.stage);
+      this.background = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), constants.backgroundX, 1440, "center", 0, "center", 0, "image", this.ecs, this.stage);
+      this.background_top = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), constants.backgroundX, 1440, "center", 0, "center", -1440, "image", this.ecs, this.stage);
+      this.background_bottom = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), constants.backgroundX, 1440, "center", 0, "center", 1440, "image", this.ecs, this.stage);
+      this.background_left = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), constants.backgroundX, 1440, "center", -constants.backgroundX, "center", 0, "image", this.ecs, this.stage);
+      this.background_right = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), constants.backgroundX, 1440, "center", constants.backgroundX, "center", 0, "image", this.ecs, this.stage);
 
       switch (this.current_scene) {
 
@@ -825,22 +832,22 @@ export default {
 
       if (this.current_scene != 8 && this.current_scene != 2 && this.current_scene != 3 && this.current_scene != 10) {
         var temp_fg_img = {
-          images: [this.menu_loading_queue.getResult(sceneData[this.current_scene].fg_img.images[0])],
+          images: [this.loadingQueue.getResult(sceneData[this.current_scene].fg_img.images[0])],
           frames: sceneData[this.current_scene].fg_img.frames,
           framerate: sceneData[this.current_scene].fg_img.framerate
         };
         this.foreground = AssetHandler.createTextContainer(temp_fg_img, sceneData[this.current_scene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", sceneData[this.current_scene].fg_img.frames.width, sceneData[this.current_scene].fg_img.frames.height, "center", 0, "center", 0, "image", 0, this.ecs, this.stage);
       } else if (this.current_scene == 10) {
-        this.foreground = AssetHandler.createImage(this.menu_loading_queue.getResult("title-text"), 1635, 480, "center", 0, "top", 48 + 480 / 2, "image", this.ecs, this.stage);
+        this.foreground = AssetHandler.createImage(this.loadingQueue.getResult("title-text"), 1635, 480, "center", 0, "top", 48 + 480 / 2, "image", this.ecs, this.stage);
       } else if (this.current_scene == 8) {
-        this.midground = AssetHandler.createImage(this.menu_loading_queue.getResult("map"), constants.backgroundX, constants.backgroundY, "center", 0, "center", 0, "image", this.ecs, this.stage);
-        this.foreground = AssetHandler.createButton(this.menu_loading_queue.getResult("map-banner"), "Select a level", constants.backgroundX, 108, "center", 0, "top", 0 + (108/2), "image", function() {}.bind(this), this.ecs, this.stage);
+        this.midground = AssetHandler.createImage(this.loadingQueue.getResult("map"), constants.backgroundX, constants.backgroundY, "center", 0, "center", 0, "image", this.ecs, this.stage);
+        this.foreground = AssetHandler.createButton(this.loadingQueue.getResult("map-banner"), "Select a level", constants.backgroundX, 108, "center", 0, "top", 0 + (108/2), "image", function() {}.bind(this), this.ecs, this.stage);
       }
 
       if (this.current_scene == 2) {
-        this.background = AssetHandler.createImage(this.menu_loading_queue.getResult("menu"), constants.backgroundX, constants.backgroundY, "center", 0, "bottom", -constants.backgroundY / 2, "image", this.ecs, this.stage);
-        this.background_left = AssetHandler.createImage(this.menu_loading_queue.getResult("menu-left"), constants.backgroundX, constants.backgroundY, "center", 0 - (constants.backgroundX), "bottom", -constants.backgroundY / 2, "image", this.ecs, this.stage);
-        this.background_right = AssetHandler.createImage(this.menu_loading_queue.getResult("menu-right"), constants.backgroundX, constants.backgroundY, "center", 0 + (constants.backgroundX), "bottom", -constants.backgroundY / 2, "image", this.ecs, this.stage);
+        this.background = AssetHandler.createImage(this.loadingQueue.getResult("menu"), constants.backgroundX, constants.backgroundY, "center", 0, "bottom", -constants.backgroundY / 2, "image", this.ecs, this.stage);
+        this.background_left = AssetHandler.createImage(this.loadingQueue.getResult("menu-left"), constants.backgroundX, constants.backgroundY, "center", 0 - (constants.backgroundX), "bottom", -constants.backgroundY / 2, "image", this.ecs, this.stage);
+        this.background_right = AssetHandler.createImage(this.loadingQueue.getResult("menu-right"), constants.backgroundX, constants.backgroundY, "center", 0 + (constants.backgroundX), "bottom", -constants.backgroundY / 2, "image", this.ecs, this.stage);
       }
 
       // Custom scene functionalities
@@ -963,26 +970,7 @@ export default {
       this.level.resetLevel();
       this.changeScene(3);
 
-    },
-
-    //Loadbar for loading screen
-    handleProgress: function(evt) {
-
-      var progbar = document.getElementById("progressBar");
-      var perctext = document.getElementById("percentText");
-      var loadtext = document.getElementById("loadingText");
-      progressBar.hidden = false;
-      progressBackground.hidden = false;
-      ldBg.hidden = false;
-
-      loadtext.hidden = false;
-
-      progbar.style.width = this.menu_loading_queue.progress * 100 + '%';
-      perctext.innerHTML = (Math.floor(this.menu_loading_queue.progress * 100)).toString() + '%';
-
     }
-
-
 
   }
 
@@ -990,87 +978,6 @@ export default {
 
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-
-.ldscreen {
-
-  /* Position */
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-
-  /* Properties */
-  height: 100%;
-  width: 100%;
-  background-color: #919191;
-	z-index: 2;
-
-}
-
-.bgbar {
-
-  /* Position */
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-
-  /* Properties */
-  background-color: LightGray;
-  height: 50px;
-  width: 90%;
-	z-index: 2;
-
-}
-
-.pgbar {
-
-  /* Position */
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-
-  /* Properties */
-  background-color: Gold;
-  height: 100%;
-  width: 100%;
-	z-index: 2;
-
-}
-
-#loadingText {
-
-  /* Position */
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 30%;
-  left: 50%;
-
-  /* Properties */
-  font-family: "Blackadder";
-  font-size: 15vh;
-  z-index: 2;
-  color: Gold;
-
-}
-
-#percentText {
-
-  /* Position */
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 70%;
-  left: 50%;
-
-  /* Properties */
-  font-family: "Oldstyle";
-  font-size: 10vh;
-  z-index: 2;
-  color: Gold;
-
-}
 
 </style>
