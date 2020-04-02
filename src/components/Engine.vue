@@ -164,11 +164,6 @@ export default {
     this.loaded = false;
 
     this.loadingQueue = new createjs.LoadQueue();
-    // this.loadingQueue.on("progress", this.handleProgress.bind(this));
-    // this.loadingQueue.onComplete = this.handleComplete;
-    // this.loadingQueue.on("complete", this.handleComplete.bind(this));
-    // this.loadingQueue.addEventListener("fileload", handleFileComplete);
-
     this.loadingQueue.loadManifest(sceneManifest);
 
     // Set the window resize function to the one
@@ -383,32 +378,9 @@ export default {
 
     tick: function(event) {
 
-      // console.log(this.second_title);
       // this.second_title.x = this.stage.canvas.width / 3;
       if (this.preloaded && !this.loaded) {
-
-        this.bg = new createjs.Shape();                             // Create a rectangle for clearing the screen
-        this.bg_color = "#333333";                                  // Background color
-        this.stage.addChild(this.bg);                               // Add rectangle to the stage
-
-        this.createScene();                                         // Create scene assets
-
-        this.landscape_warning = new createjs.Shape();
-
-        this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, 288, 288, "center", 0, "center", 0, "image", this.ecs, this.stage);
-        this.stage.removeChild(this.phone_rotation);
-
-        this.resize(); // Resize to set initial scale
-        this.loaded = true;
-
-        // if(this.loadingQueue.progress * 100  >= 100) {
-
-        //   progressBar.hidden = true;
-        //   progressBackground.hidden = true;
-        //   ldBg.hidden = true;
-
-        // }
-
+        this.firstLoad();
       }
 
       if (this.current_scene == 0) {
@@ -732,6 +704,33 @@ export default {
     ////////////
     // SCENES //
     ////////////
+
+    // Load the scene in the variable current_scene
+    firstLoad: function() {
+
+      this.bg = new createjs.Shape();                             // Create a rectangle for clearing the screen
+      this.bg_color = "#333333";                                  // Background color
+      this.stage.addChild(this.bg);                               // Add rectangle to the stage
+
+      this.createScene();                                         // Create scene assets
+
+      this.landscape_warning = new createjs.Shape();
+
+      this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, 288, 288, "center", 0, "center", 0, "image", this.ecs, this.stage);
+      this.stage.removeChild(this.phone_rotation);
+
+      this.resize(); // Resize to set initial scale
+      this.loaded = true;
+
+      // if(this.loadingQueue.progress * 100  >= 100) {
+
+      //   progressBar.hidden = true;
+      //   progressBackground.hidden = true;
+      //   ldBg.hidden = true;
+
+      // }
+
+    },
 
     // Load the scene in the variable current_scene
     loadCurrentScene: function() {

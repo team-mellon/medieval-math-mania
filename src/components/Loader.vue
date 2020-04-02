@@ -30,7 +30,6 @@
       loadingQueue: function(newVal, oldVal) { // watch it
         if (newVal !== null) {
           this.loadingQueue.on("progress", this.handleProgress.bind(this));
-          // this.loadingQueue.onComplete = this.handleComplete;
           this.loadingQueue.on("complete", this.handleComplete.bind(this));
           // this.loadingQueue.addEventListener("fileload", handleFileComplete);
         }
@@ -40,13 +39,8 @@
     methods: {
 
       handleComplete: function(event) {
+        console.log("Loaded!");
         this.$emit('loaded', 'loaded')
-        // this.second_title = new createjs.Bitmap(this.loadingQueue.getResult("image"));
-        // console.log(this.second_title);
-        // this.preloaded = true;
-        // console.log("Loaded!");
-        //OR samething
-        //var bg = new createjs.Bitmap(images['image']);
       },
 
       //Loadbar for loading screen
