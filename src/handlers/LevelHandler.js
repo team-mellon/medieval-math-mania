@@ -641,11 +641,15 @@ class LevelHandler {
 
     var sting = this.victoryGenerator();  // temp fix for sending victory string to function
 
-    this.end_text = AssetHandler.createText(sting, "Oldstyle", "65px", "bold", "gold", 10, 10, "center", 0, "center", 0 - 140, "image", this.lcs, stage);
+    this.end_text = AssetHandler.createText(sting, "Oldstyle", "65px", "bold", "gold", 10, 10, "center", 0, "center", 0 - 180, "image", this.lcs, stage);
     this.end_text.visible = false;
     //end_text.skewX = -5;
     this.end_text.skewY = -15;
     this.end_text.textAlign = "center";
+
+    this.level_text = AssetHandler.createText("You Beat Level " + this.current_level + "!", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0 - 40, "image", this.lcs, stage);
+    this.level_text.visible = false;
+    this.level_text.alpha = 0;
 
     this.hit_text = AssetHandler.createText("Total Hits:      ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0, "image", this.lcs, stage);
     this.hit_text.visible = false;
@@ -1337,24 +1341,27 @@ class LevelHandler {
     createjs.Tween.get(this.end_text).wait(4250).to({scaleX:tempX ,scaleY:tempY}, 1000, createjs.Ease.quintIn);
     createjs.Tween.get(this.end_text).wait(4250).to({rotation:360}, 1000);
 
+    this.level_text.visible = true;
+    createjs.Tween.get(this.level_text).wait(5750).to({alpha:1}, 500);
+
     this.hit_text.visible = true;
-    createjs.Tween.get(this.hit_text).wait(5750).to({alpha:1}, 500);
+    createjs.Tween.get(this.hit_text).wait(6750).to({alpha:1}, 500);
 
     this.low_text.visible = true;
-    createjs.Tween.get(this.low_text).wait(6750).to({alpha:1}, 500);
+    createjs.Tween.get(this.low_text).wait(7750).to({alpha:1}, 500);
 
     this.high_text.visible = true;
-    createjs.Tween.get(this.high_text).wait(7750).to({alpha:1}, 500);
+    createjs.Tween.get(this.high_text).wait(8750).to({alpha:1}, 500);
 
   	if(this.current_level != 0 && authenticated){
 	    if(badges[(this.current_level - 1)] == 0){
     		this.badge_text.visible = true;
-    		createjs.Tween.get(this.badge_text).wait(8750).to({alpha:1}, 500);
+    		createjs.Tween.get(this.badge_text).wait(9750).to({alpha:1}, 500);
 	    }
   	}
 
     this.end_level_button.visible = true;
-    createjs.Tween.get(this.end_level_button).wait(9375).to({alpha:1}, 125);
+    createjs.Tween.get(this.end_level_button).wait(10375).to({alpha:1}, 125);
 
     //plays victory tune
     createjs.Sound.play("win", this.delayWin);
