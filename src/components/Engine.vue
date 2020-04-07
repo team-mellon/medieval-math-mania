@@ -78,15 +78,7 @@ export default {
 
       scale: {
         scene_scale_X: 1.0,
-        scene_scale_Y: 1.0,
-        max_scale_Y: 1440,
-        max_scale_X: 1920,
-        screen_ratio: 1920 / 1440,
-        scene_margin_X: 0.0,
-        added: false,
-        max_stored: false,
-        temp_scale: 1,
-        temp_max: 1440
+        scene_scale_Y: 1.0
       },
       // Scaling for engine assets
 
@@ -195,24 +187,6 @@ export default {
     this.ecs = []; // Entity component system for scaling and eventually object storage
 
     // var landscape_warning;
-
-    /////////////
-    // SCALING //
-    /////////////
-
-    this.max_scale_Y = 1440;
-    this.max_scale_X = 1920;
-
-    this.screen_ratio = this.max_scale_X / this.max_scale_Y
-
-    this.scene_margin_X = 0.0;
-
-    this.added = false;
-
-    this.max_stored = false;
-
-    this.temp_scale = 1;
-    this.temp_max = 1440
 
     ////////////
     // SCENES //
@@ -624,7 +598,7 @@ export default {
       // If window height is greater than width
       if (this.mobile.isPortrait && this.mobile.isMobile) {
 
-        if(!this.added) {
+        if(!this.scaler.added) {
 
           this.stage.addChild(this.landscape_warning);
           this.stage.addChild(this.phone_rotation);
@@ -633,19 +607,19 @@ export default {
           this.phone_rotation.gotoAndPlay(0);
           this.scene_html = document.getElementById("sceneHTML");
           this.scene_html.hidden = true;
-          this.added = true;
+          this.scaler.added = true;
 
         }
 
       } else {
 
-        if(this.added){
+        if(this.scaler.added){
 
           this.stage.removeChild(this.landscape_warning);
           this.stage.removeChild(this.phone_rotation);
           this.scene_html = document.getElementById("sceneHTML");
           this.scene_html.hidden = false;
-          this.added = false;
+          this.scaler.added = false;
 
         }
 
@@ -655,7 +629,7 @@ export default {
       this.stage.canvas.width = window.innerWidth;
       this.stage.canvas.height = window.innerHeight;
 
-      this.screen_ratio = this.stage.canvas.width / this.stage.canvas.height;
+      this.scaler.screenRatio = this.stage.canvas.width / this.stage.canvas.height;
 
       if (window.innerWidth < 600) {
         // gui_scale = 3;
@@ -670,29 +644,29 @@ export default {
       this.bg.graphics.beginFill(this.bg_color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
 
       // Calculate the scene scaling
-      if (this.screen_ratio < 2.5) { // tall screen
+      if (this.scaler.screenRatio < 2.5) { // tall screen
 
-        this.max_stored = false;
-        this.scene_scale_X = this.stage.canvas.width / this.max_scale_X;
-        this.scale.scene_scale_Y = this.stage.canvas.width / this.max_scale_X;
+        this.scaler.maxStored = false;
+        this.scene_scale_X = this.stage.canvas.width / this.scaler.maxScaleX;
+        this.scale.scene_scale_Y = this.stage.canvas.width / this.scaler.maxScaleX;
 
-      } else if (this.screen_ratio > 2.5) { // wide screen
-        if(!this.max_stored) {
-          this.max_stored = true;
-          this.temp_max = this.stage.canvas.height;
+      } else if (this.scaler.screenRatio > 2.5) { // wide screen
+        if(!this.scaler.maxStored) {
+          this.scaler.maxStored = true;
+          this.scaler.tempMax = this.stage.canvas.height;
         }
-        this.temp_scale = this.stage.canvas.width / this.max_scale_X;
-        this.scene_scale_X = this.temp_scale * ( this.stage.canvas.height / this.temp_max );
-        this.scale.scene_scale_Y = this.temp_scale * ( this.stage.canvas.height / this.temp_max );
+        this.scaler.tempScale = this.stage.canvas.width / this.scaler.maxScaleX;
+        this.scene_scale_X = this.scaler.tempScale * ( this.stage.canvas.height / this.scaler.tempMax );
+        this.scale.scene_scale_Y = this.scaler.tempScale * ( this.stage.canvas.height / this.scaler.tempMax );
       }
 
       // Calculate the scene margin in a given direction
-      this.scene_margin_X = ( this.stage.canvas.width - this.max_scale_X ) / 2;
+      this.scaler.sceneMarginX = ( this.stage.canvas.width - this.scaler.maxScaleX ) / 2;
 
       // Log screen scaling for debugging purposes
       // console.log(this.scene_scale_X);
       // console.log(this.scale.scene_scale_Y);
-      // console.log(this.screen_ratio);
+      // console.log(this.scaler.screenRatio);
 
       this.landscape_warning.graphics.clear()
       this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);

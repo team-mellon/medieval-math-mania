@@ -9,14 +9,18 @@
 
 class Scaler {
 
-  maxScaleY = 1440;
-  maxScaleX = 1920;
-  screen_ratio = this.maxScaleY / this.maxScaleX
-  scene_margin_X = 0.0;
-  added = false;
-  max_stored = false;
-  temp_scale = 1;
-  temp_max = 1440
+  constructor() {
+
+    this.maxScaleY = 1440;
+    this.maxScaleX = 1920;
+    this.screenRatio = this.maxScaleY / this.maxScaleX;
+    this.sceneMarginX = 0.0;
+    this.added = false;
+    this.maxStored = false;
+    this.tempScale = 1;
+    this.tempMax = 1440
+
+  }
 
   /**
    * Function to scale the image-like assets.
