@@ -185,6 +185,7 @@ export default {
     this.music = new SoundHandler();
     this.gui = new GUIHandler();
     this.level = new LevelHandler();
+    this.scaler = new Scaler();
 
     document.onkeydown = this.input.keyDown.bind(this.input);   // Add keydown listener
     document.onkeyup = this.input.keyUp.bind(this.input);       // Add keyup listener
@@ -704,10 +705,10 @@ export default {
       }
 
       if (this.current_scene == 3) {
-        Scaler.scaleAssets(this.level.lcs, this.current_scene, this.mobile.isMobile, sceneScaling, this.stage); // Scale scene appropriately
+        this.scaler.scaleAssets(this.level.lcs, this.current_scene, this.mobile.isMobile, sceneScaling, this.stage); // Scale scene appropriately
       }
 
-      Scaler.scaleAssets(this.ecs, this.current_scene, this.mobile.isMobile, sceneScaling, this.stage); // Scale scene appropriately
+      this.scaler.scaleAssets(this.ecs, this.current_scene, this.mobile.isMobile, sceneScaling, this.stage); // Scale scene appropriately
       // this.scaleAssets(this.gcs, this.current_scene, this.mobile.isMobile, this.scale.scene_scale_Y, this.scene_scale_X, this.stage); // Scale scene appropriately
 
 

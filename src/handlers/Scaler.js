@@ -26,7 +26,7 @@ class Scaler {
    * @param {object} sceneScaling - The scaling of the scenes' dimensions.
    * @param {object} stage - The stage that displays the content.
    */
-  static scaleAssets (entityComponentSystem, current_scene, isMobile, sceneScaling, stage) {
+  scaleAssets(entityComponentSystem, current_scene, isMobile, sceneScaling, stage) {
 
     if (current_scene == 3) {
       this.scaleEntryForm(sceneScaling);
@@ -52,7 +52,7 @@ class Scaler {
    * @param {object} entityComponent - The the current entity being scaled.
    * @returns {object} startValues : { x: xStart, y: yStart } - The starting location values.
    */
-  static snapEdges(stage, entityComponent) {
+  snapEdges(stage, entityComponent) {
 
     let xStart = stage.canvas.width / 2;
     let yStart = stage.canvas.height / 2;
@@ -100,7 +100,7 @@ class Scaler {
    * @param {object} sceneScaling - The scaling of the scenes' dimensions.
    * @returns {object} entity_object - The entity object produced.
    */
-  static setScale(isMobile, entityComponent, sceneScaling) {
+  setScale(isMobile, entityComponent, sceneScaling) {
 
     let platformScale = 1;
 
@@ -157,7 +157,7 @@ class Scaler {
    * Function to scale the entry form during the game.
    * @param {object} sceneScaling - The scaling of the scenes' dimensions.
    */
-  static scaleEntryForm(sceneScaling) {
+  scaleEntryForm(sceneScaling) {
 
     var xPosition = (284 * sceneScaling.y).toString() + "px";
     var yPosition = (960 * sceneScaling.y).toString() + "px";
