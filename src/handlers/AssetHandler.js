@@ -197,7 +197,7 @@ class AssetHandler {
     image.regX = config.width/2;
     image.regY = config.height/2;
 
-    this.createAndPushEntity(entityComponentSystem, image, config.width, config.height, config.xLock, config.xOffset, config.yLock, config.yOffset, config.type);
+    this.createAndPushEntity(entityComponentSystem, image, config);
 
     return image;
 
@@ -220,7 +220,7 @@ class AssetHandler {
     sprite.regX = config.width/2;
     sprite.regY = config.height/2;
 
-    this.createAndPushEntity(entityComponentSystem, sprite, config.width, config.height, config.xLock, config.xOffset, config.yLock, config.yOffset, config.type);
+    this.createAndPushEntity(entityComponentSystem, sprite, config);
 
     return sprite;
 
@@ -233,7 +233,7 @@ class AssetHandler {
     text.regX = config.width/2;
     text.regY = config.height/2;
 
-    this.createAndPushEntity(entityComponentSystem, text, config.width, config.height, config.xLock, config.xOffset, config.yLock, config.yOffset, config.type);
+    this.createAndPushEntity(entityComponentSystem, text, config);
 
     return text;
 
@@ -268,7 +268,7 @@ class AssetHandler {
 
     // button.on("click", handleClick);
 
-    this.createAndPushEntity(entityComponentSystem, text, config.width, config.height, config.xLock, config.xOffset, config.yLock, config.yOffset, config.type);
+    this.createAndPushEntity(entityComponentSystem, text, config);
 
     return container;
 
@@ -311,7 +311,7 @@ class AssetHandler {
       }
     }
 
-    this.createAndPushEntity(entityComponentSystem, text, config.width, config.height, config.xLock, config.xOffset, config.yLock, config.yOffset, config.type);
+    this.createAndPushEntity(entityComponentSystem, text, config);
 
     return text;
 
@@ -342,7 +342,7 @@ class AssetHandler {
     containerFrame.y = 100;
     stage.addChild(containerFrame);
 
-    this.createAndPushEntity(entityComponentSystem, containerFrame, config.width, config.height, config.xLock, config.xOffset, config.yLock, config.yOffset, config.type);
+    this.createAndPushEntity(entityComponentSystem, containerFrame, config);
 
     return containerFrame;
 
@@ -403,28 +403,34 @@ class AssetHandler {
     // label.on("click", handleClick);
     button.on("click", handleClick);
 
-    this.createAndPushEntity(entityComponentSystem, button, config.width, config.height, config.xLock, config.xOffset, config.yLock, config.yOffset, config.type);
+    this.createAndPushEntity(entityComponentSystem, button, config);
 
     return button;
 
   }
 
-  static createAndPushEntity(entityComponentSystem, obj, config_width, config_height, config_xLock, config_xLocation, config_yLock, config_yLocation, config_type) {
+  static createAndPushEntity(entityComponentSystem, obj, config) {
 
     // Create the object to go in the respective entity component system
-    let entity_object = {
+    let entityObject = {
       object: obj,
-      width: config_width,
-      height: config_height,
-      x_lock: config_xLock,
-      x_location: config_xLocation,
-      y_lock: config_yLock,
-      y_location: config_yLocation,
-      type: config_type
+      width: config.width,
+      height: config.height,
+      x_lock: config.xLock,
+      x_location: config.xOffset,
+      y_lock: config.yLock,
+      y_location: config.yOffset,
+      type: config.type
     };
 
+    this.pushEntity(entityComponentSystem, entityObject);
+
+  }
+
+  static pushEntity(entityComponentSystem, entityObject) {
+
     // Push into the respective ecs
-    entityComponentSystem.push(entity_object);
+    entityComponentSystem.push(entityObject);
 
   }
 
