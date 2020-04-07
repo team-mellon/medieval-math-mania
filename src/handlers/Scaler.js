@@ -46,32 +46,6 @@ class Scaler {
 
   }
 
-  // // Scale the image-like assets
-  // scale_to_canvas: function(image, x_lock, x_location, y_lock, y_location, type) {
-  //
-  //   if (mobile) {
-  //
-  //     switch (type) {
-  //
-  //       case "image":
-  //         break;
-  //
-  //       case "gui":
-  //         image.scale = 1.0;
-  //         break;
-  //
-  //       case "smallgui":
-  //         image.scale = 0.5;
-  //         break;
-  //     }
-  //
-  //   }
-  //
-  //   image.x = x_start + x_location;
-  //   image.y = y_start + y_location;
-  //
-  // },
-
   /**
    * Function to snap items to the edges of screen.
    * @param {object} stage - The stage that displays the content.
@@ -150,6 +124,27 @@ class Scaler {
     //     break;
     
     // }
+
+    // if (mobile) {
+  
+    //   switch (type) {
+  
+    //     case "image":
+    //       break;
+  
+    //     case "gui":
+    //       image.scale = 1.0;
+    //       break;
+  
+    //     case "smallgui":
+    //       image.scale = 0.5;
+    //       break;
+    //   }
+  
+    // }
+  
+    // image.x = x_start + x_location;
+    // image.y = y_start + y_location;
 
     entityComponent.object.scaleX = sceneScaling.x;
     entityComponent.object.scaleY = sceneScaling.y;
