@@ -35,6 +35,9 @@ import constants from '../game_data/constants.js';
 import { sceneData, sceneManifest } from '../game_data/scenes.js';
 import { levelData } from '../game_data/levels.js';
 
+// Models
+import ObjectConfig from '../structures/ObjectConfig'
+
 export default {
 
   name: 'Engine',
@@ -718,7 +721,8 @@ export default {
 
       this.landscape_warning = new createjs.Shape();
 
-      this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, 288, 288, "center", 0, "center", 0, "image", this.ecs, this.stage);
+      let config = new ObjectConfig('default', 'image', 288, 288, "center", 0, "center", 0);
+      this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, config, this.ecs, this.stage);
       this.stage.removeChild(this.phone_rotation);
 
       this.resize(); // Resize to set initial scale
@@ -795,11 +799,22 @@ export default {
       this.bg.graphics.clear()
       this.bg.graphics.beginFill(this.bg_color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
 
-      this.background = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), constants.backgroundX, 1440, "center", 0, "center", 0, "image", this.ecs, this.stage);
-      this.background_top = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), constants.backgroundX, 1440, "center", 0, "center", -1440, "image", this.ecs, this.stage);
-      this.background_bottom = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), constants.backgroundX, 1440, "center", 0, "center", 1440, "image", this.ecs, this.stage);
-      this.background_left = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), constants.backgroundX, 1440, "center", -constants.backgroundX, "center", 0, "image", this.ecs, this.stage);
-      this.background_right = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), constants.backgroundX, 1440, "center", constants.backgroundX, "center", 0, "image", this.ecs, this.stage);
+      let config;
+
+      config = new ObjectConfig('default', 'image', constants.backgroundX, 1440, "center", 0, "center", 0);
+      this.background = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), config, this.ecs, this.stage);
+
+      config = new ObjectConfig('default', 'image', constants.backgroundX, 1440, "center", 0, "center", -1440);
+      this.background_top = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), config, this.ecs, this.stage);
+      
+      config = new ObjectConfig('default', 'image', constants.backgroundX, 1440, "center", 0, "center", 1440);
+      this.background_bottom = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), config, this.ecs, this.stage);
+      
+      config = new ObjectConfig('default', 'image', constants.backgroundX, 1440, "center", -constants.backgroundX, "center", 0);
+      this.background_left = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), config, this.ecs, this.stage);
+      
+      config = new ObjectConfig(constants.backgroundX, 1440, "center", constants.backgroundX, "center", 0);
+      this.background_right = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), config, this.ecs, this.stage);
 
       switch (this.current_scene) {
 
@@ -832,23 +847,42 @@ export default {
       }
 
       if (this.current_scene != 8 && this.current_scene != 2 && this.current_scene != 3 && this.current_scene != 10) {
+
         var temp_fg_img = {
           images: [this.loadingQueue.getResult(sceneData[this.current_scene].fg_img.images[0])],
           frames: sceneData[this.current_scene].fg_img.frames,
           framerate: sceneData[this.current_scene].fg_img.framerate
         };
-        this.foreground = AssetHandler.createTextContainer(temp_fg_img, sceneData[this.current_scene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", sceneData[this.current_scene].fg_img.frames.width, sceneData[this.current_scene].fg_img.frames.height, "center", 0, "center", 0, "image", 0, this.ecs, this.stage);
+
+        let config = new ObjectConfig('default', 'image', sceneData[this.current_scene].fg_img.frames.width, sceneData[this.current_scene].fg_img.frames.height, "center", 0, "center", 0);
+        this.foreground = AssetHandler.createTextContainer(temp_fg_img, sceneData[this.current_scene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", config, 0, this.ecs, this.stage);
+
       } else if (this.current_scene == 10) {
-        this.foreground = AssetHandler.createImage(this.loadingQueue.getResult("title-text"), 1635, 480, "center", 0, "top", 48 + 480 / 2, "image", this.ecs, this.stage);
+
+        config = new ObjectConfig('default', 'image', 1635, 480, "center", 0, "top", 48 + 480 / 2);
+        this.foreground = AssetHandler.createImage(this.loadingQueue.getResult("title-text"), config, this.ecs, this.stage);
+
       } else if (this.current_scene == 8) {
-        this.midground = AssetHandler.createImage(this.loadingQueue.getResult("map"), constants.backgroundX, constants.backgroundY, "center", 0, "center", 0, "image", this.ecs, this.stage);
-        this.foreground = AssetHandler.createButton(this.loadingQueue.getResult("map-banner"), "Select a level", constants.backgroundX, 108, "center", 0, "top", 0 + (108/2), "image", function() {}.bind(this), this.ecs, this.stage);
+
+        config = new ObjectConfig('default', 'image', constants.backgroundX, constants.backgroundY, "center", 0, "center", 0);
+        this.midground = AssetHandler.createImage(this.loadingQueue.getResult("map"), config, this.ecs, this.stage);
+
+        config = new ObjectConfig('default', 'gui', constants.backgroundX, 108, "center", 0, "top", 0 + (108/2));
+        this.foreground = AssetHandler.createButton(this.loadingQueue.getResult("map-banner"), "Select a level", config, function() {}.bind(this), this.ecs, this.stage);
+
       }
 
       if (this.current_scene == 2) {
-        this.background = AssetHandler.createImage(this.loadingQueue.getResult("menu"), constants.backgroundX, constants.backgroundY, "center", 0, "bottom", -constants.backgroundY / 2, "image", this.ecs, this.stage);
-        this.background_left = AssetHandler.createImage(this.loadingQueue.getResult("menu-left"), constants.backgroundX, constants.backgroundY, "center", 0 - (constants.backgroundX), "bottom", -constants.backgroundY / 2, "image", this.ecs, this.stage);
-        this.background_right = AssetHandler.createImage(this.loadingQueue.getResult("menu-right"), constants.backgroundX, constants.backgroundY, "center", 0 + (constants.backgroundX), "bottom", -constants.backgroundY / 2, "image", this.ecs, this.stage);
+
+        config = new ObjectConfig('default', 'image', constants.backgroundX, constants.backgroundY, "center", 0, "bottom", -constants.backgroundY / 2);
+        this.background = AssetHandler.createImage(this.loadingQueue.getResult("menu"), config, this.ecs, this.stage);
+        
+        config = new ObjectConfig('default', 'image', constants.backgroundX, constants.backgroundY, "center", 0 - (constants.backgroundX), "bottom", -constants.backgroundY / 2);
+        this.background_left = AssetHandler.createImage(this.loadingQueue.getResult("menu-left"), config, this.ecs, this.stage);
+        
+        config = new ObjectConfig('default', 'image', constants.backgroundX, constants.backgroundY, "center", 0 + (constants.backgroundX), "bottom", -constants.backgroundY / 2);
+        this.background_right = AssetHandler.createImage(this.loadingQueue.getResult("menu-right"), config, this.ecs, this.stage);
+
       }
 
       // Custom scene functionalities
