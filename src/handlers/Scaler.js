@@ -11,14 +11,21 @@ class Scaler {
 
   maxScaleY = 1440;
   maxScaleX = 1920;
-  // screen_ratio = this.maxScaleY / this.maxScaleX
+  screen_ratio = this.maxScaleY / this.maxScaleX
   scene_margin_X = 0.0;
   added = false;
   max_stored = false;
   temp_scale = 1;
   temp_max = 1440
 
-  // Scale the image-like assets
+  /**
+   * Function to scale the image-like assets.
+   * @param {object} entityComponentSystem - The array of entities.
+   * @param {object} current_scene - The index of the current scene.
+   * @param {object} isMobile - The flag that determines if on a mobile device.
+   * @param {object} sceneScaling - The scaling of the scenes' dimensions.
+   * @param {object} stage - The stage that displays the content.
+   */
   static scaleAssets (entityComponentSystem, current_scene, isMobile, sceneScaling, stage) {
 
     if (current_scene == 3) {
@@ -42,12 +49,6 @@ class Scaler {
   // // Scale the image-like assets
   // scale_to_canvas: function(image, x_lock, x_location, y_lock, y_location, type) {
   //
-  //   var x_start = stage.canvas.width / 2;
-  //   var y_start = stage.canvas.height / 2;
-  //
-  //   image.scaleX = scene_scale_X;
-  //   image.scaleY = scene_scale_Y;
-  //
   //   if (mobile) {
   //
   //     switch (type) {
@@ -66,43 +67,17 @@ class Scaler {
   //
   //   }
   //
-  //   switch (x_lock) {
-  //
-  //     case "left":
-  //       var x_start = 0;
-  //       break;
-  //
-  //     case "center":
-  //       var x_start = stage.canvas.width / 2;
-  //       break;
-  //
-  //     case "right":
-  //       var x_start = stage.canvas.width;
-  //       break;
-  //
-  //   }
-  //
-  //   switch (y_lock) {
-  //
-  //     case "top":
-  //       var y_start = 0;
-  //       break;
-  //
-  //     case "center":
-  //       var y_start = stage.canvas.height / 2;
-  //       break;
-  //
-  //     case "bottom":
-  //       var y_start = stage.canvas.height;
-  //       break;
-  //
-  //   }
-  //
   //   image.x = x_start + x_location;
   //   image.y = y_start + y_location;
   //
   // },
 
+  /**
+   * Function to snap items to the edges of screen.
+   * @param {object} stage - The stage that displays the content.
+   * @param {object} entityComponent - The the current entity being scaled.
+   * @returns {object} startValues : { x: xStart, y: yStart } - The starting location values.
+   */
   static snapEdges(stage, entityComponent) {
 
     let xStart = stage.canvas.width / 2;
@@ -140,10 +115,17 @@ class Scaler {
 
     }
 
-    return { x: xStart, y: yStart }
+    return { x: xStart, y: yStart };
 
   }
 
+  /**
+   * Function to scale an individual entity.
+   * @param {object} isMobile - The flag that determines if on a mobile device.
+   * @param {object} entityComponent - The the current entity being scaled.
+   * @param {object} sceneScaling - The scaling of the scenes' dimensions.
+   * @returns {object} entity_object - The entity object produced.
+   */
   static setScale(isMobile, entityComponent, sceneScaling) {
 
     let platformScale = 1;
@@ -176,6 +158,10 @@ class Scaler {
 
   }
 
+  /**
+   * Function to scale the entry form during the game.
+   * @param {object} sceneScaling - The scaling of the scenes' dimensions.
+   */
   static scaleEntryForm(sceneScaling) {
 
     var xPosition = (284 * sceneScaling.y).toString() + "px";
