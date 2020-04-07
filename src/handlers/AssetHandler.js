@@ -8,88 +8,26 @@
 class AssetHandler {
 
   // Scale the image-like assets
-  static scaleAssets (entity_component_system, current_scene, isMobile, scene_scale_Y, scene_scale_X, stage) {
+  static scaleAssets (entityComponentSystem, current_scene, isMobile, scene_scale_Y, scene_scale_X, stage) {
 
-    if (current_scene == 3) {
-
-      var x_position = (284 * scene_scale_Y).toString() + "px";
-      var y_position = (960 * scene_scale_Y).toString() + "px";
-
-      // console.log(x_position);
-
-      var game_entry_form = document.getElementById("equationBanner");
-      game_entry_form.style.bottom = x_position;
-      game_entry_form.style.right = y_position;
-
+    let sceneScaling = {
+      x: scene_scale_X,
+      y: scene_scale_Y
     }
 
-    // console.log("ECS length: " + entity_component_system.length);
+    if (current_scene == 3) {
+      this.scaleEntryForm(sceneScaling);
+    }
 
-    for (var i = 0; i < entity_component_system.length; i++) {
+    // console.log("ECS length: " + entityComponentSystem.length);
 
-      let platform_scale = 1.0;
+    for (var i = 0; i < entityComponentSystem.length; i++) {
 
-      let x_start = stage.canvas.width / 2;
-      let y_start = stage.canvas.height / 2;
+      let platformScale = this.setScale(isMobile, entityComponentSystem[i], sceneScaling);
+      let startValues = this.snapEdges(stage, entityComponentSystem[i]);
 
-      switch (entity_component_system[i].x_lock) {
-
-        case "left":
-          x_start = 0;
-          break;
-
-        case "center":
-          x_start = stage.canvas.width / 2;
-          break;
-
-        case "right":
-          x_start = stage.canvas.width;
-          break;
-
-      }
-
-      switch (entity_component_system[i].y_lock) {
-
-        case "top":
-          y_start = 0;
-          break;
-
-        case "center":
-          y_start = stage.canvas.height / 2;
-          break;
-
-        case "bottom":
-          y_start = stage.canvas.height;
-          break;
-
-      }
-
-      entity_component_system[i].object.scaleX = scene_scale_X;
-      entity_component_system[i].object.scaleY = scene_scale_Y;
-
-      // if (isMobile) {
-      //
-      //   platform_scale = 1.5;
-      //
-      // }
-
-      // switch (entity_component_system[i].type) {
-      //
-      //   case "image":
-      //     break;
-      //
-      //   case "gui":
-      //     // ecs[i].object.scale = 1.0;
-      //     break;
-      //
-      //   case "smallgui":
-      //     // ecs[i].object.scale = 0.5;
-      //     break;
-      //
-      // }
-
-      entity_component_system[i].object.x = x_start + entity_component_system[i].x_location * scene_scale_Y * platform_scale;
-      entity_component_system[i].object.y = y_start + entity_component_system[i].y_location * scene_scale_Y * platform_scale;
+      entityComponentSystem[i].object.x = startValues.x + entityComponentSystem[i].x_location * sceneScaling.y * platformScale;
+      entityComponentSystem[i].object.y = startValues.y + entityComponentSystem[i].y_location * sceneScaling.y * platformScale;
 
     }
 
@@ -159,29 +97,113 @@ class AssetHandler {
   //
   // },
 
-  static createImage (location, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
+  static snapEdges(stage, entityComponent) {
+
+    let xStart = stage.canvas.width / 2;
+    let yStart = stage.canvas.height / 2;
+
+    switch (entityComponent.x_lock) {
+
+      case "left":
+        xStart = 0;
+        break;
+
+      case "center":
+        xStart = stage.canvas.width / 2;
+        break;
+
+      case "right":
+        xStart = stage.canvas.width;
+        break;
+
+    }
+
+    switch (entityComponent.y_lock) {
+
+      case "top":
+        yStart = 0;
+        break;
+
+      case "center":
+        yStart = stage.canvas.height / 2;
+        break;
+
+      case "bottom":
+        yStart = stage.canvas.height;
+        break;
+
+    }
+
+    return { x: xStart, y: yStart }
+
+  }
+
+  static setScale(isMobile, entityComponent, sceneScaling) {
+
+    let platformScale = 1;
+
+    if (isMobile) {
+    
+    //   platformScale = 1.5;
+    
+    }
+
+    // switch (entityComponent.type) {
+    
+    //   case "image":
+    //     break;
+    
+    //   case "gui":
+    //     // entityComponent.object.scale = 1.0;
+    //     break;
+    
+    //   case "smallgui":
+    //     // entityComponent.object.scale = 0.5;
+    //     break;
+    
+    // }
+
+    entityComponent.object.scaleX = sceneScaling.x;
+    entityComponent.object.scaleY = sceneScaling.y;
+
+    return platformScale;
+
+  }
+
+  static scaleEntryForm(sceneScaling) {
+
+    var xPosition = (284 * sceneScaling.y).toString() + "px";
+    var yPosition = (960 * sceneScaling.y).toString() + "px";
+
+    var gameEntryForm = document.getElementById("equationBanner");
+    gameEntryForm.style.bottom = xPosition;
+    gameEntryForm.style.right = yPosition;
+
+  }
+
+  static createImage(location, config, entityComponentSystem, stage) {
 
     let image = new createjs.Bitmap(location);
 
     // let listener = image.on("error", function(evt, data) {
     //   console.log("'" + evt.src + "' failed to load");
     // });
-    //
+    
     // let listener2 = image.on("complete", function(evt) {
     //   console.log("Spritesheet loading complete. Check for errors.");
     // });
 
     stage.addChild(image);
-    image.regX = width/2;
-    image.regY = height/2;
+    image.regX = config.width/2;
+    image.regY = config.height/2;
 
-    this.createAndPushEntity(entity_component_system, image, width, height, x_lock, x_location, y_lock, y_location, type);
+    this.createAndPushEntity(entityComponentSystem, image, config.width, config.height, config.xLock, config.xOffset, config.yLock, config.yOffset, config.type);
 
     return image;
 
   }
 
-  static createSprite (animation, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
+  static createSprite (animation, config, entityComponentSystem, stage) {
 
     let spriteSheet = new createjs.SpriteSheet(animation);
 
@@ -195,81 +217,29 @@ class AssetHandler {
 
     let sprite = new createjs.Sprite(spriteSheet);
     stage.addChild(sprite);
-    sprite.regX = width/2;
-    sprite.regY = height/2;
+    sprite.regX = config.width/2;
+    sprite.regY = config.height/2;
 
-    this.createAndPushEntity(entity_component_system, sprite, width, height, x_lock, x_location, y_lock, y_location, type);
+    this.createAndPushEntity(entityComponentSystem, sprite, config.width, config.height, config.xLock, config.xOffset, config.yLock, config.yOffset, config.type);
 
     return sprite;
 
   }
 
-  static createText (num, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
+  static createText (num, font, size, style, color, config, entityComponentSystem, stage) {
 
     var text = new createjs.Text(num, style + " " + size + " " + font, color);
     stage.addChild(text);
-    text.regX = width/2;
-    text.regY = height/2;
+    text.regX = config.width/2;
+    text.regY = config.height/2;
 
-    this.createAndPushEntity(entity_component_system, text, width, height, x_lock, x_location, y_lock, y_location, type);
-
-    return text;
-
-  }
-
-  static createStatsContainer (arr, asset, num, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage) {
-
-    var text = new createjs.Text(num, style + " " + size + " " + font, color);
-    //stage.addChild(text);
-  	text.regX = 50;
-  	text.regY = 100;
-  	text.x = -250;
-
-  	var container = new createjs.Container();
-  	container.addChild(text);
-  	stage.addChild(container);
-
-
-// NEW VERSION OF BADGES FOR STATS PAGE
-
-	let count = 0;
-	for(var i = 0; i <= 195; i += 65){
-	    for(var j = 0; j < 5; j++){
-	        if(arr[count] == 1)
-	            var temp = new createjs.Bitmap("res/badges/badge-level-" + (count + 1) + ".png");
-		else
-		    var temp = new createjs.Bitmap(asset);
-
-		temp.regX = width / 2;
-		temp.regY = height / 2;
-		temp.scale = 0.25;
-		temp.name = "badge " + (count + 1);
-		temp.x = j * 70;
-		temp.y = -70 + i;
-		container.addChild(temp);
-
-		count++;
-	    }
-	}
-
-
-/*
-	var image = new createjs.Bitmap(asset);
-	//stage.addChild(image);
-	image.regX = width/2;
-	image.regY = height/2;
-	image.scale = 0.50;
-	//image.x = 100;
-	//image.y = 100;
-*/
-
-    this.createAndPushEntity(entity_component_system, container, width, height, x_lock, x_location, y_lock, y_location, type);
+    this.createAndPushEntity(entityComponentSystem, text, config.width, config.height, config.xLock, config.xOffset, config.yLock, config.yOffset, config.type);
 
     return text;
 
   }
 
-  static createTextContainer (animation, words, font, size, style, color, width, height, x_lock, x_location, y_lock, y_location, type, reg, entity_component_system, stage) { // }, handleClick) {
+  static createTextContainer (animation, words, font, size, style, color, config, reg, entityComponentSystem, stage) { // }, handleClick) {
 
     var spriteSheet = new createjs.SpriteSheet(animation);
 
@@ -282,12 +252,12 @@ class AssetHandler {
     });
 
     var sprite = new createjs.Sprite(spriteSheet);
-    sprite.regX = width/2;
-    sprite.regY = height/2;
+    sprite.regX = config.width/2;
+    sprite.regY = config.height/2;
 
-    var text = new createjs.Text(words, style + " " + size + " " + font, color);
-    text.textAlign = "center";
-    text.textBaseline = "middle";
+    var text = new createjs.Text(words, style + ' ' + size + ' ' + font, color);
+    text.textAlign = 'center';
+    text.textBaseline = 'middle';
     text.lineWidth = 700;
     text.regY = reg / 2;
     // text.regY = text.getMeasuredHeight() / 2;
@@ -298,13 +268,56 @@ class AssetHandler {
 
     // button.on("click", handleClick);
 
-    this.createAndPushEntity(entity_component_system, container, width, height, x_lock, x_location, y_lock, y_location, type);
+    this.createAndPushEntity(entityComponentSystem, text, config.width, config.height, config.xLock, config.xOffset, config.yLock, config.yOffset, config.type);
 
     return container;
 
   }
 
-  static createContainerFrame(width, height, x_lock, x_location, y_lock, y_location, type, entity_component_system, stage){
+  static createStatsContainer (arr, asset, num, font, size, style, color, config, entityComponentSystem, stage) {
+
+    var text = new createjs.Text(num, style + " " + size + " " + font, color);
+    //stage.addChild(text);
+    text.regX = 50;
+    text.regY = 100;
+    text.x = -250;
+
+    var container = new createjs.Container();
+    container.addChild(text);
+    stage.addChild(container);
+
+
+    // NEW VERSION OF BADGES FOR STATS PAGE
+
+    let count = 0;
+    for(var i = 0; i <= 195; i += 65){
+      for(var j = 0; j < 5; j++){
+
+        if(arr[count] == 1)
+          var temp = new createjs.Bitmap("res/badges/badge-level-" + (count + 1) + ".png");
+        else
+          var temp = new createjs.Bitmap(asset);
+
+        temp.regX = config.width / 2;
+        temp.regY = config.height / 2;
+        temp.scale = 0.25;
+        temp.name = "badge " + (count + 1);
+        temp.x = j * 70;
+        temp.y = -70 + i;
+        container.addChild(temp);
+
+        count++;
+
+      }
+    }
+
+    this.createAndPushEntity(entityComponentSystem, text, config.width, config.height, config.xLock, config.xOffset, config.yLock, config.yOffset, config.type);
+
+    return text;
+
+  }
+
+  static createContainerFrame(config, entityComponentSystem, stage){
 
     var squareFrame = new createjs.Shape();
     squareFrame.graphics.beginFill("black").drawRect(0,0,220,320);
@@ -329,17 +342,17 @@ class AssetHandler {
     containerFrame.y = 100;
     stage.addChild(containerFrame);
 
-    this.createAndPushEntity(entity_component_system, containerFrame, width, height, x_lock, x_location, y_lock, y_location, type);
+    this.createAndPushEntity(entityComponentSystem, containerFrame, config.width, config.height, config.xLock, config.xOffset, config.yLock, config.yOffset, config.type);
 
     return containerFrame;
 
   }
 
-  static createButton (location, text, width, height, x_lock, x_location, y_lock, y_location, type, handleClick, entity_component_system, stage) {
+  static createButton (location, text, config, handleClick, entityComponentSystem, stage) {
 
     var image = new createjs.Bitmap(location);
-    image.regX = width/2;
-    image.regY = height/2;
+    image.regX = config.width/2;
+    image.regY = config.height/2;
 
     var color = "#DAA520";
     var size = "24";
@@ -372,7 +385,7 @@ class AssetHandler {
     var label = new createjs.Text(text, "normal " + size + "px " + font, color);
     // label.name = "label";
 		var hit = new createjs.Shape();
-    hit.graphics.beginFill("#000").drawRect(-25, -25, width, height);
+    hit.graphics.beginFill("#000").drawRect(-25, -25, config.width, config.height);
 		label.hitArea = hit;
     label.textAlign = "center";
     label.textBaseline = "middle";
@@ -390,28 +403,28 @@ class AssetHandler {
     // label.on("click", handleClick);
     button.on("click", handleClick);
 
-    this.createAndPushEntity(entity_component_system, button, width, height, x_lock, x_location, y_lock, y_location, type);
+    this.createAndPushEntity(entityComponentSystem, button, config.width, config.height, config.xLock, config.xOffset, config.yLock, config.yOffset, config.type);
 
     return button;
 
   }
 
-  static createAndPushEntity (entity_component_system, obj, obj_width, obj_height, obj_x_lock, obj_x_location, obj_y_lock, obj_y_location, obj_type) {
+  static createAndPushEntity(entityComponentSystem, obj, config_width, config_height, config_xLock, config_xLocation, config_yLock, config_yLocation, config_type) {
 
     // Create the object to go in the respective entity component system
     let entity_object = {
       object: obj,
-      width: obj_width,
-      height: obj_height,
-      x_lock: obj_x_lock,
-      x_location: obj_x_location,
-      y_lock: obj_y_lock,
-      y_location: obj_y_location,
-      type: obj_type
+      width: config_width,
+      height: config_height,
+      x_lock: config_xLock,
+      x_location: config_xLocation,
+      y_lock: config_yLock,
+      y_location: config_yLocation,
+      type: config_type
     };
 
     // Push into the respective ecs
-    entity_component_system.push(entity_object);
+    entityComponentSystem.push(entity_object);
 
   }
 
