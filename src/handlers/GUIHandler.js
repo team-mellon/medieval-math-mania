@@ -274,14 +274,17 @@ class GUIHandler {
 
   			for (var i = 1; i < (constants.num_levels + 1); i++) {
 
+				let indicatorType = '';
+
 				if (i === level.current_level) {
-					var indicator = AssetHandler.createButton("res/map-indicator-current.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", levels[i].open, entity_component_system, stage);
+					indicatorType = '-current';
 				} else if (level.visitedLevels[i]) {
-					var indicator = AssetHandler.createButton("res/map-indicator-visited.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", levels[i].open, entity_component_system, stage);
-				} else {
-					var indicator = AssetHandler.createButton("res/map-indicator.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", levels[i].open, entity_component_system, stage);
+					indicatorType = '-visited';
 				}
-  				// var indicator = AssetHandler.createButton("res/map-indicator.png", (i).toString(), 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/, "gui", function (this) { indicatorFunction(i).bind(this) }, entity_component_system, stage);
+
+				config = new ObjectConfig('default', 'gui', 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/);
+				var indicator = AssetHandler.createButton("res/map-indicator" + indicatorType + ".png", (i).toString(), config, levels[i].open, entity_component_system, stage);
+				// var indicator = AssetHandler.createButton("res/map-indicator.png", (i).toString(), config, function (this) { indicatorFunction(i).bind(this) }, entity_component_system, stage);
 				indicator.on("mouseover", function (evt) { this.handleMouseEvent(evt, stage, scale.scene_scale_Y) }.bind(this));
 				indicator.on("mouseout", function (evt) { this.handleMouseEvent(evt, stage, scale.scene_scale_Y) }.bind(this));
 
