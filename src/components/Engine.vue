@@ -20,6 +20,7 @@ import Loader from './Loader.vue'
 
 // Static classes
 import AssetHandler from '../handlers/AssetHandler.js';
+import Scaler from '../handlers/Scaler.js';
 import FormHandler from '../handlers/FormHandler.js';
 import APIHandler from '../handlers/APIHandler.js';
 
@@ -695,12 +696,21 @@ export default {
       this.landscape_warning.graphics.clear()
       this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
 
+
+
+      let sceneScaling = {
+        x: this.scene_scale_X,
+        y: this.scale.scene_scale_Y
+      }
+
       if (this.current_scene == 3) {
-        AssetHandler.scaleAssets(this.level.lcs, this.current_scene, this.mobile.isMobile, this.scale.scene_scale_Y, this.scene_scale_X, this.stage); // Scale scene appropriately
-      } // else {
-        AssetHandler.scaleAssets(this.ecs, this.current_scene, this.mobile.isMobile, this.scale.scene_scale_Y, this.scene_scale_X, this.stage); // Scale scene appropriately
-      // }
+        Scaler.scaleAssets(this.level.lcs, this.current_scene, this.mobile.isMobile, sceneScaling, this.stage); // Scale scene appropriately
+      }
+
+      Scaler.scaleAssets(this.ecs, this.current_scene, this.mobile.isMobile, sceneScaling, this.stage); // Scale scene appropriately
       // this.scaleAssets(this.gcs, this.current_scene, this.mobile.isMobile, this.scale.scene_scale_Y, this.scene_scale_X, this.stage); // Scale scene appropriately
+
+
 
       this.stage.update()
 
