@@ -163,9 +163,9 @@ export default {
     this.loadingQueue.loadManifest(sceneManifest);
 
     // Set the window resize function to the one
-    window.addEventListener('resize', this.resize, false);
+    window.addEventListener('resize', function () { this.scaler.resize(this.mobile, this.stage, this.landscape_warning, this.phone_rotation, this.scene_html, this.bg_color, this.bg, this.scene_scale_X, this.scene_scale_Y, this.scale, this.level, this.ecs, this.current_scene) }.bind(this), false);
 
-  // Grabbing the canvas to set touch cozntrols
+    // Grabbing the canvas to set touch cozntrols
     this.drawingCanvas = document.getElementById("drawingCanvas");
 
     // Grabbing the div that hold the html stuff
@@ -585,112 +585,6 @@ export default {
       //var bg = new createjs.Bitmap(images['image']);
     },
 
-    /////////////
-    // SCALING //
-    /////////////
-
-    // Scale the stage
-    resize: function() {
-
-      this.mobile.mobileCheck(console, navigator);
-      this.mobile.orientationCheck(console, window);
-
-      // If window height is greater than width
-      if (this.mobile.isPortrait && this.mobile.isMobile) {
-
-        if(!this.scaler.added) {
-
-          this.stage.addChild(this.landscape_warning);
-          this.stage.addChild(this.phone_rotation);
-          this.landscape_warning.graphics.clear()
-          this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
-          this.phone_rotation.gotoAndPlay(0);
-          this.scene_html = document.getElementById("sceneHTML");
-          this.scene_html.hidden = true;
-          this.scaler.added = true;
-
-        }
-
-      } else {
-
-        if(this.scaler.added){
-
-          this.stage.removeChild(this.landscape_warning);
-          this.stage.removeChild(this.phone_rotation);
-          this.scene_html = document.getElementById("sceneHTML");
-          this.scene_html.hidden = false;
-          this.scaler.added = false;
-
-        }
-
-      }
-
-      // Resize the canvas element with new window size
-      this.stage.canvas.width = window.innerWidth;
-      this.stage.canvas.height = window.innerHeight;
-
-      this.scaler.screenRatio = this.stage.canvas.width / this.stage.canvas.height;
-
-      if (window.innerWidth < 600) {
-        // gui_scale = 3;
-      } else if (window.innerWidth < 900) {
-        // gui_scale = 2;
-      } else {
-        // gui_scale = 1;
-      }
-
-      // Redraw background before everthing else for Z-axis reasons
-      this.bg.graphics.clear()
-      this.bg.graphics.beginFill(this.bg_color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
-
-      // Calculate the scene scaling
-      if (this.scaler.screenRatio < 2.5) { // tall screen
-
-        this.scaler.maxStored = false;
-        this.scene_scale_X = this.stage.canvas.width / this.scaler.maxScaleX;
-        this.scale.scene_scale_Y = this.stage.canvas.width / this.scaler.maxScaleX;
-
-      } else if (this.scaler.screenRatio > 2.5) { // wide screen
-        if(!this.scaler.maxStored) {
-          this.scaler.maxStored = true;
-          this.scaler.tempMax = this.stage.canvas.height;
-        }
-        this.scaler.tempScale = this.stage.canvas.width / this.scaler.maxScaleX;
-        this.scene_scale_X = this.scaler.tempScale * ( this.stage.canvas.height / this.scaler.tempMax );
-        this.scale.scene_scale_Y = this.scaler.tempScale * ( this.stage.canvas.height / this.scaler.tempMax );
-      }
-
-      // Calculate the scene margin in a given direction
-      this.scaler.sceneMarginX = ( this.stage.canvas.width - this.scaler.maxScaleX ) / 2;
-
-      // Log screen scaling for debugging purposes
-      // console.log(this.scene_scale_X);
-      // console.log(this.scale.scene_scale_Y);
-      // console.log(this.scaler.screenRatio);
-
-      this.landscape_warning.graphics.clear()
-      this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
-
-
-
-      let sceneScaling = {
-        x: this.scene_scale_X,
-        y: this.scale.scene_scale_Y
-      }
-
-      if (this.current_scene == 3) {
-        this.scaler.scaleAssets(this.level.lcs, this.current_scene, this.mobile.isMobile, sceneScaling, this.stage); // Scale scene appropriately
-      }
-
-      this.scaler.scaleAssets(this.ecs, this.current_scene, this.mobile.isMobile, sceneScaling, this.stage); // Scale scene appropriately
-      // this.scaleAssets(this.gcs, this.current_scene, this.mobile.isMobile, this.scale.scene_scale_Y, this.scene_scale_X, this.stage); // Scale scene appropriately
-
-
-
-      this.stage.update()
-
-    },
-
     ////////////
     // SCENES //
     ////////////
@@ -710,7 +604,7 @@ export default {
       this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, config, this.ecs, this.stage);
       this.stage.removeChild(this.phone_rotation);
 
-      this.resize(); // Resize to set initial scale
+      this.scaler.resize(this.mobile, this.stage, this.landscape_warning, this.phone_rotation, this.scene_html, this.bg_color, this.bg, this.scene_scale_X, this.scene_scale_Y, this.scale, this.level, this.ecs, this.current_scene); // Resize to set initial scale
       this.loaded = true;
 
       // if(this.loadingQueue.progress * 100  >= 100) {
@@ -760,7 +654,7 @@ export default {
       // this.level.visibleForm(true);
 
       // Resize everything for scaling
-      this.resize();
+      this.scaler.resize(this.mobile, this.stage, this.landscape_warning, this.phone_rotation, this.scene_html, this.bg_color, this.bg, this.scene_scale_X, this.scene_scale_Y, this.scale, this.level, this.ecs, this.current_scene);
 
     },
 
