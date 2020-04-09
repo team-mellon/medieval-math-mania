@@ -212,9 +212,9 @@ class Object {
   }
 
   // Scale the image-like assets
-  static scale(entity_component_system, current_scene, isMobile, scene_scale_Y, scene_scale_X, stage) {
+  static scale(entity_component_system, currentScene, isMobile, scene_scale_Y, scene_scale_X, stage) {
 
-    if (current_scene == 3) {
+    if (currentScene == 3) {
 
       var x_position = (284 * scene_scale_Y).toString() + "px";
       var y_position = (960 * scene_scale_Y).toString() + "px";

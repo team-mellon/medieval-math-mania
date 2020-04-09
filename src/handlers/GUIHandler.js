@@ -19,20 +19,20 @@ class GUIHandler {
 
 	constructor() {
 
-	this.gcs = []; // GUI component system for scaling and eventually object storage
+		this.gcs = []; // GUI component system for scaling and eventually object storage
 
-	this.containerFrame = {};
+		this.containerFrame = {};
 
-	this.indicators = [];
-	this.indicator_counter = 0;
+		this.indicators = [];
+		this.indicator_counter = 0;
 
 	}
 
-	createGUI (entity_component_system, current_scene, stage, user, async, changeScene, oneWayScene, indicatorFunction, level, mobile, menubutton, levels, scale) {
+	createGUI (entity_component_system, currentScene, stage, user, async, changeScene, oneWayScene, indicatorFunction, level, mobile, menubutton, levels, scale) {
 
 		let config;
 
-		switch(current_scene) {
+		switch(currentScene) {
 
 			case 0:
 

@@ -33,11 +33,11 @@ class Scaler {
   /**
    * Function to scale the entire stage.
    * @param {object} entityComponentSystem - The array of entities.
-   * @param {object} current_scene - The index of the current scene.
+   * @param {object} currentScene - The index of the current scene.
    * @param {object} isMobile - The flag that determines if on a mobile device.
    * @param {object} stage - The stage that displays the content.
    */
-    resize(mobile, stage, landscape_warning, phone_rotation, scene_html, bg_color, bg, level, ecs, current_scene) {
+    resize(mobile, stage, landscape_warning, phone_rotation, scene_html, bg_color, bg, level, ecs, currentScene) {
 
       // Redraw background before everthing else for Z-axis reasons
       bg.graphics.clear()
@@ -76,12 +76,12 @@ class Scaler {
       landscape_warning.graphics.clear()
       landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, stage.canvas.width, stage.canvas.height);
 
-      if (this.current_scene == 3) {
-        this.scaleAssets(level.lcs, current_scene, mobile.isMobile, stage); // Scale scene appropriately
+      if (this.currentScene == 3) {
+        this.scaleAssets(level.lcs, currentScene, mobile.isMobile, stage); // Scale scene appropriately
       }
 
-      this.scaleAssets(ecs, current_scene, mobile.isMobile, stage); // Scale scene appropriately
-      // this.scaleAssets(this.gcs, current_scene, mobile.isMobile, this.scale.y, this.scale.x, stage); // Scale scene appropriately
+      this.scaleAssets(ecs, currentScene, mobile.isMobile, stage); // Scale scene appropriately
+      // this.scaleAssets(this.gcs, currentScene, mobile.isMobile, this.scale.y, this.scale.x, stage); // Scale scene appropriately
 
       stage.update()
 

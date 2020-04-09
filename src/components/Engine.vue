@@ -21,6 +21,7 @@ import Loader from './Loader.vue'
 // Static classes
 import AssetHandler from '../handlers/AssetHandler.js';
 import Scaler from '../handlers/Scaler.js';
+import Director from '../handlers/Director.js';
 import FormHandler from '../handlers/FormHandler.js';
 import APIHandler from '../handlers/APIHandler.js';
 
@@ -80,7 +81,11 @@ export default {
         x: 1.0,
         y: 1.0
       },
-      // Scaling for engine assets
+
+      background: {
+        entity: {},
+        color: '#808080'
+      },
 
       // w: 100,
       // h: 200,
@@ -154,7 +159,22 @@ export default {
     // INITIIALIZATION //
     /////////////////////
 
-    this.second_title = {};
+    // Grab the canvas that the stage is attached to.
+    this.drawingCanvas = document.getElementById("drawingCanvas");
+
+    // Initialize all the handlers
+    this.mobile = new MobileHandler();
+    this.music = new SoundHandler();
+    this.gui = new GUIHandler();
+    this.level = new LevelHandler();
+    this.scaler = new Scaler();
+    this.director = new Director();
+    this.input = new InputHandler(this.drawingCanvas);
+
+    // Grabbing the div that hold the html forms.
+    this.director.sceneHtml = document.getElementById("sceneHTML");
+
+    this.second_title = null;
 
     this.preloaded = false;
     this.loaded = false;
@@ -163,39 +183,20 @@ export default {
     this.loadingQueue.loadManifest(sceneManifest);
 
     // Set the window resize function to the one
-    window.addEventListener('resize', function () { this.scaler.resize(this.mobile, this.stage, this.landscape_warning, this.phone_rotation, this.scene_html, this.bg_color, this.bg, this.level, this.ecs, this.current_scene) }.bind(this), false);
+    window.addEventListener('resize', function () { 
+      this.scaler.resize(this.mobile, this.stage, this.landscape_warning, this.phone_rotation, this.director.sceneHtml, this.background.color, this.bg, this.level, this.ecs, this.director.currentScene)
+    }.bind(this), false);
 
-    // Grabbing the canvas to set touch cozntrols
-    this.drawingCanvas = document.getElementById("drawingCanvas");
+    // Add keydown listener
+    document.onkeydown = this.input.keyDown.bind(this.input);
 
-    // Grabbing the div that hold the html stuff
-    this.scene_html = document.getElementById("sceneHTML");
-
-    // Initialize all the handlers
-    this.input = new InputHandler(this.drawingCanvas);
-    this.mobile = new MobileHandler();
-    this.music = new SoundHandler();
-    this.gui = new GUIHandler();
-    this.level = new LevelHandler();
-    this.scaler = new Scaler();
-
-    document.onkeydown = this.input.keyDown.bind(this.input);   // Add keydown listener
-    document.onkeyup = this.input.keyUp.bind(this.input);       // Add keyup listener
+    // Add keyup listener
+    document.onkeyup = this.input.keyUp.bind(this.input);
 
     // console.log("initialized.");
-
     this.ecs = []; // Entity component system for scaling and eventually object storage
 
     // var landscape_warning;
-
-    ////////////
-    // SCENES //
-    ////////////
-
-    this.scene_html;
-
-    this.current_scene = 10;
-    this.last_scene = 0;
 
     ////////////
     // LEVELS //
@@ -362,7 +363,7 @@ export default {
         this.firstLoad();
       }
 
-      if (this.current_scene == 0) {
+      if (this.director.currentScene == 0) {
 
         // console.log(this.user.authenticated);
 
@@ -387,7 +388,7 @@ export default {
 
       }
 
-      if (this.current_scene == 1) {
+      if (this.director.currentScene == 1) {
 
         // console.log(this.user.authenticated);
 
@@ -427,7 +428,7 @@ export default {
 
       }
 
-      if (this.current_scene == 3) {
+      if (this.director.currentScene == 3) {
 
         var y_position = (284 * this.scaler.scale.y).toString() + "px";
         var x_position = ((window.innerWidth / 2) + (0) * this.scaler.scale.y).toString() + "px";
@@ -454,7 +455,7 @@ export default {
 
       //Calls external function to generate ranges for each level, this is reset when each level is selected on level select
 
-      if (this.current_scene == 3 && this.level.pause_menu.visible == false) {
+      if (this.director.currentScene == 3 && this.level.pause_menu.visible == false) {
 
         // If the range is not generated
         if(!this.level.generated) {
@@ -487,7 +488,7 @@ export default {
           this.input.drag_up = false;
 
           this.level.runInput(this.mobile.isMobile);
-          this.clearHtml();
+          this.director.clearHtml();
           FormHandler.createGameForm(this.level.multiplicand, this.level.sign, this.level.equal, this.level.solution, this.level.history_list2, this.level.play_tutorial, this.mobile.isMobile);
 
         }
@@ -580,7 +581,7 @@ export default {
       this.second_title = new createjs.Bitmap(this.loadingQueue.getResult("image"));
       // console.log(this.second_title);
       this.preloaded = true;
-      // console.log("Loaded!");
+      console.log("Loaded!");
       //OR samething
       //var bg = new createjs.Bitmap(images['image']);
       
@@ -590,7 +591,7 @@ export default {
     // SCENES //
     ////////////
 
-    // Load the scene in the variable current_scene
+    // Load the scene in the variable currentScene
     firstLoad: function() {
 
       this.setBackgroundColor("#333333");
@@ -603,7 +604,7 @@ export default {
       this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, config, this.ecs, this.stage);
       this.stage.removeChild(this.phone_rotation);
 
-      this.scaler.resize(this.mobile, this.stage, this.landscape_warning, this.phone_rotation, this.scene_html, this.bg_color, this.bg, this.level, this.ecs, this.current_scene); // Resize to set initial scale
+      this.scaler.resize(this.mobile, this.stage, this.landscape_warning, this.phone_rotation, this.director.sceneHtml, this.background.color, this.bg, this.level, this.ecs, this.director.currentScene); // Resize to set initial scale
       this.loaded = true;
 
       // if(this.loadingQueue.progress * 100  >= 100) {
@@ -616,34 +617,40 @@ export default {
 
     },
 
-    // Load the scene in the variable current_scene
+    // Load the scene in the variable currentScene
     setBackgroundColor: function(color) {
       
       // Create a rectangle for clearing the screen
       this.bg = new createjs.Shape();
       
       // Set background color to grey
-      this.bg_color = color;
+      this.background.color = color;
 
       // 
       this.bg.graphics.clear()
-      this.bg.graphics.beginFill(this.bg_color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
+      this.bg.graphics.beginFill(this.background.color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
 
       // Add rectangle to the stage
       this.stage.addChild(this.bg);
 
     },
 
-    // Load the scene in the variable current_scene
+    // Load the scene in the variable currentScene
     loadCurrentScene: function() {
 
+      // Clear HTML before creating a new scene
+      this.director.clearHtml();
+
+      // Destroy the last scene
+      this.director.destroyScene(this.ecs, this.stage);
+
       // Load background color for the scene
-      this.bg_color = sceneData[this.current_scene].color;
+      this.background.color = sceneData[this.director.currentScene].color;
 
       // If the current scene is the game load the special level assets
-      if (this.current_scene == 3) {
+      if (this.director.currentScene == 3) {
 
-          this.bg_color = levelData[this.level.current_level].color;
+          this.background.color = levelData[this.level.current_level].color;
 
           if (!this.level.generated) {
 
@@ -659,19 +666,13 @@ export default {
 
       }
 
-      // Clear HTML before creating a new scene
-      this.clearHtml();
-
-      // Destroy the last scene
-      this.destroyScene();
-
       // Create the new scene
       this.createScene();
 
       // this.level.visibleForm(true);
 
       // Resize everything for scaling
-      this.scaler.resize(this.mobile, this.stage, this.landscape_warning, this.phone_rotation, this.scene_html, this.bg_color, this.bg, this.level, this.ecs, this.current_scene);
+      this.scaler.resize(this.mobile, this.stage, this.landscape_warning, this.phone_rotation, this.director.sceneHtml, this.background.color, this.bg, this.level, this.ecs, this.director.currentScene);
 
     },
 
@@ -682,13 +683,13 @@ export default {
     changeScene: function(newScene) {
 
       // Set the last scene to the current scene
-      this.last_scene = this.current_scene;
+      this.director.lastScene = this.director.currentScene;
 
       // Set the current scene to the new scene
-      this.current_scene = newScene;
+      this.director.currentScene = newScene;
 
       // Load the scene
-      this.loadCurrentScene();
+      this.director.loadCurrentScene(this.ecs, this.stage, this.background, this.level);
 
     },
 
@@ -696,72 +697,72 @@ export default {
 
       this.stage.addChild(this.bg);
       this.bg.graphics.clear()
-      this.bg.graphics.beginFill(this.bg_color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
+      this.bg.graphics.beginFill(this.background.color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
 
       let config;
 
       config = new ObjectConfig('default', 'image', constants.backgroundX, 1440, "center", 0, "center", 0);
-      this.background = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), config, this.ecs, this.stage);
+      this.background = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.director.currentScene].bg_img), config, this.ecs, this.stage);
 
       config = new ObjectConfig('default', 'image', constants.backgroundX, 1440, "center", 0, "center", -1440);
-      this.background_top = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), config, this.ecs, this.stage);
+      this.background_top = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.director.currentScene].bg_img), config, this.ecs, this.stage);
       
       config = new ObjectConfig('default', 'image', constants.backgroundX, 1440, "center", 0, "center", 1440);
-      this.background_bottom = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), config, this.ecs, this.stage);
+      this.background_bottom = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.director.currentScene].bg_img), config, this.ecs, this.stage);
       
       config = new ObjectConfig('default', 'image', constants.backgroundX, 1440, "center", -constants.backgroundX, "center", 0);
-      this.background_left = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), config, this.ecs, this.stage);
+      this.background_left = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.director.currentScene].bg_img), config, this.ecs, this.stage);
       
       config = new ObjectConfig(constants.backgroundX, 1440, "center", constants.backgroundX, "center", 0);
-      this.background_right = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.current_scene].bg_img), config, this.ecs, this.stage);
+      this.background_right = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.director.currentScene].bg_img), config, this.ecs, this.stage);
 
-      switch (this.current_scene) {
+      switch (this.director.currentScene) {
 
         case 0:
-          // scenes[this.current_scene].fg_text] = "Login:\n\nSignup:\n\n";
-          sceneData[this.current_scene].fg_text = "";
+          // scenes[this.director.currentScene].fg_text] = "Login:\n\nSignup:\n\n";
+          sceneData[this.director.currentScene].fg_text = "";
           break;
         case 1:
-          // scenes[this.current_scene].fg_text = "Firstname:\n\nLastname:\n\nUsername:\n\nPassword:\n\nConfirm:\n\n";
-          sceneData[this.current_scene].fg_text = "";
+          // scenes[this.director.currentScene].fg_text = "Firstname:\n\nLastname:\n\nUsername:\n\nPassword:\n\nConfirm:\n\n";
+          sceneData[this.director.currentScene].fg_text = "";
           break;
         case 4:
-          sceneData[this.current_scene].fg_text = "";
+          sceneData[this.director.currentScene].fg_text = "";
           break;
         case 5:
-          sceneData[this.current_scene].fg_text = "How To Play: The goal of the game is to get one hit anywhere above the range, one hit anywhere below the range, and three hits within the range";
+          sceneData[this.director.currentScene].fg_text = "How To Play: The goal of the game is to get one hit anywhere above the range, one hit anywhere below the range, and three hits within the range";
           break;
         case 6:
-          // scenes[this.current_scene].fg_text = "Volume:\n\nTime:\n\nTutorial\n\n";
-          sceneData[this.current_scene].fg_text = "";
+          // scenes[this.director.currentScene].fg_text = "Volume:\n\nTime:\n\nTutorial\n\n";
+          sceneData[this.director.currentScene].fg_text = "";
           break;
         case 7:
-          sceneData[this.current_scene].fg_text = "Username: " + this.user.username + "\n\nName: " + this.user.firstname + " " + this.user.lastname + "\n\n";
+          sceneData[this.director.currentScene].fg_text = "Username: " + this.user.username + "\n\nName: " + this.user.firstname + " " + this.user.lastname + "\n\n";
           break;
         case 9:
-          sceneData[this.current_scene].fg_text = levelData[this.level.current_level].hint;
+          sceneData[this.director.currentScene].fg_text = levelData[this.level.current_level].hint;
           break;
         default:
 
       }
 
-      if (this.current_scene != 8 && this.current_scene != 2 && this.current_scene != 3 && this.current_scene != 10) {
+      if (this.director.currentScene != 8 && this.director.currentScene != 2 && this.director.currentScene != 3 && this.director.currentScene != 10) {
 
         var temp_fg_img = {
-          images: [this.loadingQueue.getResult(sceneData[this.current_scene].fg_img.images[0])],
-          frames: sceneData[this.current_scene].fg_img.frames,
-          framerate: sceneData[this.current_scene].fg_img.framerate
+          images: [this.loadingQueue.getResult(sceneData[this.director.currentScene].fg_img.images[0])],
+          frames: sceneData[this.director.currentScene].fg_img.frames,
+          framerate: sceneData[this.director.currentScene].fg_img.framerate
         };
 
-        let config = new ObjectConfig('default', 'image', sceneData[this.current_scene].fg_img.frames.width, sceneData[this.current_scene].fg_img.frames.height, "center", 0, "center", 0);
-        this.foreground = AssetHandler.createTextContainer(temp_fg_img, sceneData[this.current_scene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", config, 0, this.ecs, this.stage);
+        let config = new ObjectConfig('default', 'image', sceneData[this.director.currentScene].fg_img.frames.width, sceneData[this.director.currentScene].fg_img.frames.height, "center", 0, "center", 0);
+        this.foreground = AssetHandler.createTextContainer(temp_fg_img, sceneData[this.director.currentScene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", config, 0, this.ecs, this.stage);
 
-      } else if (this.current_scene == 10) {
+      } else if (this.director.currentScene == 10) {
 
         config = new ObjectConfig('default', 'image', 1635, 480, "center", 0, "top", 48 + 480 / 2);
         this.foreground = AssetHandler.createImage(this.loadingQueue.getResult("title-text"), config, this.ecs, this.stage);
 
-      } else if (this.current_scene == 8) {
+      } else if (this.director.currentScene == 8) {
 
         config = new ObjectConfig('default', 'image', constants.backgroundX, constants.backgroundY, "center", 0, "center", 0);
         this.midground = AssetHandler.createImage(this.loadingQueue.getResult("map"), config, this.ecs, this.stage);
@@ -771,7 +772,7 @@ export default {
 
       }
 
-      if (this.current_scene == 2) {
+      if (this.director.currentScene == 2) {
 
         config = new ObjectConfig('default', 'image', constants.backgroundX, constants.backgroundY, "center", 0, "bottom", -constants.backgroundY / 2);
         this.background = AssetHandler.createImage(this.loadingQueue.getResult("menu"), config, this.ecs, this.stage);
@@ -785,7 +786,7 @@ export default {
       }
 
       // Custom scene functionalities
-      switch (this.current_scene) {
+      switch (this.director.currentScene) {
 
         case 0: // Login
 
@@ -837,7 +838,7 @@ export default {
 
       }
 
-      this.gui.createGUI(this.ecs, this.current_scene, this.stage, this.user, this.async, this.changeScene, this.oneWayScene, this.indicatorFunction, this.level, this.mobile, this.gui.menu_button, this.levels, this.scale);
+      this.gui.createGUI(this.ecs, this.director.currentScene, this.stage, this.user, this.async, this.changeScene, this.oneWayScene, this.indicatorFunction, this.level, this.mobile, this.gui.menu_button, this.levels, this.scale);
 
       // console.log(entity_component_system);
 
@@ -846,58 +847,27 @@ export default {
     oneWayScene: function() {
 
       // Switch the current and last screen
-      var temp = this.current_scene;
-      this.current_scene = this.last_scene;
-      this.last_scene = temp;
+      var temp = this.director.currentScene;
+      this.director.currentScene = this.director.lastScene;
+      this.director.lastScene = temp;
 
       // Load the scene
-      this.loadCurrentScene();
+      this.director.loadCurrentScene(this.ecs, this.stage, this.background, this.level);
 
       // If the last scene was the game open with the pause screen
-      if (this.last_scene == 3) {
+      if (this.director.lastScene == 3) {
 
         this.gui.menu_button.visible = false;
 
         this.level.openPauseMenu(this.user.authenticated);
 
-      } else if (this.current_scene == 3) {
+      } else if (this.director.currentScene == 3) {
 
         this.gui.menu_button.visible = true;
         FormHandler.createGameForm(this.level.multiplicand, this.level.sign, this.level.equal, this.level.solution, this.level.history_list2, this.level.play_tutorial, this.mobile.isMobile);
         this.level.remakeMultiplierBanner();
         this.level.remakeRangeBanner();
         this.level.structure_score.text = "Total Lows: " + this.level.miss_lower_counter.toString() + "\nTotal High: " + this.level.miss_upper_counter.toString() + "\nTotal Hits: " + this.level.hit_counter.toString();
-
-      }
-
-    },
-
-    /**
-     * A function to clear the stage and entity components.
-     */
-    destroyScene: function() {
-
-      // Clear the stage.
-      this.stage.removeAllChildren();
-
-      // Clear the entity component system.
-      this.ecs = [];
-
-    },
-
-    /**
-     * A function to clear the html currently being added to the screen.
-     */
-    clearHtml: function() {
-
-      // Get the element that contains the custom HTML for the scene.
-      this.scene_html = document.getElementById("sceneHTML");
-
-      // Until there are no more children elements...
-      while (this.scene_html.firstChild) {
-
-        // Remove the first child element.
-        this.scene_html.removeChild(this.scene_html.firstChild);
 
       }
 
