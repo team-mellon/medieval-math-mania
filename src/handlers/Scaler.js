@@ -15,6 +15,10 @@ class Scaler {
    */
   constructor() {
 
+    this.scale = {
+      x: 1.0,
+      y: 1.0
+    };
     this.maxScaleY = 1440;
     this.maxScaleX = 1920;
     this.screenRatio = this.maxScaleY / this.maxScaleX;
@@ -31,10 +35,9 @@ class Scaler {
    * @param {object} entityComponentSystem - The array of entities.
    * @param {object} current_scene - The index of the current scene.
    * @param {object} isMobile - The flag that determines if on a mobile device.
-   * @param {object} sceneScaling - The scaling of the scenes' dimensions.
    * @param {object} stage - The stage that displays the content.
    */
-    resize(mobile, stage, landscape_warning, phone_rotation, scene_html, bg_color, bg, scene_scale_X, scene_scale_Y, scale, level, ecs, current_scene) {
+    resize(mobile, stage, landscape_warning, phone_rotation, scene_html, bg_color, bg, level, ecs, current_scene) {
 
       mobile.mobileCheck(console, navigator);
       mobile.orientationCheck(console, window);
@@ -56,36 +59,25 @@ class Scaler {
         // gui_scale = 1;
       }
 
-      // Redraw background before everthing else for Z-axis reasons
-      bg.graphics.clear()
-      bg.graphics.beginFill(bg_color).drawRect(0, 0, stage.canvas.width, stage.canvas.height);
-
-      let sceneScalings = this.calculateScaling(scene_scale_X, scene_scale_Y, stage, scale);
-      scene_scale_X = sceneScalings.x;
-      scale.scene_scale_Y = sceneScalings.y;
+      this.calculateScaling(stage);
 
       // Calculate the scene margin in a given direction
       this.sceneMarginX = ( stage.canvas.width - this.maxScaleX ) / 2;
 
       // Log screen scaling for debugging purposes
-      // console.log(scene_scale_X);
-      // console.log(scale.scene_scale_Y);
+      // console.log(this.scale.x);
+      // console.log(this.scale.y);
       // console.log(this.screenRatio);
 
       landscape_warning.graphics.clear()
       landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, stage.canvas.width, stage.canvas.height);
 
-      let sceneScaling = {
-        x: scene_scale_X,
-        y: scale.scene_scale_Y
-      }
-
       if (this.current_scene == 3) {
-        this.scaleAssets(level.lcs, current_scene, mobile.isMobile, sceneScaling, stage); // Scale scene appropriately
+        this.scaleAssets(level.lcs, current_scene, mobile.isMobile, stage); // Scale scene appropriately
       }
 
-      this.scaleAssets(ecs, current_scene, mobile.isMobile, sceneScaling, stage); // Scale scene appropriately
-      // this.scaleAssets(this.gcs, current_scene, mobile.isMobile, scale.scene_scale_Y, scene_scale_X, stage); // Scale scene appropriately
+      this.scaleAssets(ecs, current_scene, mobile.isMobile, stage); // Scale scene appropriately
+      // this.scaleAssets(this.gcs, current_scene, mobile.isMobile, this.scale.y, this.scale.x, stage); // Scale scene appropriately
 
       stage.update()
 
@@ -127,21 +119,20 @@ class Scaler {
 
   /**
    * Calculate the scene scaling.
-   * @param {object} sceneScaling - The scaling of the scenes' dimensions.
-   * @param {object} sceneScaling - The scaling of the scenes' dimensions.
    * @param {object} stage - The stage that displays the content.
-   * @param {object} scale - The scaling of the scenes' dimensions.
    */
-    calculateScaling(scene_scale_X, scene_scale_Y, stage, scale) {
+    calculateScaling(stage) {
 
       // Calculate the scene scaling
       if (this.screenRatio < 2.5) { // tall screen
 
+        // Calculate the scale with the max x scaling
         this.maxStored = false;
-        scene_scale_X = stage.canvas.width / this.maxScaleX;
-        scale.scene_scale_Y = stage.canvas.width / this.maxScaleX;
+        this.scale.x = stage.canvas.width / this.maxScaleX;
+        this.scale.y = stage.canvas.width / this.maxScaleX;
 
       } else if (this.screenRatio > 2.5) { // wide screen
+
 
         if(!this.maxStored) {
           this.maxStored = true;
@@ -149,38 +140,35 @@ class Scaler {
         }
 
         this.tempScale = stage.canvas.width / this.maxScaleX;
-        scene_scale_X = this.tempScale * ( stage.canvas.height / this.tempMax );
-        scale.scene_scale_Y = this.tempScale * ( stage.canvas.height / this.tempMax );
+        this.scale.x = this.tempScale * ( stage.canvas.height / this.tempMax );
+        this.scale.y = this.tempScale * ( stage.canvas.height / this.tempMax );
         
       }
-
-      return { x: scene_scale_X, y: scale.scene_scale_Y }
 
     }
 
   /**
    * Function to scale the image-like assets.
    * @param {object} entityComponentSystem - The array of entities.
-   * @param {object} current_scene - The index of the current scene.
+   * @param {object} currentScene - The index of the current scene.
    * @param {object} isMobile - The flag that determines if on a mobile device.
-   * @param {object} sceneScaling - The scaling of the scenes' dimensions.
    * @param {object} stage - The stage that displays the content.
    */
-  scaleAssets(entityComponentSystem, current_scene, isMobile, sceneScaling, stage) {
-
-    if (current_scene == 3) {
-      this.scaleEntryForm(sceneScaling);
-    }
+  scaleAssets(entityComponentSystem, currentScene, isMobile, stage) {
 
     // console.log("ECS length: " + entityComponentSystem.length);
 
+    if (currentScene == 3) {
+      this.scaleEntryForm();
+    }
+
     for (var i = 0; i < entityComponentSystem.length; i++) {
 
-      let platformScale = this.setScale(isMobile, entityComponentSystem[i], sceneScaling);
+      let platformScale = this.setScale(isMobile, entityComponentSystem[i]);
       let startValues = this.snapEdges(stage, entityComponentSystem[i]);
 
-      entityComponentSystem[i].object.x = startValues.x + entityComponentSystem[i].x_location * sceneScaling.y * platformScale;
-      entityComponentSystem[i].object.y = startValues.y + entityComponentSystem[i].y_location * sceneScaling.y * platformScale;
+      entityComponentSystem[i].object.x = startValues.x + entityComponentSystem[i].x_location * this.scale.y * platformScale;
+      entityComponentSystem[i].object.y = startValues.y + entityComponentSystem[i].y_location * this.scale.y * platformScale;
 
     }
 
@@ -237,10 +225,9 @@ class Scaler {
    * Function to scale an individual entity.
    * @param {object} isMobile - The flag that determines if on a mobile device.
    * @param {object} entityComponent - The the current entity being scaled.
-   * @param {object} sceneScaling - The scaling of the scenes' dimensions.
-   * @returns {object} entity_object - The entity object produced.
+   * @returns {object} platformScale - The platform specific scale of that entity.
    */
-  setScale(isMobile, entityComponent, sceneScaling) {
+  setScale(isMobile, entityComponent) {
 
     let platformScale = 1;
 
@@ -286,8 +273,8 @@ class Scaler {
     // image.x = x_start + x_location;
     // image.y = y_start + y_location;
 
-    entityComponent.object.scaleX = sceneScaling.x;
-    entityComponent.object.scaleY = sceneScaling.y;
+    entityComponent.object.scaleX = this.scale.x;
+    entityComponent.object.scaleY = this.scale.y;
 
     return platformScale;
 
@@ -295,13 +282,14 @@ class Scaler {
 
   /**
    * Function to scale the entry form during the game.
-   * @param {object} sceneScaling - The scaling of the scenes' dimensions.
    */
-  scaleEntryForm(sceneScaling) {
+  scaleEntryForm() {
 
-    var xPosition = (284 * sceneScaling.y).toString() + "px";
-    var yPosition = (960 * sceneScaling.y).toString() + "px";
+    // Set the position values of the form
+    var xPosition = (284 * this.scale.y).toString() + "px";
+    var yPosition = (960 * this.scale.y).toString() + "px";
 
+    // Set the actual html element values
     var gameEntryForm = document.getElementById("equationBanner");
     gameEntryForm.style.bottom = xPosition;
     gameEntryForm.style.right = yPosition;

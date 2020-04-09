@@ -77,8 +77,8 @@ export default {
       },
 
       scale: {
-        scene_scale_X: 1.0,
-        scene_scale_Y: 1.0
+        x: 1.0,
+        y: 1.0
       },
       // Scaling for engine assets
 
@@ -163,7 +163,7 @@ export default {
     this.loadingQueue.loadManifest(sceneManifest);
 
     // Set the window resize function to the one
-    window.addEventListener('resize', function () { this.scaler.resize(this.mobile, this.stage, this.landscape_warning, this.phone_rotation, this.scene_html, this.bg_color, this.bg, this.scene_scale_X, this.scene_scale_Y, this.scale, this.level, this.ecs, this.current_scene) }.bind(this), false);
+    window.addEventListener('resize', function () { this.scaler.resize(this.mobile, this.stage, this.landscape_warning, this.phone_rotation, this.scene_html, this.bg_color, this.bg, this.level, this.ecs, this.current_scene) }.bind(this), false);
 
     // Grabbing the canvas to set touch cozntrols
     this.drawingCanvas = document.getElementById("drawingCanvas");
@@ -429,8 +429,8 @@ export default {
 
       if (this.current_scene == 3) {
 
-        var y_position = (284 * this.scale.scene_scale_Y).toString() + "px";
-        var x_position = ((window.innerWidth / 2) + (0) * this.scale.scene_scale_Y).toString() + "px";
+        var y_position = (284 * this.scaler.scale.y).toString() + "px";
+        var x_position = ((window.innerWidth / 2) + (0) * this.scaler.scale.y).toString() + "px";
 
         // console.log(x_position);
 
@@ -441,8 +441,8 @@ export default {
           document.getElementById("entryInput").focus();
         }
 
-        y_position = (300 * this.scale.scene_scale_Y).toString() + "px";
-        x_position = ( (window.innerWidth / 2) - (234 + 288 / 2) * this.scene_scale_X).toString() + "px";
+        y_position = (300 * this.scaler.scale.y).toString() + "px";
+        x_position = ( (window.innerWidth / 2) - (234 + 288 / 2) * this.scaler.scale.x).toString() + "px";
 
         // console.log(x_position);
 
@@ -523,8 +523,7 @@ export default {
           this.gui.menu_button.visible = false;
 
           // Show the endgame screen
-          this.level.createVictoryBanner(this.scene_scale_X, this.scale.scene_scale_Y, this.user.badges, this.user.authenticated);
-
+          this.level.createVictoryBanner(this.scaler.scale.x, this.scaler.scale.y, this.user.badges, this.user.authenticated);
 
           this.level.visitedLevels[this.level.current_level] = true;
           this.user.badges[(this.level.current_level - 1)] = 1;
@@ -555,10 +554,10 @@ export default {
         this.level.towerAnimation();
 
         // Run the catapult animation
-        this.level.runCatapultAnimation(this.scale.scene_scale_Y);
+        this.level.runCatapultAnimation(this.scaler.scale.y);
 
         // Reload the catapult
-        this.level.reloadCatapult(this.stage, this.scale.scene_scale_Y)
+        this.level.reloadCatapult(this.stage, this.scaler.scale.y)
 
       }
 
@@ -577,12 +576,14 @@ export default {
     },
 
     handleComplete: function(event) {
+
       this.second_title = new createjs.Bitmap(this.loadingQueue.getResult("image"));
       // console.log(this.second_title);
       this.preloaded = true;
       // console.log("Loaded!");
       //OR samething
       //var bg = new createjs.Bitmap(images['image']);
+      
     },
 
     ////////////
@@ -604,7 +605,7 @@ export default {
       this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, config, this.ecs, this.stage);
       this.stage.removeChild(this.phone_rotation);
 
-      this.scaler.resize(this.mobile, this.stage, this.landscape_warning, this.phone_rotation, this.scene_html, this.bg_color, this.bg, this.scene_scale_X, this.scene_scale_Y, this.scale, this.level, this.ecs, this.current_scene); // Resize to set initial scale
+      this.scaler.resize(this.mobile, this.stage, this.landscape_warning, this.phone_rotation, this.scene_html, this.bg_color, this.bg, this.level, this.ecs, this.current_scene); // Resize to set initial scale
       this.loaded = true;
 
       // if(this.loadingQueue.progress * 100  >= 100) {
