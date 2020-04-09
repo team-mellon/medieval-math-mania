@@ -593,9 +593,7 @@ export default {
     // Load the scene in the variable current_scene
     firstLoad: function() {
 
-      this.bg = new createjs.Shape();                             // Create a rectangle for clearing the screen
-      this.bg_color = "#333333";                                  // Background color
-      this.stage.addChild(this.bg);                               // Add rectangle to the stage
+      this.setBackgroundColor("#333333");
 
       this.createScene();                                         // Create scene assets
 
@@ -615,6 +613,24 @@ export default {
       //   ldBg.hidden = true;
 
       // }
+
+    },
+
+    // Load the scene in the variable current_scene
+    setBackgroundColor: function(color) {
+      
+      // Create a rectangle for clearing the screen
+      this.bg = new createjs.Shape();
+      
+      // Set background color to grey
+      this.bg_color = color;
+
+      // 
+      this.bg.graphics.clear()
+      this.bg.graphics.beginFill(this.bg_color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
+
+      // Add rectangle to the stage
+      this.stage.addChild(this.bg);
 
     },
 
@@ -655,18 +671,21 @@ export default {
       // this.level.visibleForm(true);
 
       // Resize everything for scaling
-      this.scaler.resize(this.mobile, this.stage, this.landscape_warning, this.phone_rotation, this.scene_html, this.bg_color, this.bg, this.scene_scale_X, this.scene_scale_Y, this.scale, this.level, this.ecs, this.current_scene);
+      this.scaler.resize(this.mobile, this.stage, this.landscape_warning, this.phone_rotation, this.scene_html, this.bg_color, this.bg, this.level, this.ecs, this.current_scene);
 
     },
 
-    changeScene: function(new_scene) {
+    /**
+     * A function to change the current scene to a new scene.
+     * @param {object} newScene - The index of the scene to navigate to.
+     */
+    changeScene: function(newScene) {
+
+      // Set the last scene to the current scene
+      this.last_scene = this.current_scene;
 
       // Set the current scene to the new scene
-
-      this.last_scene = this.current_scene;
-      this.current_scene = new_scene;
-      // console.log("Last Scene: " + this.last_scene);
-      // console.log("Current Scene: " + this.current_scene);
+      this.current_scene = newScene;
 
       // Load the scene
       this.loadCurrentScene();
@@ -841,10 +860,6 @@ export default {
 
         this.level.openPauseMenu(this.user.authenticated);
 
-        // this.level.pauseAnimation(true);
-        // this.level.visibleButton(true);
-        // this.level.visibleForm(false);
-
       } else if (this.current_scene == 3) {
 
         this.gui.menu_button.visible = true;
@@ -857,20 +872,31 @@ export default {
 
     },
 
+    /**
+     * A function to clear the stage and entity components.
+     */
     destroyScene: function() {
 
+      // Clear the stage.
       this.stage.removeAllChildren();
 
+      // Clear the entity component system.
       this.ecs = [];
 
     },
 
+    /**
+     * A function to clear the html currently being added to the screen.
+     */
     clearHtml: function() {
 
+      // Get the element that contains the custom HTML for the scene.
       this.scene_html = document.getElementById("sceneHTML");
 
+      // Until there are no more children elements...
       while (this.scene_html.firstChild) {
 
+        // Remove the first child element.
         this.scene_html.removeChild(this.scene_html.firstChild);
 
       }

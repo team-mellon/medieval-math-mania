@@ -39,6 +39,10 @@ class Scaler {
    */
     resize(mobile, stage, landscape_warning, phone_rotation, scene_html, bg_color, bg, level, ecs, current_scene) {
 
+      // Redraw background before everthing else for Z-axis reasons
+      bg.graphics.clear()
+      bg.graphics.beginFill(bg_color).drawRect(0, 0, stage.canvas.width, stage.canvas.height);
+
       mobile.mobileCheck(console, navigator);
       mobile.orientationCheck(console, window);
 
@@ -229,46 +233,31 @@ class Scaler {
    */
   setScale(isMobile, entityComponent) {
 
-    let platformScale = 1;
+    let platformScale = 1.0;
 
     if (isMobile) {
-    
-    //   platformScale = 1.5;
-    
+
+      platformScale = 1.5;
+  
+      switch (entityComponent.type) {
+  
+        case "image":
+          platformScale = 1.0;
+          break;
+  
+        case "gui":
+          platformScale = 1.5;
+          // entityComponent.object.scale = 1.0;
+          break;
+  
+        case "smallgui":
+          platformScale = 0.5;
+          // entityComponent.object.scale = 0.5;
+          break;
+
+      }
+  
     }
-
-    // switch (entityComponent.type) {
-    
-    //   case "image":
-    //     break;
-    
-    //   case "gui":
-    //     // entityComponent.object.scale = 1.0;
-    //     break;
-    
-    //   case "smallgui":
-    //     // entityComponent.object.scale = 0.5;
-    //     break;
-    
-    // }
-
-    // if (mobile) {
-  
-    //   switch (type) {
-  
-    //     case "image":
-    //       break;
-  
-    //     case "gui":
-    //       image.scale = 1.0;
-    //       break;
-  
-    //     case "smallgui":
-    //       image.scale = 0.5;
-    //       break;
-    //   }
-  
-    // }
   
     // image.x = x_start + x_location;
     // image.y = y_start + y_location;
