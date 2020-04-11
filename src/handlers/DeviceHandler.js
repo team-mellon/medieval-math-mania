@@ -266,10 +266,13 @@ class DeviceHandler {
    */
   setScale(entityComponent) {
 
+    // Set default value.
     let platformScale = 1.0;
 
+    // If the device is a mobile device...
     if (this.device.isMobile) {
 
+      // Set mobile scale.
       platformScale = 1.5;
   
       switch (entityComponent.type) {
