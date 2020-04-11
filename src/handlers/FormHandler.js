@@ -68,12 +68,12 @@ class FormHandler {
 
   }
 
-  static createGameForm (multiplicand, sign, equal, solution, history_list, play_tutorial, isMobile) {
+  static createGameForm (level, isMobile) {
 
     // Creates username display text
     var multiplicand_div = document.createElement("div"); // Create encompassing div
     multiplicand_div.id = "multiplicandText";
-    multiplicand_div.appendChild(document.createTextNode(multiplicand));
+    multiplicand_div.appendChild(document.createTextNode(level.multiplicand));
 
     var entry_input;
     if (isMobile) {
@@ -119,14 +119,14 @@ class FormHandler {
 
     var solution_div = document.createElement("div"); // Create encompassing div
     solution_div.id = "solutionText";
-    solution_div.appendChild(document.createTextNode(solution));
+    solution_div.appendChild(document.createTextNode(level.solution));
 
     // Creates username div to hold display text and input box
     var game_entry_div = document.createElement("div"); // Create encompassing div
     game_entry_div.appendChild(multiplicand_div);
-    game_entry_div.appendChild(document.createTextNode(sign));
+    game_entry_div.appendChild(document.createTextNode(level.sign));
     game_entry_div.appendChild(entry_input);
-    game_entry_div.appendChild(document.createTextNode(equal));
+    game_entry_div.appendChild(document.createTextNode(level.equal));
     game_entry_div.appendChild(solution_div);
 
     // Creates username display text
@@ -134,8 +134,8 @@ class FormHandler {
     history_div.className = "dropdown-content";
     history_div.id = "myDropdown";
 
-    for (var x in history_list) {
-      history_div.appendChild(document.createTextNode(history_list[x]));
+    for (var x in level.history_list) {
+      history_div.appendChild(document.createTextNode(level.history_list[x]));
       history_div.appendChild(document.createElement("br"));
     }
 
@@ -174,11 +174,11 @@ class FormHandler {
 
   }
 
-  static createSettingsForm (boss_fight, play_tutorial, setTutorial, setBoss, setVolume) {
+  static createSettingsForm (level, setVolume) {
 
     var settings_volume_div = this.createInputSliderWithLabel("login", "Volume", "volumeSlider", "range", "volume", false, setVolume);
-    // var settings_time_div = this.createInputBoxWithLabel("login", "Timed?", "bossValue", "checkbox", "time", false, boss_fight, setBoss);
-    var settings_tutorial_div = this.createInputBoxWithLabel("login", "Tutorial?", "tutorialValue", "checkbox", "tutorial", false, play_tutorial, setTutorial);
+    // var settings_time_div = this.createInputBoxWithLabel("login", "Timed?", "bossValue", "checkbox", "time", false, level.boss_fight, level.setBoss);
+    var settings_tutorial_div = this.createInputBoxWithLabel("login", "Tutorial?", "tutorialValue", "checkbox", "tutorial", false, level.play_tutorial, level.setTutorial);
 
     // Creates login form to hold username and password divs
     var settings_form = document.createElement("form");
