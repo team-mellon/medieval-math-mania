@@ -192,6 +192,11 @@ export default {
 
 
 
+    this.loadingQueue = new createjs.LoadQueue();
+    this.loadingQueue.loadManifest(sceneManifest);
+
+
+
     // INPUT MAYBE //
     // Add keydown listener
     document.onkeydown = this.input.keyDown.bind(this.input);
