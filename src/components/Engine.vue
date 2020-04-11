@@ -168,17 +168,12 @@ export default {
     // Grab the canvas that the stage is attached to.
     this.drawingCanvas = document.getElementById(this.config.canvasId);
 
-
-
     // Initialize the scene manager.
     this.director = new Director();
     
     // Initialize the engine modules.
     this.input = new InputHandler(this.drawingCanvas); // Input handler
     this.device = new DeviceHandler(); // Scales the scene
-
-    // Initialize the sound handler, maybe put in director 
-    this.music = new SoundHandler();
 
 
 
@@ -187,7 +182,7 @@ export default {
     // SCALER MAYBE
     // Set the window resize function to the one
     window.addEventListener('resize', function () { 
-      this.device.resize(this.ecs, this.stage, this.director)
+      this.device.resize(this.director.sceneComponentSystem, this.stage, this.director)
     }.bind(this), false);
 
 
@@ -204,15 +199,6 @@ export default {
     // Add keyup listener
     document.onkeyup = this.input.keyUp.bind(this.input);
 
-
-
-    // SCENE MAYBE //
-    // console.log("initialized.");
-    this.ecs = []; // Entity component system for scaling and eventually object storage
-
-
-
-    // INPUT MAYBE //
     createjs.Touch.enable(this.stage);                          // Enable touch interaction for mobile
     this.stage.enableMouseOver();                               // Enable mouse events with scene objects
 
@@ -231,10 +217,10 @@ export default {
       if (this.loader.preloaded && !this.loader.loaded) {
 
         // Create the first 'currentScene'
-        this.director.createScene(this.ecs, this.stage, this.device, this.music, this.user, this.async); // Create scene assets
+        this.director.createScene(this.stage, this.device, this.user); // Create scene assets
 
         // Rescale the view to size the scene to the device.
-        this.device.resize(this.ecs, this.stage, this.director); // Resize to set initial scale
+        this.device.resize(this.director.sceneComponentSystem, this.stage, this.director); // Resize to set initial scale
 
         // Set the loaded flag.
         this.loader.loaded = true;
@@ -267,7 +253,7 @@ export default {
         }
 
         if (this.user.authenticated) {
-          this.director.changeScene(2, this.ecs, this.stage, this.device, this.music, this.user, this.async);
+          this.director.changeScene(2, this.stage, this.device, this.user);
         }
 
       }
@@ -301,8 +287,8 @@ export default {
                       "lname": document.getElementById('lastnameInput').value,
                       "confirm": document.getElementById('confirmInput').value
                     };
-                    APIHandler.createUser(text, this.user, this.async);
-                    this.director.changeScene(2, this.ecs, this.stage, this.device, this.music, this.user, this.async);
+                    APIHandler.createUser(text, this.user, this.director.async);
+                    this.director.changeScene(2, this.stage, this.device, this.user);
                   }
                 }
               }
@@ -340,82 +326,10 @@ export default {
 
       //Calls external function to generate ranges for each level, this is reset when each level is selected on level select
 
-      // Game scene && pause menu
+      // Game scene && not paused
       if (this.director.currentScene == 3 && this.director.level.pause_menu.visible == false) {
 
-        // If the range is not generated
-        if(!this.director.level.generated) {
-          this.director.generateLevel();
-        }
-
-        // Key checks
-
-        // Spacebar to randomize the range
-        // if (keys[32]){
-          // randomizeRangeAndMultiplier();
-        // }
-
-        // console.log(this.input.drag_up);
-
-        // Enter or swipe up to check input
-        if ((this.input.keys[13] || this.input.drag_up) && this.director.level.catapult.paused) { // Enter or drag up swipe on mobile
-          console.log("Enter Pressed");
-
-          // Reset drag_up bool;
-          this.input.drag_up = false;
-
-          this.director.level.runInput(this.device.device.isMobile);
-          this.director.clearHtml();
-          FormHandler.createGameForm(this.director.level, this.device.device.isMobile);
-
-        }
-
-        // If on mobile
-        if (this.device.device.isMobile) {
-          // Check which digit is selected and highlight it
-          this.director.level.checkSelectedDigit();
-        }
-
-        this.director.runAnimations(this.ecs, this.stage, this.music, this.user, this.async, this.device);
-
-        //If game over
-        if (this.director.level.hit_counter >= 3 && this.director.level.miss_upper_counter >= 1 && this.director.level.miss_lower_counter >= 1 && this.director.level.reload == false && this.director.level.current_level != 0) {
-
-          // udpate global total
-          this.user.hits += this.director.level.hit_counter;
-          this.user.highs += this.director.level.miss_upper_counter;
-          this.user.lows += this.director.level.miss_lower_counter;
-
-          this.director.level.hit_text.text += this.director.level.hit_counter.toString();
-          this.director.level.low_text.text += this.director.level.miss_lower_counter.toString();
-          this.director.level.high_text.text += this.director.level.miss_upper_counter.toString();
-
-          this.director.gui.menu_button.visible = false;
-
-          // Show the endgame screen
-          this.director.level.createVictoryBanner(this.device.scale.x, this.device.scale.y, this.user.badges, this.user.authenticated);
-
-          this.director.level.visitedLevels[this.director.level.current_level] = true;
-          this.user.badges[(this.director.level.current_level - 1)] = 1;
-
-          // update database
-          APIHandler.updateStats(
-            {
-              user: this.user.username,
-              hits: this.user.hits,
-              highs: this.user.highs,
-              lows: this.user.lows,
-              badges: this.user.badges
-            },
-            this.user,
-            this.async
-          );
-
-          // Also maybe check if boss level is active
-          // this.director.level.checkBossFight();
-        }
-
-        this.director.runLevelTriggers(this.stage, this.device);
+        this.director.gameRunning(this.stage, this.device, this.input, this.user);
 
       }
 
