@@ -1,19 +1,30 @@
 //==============================================================================
 //                                                                            ||
-// SCALER                                                                     ||
+// DEVICE HANDLER                                                             ||
 //============================================================================||
 //                                                                            ||
-// This module is a handler for asset scaling.                                ||
+// This module is a handler for managing the current devices specifications.  ||
 //                                                                            ||
 //==============================================================================
 
-class Scaler {
+// Static classes
+import AssetHandler from './AssetHandler.js';
+
+
+import MobileHandler from './MobileHandler.js';
+
+// Models
+import ObjectConfig from '../structures/ObjectConfig'
+
+class DeviceHandler {
 
   /**
    * Constructor for the scaling component of the engine.
    * @constructor
    */
   constructor() {
+
+    this.device = new MobileHandler(); // Mobile manager
 
     this.scale = {
       x: 1.0,
@@ -28,26 +39,42 @@ class Scaler {
     this.tempScale = 1;
     this.tempMax = 1440
 
+    this.landscape_warning = new createjs.Shape();
+    this.phone_rotation = null;
+
+    ////////////
+    // MOBILE //
+    ////////////
+
+    this.phone_rotationS = {
+
+      images: ["res/phone-rotation.png"],
+      frames: {width:288, height:288, count:2, regX: 0, regY:0, spacing:0, margin:0},
+      framerate: 2
+
+    };
+
   }
 
   /**
    * Function to scale the entire stage.
    * @param {object} entityComponentSystem - The array of entities.
    * @param {object} currentScene - The index of the current scene.
-   * @param {object} isMobile - The flag that determines if on a mobile device.
    * @param {object} stage - The stage that displays the content.
    */
-    resize(mobile, stage, landscape_warning, phone_rotation, scene_html, bg_color, bg, level, ecs, currentScene) {
+    resize(ecs, stage, director) {
+
+      this.loadOrientationAnimation(ecs, stage)
 
       // Redraw background before everthing else for Z-axis reasons
-      bg.graphics.clear()
-      bg.graphics.beginFill(bg_color).drawRect(0, 0, stage.canvas.width, stage.canvas.height);
+      director.background.shape.graphics.clear()
+      director.background.shape.graphics.beginFill(director.background.color).drawRect(0, 0, stage.canvas.width, stage.canvas.height);
 
-      mobile.mobileCheck(console, navigator);
-      mobile.orientationCheck(console, window);
+      this.device.mobileCheck(console, navigator);
+      this.device.orientationCheck(console, window);
 
       // If window height is greater than width
-      this.checkOrientation(mobile, stage, landscape_warning, phone_rotation, scene_html);
+      this.checkOrientation(stage, director);
 
       // Resize the canvas element with new window size
       stage.canvas.width = window.innerWidth;
@@ -73,34 +100,34 @@ class Scaler {
       // console.log(this.scale.y);
       // console.log(this.screenRatio);
 
-      landscape_warning.graphics.clear()
-      landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, stage.canvas.width, stage.canvas.height);
+      this.landscape_warning.graphics.clear()
+      this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, stage.canvas.width, stage.canvas.height);
 
-      if (this.currentScene == 3) {
-        this.scaleAssets(level.lcs, currentScene, mobile.isMobile, stage); // Scale scene appropriately
+      if (director.currentScene == 3) {
+        this.scaleAssets(director.level.lcs, director.currentScene, stage); // Scale scene appropriately
       }
 
-      this.scaleAssets(ecs, currentScene, mobile.isMobile, stage); // Scale scene appropriately
-      // this.scaleAssets(this.gcs, currentScene, mobile.isMobile, this.scale.y, this.scale.x, stage); // Scale scene appropriately
+      this.scaleAssets(ecs, director.currentScene, stage); // Scale scene appropriately
+      // this.scaleAssets(this.gcs, currentScene, this.scale.y, this.scale.x, stage); // Scale scene appropriately
 
       stage.update()
 
     }
 
-    checkOrientation(mobile, stage, landscape_warning, phone_rotation, scene_html) {
+    checkOrientation(stage, director) {
       
       // If window height is greater than width
-      if (mobile.isPortrait && mobile.isMobile) {
+      if (this.device.isPortrait && this.device.isMobile) {
 
         if(!this.added) {
 
-          stage.addChild(landscape_warning);
-          stage.addChild(phone_rotation);
-          landscape_warning.graphics.clear()
-          landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, stage.canvas.width, stage.canvas.height);
-          phone_rotation.gotoAndPlay(0);
-          scene_html = document.getElementById("sceneHTML");
-          scene_html.hidden = true;
+          stage.addChild(this.landscape_warning);
+          stage.addChild(this.phone_rotation);
+          this.landscape_warning.graphics.clear()
+          this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, stage.canvas.width, stage.canvas.height);
+          this.phone_rotation.gotoAndPlay(0);
+          director.sceneHtml = document.getElementById("sceneHTML");
+          director.sceneHtml.hidden = true;
           this.added = true;
 
         }
@@ -109,15 +136,24 @@ class Scaler {
 
         if(this.added){
 
-          stage.removeChild(landscape_warning);
-          stage.removeChild(phone_rotation);
-          scene_html = document.getElementById("sceneHTML");
-          scene_html.hidden = false;
+          stage.removeChild(this.landscape_warning);
+          stage.removeChild(this.phone_rotation);
+          director.sceneHtml = document.getElementById("sceneHTML");
+          director.sceneHtml.hidden = false;
           this.added = false;
 
         }
 
       }
+
+    }
+
+    loadOrientationAnimation(ecs, stage) {
+
+      // Load the phone rotation picture but remove it from the stage.
+      let config = new ObjectConfig('default', 'image', 288, 288, "center", 0, "center", 0);
+      this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, config, ecs, stage);
+      stage.removeChild(this.phone_rotation);
 
     }
 
@@ -154,11 +190,9 @@ class Scaler {
   /**
    * Function to scale the image-like assets.
    * @param {object} entityComponentSystem - The array of entities.
-   * @param {object} currentScene - The index of the current scene.
-   * @param {object} isMobile - The flag that determines if on a mobile device.
    * @param {object} stage - The stage that displays the content.
    */
-  scaleAssets(entityComponentSystem, currentScene, isMobile, stage) {
+  scaleAssets(entityComponentSystem, currentScene, stage) {
 
     // console.log("ECS length: " + entityComponentSystem.length);
 
@@ -168,7 +202,7 @@ class Scaler {
 
     for (var i = 0; i < entityComponentSystem.length; i++) {
 
-      let platformScale = this.setScale(isMobile, entityComponentSystem[i]);
+      let platformScale = this.setScale(entityComponentSystem[i]);
       let startValues = this.snapEdges(stage, entityComponentSystem[i]);
 
       entityComponentSystem[i].object.x = startValues.x + entityComponentSystem[i].x_location * this.scale.y * platformScale;
@@ -227,15 +261,14 @@ class Scaler {
 
   /**
    * Function to scale an individual entity.
-   * @param {object} isMobile - The flag that determines if on a mobile device.
    * @param {object} entityComponent - The the current entity being scaled.
    * @returns {object} platformScale - The platform specific scale of that entity.
    */
-  setScale(isMobile, entityComponent) {
+  setScale(entityComponent) {
 
     let platformScale = 1.0;
 
-    if (isMobile) {
+    if (this.device.isMobile) {
 
       platformScale = 1.5;
   
@@ -286,4 +319,4 @@ class Scaler {
   }
 
 }
-export default Scaler;
+export default DeviceHandler;
