@@ -255,6 +255,8 @@ class AssetHandler {
 
   static pushEntity(entityComponentSystem, entityObject) {
 
+    // this.$emit('pushToEcs', entity_object)
+
     // Push into the respective ecs
     entityComponentSystem.push(entityObject);
 
