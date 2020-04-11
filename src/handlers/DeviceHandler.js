@@ -22,7 +22,7 @@ class DeviceHandler {
    * Constructor for the scaling component of the engine.
    * @constructor
    */
-  constructor() {
+  constructor(stage, device) {
 
     this.device = new MobileHandler(); // Mobile manager
 
@@ -53,6 +53,12 @@ class DeviceHandler {
       framerate: 2
 
     };
+
+    // Set the window resize function to the one
+    window.addEventListener('resize', function () { 
+      this.resize(director.sceneComponentSystem, stage, director)
+    }.bind(this), false);
+
 
   }
 

@@ -168,17 +168,11 @@ export default {
     
     // Initialize the engine modules.
     this.input = new InputHandler(this.drawingCanvas); // Input handler
-    this.device = new DeviceHandler(); // Scales the scene
+    this.device = new DeviceHandler(this.stage, this.director); // Scales the scene
 
 
 
     this.second_title = null;
-
-    // SCALER MAYBE
-    // Set the window resize function to the one
-    window.addEventListener('resize', function () { 
-      this.device.resize(this.director.sceneComponentSystem, this.stage, this.director)
-    }.bind(this), false);
 
 
 
