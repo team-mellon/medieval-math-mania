@@ -23,7 +23,8 @@ class GUIHandler {
 	constructor() {
 
 		this.gcs = []; // GUI component system for scaling and eventually object storage
-
+		// gcs: [] // GUI component system for scaling and eventually object storage
+		
 		this.containerFrame = {};
 
 		this.indicators = [];

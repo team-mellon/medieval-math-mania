@@ -33,6 +33,7 @@ class Director {
   constructor() {
 
 		this.sceneComponentSystem = []; // Scene component system for scaling and eventually object storage
+    // ecs: [], // Entity component system for scaling and eventually object storage
 
     this.loadingQueue = new createjs.LoadQueue();
     this.loadingQueue.loadManifest(sceneManifest);
@@ -539,13 +540,13 @@ class Director {
    * @param {object} entityComponent - The the current entity being scaled.
    * @returns {object} platformScale - The platform specific scale of that entity.
    */    // L
-  loadCurrentScene(entityComponentSystem, stage, device, user) {
+  loadCurrentScene(stage, device, user) {
 
     // Clear HTML before creating a new scene
     this.clearHtml();
 
     // Destroy the last scene
-    this.destroyScene(entityComponentSystem, stage);
+    this.destroyScene(stage);
 
     // Load background color for the scene
     this.background.color = sceneData[this.currentScene].color;
@@ -570,9 +571,9 @@ class Director {
     }
 
     // Create the new scene
-    this.createScene(entityComponentSystem, stage, device, user);
+    this.createScene(stage, device, user);
 
-    device.resize(entityComponentSystem, stage, this);
+    device.resize(stage, this);
 
     // this.level.visibleForm(true);
 
@@ -582,7 +583,7 @@ class Director {
    * A function to change the current scene to a new scene.
    * @param {object} newScene - The index of the scene to navigate to.
    */
-  changeScene(newScene, entityComponentSystem, stage, device, user) {
+  changeScene(newScene, stage, device, user) {
 
     // Set the last scene to the current scene
     this.lastScene = this.currentScene;
@@ -591,7 +592,7 @@ class Director {
     this.currentScene = newScene;
 
     // Load the scene
-    this.loadCurrentScene(entityComponentSystem, stage, device, user);
+    this.loadCurrentScene(stage, device, user);
 
   }
 
@@ -632,7 +633,7 @@ class Director {
    * @param {object} entityComponentSystem - The array of entities.
    * @param {object} stage - The stage that displays the content.
    */
-  destroyScene(entityComponentSystem, stage) {
+  destroyScene(stage) {
 
     // Clear the stage.
     stage.removeAllChildren();

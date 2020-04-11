@@ -99,11 +99,6 @@ export default {
       // w: 100,
       // h: 200,
 
-      animations: {
-        // ecs: [], // Entity component system for scaling and eventually object storage
-        // gcs: [] // GUI component system for scaling and eventually object storage
-      },
-
       style: {
         background: '#aaa'
       }
