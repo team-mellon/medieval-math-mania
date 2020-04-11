@@ -167,7 +167,7 @@ export default {
     this.director = new Director();
     
     // Initialize the engine modules.
-    this.input = new InputHandler(this.drawingCanvas); // Input handler
+    this.input = new InputHandler(this.stage, this.drawingCanvas); // Input handler
     this.device = new DeviceHandler(this.stage, this.director); // Scales the scene
 
 
@@ -177,19 +177,7 @@ export default {
 
 
     this.loadingQueue = new createjs.LoadQueue();
-    this.loadingQueue.loadManifest(sceneManifest);
-
-
-
-    // INPUT MAYBE //
-    // Add keydown listener
-    document.onkeydown = this.input.keyDown.bind(this.input);
-
-    // Add keyup listener
-    document.onkeyup = this.input.keyUp.bind(this.input);
-
-    createjs.Touch.enable(this.stage);                          // Enable touch interaction for mobile
-    this.stage.enableMouseOver();                               // Enable mouse events with scene objects
+    this.loadingQueue.loadManifest(sceneManifest);                       // Enable mouse events with scene objects
 
 
 

@@ -8,7 +8,7 @@
 class InputHandler {
 
   // Constructor to initialize input checking variables
-  constructor(drawingCanvas) {
+  constructor(stage, drawingCanvas) {
 
     drawingCanvas.addEventListener("touchstart", this.handleStart.bind(this), false);
     drawingCanvas.addEventListener('touchend', this.handleEnd.bind(this), false);
@@ -28,6 +28,15 @@ class InputHandler {
     // Location of start and end touches for drag calculations
     this.start_touch = 0;
     this.end_touch = 0;
+
+    // Add keydown listener
+    document.onkeydown = this.keyDown.bind(this);
+
+    // Add keyup listener
+    document.onkeyup = this.keyUp.bind(this);
+
+    createjs.Touch.enable(this.stage);                          // Enable touch interaction for mobile
+    this.stage.enableMouseOver();        
 
   }
 
