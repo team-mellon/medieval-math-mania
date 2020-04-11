@@ -35,8 +35,8 @@ class InputHandler {
     // Add keyup listener
     document.onkeyup = this.keyUp.bind(this);
 
-    createjs.Touch.enable(this.stage);                          // Enable touch interaction for mobile
-    this.stage.enableMouseOver();        
+    createjs.Touch.enable(stage);                          // Enable touch interaction for mobile
+    stage.enableMouseOver();        
 
   }
 

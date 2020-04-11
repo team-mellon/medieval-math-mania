@@ -22,7 +22,7 @@ class DeviceHandler {
    * Constructor for the scaling component of the engine.
    * @constructor
    */
-  constructor(stage, device) {
+  constructor(stage, director) {
 
     this.device = new MobileHandler(); // Mobile manager
 

@@ -28,7 +28,6 @@ import DeviceHandler from '../handlers/DeviceHandler.js';
 
 // Normal classes
 import InputHandler from '../handlers/InputHandler.js';
-import SoundHandler from '../handlers/SoundHandler.js';
 
 // Game Data
 import constants from '../game_data/constants.js';
@@ -162,24 +161,18 @@ export default {
 
     // Grab the canvas that the stage is attached to.
     this.drawingCanvas = document.getElementById(this.config.canvasId);
-
-    // Initialize the scene manager.
-    this.director = new Director();
     
     // Initialize the engine modules.
     this.input = new InputHandler(this.stage, this.drawingCanvas); // Input handler
     this.device = new DeviceHandler(this.stage, this.director); // Scales the scene
 
-
+    // Initialize the scene manager.
+    this.director = new Director(this.stage, this.device, this.user);
 
     this.second_title = null;
 
-
-
     this.loadingQueue = new createjs.LoadQueue();
     this.loadingQueue.loadManifest(sceneManifest);                       // Enable mouse events with scene objects
-
-
 
     createjs.Ticker.setFPS(30);                                 // Set FPS (could be depricated?)
     createjs.Ticker.addEventListener('tick', this.tick);        // Set tisk listener for use as game loop

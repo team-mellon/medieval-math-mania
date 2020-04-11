@@ -12,6 +12,7 @@ import AssetHandler from '../handlers/AssetHandler.js';
 // Scene Modules
 import GUIHandler from '../handlers/GUIHandler.js';
 import LevelHandler from '../handlers/LevelHandler.js';
+import SoundHandler from '../handlers/SoundHandler.js';
 // Static classes
 import FormHandler from '../handlers/FormHandler.js';
 import APIHandler from '../handlers/APIHandler.js';
@@ -30,7 +31,7 @@ class Director {
    * Constructor for the scaling component of the engine.
    * @constructor
    */
-  constructor() {
+  constructor(stage, device, user) {
 
 		this.sceneComponentSystem = []; // Scene component system for scaling and eventually object storage
     // ecs: [], // Entity component system for scaling and eventually object storage
@@ -72,127 +73,127 @@ class Director {
 
       { // Tutorial
         open: function () {
-          this.indicatorFunction(0);
+          this.indicatorFunction(0, stage, device, user);
         }.bind(this)
       },
 
       { // City
         open: function () {
-          this.indicatorFunction(1);
+          this.indicatorFunction(1, stage, device, user);
         }.bind(this)
       },
 
       { // Grasslands
         open: function () {
-          this.indicatorFunction(2);
+          this.indicatorFunction(2, stage, device, user);
         }.bind(this)
       },
 
       { // Volcano
         open: function () {
-          this.indicatorFunction(3);
+          this.indicatorFunction(3, stage, device, user);
         }.bind(this)
       },
 
       { // Sea
         open: function () {
-          this.indicatorFunction(4);
+          this.indicatorFunction(4, stage, device, user);
         }.bind(this)
       },
 
       { // Mountains
         open: function () {
-          this.indicatorFunction(5);
+          this.indicatorFunction(5, stage, device, user);
         }.bind(this)
       },
 
       { // Summit
         open: function () {
-          this.indicatorFunction(6);
+          this.indicatorFunction(6, stage, device, user);
         }.bind(this)
       },
 
       { // Cave
         open: function () {
-          this.indicatorFunction(7);
+          this.indicatorFunction(7, stage, device, user);
         }.bind(this)
       },
 
       { // Forest
         open: function () {
-          this.indicatorFunction(8);
+          this.indicatorFunction(8, stage, device, user);
         }.bind(this)
       },
 
       { // Alpine
         open: function () {
-          this.indicatorFunction(9);
+          this.indicatorFunction(9, stage, device, user);
         }.bind(this)
       },
 
       { // Woods
         open: function () {
-          this.indicatorFunction(10);
+          this.indicatorFunction(10, stage, device, user);
         }.bind(this)
       },
 
       { // Swamp
         open: function () {
-          this.indicatorFunction(11);
+          this.indicatorFunction(11, stage, device, user);
         }.bind(this)
       },
 
       { // Deadlands
         open: function () {
-          this.indicatorFunction(12);
+          this.indicatorFunction(12, stage, device, user);
         }.bind(this)
       },
 
       { // Sky
         open: function () {
-          this.indicatorFunction(13);
+          this.indicatorFunction(13, stage, device, user);
         }.bind(this)
       },
 
       { // Underwater
         open: function () {
-          this.indicatorFunction(14);
+          this.indicatorFunction(14, stage, device, user);
         }.bind(this)
       },
 
       { // Fungi
         open: function () {
-          this.indicatorFunction(15);
+          this.indicatorFunction(15, stage, device, user);
         }.bind(this)
       },
 
       { // Tundra
         open: function () {
-          this.indicatorFunction(16);
+          this.indicatorFunction(16, stage, device, user);
         }.bind(this)
       },
 
       { // Tarpit
         open: function () {
-          this.indicatorFunction(17);
+          this.indicatorFunction(17, stage, device, user);
         }.bind(this)
       },
 
       { // Desert
         open: function () {
-          this.indicatorFunction(18);
+          this.indicatorFunction(18, stage, device, user);
         }.bind(this)
       },
 
       { // Boreal
         open: function () {
-          this.indicatorFunction(19);
+          this.indicatorFunction(19, stage, device, user);
         }.bind(this)
       },
 
       { // Monolith
         open: function () {
-          this.indicatorFunction(20);
+          this.indicatorFunction(20, stage, device, user);
         }.bind(this)
       }
 
@@ -374,9 +375,9 @@ class Director {
     this.setForegroundText(user);
     this.setForeground(stage);
 
-    this.runCustomCode(stage);
+    this.runCustomCode(stage, device, user);
 
-    this.gui.createGUI(this, stage, user, this.async, device, this.gui.menu_button, this.levels);
+    this.gui.createGUI(this.sceneComponentSystem, this, stage, user, this.async, device, this.gui.menu_button, this.levels);
 
     // console.log(entity_component_system);
 
@@ -500,7 +501,7 @@ class Director {
 
   }
 
-  runCustomCode(stage) {
+  runCustomCode(stage, device, user) {
 
     // Custom scene functionalities
     switch (this.currentScene) {
@@ -514,12 +515,12 @@ class Director {
         break;
 
       case 3: // Game
-        FormHandler.createGameForm(this.level, this.device.isMobile);
+        FormHandler.createGameForm(this.level, device.isMobile);
         this.level.createLevel(stage,
-          function() { createjs.Sound.play("select"); this.changeScene(8, stage, device, user); level.visibleForm(true); level.destroyLevel(stage); }.bind(this),
-          function() { createjs.Sound.play("sword"); this.changeScene(9, stage, device, user); level.visibleForm(true); }.bind(this),
-          function() { createjs.Sound.play("menu"); this.changeScene(2, stage, device, user); level.visibleForm(true); level.destroyLevel(stage); }.bind(this),
-          function() { createjs.Sound.play("menu"); this.changeScene(6, stage, device, user); level.visibleForm(true); }.bind(this),
+          function() { createjs.Sound.play("select"); this.changeScene(8, stage, device, user); this.level.visibleForm(true); this.level.destroyLevel(stage); }.bind(this),
+          function() { createjs.Sound.play("sword"); this.changeScene(9, stage, device, user); this.level.visibleForm(true); }.bind(this),
+          function() { createjs.Sound.play("menu"); this.changeScene(2, stage, device, user); this.level.visibleForm(true); this.level.destroyLevel(stage); }.bind(this),
+          function() { createjs.Sound.play("menu"); this.changeScene(6, stage, device, user); this.level.visibleForm(true); }.bind(this),
           user.authenticated,
           function() { this.gui.menu_button.visible = true; }.bind(this),
           this.sound
@@ -573,7 +574,7 @@ class Director {
     // Create the new scene
     this.createScene(stage, device, user);
 
-    device.resize(stage, this);
+    device.resize(this.sceneComponentSystem, stage, this);
 
     // this.level.visibleForm(true);
 
@@ -639,7 +640,7 @@ class Director {
     stage.removeAllChildren();
 
     // Clear the entity component system.
-    entityComponentSystem = [];
+    this.sceneComponentSystem = [];
 
   }
 
@@ -661,7 +662,7 @@ class Director {
 
   }
 
-  indicatorFunction(newL) {
+  indicatorFunction(newL, stage, device, user) {
 
     this.level.generated = false;
     createjs.Sound.play("select");
