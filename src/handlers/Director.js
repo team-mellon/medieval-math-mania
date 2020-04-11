@@ -280,7 +280,7 @@ class Director {
 
     this.runCustomCode(ecs, stage, music);
 
-    this.gui.createGUI(ecs, this, stage, user, async, device, this.gui.menu_button, this.levels, music, this.loadingQueue);
+    this.gui.createGUI(ecs, this, stage, user, async, device, this.gui.menu_button, this.levels, music);
 
     // console.log(entity_component_system);
 
@@ -477,6 +477,8 @@ class Director {
     // Create the new scene
     this.createScene(entityComponentSystem, stage, device, music, user, async);
 
+    device.resize(entityComponentSystem, stage, this);
+
     // this.level.visibleForm(true);
 
   }
@@ -509,7 +511,7 @@ class Director {
     this.loadCurrentScene(ecs, stage, device, music, user, async);
 
     // Resize everything for scaling
-    device.resize(ecs, stage, this, mobile);
+    device.resize(ecs, stage, this);
 
     // If the last scene was the game open with the pause screen
     if (this.lastScene == 3) {

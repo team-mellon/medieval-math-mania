@@ -31,7 +31,7 @@ class GUIHandler {
 
 	}
 
-	createGUI(entity_component_system, director, stage, user, async, level, device, menubutton, levels, music) {
+	createGUI(entity_component_system, director, stage, user, async, device, menubutton, levels, music) {
 
 		let config;
 
@@ -188,11 +188,11 @@ class GUIHandler {
 
 				// menubutton.visible = false
 
-			level.openPauseMenu(user.authenticated);
+			director.level.openPauseMenu(user.authenticated);
 
-			// level.pauseAnimation(true);
-			// level.visibleButton(true);
-			// level.visibleForm(false);
+			// director.level.pauseAnimation(true);
+			// director.level.visibleButton(true);
+			// director.level.visibleForm(false);
 
 		}.bind(this), entity_component_system, stage);
 
@@ -200,38 +200,38 @@ class GUIHandler {
 
 					config = new ObjectConfig('default', 'gui', 192, 192, "center", -234 - (288 / 2), "bottom", -(192 / 2));
 					this.ll_number_button = AssetHandler.createButton("res/number-button-ll.png", "", config, function() {
-						if(level.digit > 0)
-							level.digit--;
-						if(level.digit < 0)
-							level.digit = 0;
-						console.log(level.digit);
+						if(director.level.digit > 0)
+							director.level.digit--;
+						if(director.level.digit < 0)
+							director.level.digit = 0;
+						console.log(director.level.digit);
 					}.bind(this), entity_component_system, stage);
 
 					config = new ObjectConfig('default', 'gui', 192, 192, "center", -234 - (288 / 2), "bottom", -(192 / 2));
 					this.lr_number_button = AssetHandler.createButton("res/number-button-lr.png", "", config, function() {
-						if(level.digit < 2)
-							level.digit++;
-						if(level.digit > 2)
-							level.digit = 2;
-						console.log(level.digit);
+						if(director.level.digit < 2)
+							director.level.digit++;
+						if(director.level.digit > 2)
+							director.level.digit = 2;
+						console.log(director.level.digit);
 					}.bind(this), entity_component_system, stage);
 
 					config = new ObjectConfig('default', 'gui', 192, 192, "center", 234 + (288 / 2), "bottom", -(192 / 2));
 					this.rr_number_button = AssetHandler.createButton("res/number-button-rr.png", "", config, function() {
-						level.multiplier += level.adder;
-						document.getElementById("hundredsPlace").textContent = Math.floor(level.multiplier/100 % 10);
-						document.getElementById("tensPlace").textContent = Math.abs(Math.floor(level.multiplier/10 % 10));
-						document.getElementById("onesPlace").textContent = Math.abs(Math.floor(level.multiplier % 10));
-			console.log(level.multiplier + " up");
+						director.level.multiplier += director.level.adder;
+						document.getElementById("hundredsPlace").textContent = Math.floor(director.level.multiplier/100 % 10);
+						document.getElementById("tensPlace").textContent = Math.abs(Math.floor(director.level.multiplier/10 % 10));
+						document.getElementById("onesPlace").textContent = Math.abs(Math.floor(director.level.multiplier % 10));
+			console.log(director.level.multiplier + " up");
 					}.bind(this), entity_component_system, stage);
 
 					config = new ObjectConfig('default', 'gui', 192, 192, "center", 234 + (288 / 2), "bottom", -(192 / 2));
 					this.rl_number_button = AssetHandler.createButton("res/number-button-rl.png", "", config, function() {
-						level.multiplier -= level.adder;
-						document.getElementById("hundredsPlace").textContent = Math.floor(level.multiplier/100 % 10);
-						document.getElementById("tensPlace").textContent = Math.abs(Math.floor(level.multiplier/10 % 10));
-						document.getElementById("onesPlace").textContent = Math.abs(Math.floor(level.multiplier % 10));
-			console.log(level.multiplier + " down");
+						director.level.multiplier -= director.level.adder;
+						document.getElementById("hundredsPlace").textContent = Math.floor(director.level.multiplier/100 % 10);
+						document.getElementById("tensPlace").textContent = Math.abs(Math.floor(director.level.multiplier/10 % 10));
+						document.getElementById("onesPlace").textContent = Math.abs(Math.floor(director.level.multiplier % 10));
+			console.log(director.level.multiplier + " down");
 					}.bind(this), entity_component_system, stage);
 
 				}
@@ -318,9 +318,9 @@ class GUIHandler {
 
 				let indicatorType = '';
 
-				if (i === level.current_level) {
+				if (i === director.level.current_level) {
 					indicatorType = '-current';
-				} else if (level.visitedLevels[i]) {
+				} else if (director.level.visitedLevels[i]) {
 					indicatorType = '-visited';
 				}
 
@@ -349,11 +349,11 @@ class GUIHandler {
 			// director.changeScene(3, entity_component_system, stage, device, music, user, async);
 			director.oneWayScene(entity_component_system, stage, device, music, user, async);
 
-			// level.openPauseMenu();
+			// director.level.openPauseMenu();
 
-			// level.pauseAnimation(true);
-			// level.visibleButton(true);
-			// level.visibleForm(false);
+			// director.level.pauseAnimation(true);
+			// director.level.visibleButton(true);
+			// director.level.visibleForm(false);
 
 			}.bind(this), entity_component_system, stage);
 

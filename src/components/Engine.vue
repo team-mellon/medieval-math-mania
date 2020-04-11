@@ -231,7 +231,7 @@ export default {
       if (this.loader.preloaded && !this.loader.loaded) {
 
         // Create the first 'currentScene'
-        this.director.createScene(this.ecs, this.stage, this.director.level, this.device, this.music, this.user, this.async); // Create scene assets
+        this.director.createScene(this.ecs, this.stage, this.device, this.music, this.user, this.async); // Create scene assets
 
         // Rescale the view to size the scene to the device.
         this.device.resize(this.ecs, this.stage, this.director); // Resize to set initial scale
