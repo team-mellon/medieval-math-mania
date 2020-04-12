@@ -336,7 +336,6 @@ class GUIHandler {
 			}
 
 			config = new ObjectConfig('default', 'gui', 210, 310, "center", 200, "center", 200);
-			console.log(config);
 			this.containerFrame = AssetHandler.createContainerFrame(config, entity_component_system, stage);
 			this.containerFrame.visible = false;
 

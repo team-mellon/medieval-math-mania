@@ -209,6 +209,120 @@ class Director {
    * @param {object} stage - The stage that displays the content.
    */
 
+  runScene(stage, device, user) {
+
+    if (this.currentScene == 0) {
+
+      // console.log(user.authenticated);
+
+      if (device.input.keys[13]) {  // Enter key
+
+        createjs.Sound.play("sword");
+
+        var key = document.getElementById('usernameInput').value;
+
+        var text = {
+          "uname": document.getElementById('usernameInput').value,
+          "pass": document.getElementById('passwordInput').value
+        };
+
+        APIHandler.verifyUser(text, user, this.async);
+
+      }
+
+      if (user.authenticated) {
+        this.changeScene(2, stage, device, user);
+      }
+
+    }
+
+    if (this.currentScene == 1) {
+
+      // console.log(user.authenticated);
+
+      if (device.input.keys[13]) {
+        createjs.Sound.play("sword");
+        var key = document.getElementById('usernameInput').value;
+        if( /*key in this.database.users ||*/ key == "" ) {
+          document.getElementById('errorText').textContent = "Invalid username";
+        }	else {
+          if(document.getElementById('firstnameInput').value == "") {
+            document.getElementById('errorText').textContent = "Invalid firstname";
+          } else {
+            if(document.getElementById('lastnameInput').value == "") {
+              document.getElementById('errorText').textContent = "Invalid lastname";
+            } else {
+              if(document.getElementById('passwordInput').value == "") {
+                document.getElementById('errorText').textContent = "Invalid password";
+              } else {
+                if(document.getElementById('passwordInput').value != document.getElementById('confirmInput').value) {
+                  document.getElementById('errorText').textContent = "Passwords do not match";
+                } else {
+                  var text = {
+                    "uname": document.getElementById('usernameInput').value,
+                    "pass": document.getElementById('passwordInput').value,
+                    "fname": document.getElementById('firstnameInput').value,
+                    "lname": document.getElementById('lastnameInput').value,
+                    "confirm": document.getElementById('confirmInput').value
+                  };
+                  APIHandler.createUser(text, user, this.async);
+                  this.changeScene(2, stage, device, user);
+                }
+              }
+            }
+          }
+        }
+      }
+
+    }
+
+    // Game scene
+    if (this.currentScene == 3) {
+
+      var y_position = (284 * device.scale.y).toString() + "px";
+      var x_position = ((window.innerWidth / 2) + (0) * device.scale.y).toString() + "px";
+
+      // console.log(x_position);
+
+      var game_entry_form = document.getElementById("equationBanner");
+      game_entry_form.style.bottom = y_position;
+      game_entry_form.style.right = x_position;
+      if (!device.device.isMobile) {
+        document.getElementById("entryInput").focus();
+      }
+
+      y_position = (300 * device.scale.y).toString() + "px";
+      x_position = ( (window.innerWidth / 2) - (234 + 288 / 2) * device.scale.x).toString() + "px";
+
+      // console.log(x_position);
+
+      var game_history_form = document.getElementById("historyBanner");
+      game_history_form.style.bottom = y_position;
+      game_history_form.style.right = x_position;
+
+    }
+
+    //Calls external function to generate ranges for each level, this is reset when each level is selected on level select
+
+    // Game scene && not paused
+    if (this.currentScene == 3 && this.level.pause_menu.visible == false) {
+
+      this.gameRunning(stage, device, user);
+
+    }
+
+    // Update frame counter for drawing
+    // frame_counter++;
+
+    // if (frame_counter > 9) {
+    //
+    //   this.level.reload_counter += frame_counter;
+    //   frame_counter = 0;
+    //
+    // }
+
+  }
+
   /**
    * Calculate the scene scaling.
    * @param {object} stage - The stage that displays the content.
@@ -235,7 +349,7 @@ class Director {
 
   }
 
-  gameRunning(stage, device, input, user) {
+  gameRunning(stage, device, user) {
 
     // If the range is not generated
     if(!this.level.generated) {
@@ -249,14 +363,14 @@ class Director {
       // randomizeRangeAndMultiplier();
     // }
 
-    // console.log(this.input.drag_up);
+    // console.log(device.input.drag_up);
 
     // Enter or swipe up to check input
-    if ((input.keys[13] || input.drag_up) && this.level.catapult.paused) { // Enter or drag up swipe on mobile
+    if ((device.input.keys[13] || device.input.drag_up) && this.level.catapult.paused) { // Enter or drag up swipe on mobile
       console.log("Enter Pressed");
 
       // Reset drag_up bool;
-      input.drag_up = false;
+      device.input.drag_up = false;
 
       this.level.runInput(device.device.isMobile);
       this.clearHtml();
@@ -563,7 +677,7 @@ class Director {
 
       } else {
 
-        FormHandler.createGameForm(this.level, this.device.isMobile);
+        FormHandler.createGameForm(this.level, device.isMobile);
         this.level.remakeMultiplierBanner();
         this.level.remakeRangeBanner();
 
@@ -574,7 +688,7 @@ class Director {
     // Create the new scene
     this.createScene(stage, device, user);
 
-    device.resize(this.sceneComponentSystem, stage, this);
+    device.resize(stage, this);
 
     // this.level.visibleForm(true);
 
@@ -608,7 +722,7 @@ class Director {
     this.loadCurrentScene(stage, device, user);
 
     // Resize everything for scaling
-    device.resize(this.sceneComponentSystem, stage, this);
+    device.resize(stage, this);
 
     // If the last scene was the game open with the pause screen
     if (this.lastScene == 3) {

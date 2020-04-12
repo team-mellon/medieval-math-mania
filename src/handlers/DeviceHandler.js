@@ -10,8 +10,9 @@
 // Static classes
 import AssetHandler from './AssetHandler.js';
 
-
+// Submodules
 import MobileHandler from './MobileHandler.js';
+import InputHandler from '../handlers/InputHandler.js';
 
 // Models
 import ObjectConfig from '../structures/ObjectConfig'
@@ -22,14 +23,46 @@ class DeviceHandler {
    * Constructor for the scaling component of the engine.
    * @constructor
    */
-  constructor(stage, director) {
+  constructor(stage, director, drawingCanvas) {
 
-    this.device = new MobileHandler(); // Mobile manager
+    ////////////
+    // MOBILE //
+    ////////////
 
+    // Mobile manager
+    this.device = new MobileHandler();
+
+    // Landscape warning backdrop
+    this.landscape_warning = new createjs.Shape();
+
+    // Phone rotation image variables
+    this.phone_rotation = null;
+    this.phone_rotationS = {
+      images: ["res/phone-rotation.png"],
+      frames: {width:288, height:288, count:2, regX: 0, regY:0, spacing:0, margin:0},
+      framerate: 2
+    };
+
+    ///////////
+    // INPUT //
+    ///////////
+
+    // Input handler
+    this.input = new InputHandler(stage, drawingCanvas);
+
+    /////////////
+    // SCALING //
+    /////////////
+
+    // Scene scaling variables
     this.scale = {
       x: 1.0,
-      y: 1.0
+      y: 1.0,
+      maxY: 1440,
+      maxX: 1920,
+      ratio: 1440 / 1920,
     };
+
     this.maxScaleY = 1440;
     this.maxScaleX = 1920;
     this.screenRatio = this.maxScaleY / this.maxScaleX;
@@ -39,26 +72,8 @@ class DeviceHandler {
     this.tempScale = 1;
     this.tempMax = 1440
 
-    this.landscape_warning = new createjs.Shape();
-    this.phone_rotation = null;
-
-    ////////////
-    // MOBILE //
-    ////////////
-
-    this.phone_rotationS = {
-
-      images: ["res/phone-rotation.png"],
-      frames: {width:288, height:288, count:2, regX: 0, regY:0, spacing:0, margin:0},
-      framerate: 2
-
-    };
-
     // Set the window resize function to the one
-    window.addEventListener('resize', function () { 
-      this.resize(director.sceneComponentSystem, stage, director)
-    }.bind(this), false);
-
+    window.addEventListener('resize', function() { this.resize(stage, director) }.bind(this), false);
 
   }
 
@@ -68,9 +83,9 @@ class DeviceHandler {
    * @param {object} currentScene - The index of the current scene.
    * @param {object} stage - The stage that displays the content.
    */
-    resize(ecs, stage, director) {
+    resize(stage, director) {
 
-      this.loadOrientationAnimation(ecs, stage)
+      this.loadOrientationAnimation(director.sceneComponentSystem, stage)
 
       // Redraw background before everthing else for Z-axis reasons
       director.background.shape.graphics.clear()
@@ -113,7 +128,7 @@ class DeviceHandler {
         this.scaleAssets(director.level.lcs, director.currentScene, stage); // Scale scene appropriately
       }
 
-      this.scaleAssets(ecs, director.currentScene, stage); // Scale scene appropriately
+      this.scaleAssets(director.sceneComponentSystem, director.currentScene, stage); // Scale scene appropriately
       // this.scaleAssets(this.gcs, currentScene, this.scale.y, this.scale.x, stage); // Scale scene appropriately
 
       stage.update()

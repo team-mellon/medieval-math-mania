@@ -26,9 +26,6 @@ import APIHandler from '../handlers/APIHandler.js';
 import Director from '../handlers/Director.js';
 import DeviceHandler from '../handlers/DeviceHandler.js';
 
-// Normal classes
-import InputHandler from '../handlers/InputHandler.js';
-
 // Game Data
 import constants from '../game_data/constants.js';
 import { sceneData, sceneManifest } from '../game_data/scenes.js';
@@ -161,10 +158,9 @@ export default {
 
     // Grab the canvas that the stage is attached to.
     this.drawingCanvas = document.getElementById(this.config.canvasId);
-    
+
     // Initialize the engine modules.
-    this.input = new InputHandler(this.stage, this.drawingCanvas); // Input handler
-    this.device = new DeviceHandler(this.stage, this.director); // Scales the scene
+    this.device = new DeviceHandler(this.stage, this.director, this.drawingCanvas); // Scales the scene
 
     // Initialize the scene manager.
     this.director = new Director(this.stage, this.device, this.user);
@@ -203,115 +199,7 @@ export default {
 
       }
 
-      if (this.director.currentScene == 0) {
-
-        // console.log(this.user.authenticated);
-
-        if (this.input.keys[13]) {  // Enter key
-
-          createjs.Sound.play("sword");
-
-          var key = document.getElementById('usernameInput').value;
-
-          var text = {
-            "uname": document.getElementById('usernameInput').value,
-            "pass": document.getElementById('passwordInput').value
-          };
-
-          APIHandler.verifyUser(text, this.user, this.async);
-
-        }
-
-        if (this.user.authenticated) {
-          this.director.changeScene(2, this.stage, this.device, this.user);
-        }
-
-      }
-
-      if (this.director.currentScene == 1) {
-
-        // console.log(this.user.authenticated);
-
-        if (this.input.keys[13]) {
-          createjs.Sound.play("sword");
-          var key = document.getElementById('usernameInput').value;
-          if( /*key in this.database.users ||*/ key == "" ) {
-            document.getElementById('errorText').textContent = "Invalid username";
-          }	else {
-            if(document.getElementById('firstnameInput').value == "") {
-              document.getElementById('errorText').textContent = "Invalid firstname";
-            } else {
-              if(document.getElementById('lastnameInput').value == "") {
-                document.getElementById('errorText').textContent = "Invalid lastname";
-              } else {
-                if(document.getElementById('passwordInput').value == "") {
-                  document.getElementById('errorText').textContent = "Invalid password";
-                } else {
-                  if(document.getElementById('passwordInput').value != document.getElementById('confirmInput').value) {
-                    document.getElementById('errorText').textContent = "Passwords do not match";
-                  } else {
-                    var text = {
-                      "uname": document.getElementById('usernameInput').value,
-                      "pass": document.getElementById('passwordInput').value,
-                      "fname": document.getElementById('firstnameInput').value,
-                      "lname": document.getElementById('lastnameInput').value,
-                      "confirm": document.getElementById('confirmInput').value
-                    };
-                    APIHandler.createUser(text, this.user, this.director.async);
-                    this.director.changeScene(2, this.stage, this.device, this.user);
-                  }
-                }
-              }
-            }
-          }
-        }
-
-      }
-
-      // Game scene
-      if (this.director.currentScene == 3) {
-
-        var y_position = (284 * this.device.scale.y).toString() + "px";
-        var x_position = ((window.innerWidth / 2) + (0) * this.device.scale.y).toString() + "px";
-
-        // console.log(x_position);
-
-        var game_entry_form = document.getElementById("equationBanner");
-        game_entry_form.style.bottom = y_position;
-        game_entry_form.style.right = x_position;
-        if (!this.device.device.isMobile) {
-          document.getElementById("entryInput").focus();
-        }
-
-        y_position = (300 * this.device.scale.y).toString() + "px";
-        x_position = ( (window.innerWidth / 2) - (234 + 288 / 2) * this.device.scale.x).toString() + "px";
-
-        // console.log(x_position);
-
-        var game_history_form = document.getElementById("historyBanner");
-        game_history_form.style.bottom = y_position;
-        game_history_form.style.right = x_position;
-
-      }
-
-      //Calls external function to generate ranges for each level, this is reset when each level is selected on level select
-
-      // Game scene && not paused
-      if (this.director.currentScene == 3 && this.director.level.pause_menu.visible == false) {
-
-        this.director.gameRunning(this.stage, this.device, this.input, this.user);
-
-      }
-
-      // Update frame counter for drawing
-      // frame_counter++;
-
-      // if (frame_counter > 9) {
-      //
-      //   this.director.level.reload_counter += frame_counter;
-      //   frame_counter = 0;
-      //
-      // }
+      this.director.runScene(this.stage, this.device, this.user);
 
       this.stage.update(event);
 
