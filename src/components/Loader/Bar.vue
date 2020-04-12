@@ -1,7 +1,9 @@
 <template>
 
   <div id="backgroundBar" class="background-bar" hidden>
+
     <div id="progressBar" class="progress-bar" hidden></div>
+
   </div>
 
 </template>
@@ -19,7 +21,7 @@
         // If the new value is valid...
         if (next !== null) {
 
-          // Grab the progress bar from the template.
+          // Get the progress bar from the template.
           let progressBar = document.getElementById("progressBar");
 
           // Set the incoming value to a percent
@@ -27,6 +29,19 @@
 
           // Set the width of the progress based on the percentage value
           progressBar.style.width = percentage + '%';
+
+        // Loading is complete...
+        if(next * 100  >= 100) {
+
+          // Hide the progress bar.
+          progressBar.hidden = true;
+          backgroundBar.hidden = true;
+
+        } else {
+
+          // Show the progress bar.
+          progressBar.hidden = false;
+          backgroundBar.hidden = false;
 
         }
 

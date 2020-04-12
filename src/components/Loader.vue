@@ -1,12 +1,10 @@
 <template>
 
-  <div id="ldBg" class="ldscreen" hidden>
+  <div id="loaderBackground" class="loader-background" hidden>
 
     <span id="loadingText" hidden>Loading</span>
-
     <Bar v-bind:progress="loadingQueue.progress" />
-
-    <span id="percentText">Loading</span>
+    <span id="percentText" hidden>Loading</span>
 
   </div>
 
@@ -32,44 +30,66 @@
       }
     },
     watch: { 
-      loadingQueue: function(newVal, oldVal) { // watch it
-        if (newVal !== null) {
+      loadingQueue: function(next, previous) {
+
+        if (next !== null) {
+
+          // Handler that runs when file loading progresses.
           this.loadingQueue.on("progress", this.handleProgress.bind(this));
-          this.loadingQueue.on("complete", this.handleComplete.bind(this));
+
+          // Handler that runs when each file completes.
           // this.loadingQueue.addEventListener("fileload", handleFileComplete);
+
+          // Handler that run when the entire loading queue completes.
+          this.loadingQueue.on("complete", this.handleComplete.bind(this));
+
         }
+
       }
     },
     methods: {
 
       handleComplete: function(event) {
-        console.log("Loaded!");
+
+        // Emit to the engine that the canvas assets are ready.
         this.$emit('loaded', 'loaded')
+
       },
 
       //Loadbar for loading screen
       handleProgress: function(evt) {
 
-        // var progbar = document.getElementById("progressBar");
-        var perctext = document.getElementById("percentText");
-        var loadtext = document.getElementById("loadingText");
+        // Get the background from the template.
+        var lbBg = document.getElementById("loaderBackground");
 
+        // Get the copy text and the progress text from the template.
+        var loadingText = document.getElementById("loadingText");
+        var percentText = document.getElementById("percentText");
+
+        // Loading is complete...
         if(this.loadingQueue.progress * 100  >= 100) {
 
-          progressBar.hidden = true;
-          backgroundBar.hidden = true;
-          ldBg.hidden = true;
+          // Hide the background.
+          loaderBackground.hidden = true;
+
+          // Hide loading and percent text.
+          loadingText.hidden = true;
+          percentText.hidden = true;
 
         } else {
 
-          progressBar.hidden = false;
-          backgroundBar.hidden = false;
-          ldBg.hidden = false;
+          // Show the background.
+          loaderBackground.hidden = false;
 
-          loadtext.hidden = false;
+          // Show loading and percent text.
+          loadingText.hidden = false;
+          percentText.hidden = false;
 
-          // progbar.style.width = this.loadingQueue.progress * 100 + '%';
-          perctext.innerHTML = (Math.floor(this.loadingQueue.progress * 100)).toString() + '%';
+          // Set the incoming value to a percent.
+          let percentage = Math.floor(this.loadingQueue.progress * 100);
+
+          // The the percent text to the percent loaded.
+          percentText.innerHTML = percentage.toString() + '%';
 
         }
 
@@ -84,7 +104,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 
-  .ldscreen {
+  .loader-background {
 
     /* Position */
     position: absolute;
