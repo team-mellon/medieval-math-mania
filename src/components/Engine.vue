@@ -186,7 +186,7 @@ export default {
         this.director.createScene(this.stage, this.device, this.user); // Create scene assets
 
         // Rescale the view to size the scene to the device.
-        this.device.resize(this.director.sceneComponentSystem, this.stage, this.director); // Resize to set initial scale
+        this.device.resize(this.stage, this.director); // Resize to set initial scale
 
         // Set the loaded flag.
         this.loader.loaded = true;
