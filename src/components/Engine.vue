@@ -2,7 +2,7 @@
   <div id="engineHolder">
     <canvas id="drawingCanvas" :style="style">alternate content</canvas>
 
-    <Loader v-bind:loading-queue="loadingQueue" @loaded="preloaded" />
+    <Loader v-bind:loading-queue="loadingQueue" @loaded="primed" />
 
     <div id="sceneHTML"></div>
 
@@ -77,7 +77,7 @@ export default {
       },
 
       loader: {
-        preloaded: false,
+        primed: false,
         loaded: false
       },
 
@@ -180,7 +180,9 @@ export default {
     tick: function(event) {
 
       // this.second_title.x = this.stage.canvas.width / 3;
-      if (this.loader.preloaded && !this.loader.loaded) {
+
+      // 
+      if (this.loader.primed && !this.loader.loaded) {
 
         // Create the first 'currentScene'
         this.director.createScene(this.stage, this.device, this.user); // Create scene assets
@@ -191,26 +193,23 @@ export default {
         // Set the loaded flag.
         this.loader.loaded = true;
 
-        // if(this.director.loadingQueue.progress * 100  >= 100) {
-        //   progressBar.hidden = true;
-        //   progressBackground.hidden = true;
-        //   ldBg.hidden = true;
-        // }
-
       }
 
+      // Run the scene.
       this.director.runScene(this.stage, this.device, this.user);
 
+      // Update the stage.
       this.stage.update(event);
 
     },
 
-    preloaded: function(event) {
+    primed: function(event) {
+
+      this.loader.primed = true;
+      console.log("Primed!");
 
       this.second_title = new createjs.Bitmap(this.director.loadingQueue.getResult("image"));
       // console.log(this.second_title);
-      this.loader.preloaded = true;
-      console.log("Preloaded!");
       // OR samething
       // this.director.background.shape = new createjs.Bitmap(images['image']);
       
