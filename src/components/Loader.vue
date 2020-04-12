@@ -1,23 +1,29 @@
 <template>
+
   <div id="ldBg" class="ldscreen" hidden>
+
     <span id="loadingText" hidden>Loading</span>
-    <div id="progressBackground" class="bgbar" hidden>
-      <div id="progressBar" class="pgbar" hidden></div>
-    </div>
+
+    <Bar v-bind:progress="loadingQueue.progress" />
+
     <span id="percentText">Loading</span>
+
   </div>
+
 </template>
 
 <script>
 
+  import Bar from './Loader/Bar.vue'
+
   export default {
-
     name: 'Loader',
-
+    components: {
+      Bar
+    },
     props: {
       loadingQueue: Object
     },
-
     data () {
       return {
         loader: {
@@ -25,7 +31,6 @@
         }
       }
     },
-
     watch: { 
       loadingQueue: function(newVal, oldVal) { // watch it
         if (newVal !== null) {
@@ -35,7 +40,6 @@
         }
       }
     },
-
     methods: {
 
       handleComplete: function(event) {
@@ -46,25 +50,25 @@
       //Loadbar for loading screen
       handleProgress: function(evt) {
 
-        var progbar = document.getElementById("progressBar");
+        // var progbar = document.getElementById("progressBar");
         var perctext = document.getElementById("percentText");
         var loadtext = document.getElementById("loadingText");
 
         if(this.loadingQueue.progress * 100  >= 100) {
 
           progressBar.hidden = true;
-          progressBackground.hidden = true;
+          backgroundBar.hidden = true;
           ldBg.hidden = true;
 
         } else {
 
           progressBar.hidden = false;
-          progressBackground.hidden = false;
+          backgroundBar.hidden = false;
           ldBg.hidden = false;
 
           loadtext.hidden = false;
 
-          progbar.style.width = this.loadingQueue.progress * 100 + '%';
+          // progbar.style.width = this.loadingQueue.progress * 100 + '%';
           perctext.innerHTML = (Math.floor(this.loadingQueue.progress * 100)).toString() + '%';
 
         }
@@ -92,38 +96,6 @@
     height: 100%;
     width: 100%;
     background-color: #919191;
-    z-index: 2;
-
-  }
-
-  .bgbar {
-
-    /* Position */
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-
-    /* Properties */
-    background-color: LightGray;
-    height: 50px;
-    width: 90%;
-    z-index: 2;
-
-  }
-
-  .pgbar {
-
-    /* Position */
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-
-    /* Properties */
-    background-color: Gold;
-    height: 100%;
-    width: 100%;
     z-index: 2;
 
   }
