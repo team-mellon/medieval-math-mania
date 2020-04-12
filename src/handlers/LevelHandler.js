@@ -1650,14 +1650,14 @@ class LevelHandler {
     var progbar = document.getElementById("progressBar");
     var perctext = document.getElementById("percentText");
     progressBar.hidden= false;
-    progressBackground.hidden = false;
+    backgroundBar.hidden = false;
     ldBg.hidden = false;
     progbar.style.width = this.preload.progress * 100 + '%';
     perctext.innerHTML = (Math.floor(this.preload.progress * 100)).toString() + '%';
     if(this.preload.progress * 100  >= 100)
     {
       progressBar.hidden = true;
-      progressBackground.hidden = true;
+      backgroundBar.hidden = true;
       ldBg.hidden = true;
     }
   }

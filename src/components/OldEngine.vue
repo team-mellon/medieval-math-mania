@@ -8,8 +8,8 @@
 
     <div id="ldBg" class="ldscreen">
       <span id="loadingText">Loading</span>
-      <div id="progressBackground" class="bgbar">
-        <div id="progressBar" class="pgbar"></div>
+      <div id="backgroundBar" class="background-bar">
+        <div id="progressBar" class="progress-bar"></div>
       </div>
       <span id="percentText">Loading</span>
     </div>
@@ -238,7 +238,7 @@ export default {
 
           	//putting this here because I dont know how else to initialize this as hidden
           	progressBar.hidden = true;
-          	progressBackground.hidden = true;
+          	backgroundBar.hidden = true;
           	ldBg.hidden = true;
 
           	//registers Menu sounds

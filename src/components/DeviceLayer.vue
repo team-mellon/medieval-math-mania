@@ -238,7 +238,7 @@ export default {
 
         // if(this.director.loadingQueue.progress * 100  >= 100) {
         //   progressBar.hidden = true;
-        //   progressBackground.hidden = true;
+        //   backgroundBar.hidden = true;
         //   ldBg.hidden = true;
         // }
 
