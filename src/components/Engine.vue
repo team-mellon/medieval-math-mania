@@ -15,6 +15,7 @@
 
 <script>
 
+// 
 import Loader from './Loader.vue';
 
 // Modules
@@ -22,29 +23,22 @@ import Director from '../handlers/Director.js';
 import DeviceHandler from '../handlers/DeviceHandler.js';
 
 // Game Data
-import constants from '../game_data/constants.js';
-import { sceneData, sceneManifest } from '../game_data/scenes.js';
-import { levelData } from '../game_data/levels.js';
-
-// Models
-import ObjectConfig from '../structures/ObjectConfig'
+import { sceneManifest } from '../game_data/scenes.js';
 
 export default {
-
   name: 'Engine',
-
   components: {
     Loader
   },
-
   data () {
-
     return {
 
+      // 
       config: {
         canvasId: 'drawingCanvas',
       },
 
+      // 
       loadingQueue: null,
 
       // Authentication handling
@@ -52,6 +46,7 @@ export default {
         error: ''
       },
 
+      // 
       text: '',
 
       // Current user data
@@ -66,16 +61,19 @@ export default {
         badges: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       },
 
+      // 
       scale: {
         x: 1.0,
         y: 1.0
       },
 
+      // 
       loader: {
         primed: false,
         loaded: false
       },
 
+      // 
       background: {
         entity: {},
         shape: null,

@@ -641,12 +641,6 @@ export default {
     // GUI //
     /////////
 
-    this.buttonX = 216;
-    this.buttonY = 72;
-
-    this.backgroundX = 1920;
-    this.backgroundY = 768;
-
     this.indicators = [];
 
     this.indicator_counter = 0;
@@ -654,8 +648,6 @@ export default {
     ////////////
     // LEVELS //
     ////////////
-
-    this.num_levels = 20;
 
     this.current_level = 1;
 
