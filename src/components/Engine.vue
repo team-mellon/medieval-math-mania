@@ -1,5 +1,6 @@
 <template>
   <div id="engineFrame">
+    <DeviceLayer  />
     <canvas id="drawingCanvas" :style="style">alternate content</canvas>
 
     <Loader v-bind:loading-queue="loadingQueue" @loaded="primed" />
@@ -16,6 +17,7 @@
 <script>
 
 // 
+import DeviceLayer from './DeviceLayer.vue';
 import Loader from './Loader.vue';
 
 // Modules
@@ -28,6 +30,7 @@ import { sceneManifest } from '../game_data/scenes.js';
 export default {
   name: 'Engine',
   components: {
+    DeviceLayer,
     Loader
   },
   data () {
