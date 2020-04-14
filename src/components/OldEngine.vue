@@ -1,18 +1,10 @@
 <template>
-  <div id="engineHolder">
+  <div id="engineFrame">
 
     <canvas id="drawingCanvas" :style="style">alternate content</canvas>
     <!-- <canvas id="drawingCanvas" :width="w" :height="h" :style="style"></canvas> -->
 
     <div id="sceneHTML"></div>
-
-    <div id="ldBg" class="ldscreen">
-      <span id="loadingText">Loading</span>
-      <div id="backgroundBar" class="background-bar">
-        <div id="progressBar" class="progress-bar"></div>
-      </div>
-      <span id="percentText">Loading</span>
-    </div>
 
     <!-- <div id="moduleHolder"> -->
       <!-- <UserInterface @pushToEcs="pushEcs" @pushToLcs="pushLcs"/> -->
@@ -235,11 +227,6 @@ export default {
 
       { // Login
         custom:   function() {
-
-          	//putting this here because I dont know how else to initialize this as hidden
-          	progressBar.hidden = true;
-          	backgroundBar.hidden = true;
-          	ldBg.hidden = true;
 
           	//registers Menu sounds
           	createjs.Sound.registerSound("res/sound_effects/menu.wav", "menu");

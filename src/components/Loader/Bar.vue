@@ -30,23 +30,24 @@
           // Set the width of the progress based on the percentage value
           progressBar.style.width = percentage + '%';
 
-        // Loading is complete...
-        if(next * 100  >= 100) {
+          // Loading is complete...
+          if(next * 100  >= 100) {
 
-          // Hide the progress bar.
-          progressBar.hidden = true;
-          backgroundBar.hidden = true;
+            // Hide the progress bar.
+            progressBar.hidden = true;
+            backgroundBar.hidden = true;
 
-        } else {
+          } else {
 
-          // Show the progress bar.
-          progressBar.hidden = false;
-          backgroundBar.hidden = false;
+            // Show the progress bar.
+            progressBar.hidden = false;
+            backgroundBar.hidden = false;
+
+          }
 
         }
-
-      }
-    }
+      },
+    },
   }
 
 </script>

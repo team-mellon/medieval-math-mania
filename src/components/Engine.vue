@@ -1,9 +1,8 @@
 <template>
-  <div id="engineHolder">
+  <div id="engineFrame">
     <canvas id="drawingCanvas" :style="style">alternate content</canvas>
 
     <Loader v-bind:loading-queue="loadingQueue" @loaded="primed" />
-
     <div id="sceneHTML"></div>
 
     <!-- <canvas id="changingParametersBasedOnState" :width="w" :height="h" :style="style"></canvas> -->
@@ -16,11 +15,7 @@
 
 <script>
 
-import Loader from './Loader.vue'
-
-// Static classes
-import FormHandler from '../handlers/FormHandler.js';
-import APIHandler from '../handlers/APIHandler.js';
+import Loader from './Loader.vue';
 
 // Modules
 import Director from '../handlers/Director.js';
