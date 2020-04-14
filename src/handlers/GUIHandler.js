@@ -32,7 +32,7 @@ class GUIHandler {
 
 	}
 
-	createGUI(entity_component_system, director, stage, user, async, device, menubutton, levels) {
+	createGUI(entity_component_system, director, stage, user, async, device, menubutton) {
 
 		let config;
 
@@ -315,6 +315,13 @@ class GUIHandler {
 
 			}
 
+			function indicatorCallback(i) {  
+				return function() {
+					director.indicatorFunction(i, stage, device, user);
+					return false;
+				}.bind(this);  
+			} 
+
 			for (var i = 1; i < (constants.num_levels + 1); i++) {
 
 				let indicatorType = '';
@@ -326,7 +333,8 @@ class GUIHandler {
 				}
 
 				config = new ObjectConfig('default', 'gui', 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/);
-				var indicator = AssetHandler.createButton("res/map-indicator" + indicatorType + ".png", (i).toString(), config, levels[i].open, entity_component_system, stage);
+				let openFunction = indicatorCallback(i);
+				var indicator = AssetHandler.createButton("res/map-indicator" + indicatorType + ".png", (i).toString(), config, openFunction, entity_component_system, stage);
 				// var indicator = AssetHandler.createButton("res/map-indicator.png", (i).toString(), config, function (this) { director.indicatorFunction(i, stage, device, user).bind(this) }, entity_component_system, stage);
 				indicator.on("mouseover", function (evt) { this.handleMouseEvent(evt, stage, device.scale.scene_scale_Y) }.bind(this));
 				indicator.on("mouseout", function (evt) { this.handleMouseEvent(evt, stage, device.scale.scene_scale_Y) }.bind(this));

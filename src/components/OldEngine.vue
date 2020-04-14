@@ -681,10 +681,7 @@ export default {
           this.multiple = Math.floor(Math.random() * 7) + 2;
           this.lower = (this.multiple * this.multiplicand) - Math.floor(this.multiplicand/2);
           this.upper = (this.multiple * this.multiplicand) + Math.floor(this.multiplicand/2);
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(1);
-        }
+        }.bind(this)
       },
 
       { // Grasslands
@@ -694,10 +691,7 @@ export default {
           this.multiple = Math.floor(Math.random() * 7) + 2;
           this.lower = (this.multiple * this.multiplicand) + 1;
           this.upper = (this.multiple * (this.multiplicand+1)) - 1;
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(2);
-        }
+        }.bind(this)
       },
 
       { // Volcano
@@ -710,10 +704,7 @@ export default {
           if(this.lower == this.upper) {
             this.upper++;
           }
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(3);
-        }
+        }.bind(this)
       },
 
       { // Sea
@@ -722,10 +713,7 @@ export default {
           this.multiplicand = Math.floor(Math.random() * 90) + 10;
           this.lower = 0;
           this.upper = Math.floor(Math.random() * 7) + 2;
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(4);
-        }
+        }.bind(this)
       },
 
       { // Mountains
@@ -739,10 +727,7 @@ export default {
           this.storage = this.multiplicand * this.multiple * 10;
           this.lower = this.storage - 10;
           this.upper = this.storage + 10;
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(5);
-        }
+        }.bind(this)
       },
 
       { // Summit
@@ -754,10 +739,7 @@ export default {
       		this.multiple = 100 * this.multiplicand;
       		this.lower = this.multiple - Math.floor(this.multiplicand/2);
       		this.upper = this.multiple + Math.floor(this.multiplicand/2);
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(6);
-        }
+        }.bind(this)
       },
 
       { // Cave
@@ -766,10 +748,7 @@ export default {
       		this.multiplicand = Math.floor(Math.random() * 90) + 10;
       		this.lower = -Math.abs(Math.floor(Math.random() * 7) + 2);
       		this.upper = Math.floor(Math.random() * 7) + 2;
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(7);
-        }
+        }.bind(this)
       },
 
       { // Forest
@@ -786,10 +765,7 @@ export default {
       		{
       			this.upper += 0.4;
       		}
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(8);
-        }
+        }.bind(this)
       },
 
       { // Alpine
@@ -798,10 +774,7 @@ export default {
       		this.multiplicand = Math.floor((Math.random() * 900) + 100);
       		this.lower = 0;
       		this.upper = Math.floor(Math.random() * 7) + 2;
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(9);
-        }
+        }.bind(this)
       },
 
       { // Woods
@@ -811,10 +784,7 @@ export default {
       		this.multiplicand = Math.floor((Math.random() * 990) + 10) / 1000;
       		this.lower = 1000 * this.multiplicand;
       		this.upper = this.lower + 1;
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(10);
-        }
+        }.bind(this)
       },
 
       { // Swamp
@@ -824,10 +794,7 @@ export default {
       		this.multiplicand = Math.floor(Math.random() * 90 * 10 + 10) / 10;
       		this.lower = 1000 * this.multiplicand;
       		this.upper = this.lower + 1;
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(11);
-        }
+        }.bind(this)
       },
 
       { // Deadlands
@@ -837,10 +804,7 @@ export default {
       		this.multiplicand = Math.floor(Math.random() * 10000000);
       		this.lower = (Math.floor(this.multiplicand * 0.0001)) - (Math.floor(Math.random() * 50) + 10);
       		this.upper = (Math.floor(this.multiplicand * 0.0001)) + (Math.floor(Math.random() * 50) + 10);
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(12);
-        }
+        }.bind(this)
       },
 
       { // Sky
@@ -850,10 +814,7 @@ export default {
       		this.multiplicand = Math.floor(Math.random() * 100 + 100);
       		this.lower = Math.floor(this.multiplicand / 2) - 4;
       		this.upper = Math.floor(this.multiplicand / 2) + 4;
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(13);
-        }
+        }.bind(this)
       },
 
       { // Underwater
@@ -864,10 +825,7 @@ export default {
       		this.multiplicand = Math.floor(Math.random() * 90 + 9) / 10;
       		this.lower = Math.floor(Math.random() * 900 + 100);
       		this.upper = this.lower + 1;
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(14);
-        }
+        }.bind(this)
       },
 
       { // Fungi
@@ -877,10 +835,7 @@ export default {
       		this.multiplicand = -Math.abs(Math.floor(Math.random() * 7) + 2);
       		this.lower = this.multiplicand * this.multiplicand;
       		this.upper = this.lower + (Math.floor(Math.random() * 7) + 2);
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(15);
-        }
+        }.bind(this)
       },
 
       { // Tundra
@@ -890,10 +845,7 @@ export default {
           this.multiplicand = Math.floor(Math.random() * 90 + 9);
           this.lower = -Math.abs(Math.floor(Math.random() * 84) + 15);
           this.upper = this.lower + 5;
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(16);
-        }
+        }.bind(this)
       },
 
       { // Tarpit
@@ -903,10 +855,7 @@ export default {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90) + 10);
           this.lower = -Math.abs(Math.floor(Math.random() * 10) + 10);
           this.upper = -Math.abs(Math.floor(Math.random() * 10));
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(17);
-        }
+        }.bind(this)
       },
 
       { // Desert
@@ -916,10 +865,7 @@ export default {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
           this.lower = Math.floor(Math.random() * 10);
           this.upper = Math.floor(Math.random() * 10 + 10);
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(18);
-        }
+        }.bind(this)
       },
 
       { // Boreal
@@ -929,10 +875,7 @@ export default {
           this.multiplicand = -Math.abs(Math.floor(Math.random() * 90 * 10 + 10) / 10);
           this.lower = Math.floor((Math.random() * 90) + 9) / 100;
           this.upper = Math.floor((this.lower + 0.01)* 100)/100;
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(19);
-        }
+        }.bind(this)
       },
 
       { // Monolith
@@ -942,10 +885,7 @@ export default {
           this.multiplicand = Math.floor(Math.random() * 900) + 100;
           this.lower = -Math.abs((Math.floor(Math.random() * 10000) + 5000) /1000);
           this.upper = this.lower + 0.01;
-        }.bind(this),
-        open: function () {
-          this.indicatorFunction(20);
-        }
+        }.bind(this)
       }
 
     ];
