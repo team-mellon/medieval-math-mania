@@ -31,38 +31,21 @@ export default {
       // 
       loadingQueue: null,
 
-      // Authentication handling
-      async: {
-        error: ''
-      },
-
-      // 
-      text: '',
-
       // 
       loader: {
         primed: false,
         loaded: false
       },
 
-      // 
-      background: {
-        entity: {},
-        shape: null,
-        color: '#808080',
-        center: null,
-        left: null,
-        right: null,
-        up: null,
-        down: null
+      style: {
+        background: '#aaa'
       },
 
       w: window.innerWidth,
       h: window.innerHeight,
 
-      style: {
-        background: '#aaa'
-      }
+      // 
+      text: ''
     }
   },
 

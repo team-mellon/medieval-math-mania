@@ -28,6 +28,12 @@ export default {
       config: {
         canvasId: 'drawingCanvas',
       },
+
+      // Authentication handling
+      async: {
+        error: ''
+      },
+
       device: null,
       landscape_warning: null,
       phone_rotation: null,
@@ -47,7 +53,19 @@ export default {
       added: false,
       maxStored: false,
       tempScale: 1,
-      tempMax: 1440
+      tempMax: 1440,
+
+      // 
+      background: {
+        entity: {},
+        shape: null,
+        color: '#808080',
+        center: null,
+        left: null,
+        right: null,
+        up: null,
+        down: null
+      },
     }
   },
 
