@@ -68,7 +68,10 @@ class FormHandler {
 
   }
 
-  static createGameForm (level, isMobile) {
+  static createGameForm (level) {
+
+    let key = 'isMobile';
+    let isMobile = sessionStorage.getItem(key);
 
     // Creates username display text
     var multiplicand_div = document.createElement("div"); // Create encompassing div
