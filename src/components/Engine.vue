@@ -33,12 +33,13 @@ export default {
       w: window.innerWidth,
       h: window.innerHeight,
 
-      // ???
-      text: ''
-
     }
   },
-  mounted: function() { },
+  mounted: function() {
+
+    console.log('Engine mounted!');
+
+  },
   methods: { }
 
 }

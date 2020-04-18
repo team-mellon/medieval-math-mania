@@ -108,6 +108,9 @@ class Director {
 
   runScene(stage, device) {
 
+      // // ???
+      // text: ''
+
     // Clear color of screen
       // color was r:0.78, b:1, g:0.98, a:1 (Babylon.Color4)
 
