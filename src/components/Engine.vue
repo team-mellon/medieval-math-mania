@@ -1,15 +1,11 @@
 <template>
   <div id="engineFrame">
     <DeviceLayer ref="deviceLayer" />
-    <canvas id="drawingCanvas" :style="style">alternate content</canvas>
+
+    <canvas id="drawingCanvas" :width="w" :height="h" :style="style" >alternate content</canvas>
 
     <Loader v-bind:loading-queue="loadingQueue" @loaded="primed" />
     <div id="sceneHTML"></div>
-
-    <!-- <canvas id="changingParametersBasedOnState" :width="w" :height="h" :style="style"></canvas> -->
-    <!-- <div id="childThatSendsBackData"> -->
-      <!-- <newChild @emittedChildEvent="runParentFunctionOnReturningObject" /> -->
-    <!-- </div> -->
 
   </div>
 </template>
@@ -61,8 +57,8 @@ export default {
         down: null
       },
 
-      // w: 100,
-      // h: 200,
+      w: window.innerWidth,
+      h: window.innerHeight,
 
       style: {
         background: '#aaa'
