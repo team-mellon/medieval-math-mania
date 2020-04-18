@@ -32,7 +32,7 @@ class Director {
    * Constructor for the scaling component of the engine.
    * @constructor
    */
-  constructor(stage, device, user) {
+  constructor() {
 
 		this.sceneComponentSystem = []; // Scene component system for scaling and eventually object storage
     // ecs: [], // Entity component system for scaling and eventually object storage
@@ -98,7 +98,7 @@ class Director {
       }
 
       if (user.authenticated) {
-        this.changeScene(2, stage, device, user);
+        this.changeScene(2, stage, user);
       }
 
     }
@@ -133,7 +133,7 @@ class Director {
                     "confirm": document.getElementById('confirmInput').value
                   };
                   APIHandler.createUser(text, user, this.async);
-                  this.changeScene(2, stage, device, user);
+                  this.changeScene(2, stage, user);
                 }
               }
             }
@@ -241,7 +241,7 @@ class Director {
 
       this.level.runInput(device.device.isMobile);
       this.clearHtml();
-      FormHandler.createGameForm(this.level, device.device.isMobile);
+      FormHandler.createGameForm(this.level);
 
     }
 
@@ -253,7 +253,7 @@ class Director {
 
     }
 
-    this.runAnimations(stage, user, device);
+    this.runAnimations(stage, user);
 
     //If game over...
     if (this.level.hit_counter >= 3 && this.level.miss_upper_counter >= 1 && this.level.miss_lower_counter >= 1 && this.level.reload == false && this.level.current_level != 0) {
@@ -266,7 +266,7 @@ class Director {
 
   }
 
-  runAnimations(stage, mobile, user, device) {
+  runAnimations(stage, user) {
 
     // Run through and finish animations that play once
     this.level.updateSinglePlayAnimations();
@@ -275,7 +275,7 @@ class Director {
     this.level.runHitAnimations();
     this.level.runMissAnimations( function() {
       createjs.Sound.play("menu");
-      this.changeScene(9, stage, device, user);
+      this.changeScene(9, stage, user);
     }.bind(this) );
 
   }
@@ -342,7 +342,7 @@ class Director {
    * @param {object} entityComponent - The the current entity being scaled.
    * @returns {object} startValues : { x: xStart, y: yStart } - The starting location values.
    */
-  createScene(stage, device, user) {
+  createScene(stage, user) {
 
     // Set the background color to a neutral color
     this.setBackgroundColor(stage, "#333333");
@@ -356,9 +356,9 @@ class Director {
     this.setForegroundText(user);
     this.setForeground(stage);
 
-    this.runCustomCode(stage, device, user);
+    this.runCustomCode(stage, user);
 
-    this.gui.createGUI(this.sceneComponentSystem, this, stage, user, this.async, device, this.gui.menu_button);
+    this.gui.createGUI(this.sceneComponentSystem, this, stage, user, this.async, this.gui.menu_button);
 
     // console.log(entity_component_system);
 
@@ -482,7 +482,7 @@ class Director {
 
   }
 
-  runCustomCode(stage, device, user) {
+  runCustomCode(stage, user) {
 
     // Custom scene functionalities
     switch (this.currentScene) {
@@ -496,12 +496,12 @@ class Director {
         break;
 
       case 3: // Game
-        FormHandler.createGameForm(this.level, device.isMobile);
+        FormHandler.createGameForm(this.level);
         this.level.createLevel(stage,
-          function() { createjs.Sound.play("select"); this.changeScene(8, stage, device, user); this.level.visibleForm(true); this.level.destroyLevel(stage); }.bind(this),
-          function() { createjs.Sound.play("sword"); this.changeScene(9, stage, device, user); this.level.visibleForm(true); }.bind(this),
-          function() { createjs.Sound.play("menu"); this.changeScene(2, stage, device, user); this.level.visibleForm(true); this.level.destroyLevel(stage); }.bind(this),
-          function() { createjs.Sound.play("menu"); this.changeScene(6, stage, device, user); this.level.visibleForm(true); }.bind(this),
+          function() { createjs.Sound.play("select"); this.changeScene(8, stage, user); this.level.visibleForm(true); this.level.destroyLevel(stage); }.bind(this),
+          function() { createjs.Sound.play("sword"); this.changeScene(9, stage, user); this.level.visibleForm(true); }.bind(this),
+          function() { createjs.Sound.play("menu"); this.changeScene(2, stage, user); this.level.visibleForm(true); this.level.destroyLevel(stage); }.bind(this),
+          function() { createjs.Sound.play("menu"); this.changeScene(6, stage, user); this.level.visibleForm(true); }.bind(this),
           user.authenticated,
           function() { this.gui.menu_button.visible = true; }.bind(this),
           this.sound
@@ -522,7 +522,7 @@ class Director {
    * @param {object} entityComponent - The the current entity being scaled.
    * @returns {object} platformScale - The platform specific scale of that entity.
    */    // L
-  loadCurrentScene(stage, device, user) {
+  loadCurrentScene(stage, user) {
 
     // Clear HTML before creating a new scene
     this.clearHtml();
@@ -544,7 +544,7 @@ class Director {
 
       } else {
 
-        FormHandler.createGameForm(this.level, device.isMobile);
+        FormHandler.createGameForm(this.level);
         this.level.remakeMultiplierBanner();
         this.level.remakeRangeBanner();
 
@@ -553,9 +553,9 @@ class Director {
     }
 
     // Create the new scene
-    this.createScene(stage, device, user);
+    this.createScene(stage, user);
 
-    device.resize(stage, this);
+    // device.resize(stage);
 
     // this.level.visibleForm(true);
 
@@ -565,7 +565,7 @@ class Director {
    * A function to change the current scene to a new scene.
    * @param {object} newScene - The index of the scene to navigate to.
    */
-  changeScene(newScene, stage, device, user) {
+  changeScene(newScene, stage, user) {
 
     // Set the last scene to the current scene
     this.lastScene = this.currentScene;
@@ -574,11 +574,11 @@ class Director {
     this.currentScene = newScene;
 
     // Load the scene
-    this.loadCurrentScene(stage, device, user);
+    this.loadCurrentScene(stage, user);
 
   }
 
-  oneWayScene(stage, device, user) {
+  oneWayScene(stage, user) {
 
     // Switch the current and last screen
     var temp = this.currentScene;
@@ -586,10 +586,10 @@ class Director {
     this.lastScene = temp;
 
     // Load the scene
-    this.loadCurrentScene(stage, device, user);
+    this.loadCurrentScene(stage, user);
 
-    // Resize everything for scaling
-    device.resize(stage, this);
+    // // Resize everything for scaling
+    // device.resize(stage);
 
     // If the last scene was the game open with the pause screen
     if (this.lastScene == 3) {
@@ -601,7 +601,7 @@ class Director {
     } else if (this.currentScene == 3) {
 
       this.gui.menu_button.visible = true;
-      FormHandler.createGameForm(this.level, this.mobile.isMobile);
+      FormHandler.createGameForm(this.level);
       this.level.remakeMultiplierBanner();
       this.level.remakeRangeBanner();
       this.level.structure_score.text = "Total Lows: " + this.level.miss_lower_counter.toString() + "\nTotal High: " + this.level.miss_upper_counter.toString() + "\nTotal Hits: " + this.level.hit_counter.toString();
@@ -643,13 +643,13 @@ class Director {
 
   }
 
-  indicatorFunction(newL, stage, device, user) {
+  indicatorFunction(newL, stage, user) {
 
     this.level.generated = false;
     createjs.Sound.play("select");
     this.level.current_level = newL;
     this.level.resetLevel();
-    this.changeScene(3, stage, device, user);
+    this.changeScene(3, stage, user);
 
   }
 

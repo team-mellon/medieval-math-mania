@@ -32,7 +32,12 @@ class GUIHandler {
 
 	}
 
-	createGUI(entity_component_system, director, stage, user, async, device, menubutton) {
+	createGUI(entity_component_system, director, stage, user, async, menubutton) {
+
+		let key = 'isMobile';
+		let isMobile = sessionStorage.getItem(key);
+        key = 'sceneScaleY';
+		let sceneScaleY = sessionStorage.getItem(key);
 
 		let config;
 
@@ -40,8 +45,8 @@ class GUIHandler {
 
 			case 0:
 
-				// scale_to_canvas(left_sword_button, "center", 0 - (constants.buttonX/2 + 10) * device.scale.scene_scale_Y, "center", 0 + (constants.buttonY/2 + 140) * device.scale.scene_scale_Y, "image");
-				// scale_to_canvas(right_sword_button, "center", 0 + (constants.buttonX/2 + 50) * device.scale.scene_scale_Y, "center", 0 + (constants.buttonY/2 + 140) * device.scale.scene_scale_Y, "image");
+				// scale_to_canvas(left_sword_button, "center", 0 - (constants.buttonX/2 + 10) * sceneScaleY, "center", 0 + (constants.buttonY/2 + 140) * sceneScaleY, "image");
+				// scale_to_canvas(right_sword_button, "center", 0 + (constants.buttonX/2 + 50) * sceneScaleY, "center", 0 + (constants.buttonY/2 + 140) * sceneScaleY, "image");
 
 			config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "center", -(constants.buttonX/2 + 30), "center", (constants.buttonY/2 + 200));
 			this.left_sword_button = AssetHandler.createButton("res/sword-left.png", "Login", config, function() {
@@ -57,36 +62,36 @@ class GUIHandler {
 			config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "center", (constants.buttonX/2 + 65), "center", (constants.buttonY/2 + 200));
 			this.right_sword_button = AssetHandler.createButton("res/sword-right.png", "Signup", config, function() {
 			createjs.Sound.play("sword");
-			director.changeScene(1, stage, device, user);
+			director.changeScene(1, stage, user);
 			}.bind(this), entity_component_system, stage);
 
 			config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10));
-			this.menu_button = AssetHandler.createButton("res/login-button.png", "Back", config, function() { createjs.Sound.play("menu");  director.changeScene(10, stage, device, user); }.bind(this), entity_component_system, stage);
+			this.menu_button = AssetHandler.createButton("res/login-button.png", "Back", config, function() { createjs.Sound.play("menu");  director.changeScene(10, stage, user); }.bind(this), entity_component_system, stage);
 
 			// config = new ObjectConfig('default', 'gui', constants.backgroundX, 108, "center", 0, "top", 0 + (108/2));
 			// this.secret_button = AssetHandler.createButton("res/secret_button.png", "", constants.backgroundX, 1440, "center", 0, "center", 0, "image", function() {
 			// 	createjs.Sound.play("sword");
-			//   director.changeScene(8, stage, device, user);
+			//   director.changeScene(8, stage, user);
 			// }.bind(this), entity_component_system, stage);
 
-				// if (device.device) {
-				// 	scale_to_canvas(left_sword_button, "center", 0 - (constants.buttonX/2 + 30) * device.scale.scene_scale_Y, "center", 0 + (constants.buttonY/2 + 200) * device.scale.scene_scale_Y, "smallgui");
-				// 	scale_to_canvas(right_sword_button, "center", 0 + (constants.buttonX/2 + 65) * device.scale.scene_scale_Y, "center", 0 + (constants.buttonY/2 + 200) * device.scale.scene_scale_Y, "smallgui");
+				// if (isMobile) {
+				// 	scale_to_canvas(left_sword_button, "center", 0 - (constants.buttonX/2 + 30) * sceneScaleY, "center", 0 + (constants.buttonY/2 + 200) * sceneScaleY, "smallgui");
+				// 	scale_to_canvas(right_sword_button, "center", 0 + (constants.buttonX/2 + 65) * sceneScaleY, "center", 0 + (constants.buttonY/2 + 200) * sceneScaleY, "smallgui");
 				// } else {
 
 				break;
 			case 1:
 
-			// if (device.device) {
-			// 	scale_to_canvas(left_sword_button, "center", 0 - (constants.buttonX/2 + 10) * device.scale.scene_scale_Y, "center", 0 + (constants.buttonY/2 + 140) * device.scale.scene_scale_Y, "gui");
-			// 	scale_to_canvas(right_sword_button, "center", 0 + (constants.buttonX/2 + 50) * device.scale.scene_scale_Y, "center", 0 + (constants.buttonY/2 + 140) * device.scale.scene_scale_Y, "gui");
+			// if (isMobile) {
+			// 	scale_to_canvas(left_sword_button, "center", 0 - (constants.buttonX/2 + 10) * sceneScaleY, "center", 0 + (constants.buttonY/2 + 140) * sceneScaleY, "gui");
+			// 	scale_to_canvas(right_sword_button, "center", 0 + (constants.buttonX/2 + 50) * sceneScaleY, "center", 0 + (constants.buttonY/2 + 140) * sceneScaleY, "gui");
 			// } else {
 
 			config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "center", -(constants.buttonX/2 + 30), "center", (constants.buttonY/2 + 200));
 			this.left_sword_button = AssetHandler.createButton("res/sword-left.png", "Cancel", config, function() {
 			// fieldInput_error.alpha = 0; // password_error.alpha = 0; // message.render = 0;
 				createjs.Sound.play("sword");
-				director.changeScene(0, stage, device, user);
+				director.changeScene(0, stage, user);
 				}.bind(this), entity_component_system, stage);
 
 			config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "center", (constants.buttonX/2 + 65), "center", (constants.buttonY/2 + 200));
@@ -116,7 +121,7 @@ class GUIHandler {
 					"confirm": document.getElementById('confirmInput').value
 					};
 					APIHandler.createUser(text, user, async);
-					director.changeScene(2, stage, device, user);
+					director.changeScene(2, stage, user);
 				}
 				}
 			}
@@ -128,7 +133,7 @@ class GUIHandler {
 
 			case 2:
 
-				// if (device.device) {
+				// if (isMobile) {
 				// 	scale_to_canvas(play_button, "center", 0, "center", 0 - 105, "gui");
 				// 	scale_to_canvas(stats_button, "center", 0, "center", 0 - 20, "gui");
 				// 	scale_to_canvas(h2p_button, "center", 0, "center", 0 + 65, "gui");
@@ -138,48 +143,48 @@ class GUIHandler {
 				// } else {
 
 				config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "center", 0, "center", 0 - 200);
-				this.play_button = AssetHandler.createButton("res/menu-button.png", "Play", config, function() { createjs.Sound.play("menu"); director.changeScene(8, stage, device, user); }.bind(this), entity_component_system, stage);
+				this.play_button = AssetHandler.createButton("res/menu-button.png", "Play", config, function() { createjs.Sound.play("menu"); director.changeScene(8, stage, user); }.bind(this), entity_component_system, stage);
 
 				config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "center", 0, "center", 0 - 100);
-				this.stats_button = AssetHandler.createButton("res/menu-button.png", "Stats", config, function() { createjs.Sound.play("menu"); director.changeScene(4, stage, device, user); APIHandler.getUserData(user.username, user, async); }.bind(this), entity_component_system, stage);
+				this.stats_button = AssetHandler.createButton("res/menu-button.png", "Stats", config, function() { createjs.Sound.play("menu"); director.changeScene(4, stage, user); APIHandler.getUserData(user.username, user, async); }.bind(this), entity_component_system, stage);
 
 				config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "center", 0, "center", 0 - 0);
-				this.h2p_button = AssetHandler.createButton("res/menu-button.png", "How To Play", config, function() { createjs.Sound.play("menu"); director.indicatorFunction(0, stage, device, user); }.bind(this), entity_component_system, stage);
+				this.h2p_button = AssetHandler.createButton("res/menu-button.png", "How To Play", config, function() { createjs.Sound.play("menu"); director.indicatorFunction(0, stage, user); }.bind(this), entity_component_system, stage);
 
 				config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "center", 0, "center", 0 + 100);
-				this.settings_button = AssetHandler.createButton("res/menu-button.png", "Settings", config, function() { createjs.Sound.play("menu"); director.changeScene(6, stage, device, user); }.bind(this), entity_component_system, stage);
+				this.settings_button = AssetHandler.createButton("res/menu-button.png", "Settings", config, function() { createjs.Sound.play("menu"); director.changeScene(6, stage, user); }.bind(this), entity_component_system, stage);
 
 				config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "top", (constants.buttonY/2 + 10));
-				this.logout_button = AssetHandler.createButton("res/menu-button.png", "Logout", config, function() { createjs.Sound.play("menu"); user.authenticated = false; director.changeScene(0, stage, device, user); APIHandler.signoutUser(async); }.bind(this), entity_component_system, stage);
+				this.logout_button = AssetHandler.createButton("res/menu-button.png", "Logout", config, function() { createjs.Sound.play("menu"); user.authenticated = false; director.changeScene(0, stage, user); APIHandler.signoutUser(async); }.bind(this), entity_component_system, stage);
 
 				config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "right", 0 - (constants.buttonX/2 + 10), "top", (constants.buttonY/2 + 10));
-				this.account_button = AssetHandler.createButton("res/menu-button.png", "Account", config, function() { createjs.Sound.play("menu"); director.changeScene(7, stage, device, user); APIHandler.getUserData(user.username, user, async); }.bind(this), entity_component_system, stage);
+				this.account_button = AssetHandler.createButton("res/menu-button.png", "Account", config, function() { createjs.Sound.play("menu"); director.changeScene(7, stage, user); APIHandler.getUserData(user.username, user, async); }.bind(this), entity_component_system, stage);
 
 				break;
 
 			case 3:
 
-			// if (device.device) {
+			// if (isMobile) {
 		//
 			// 	scale_to_canvas(pause_menu, "center", 0, "center", 0, "image");
-			// 	scale_to_canvas(close_button, "center", 0 + 445 * device.scale.scene_scale_Y, "center", 0 - 281 * device.scale.scene_scale_Y, "gui");
-			// 	scale_to_canvas(main_menu_button, "center", 0, "center", 0 - 180 * device.scale.scene_scale_Y, "gui");
-			// 	scale_to_canvas(exit_level_button, "center", 0, "center", 0 - 110 * device.scale.scene_scale_Y, "gui");
-			// 	scale_to_canvas(settings_button, "center", 0, "center", 0 - 40 * device.scale.scene_scale_Y, "gui");
+			// 	scale_to_canvas(close_button, "center", 0 + 445 * sceneScaleY, "center", 0 - 281 * sceneScaleY, "gui");
+			// 	scale_to_canvas(main_menu_button, "center", 0, "center", 0 - 180 * sceneScaleY, "gui");
+			// 	scale_to_canvas(exit_level_button, "center", 0, "center", 0 - 110 * sceneScaleY, "gui");
+			// 	scale_to_canvas(settings_button, "center", 0, "center", 0 - 40 * sceneScaleY, "gui");
 		//
 			// 	scale_to_canvas(end_level_scene, "center", 0, "center", 0, "image");
-			// 	scale_to_canvas(end_level_button, "center", 0, "center", 0 + 250 * device.scale.scene_scale_Y, "gui");
-			// 	scale_to_canvas(end_text, "center", 0, "center", 0 - 140 * device.scale.scene_scale_Y, "image");
-			// 	scale_to_canvas(hit_text, "center", 0 - 120 * device.scale.scene_scale_Y, "center", 0, "image");
-			// 	scale_to_canvas(low_text, "center", 0 - 120 * device.scale.scene_scale_Y, "center", 0 + 40 * device.scale.scene_scale_Y, "image");
-			// 	scale_to_canvas(high_text, "center", 0 - 120 * device.scale.scene_scale_Y, "center", 0 + 80 * device.scale.scene_scale_Y, "image");
+			// 	scale_to_canvas(end_level_button, "center", 0, "center", 0 + 250 * sceneScaleY, "gui");
+			// 	scale_to_canvas(end_text, "center", 0, "center", 0 - 140 * sceneScaleY, "image");
+			// 	scale_to_canvas(hit_text, "center", 0 - 120 * sceneScaleY, "center", 0, "image");
+			// 	scale_to_canvas(low_text, "center", 0 - 120 * sceneScaleY, "center", 0 + 40 * sceneScaleY, "image");
+			// 	scale_to_canvas(high_text, "center", 0 - 120 * sceneScaleY, "center", 0 + 80 * sceneScaleY, "image");
 		//
-			// 	scale_to_canvas(hit_text_counter, "left", 30, "center", 0 + 225 * device.scale.scene_scale_Y, "image");
-			// 	scale_to_canvas(low_text_counter, "left", 30, "center", 0 + 280 * device.scale.scene_scale_Y, "image");
-			// 	scale_to_canvas(high_text_counter, "left", 30, "center", 0 + 300 * device.scale.scene_scale_Y, "image");
+			// 	scale_to_canvas(hit_text_counter, "left", 30, "center", 0 + 225 * sceneScaleY, "image");
+			// 	scale_to_canvas(low_text_counter, "left", 30, "center", 0 + 280 * sceneScaleY, "image");
+			// 	scale_to_canvas(high_text_counter, "left", 30, "center", 0 + 300 * sceneScaleY, "image");
 		//
 			// 	scale_to_canvas(menu_button, "right", 0 - (constants.buttonX/2 + 10), "bottom", 0 - (constants.buttonY/2 + 10), "gui");
-			// 	scale_to_canvas(hint_button, "center", 0 - 313 * device.scale.scene_scale_Y, "center", 0 + 194 * device.scale.scene_scale_Y, "gui");
+			// 	scale_to_canvas(hint_button, "center", 0 - 313 * sceneScaleY, "center", 0 + 194 * sceneScaleY, "gui");
 		//
 			// } else {
 
@@ -197,7 +202,7 @@ class GUIHandler {
 
 		}.bind(this), entity_component_system, stage);
 
-				if (device.device.isMobile) {
+				if (isMobile) {
 
 					config = new ObjectConfig('default', 'gui', 192, 192, "center", -234 - (288 / 2), "bottom", -(192 / 2));
 					this.ll_number_button = AssetHandler.createButton("res/number-button-ll.png", "", config, function() {
@@ -248,7 +253,7 @@ class GUIHandler {
 				}
 
 				config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10));
-				this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", config, function() { createjs.Sound.play("menu"); director.changeScene(2, stage, device, user); }.bind(this), entity_component_system, stage);
+				this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", config, function() { createjs.Sound.play("menu"); director.changeScene(2, stage, user); }.bind(this), entity_component_system, stage);
 				let text = "Hits: " + user.hits + "\n\nHighs: " + user.highs + "\n\nLows: " + user.lows + "\n\nTotal Misses: " + (user.highs + user.lows) + "\n\nBadges: " + counter + "\n\n";
 
 				config = new ObjectConfig('default', 'image', 240, 240, "center", 0, "center", 0);
@@ -260,21 +265,21 @@ class GUIHandler {
 			case 5:
 
 				config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10));
-				this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", config, function() { createjs.Sound.play("menu"); director.changeScene(2, stage, device, user); }.bind(this), entity_component_system, stage);
+				this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", config, function() { createjs.Sound.play("menu"); director.changeScene(2, stage, user); }.bind(this), entity_component_system, stage);
 
 				break;
 
 			case 6:
 
 				config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10));
-				this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", config, function() { createjs.Sound.play("menu"); director.oneWayScene(stage, device, user); }.bind(this), entity_component_system, stage);
+				this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", config, function() { createjs.Sound.play("menu"); director.oneWayScene(stage, user); }.bind(this), entity_component_system, stage);
 
 				break;
 
 			case 7:
 
 				config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10));
-				this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", config, function() { createjs.Sound.play("menu"); director.changeScene(2, stage, device, user); }.bind(this), entity_component_system, stage);
+				this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", config, function() { createjs.Sound.play("menu"); director.changeScene(2, stage, user); }.bind(this), entity_component_system, stage);
 
 				break;
 
@@ -303,21 +308,21 @@ class GUIHandler {
 			if (user.authenticated) {
 
 				config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10));
-					this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", config, function() { createjs.Sound.play("menu"); director.changeScene(2, stage, device, user); }.bind(this), entity_component_system, stage);
+					this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", config, function() { createjs.Sound.play("menu"); director.changeScene(2, stage, user); }.bind(this), entity_component_system, stage);
 
 			} else {
 
 				config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10));
-				this.menu_button = AssetHandler.createButton("res/login-button.png", "Back", config, function() { createjs.Sound.play("menu");  director.changeScene(10, stage, device, user); }.bind(this), entity_component_system, stage);
+				this.menu_button = AssetHandler.createButton("res/login-button.png", "Back", config, function() { createjs.Sound.play("menu");  director.changeScene(10, stage, user); }.bind(this), entity_component_system, stage);
 
 				config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "right", -(constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10));
-				this.menu_button = AssetHandler.createButton("res/login-button.png", "How To Play", config, function() { createjs.Sound.play("menu"); director.indicatorFunction(0, stage, device, user); }.bind(this), entity_component_system, stage);
+				this.menu_button = AssetHandler.createButton("res/login-button.png", "How To Play", config, function() { createjs.Sound.play("menu"); director.indicatorFunction(0, stage, user); }.bind(this), entity_component_system, stage);
 
 			}
 
 			function indicatorCallback(i) {  
 				return function() {
-					director.indicatorFunction(i, stage, device, user);
+					director.indicatorFunction(i, stage, user);
 					return false;
 				}.bind(this);  
 			} 
@@ -335,9 +340,9 @@ class GUIHandler {
 				config = new ObjectConfig('default', 'gui', 48, 48, "center", indicatorCoordinates[i].x/* + 48/2*/, "center", indicatorCoordinates[i].y/* + 48/2*/);
 				let openFunction = indicatorCallback(i);
 				var indicator = AssetHandler.createButton("res/map-indicator" + indicatorType + ".png", (i).toString(), config, openFunction, entity_component_system, stage);
-				// var indicator = AssetHandler.createButton("res/map-indicator.png", (i).toString(), config, function (this) { director.indicatorFunction(i, stage, device, user).bind(this) }, entity_component_system, stage);
-				indicator.on("mouseover", function (evt) { this.handleMouseEvent(evt, stage, device.scale.scene_scale_Y) }.bind(this));
-				indicator.on("mouseout", function (evt) { this.handleMouseEvent(evt, stage, device.scale.scene_scale_Y) }.bind(this));
+				// var indicator = AssetHandler.createButton("res/map-indicator.png", (i).toString(), config, function (this) { director.indicatorFunction(i, stage, user).bind(this) }, entity_component_system, stage);
+				indicator.on("mouseover", function (evt) { this.handleMouseEvent(evt, stage, sceneScaleY) }.bind(this));
+				indicator.on("mouseout", function (evt) { this.handleMouseEvent(evt, stage, sceneScaleY) }.bind(this));
 
 				this.indicators.push(indicator);
 
@@ -354,8 +359,8 @@ class GUIHandler {
 			config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "left", (constants.buttonX/2 + 10), "bottom", -(constants.buttonY/2 + 10));
 			this.menu_button = AssetHandler.createButton("res/login-button.png", "Menu", config, function() {
 			createjs.Sound.play("menu");
-			// director.changeScene(3, stage, device, user);
-			director.oneWayScene(stage, device, user);
+			// director.changeScene(3, stage, user);
+			director.oneWayScene(stage, user);
 
 			// director.level.openPauseMenu();
 
@@ -370,10 +375,10 @@ class GUIHandler {
 			case 10:
 
 				config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "right", -(constants.buttonX/2 + 10), "top", (constants.buttonY/2 + 10));
-				this.logout_button = AssetHandler.createButton("res/login-button.png", "Login!", config, function() { createjs.Sound.play("menu"); director.changeScene(0, stage, device, user); }.bind(this), entity_component_system, stage);
+				this.logout_button = AssetHandler.createButton("res/login-button.png", "Login!", config, function() { createjs.Sound.play("menu"); director.changeScene(0, stage, user); }.bind(this), entity_component_system, stage);
 
 				config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "center", 0, "bottom", - 2.5 * (constants.buttonY/2 + 10));
-				this.play_button = AssetHandler.createButton("res/login-button.png", "Start!!", config, function() { createjs.Sound.play("menu"); director.changeScene(8, stage, device, user); }.bind(this), entity_component_system, stage);
+				this.play_button = AssetHandler.createButton("res/login-button.png", "Start!!", config, function() { createjs.Sound.play("menu"); director.changeScene(8, stage, user); }.bind(this), entity_component_system, stage);
 
 				break;
 

@@ -7,6 +7,9 @@
 //                                                                            ||
 //==============================================================================
 
+// Modules
+import Director from '../handlers/Director.js';
+
 // Static classes
 import AssetHandler from './AssetHandler.js';
 
@@ -23,7 +26,15 @@ class DeviceHandler {
    * Constructor for the scaling component of the engine.
    * @constructor
    */
-  constructor(stage, director, drawingCanvas) {
+  constructor() {
+
+    // 
+    this.config = {
+      canvasId: 'drawingCanvas',
+    };
+
+    // Stage for drawing pictures and shapes
+    this.stage = new createjs.Stage(this.config.canvasId);
 
     ////////////
     // MOBILE //
@@ -31,6 +42,21 @@ class DeviceHandler {
 
     // Mobile manager
     this.device = new MobileHandler();
+
+    // Current user data
+    this.user = {
+      authenticated: false,
+      firstname: 'Place',
+      lastname: 'Holder',
+      username: 'CpnPlchlder',
+      hits: 0,
+      highs: 0,
+      lows: 0,
+      badges: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    }
+
+    // Initialize the scene manager.
+    this.director = new Director(this.stage, this, this.user);
 
     // Landscape warning backdrop
     this.landscape_warning = new createjs.Shape();
@@ -48,7 +74,7 @@ class DeviceHandler {
     ///////////
 
     // Input handler
-    this.input = new InputHandler(stage, drawingCanvas);
+    this.input = new InputHandler(this.stage);
 
     /////////////
     // SCALING //
@@ -73,147 +99,146 @@ class DeviceHandler {
     this.tempMax = 1440
 
     // Set the window resize function to the one
-    window.addEventListener('resize', function() { this.resize(stage, director) }.bind(this), false);
+    window.addEventListener('resize', function() { this.resize() }.bind(this), false);
 
   }
 
   /**
    * Function to scale the entire stage.
-   * @param {object} entityComponentSystem - The array of entities.
-   * @param {object} currentScene - The index of the current scene.
-   * @param {object} stage - The stage that displays the content.
    */
-    resize(stage, director) {
+  resize() {
 
-      this.loadOrientationAnimation(director.sceneComponentSystem, stage)
+    this.loadOrientationAnimation(this.director.sceneComponentSystem)
 
-      // Redraw background before everthing else for Z-axis reasons
-      director.background.shape.graphics.clear()
-      director.background.shape.graphics.beginFill(director.background.color).drawRect(0, 0, stage.canvas.width, stage.canvas.height);
+    // Redraw background before everthing else for Z-axis reasons
+    this.director.background.shape.graphics.clear()
+    this.director.background.shape.graphics.beginFill(this.director.background.color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
 
-      this.device.mobileCheck(console, navigator);
-      this.device.orientationCheck(console, window);
+    this.device.mobileCheck(console, navigator);
+    this.device.orientationCheck(console, window);
 
-      // If window height is greater than width
-      this.checkOrientation(stage, director);
+    // If window height is greater than width
+    this.checkOrientation();
 
-      // Resize the canvas element with new window size
-      stage.canvas.width = window.innerWidth;
-      stage.canvas.height = window.innerHeight;
+    // Resize the canvas element with new window size
+    this.stage.canvas.width = window.innerWidth;
+    this.stage.canvas.height = window.innerHeight;
 
-      this.screenRatio = stage.canvas.width / stage.canvas.height;
+    this.screenRatio = this.stage.canvas.width / this.stage.canvas.height;
 
-      if (window.innerWidth < 600) {
-        // gui_scale = 3;
-      } else if (window.innerWidth < 900) {
-        // gui_scale = 2;
-      } else {
-        // gui_scale = 1;
-      }
-
-      this.calculateScaling(stage);
-
-      // Calculate the scene margin in a given direction
-      this.sceneMarginX = ( stage.canvas.width - this.maxScaleX ) / 2;
-
-      // Log screen scaling for debugging purposes
-      // console.log(this.scale.x);
-      // console.log(this.scale.y);
-      // console.log(this.screenRatio);
-
-      this.landscape_warning.graphics.clear()
-      this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, stage.canvas.width, stage.canvas.height);
-
-      if (director.currentScene == 3) {
-        this.scaleAssets(director.level.lcs, director.currentScene, stage); // Scale scene appropriately
-      }
-
-      this.scaleAssets(director.sceneComponentSystem, director.currentScene, stage); // Scale scene appropriately
-      // this.scaleAssets(this.gcs, currentScene, this.scale.y, this.scale.x, stage); // Scale scene appropriately
-
-      stage.update()
-
+    if (window.innerWidth < 600) {
+      // gui_scale = 3;
+    } else if (window.innerWidth < 900) {
+      // gui_scale = 2;
+    } else {
+      // gui_scale = 1;
     }
 
-    checkOrientation(stage, director) {
-      
-      // If window height is greater than width
-      if (this.device.isPortrait && this.device.isMobile) {
+    this.calculateScaling();
 
-        if(!this.added) {
+    // Calculate the scene margin in a given direction
+    this.sceneMarginX = ( this.stage.canvas.width - this.maxScaleX ) / 2;
 
-          stage.addChild(this.landscape_warning);
-          stage.addChild(this.phone_rotation);
-          this.landscape_warning.graphics.clear()
-          this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, stage.canvas.width, stage.canvas.height);
-          this.phone_rotation.gotoAndPlay(0);
-          director.sceneHtml = document.getElementById("sceneHTML");
-          director.sceneHtml.hidden = true;
-          this.added = true;
+    // Log screen scaling for debugging purposes
+    // console.log(this.scale.x);
+    // console.log(this.scale.y);
+    // console.log(this.screenRatio);
 
-        }
+    this.landscape_warning.graphics.clear()
+    this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
 
-      } else {
+    if (this.director.currentScene == 3) {
+      this.scaleAssets(this.director.level.lcs, this.director.currentScene); // Scale scene appropriately
+    }
 
-        if(this.added){
+    this.scaleAssets(this.director.sceneComponentSystem, this.director.currentScene); // Scale scene appropriately
+    // this.scaleAssets(this.gcs, currentScene, this.scale.y, this.scale.x); // Scale scene appropriately
 
-          stage.removeChild(this.landscape_warning);
-          stage.removeChild(this.phone_rotation);
-          director.sceneHtml = document.getElementById("sceneHTML");
-          director.sceneHtml.hidden = false;
-          this.added = false;
+    this.stage.update()
 
-        }
+  }
+
+  checkOrientation() {
+    
+    // If window height is greater than width
+    if (this.device.isPortrait && this.device.isMobile) {
+
+      if(!this.added) {
+
+        this.stage.addChild(this.landscape_warning);
+        this.stage.addChild(this.phone_rotation);
+        this.landscape_warning.graphics.clear()
+        this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
+        this.phone_rotation.gotoAndPlay(0);
+        this.director.sceneHtml = document.getElementById("sceneHTML");
+        this.director.sceneHtml.hidden = true;
+        this.added = true;
 
       }
 
+    } else {
+
+      if(this.added){
+
+        this.stage.removeChild(this.landscape_warning);
+        this.stage.removeChild(this.phone_rotation);
+        this.director.sceneHtml = document.getElementById("sceneHTML");
+        this.director.sceneHtml.hidden = false;
+        this.added = false;
+
+      }
+
     }
 
-    loadOrientationAnimation(ecs, stage) {
+  }
 
-      // Load the phone rotation picture but remove it from the stage.
-      let config = new ObjectConfig('default', 'image', 288, 288, "center", 0, "center", 0);
-      this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, config, ecs, stage);
-      stage.removeChild(this.phone_rotation);
+  loadOrientationAnimation(ecs) {
 
-    }
+    // Load the phone rotation picture but remove it from the stage.
+    let config = new ObjectConfig('default', 'image', 288, 288, "center", 0, "center", 0);
+    this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, config, ecs, this.stage);
+    this.stage.removeChild(this.phone_rotation);
+
+  }
 
   /**
    * Calculate the scene scaling.
-   * @param {object} stage - The stage that displays the content.
    */
-    calculateScaling(stage) {
+  calculateScaling() {
 
-      // Calculate the scene scaling
-      if (this.screenRatio < 2.5) { // tall screen
+    // Calculate the scene scaling
+    if (this.screenRatio < 2.5) { // tall screen
 
-        // Calculate the scale with the max x scaling
-        this.maxStored = false;
-        this.scale.x = stage.canvas.width / this.maxScaleX;
-        this.scale.y = stage.canvas.width / this.maxScaleX;
+      // Calculate the scale with the max x scaling
+      this.maxStored = false;
+      this.scale.x = this.stage.canvas.width / this.maxScaleX;
+      this.scale.y = this.stage.canvas.width / this.maxScaleX;
+      let key = 'sceneScaleY';
+      sessionStorage.setItem(key, this.scale.y);
 
-      } else if (this.screenRatio > 2.5) { // wide screen
+    } else if (this.screenRatio > 2.5) { // wide screen
 
 
-        if(!this.maxStored) {
-          this.maxStored = true;
-          this.tempMax = stage.canvas.height;
-        }
-
-        this.tempScale = stage.canvas.width / this.maxScaleX;
-        this.scale.x = this.tempScale * ( stage.canvas.height / this.tempMax );
-        this.scale.y = this.tempScale * ( stage.canvas.height / this.tempMax );
-        
+      if(!this.maxStored) {
+        this.maxStored = true;
+        this.tempMax = this.stage.canvas.height;
       }
 
+      this.tempScale = this.stage.canvas.width / this.maxScaleX;
+      this.scale.x = this.tempScale * ( this.stage.canvas.height / this.tempMax );
+      this.scale.y = this.tempScale * ( this.stage.canvas.height / this.tempMax );
+      let key = 'sceneScaleY';
+      sessionStorage.setItem(key, this.scale.y);
+      
     }
+
+  }
 
   /**
    * Function to scale the image-like assets.
    * @param {object} entityComponentSystem - The array of entities.
-   * @param {object} stage - The stage that displays the content.
    */
-  scaleAssets(entityComponentSystem, currentScene, stage) {
+  scaleAssets(entityComponentSystem, currentScene) {
 
     // console.log("ECS length: " + entityComponentSystem.length);
 
@@ -224,7 +249,7 @@ class DeviceHandler {
     for (var i = 0; i < entityComponentSystem.length; i++) {
 
       let platformScale = this.setScale(entityComponentSystem[i]);
-      let startValues = this.snapEdges(stage, entityComponentSystem[i]);
+      let startValues = this.snapEdges(entityComponentSystem[i]);
 
       entityComponentSystem[i].object.x = startValues.x + entityComponentSystem[i].x_location * this.scale.y * platformScale;
       entityComponentSystem[i].object.y = startValues.y + entityComponentSystem[i].y_location * this.scale.y * platformScale;
@@ -234,15 +259,14 @@ class DeviceHandler {
   }
 
   /**
-   * Function to snap items to the edges of screen.
-   * @param {object} stage - The stage that displays the content.
+   * Function to snap items to the edges of screen..
    * @param {object} entityComponent - The the current entity being scaled.
    * @returns {object} startValues : { x: xStart, y: yStart } - The starting location values.
    */
-  snapEdges(stage, entityComponent) {
+  snapEdges(entityComponent) {
 
-    let xStart = stage.canvas.width / 2;
-    let yStart = stage.canvas.height / 2;
+    let xStart = this.stage.canvas.width / 2;
+    let yStart = this.stage.canvas.height / 2;
 
     switch (entityComponent.x_lock) {
 
@@ -251,11 +275,11 @@ class DeviceHandler {
         break;
 
       case "center":
-        xStart = stage.canvas.width / 2;
+        xStart = this.stage.canvas.width / 2;
         break;
 
       case "right":
-        xStart = stage.canvas.width;
+        xStart = this.stage.canvas.width;
         break;
 
     }
@@ -267,11 +291,11 @@ class DeviceHandler {
         break;
 
       case "center":
-        yStart = stage.canvas.height / 2;
+        yStart = this.stage.canvas.height / 2;
         break;
 
       case "bottom":
-        yStart = stage.canvas.height;
+        yStart = this.stage.canvas.height;
         break;
 
     }
