@@ -12,6 +12,8 @@ class MobileHandler {
 
     // Bool for checking if the current device is mobile
     this.isMobile = false;
+    let key = 'isMobile';
+    sessionStorage.setItem(key, false);
 
     // Bools for checking if the orientation of the current device is portrait
     this.isPortrait = true;
@@ -69,6 +71,8 @@ class MobileHandler {
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 
       this.isMobile = true;
+      let key = 'isMobile';
+      sessionStorage.setItem(key, true);
 
     }
 
