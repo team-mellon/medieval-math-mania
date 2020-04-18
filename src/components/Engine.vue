@@ -1,6 +1,6 @@
 <template>
   <div id="engineFrame">
-    <DeviceLayer  />
+    <DeviceLayer ref="deviceLayer" />
     <canvas id="drawingCanvas" :style="style">alternate content</canvas>
 
     <Loader v-bind:loading-queue="loadingQueue" @loaded="primed" />
@@ -16,13 +16,9 @@
 
 <script>
 
-// 
+// Modules
 import DeviceLayer from './DeviceLayer.vue';
 import Loader from './Loader.vue';
-
-// Modules
-import Director from '../handlers/Director.js';
-import DeviceHandler from '../handlers/DeviceHandler.js';
 
 // Game Data
 import { sceneManifest } from '../game_data/scenes.js';
@@ -35,12 +31,7 @@ export default {
   },
   data () {
     return {
-
-      // 
-      config: {
-        canvasId: 'drawingCanvas',
-      },
-
+      
       // 
       loadingQueue: null,
 
@@ -146,26 +137,19 @@ export default {
 	// 	}
 	// }
 
-
   mounted: function() {
 
-    // Stage for drawing pictures and shapes
-    this.stage = new createjs.Stage(this.config.canvasId);
-
-    // Grab the canvas that the stage is attached to.
-    this.drawingCanvas = document.getElementById(this.config.canvasId);
-
     // Initialize the engine modules.
-    this.device = new DeviceHandler(this.stage, this.director, this.drawingCanvas); // Scales the scene
+    this.$refs.deviceLayer // Scales the scene
 
-    // Initialize the scene manager.
-    this.director = new Director(this.stage, this.device, this.user);
-
+    // ???
     this.second_title = null;
 
+    // Loading queue for preloading
     this.loadingQueue = new createjs.LoadQueue();
     this.loadingQueue.loadManifest(sceneManifest);                       // Enable mouse events with scene objects
 
+    // Ticker to run game loop
     createjs.Ticker.setFPS(30);                                 // Set FPS (could be depricated?)
     createjs.Ticker.addEventListener('tick', this.tick);        // Set tisk listener for use as game loop
 
@@ -175,16 +159,16 @@ export default {
 
     tick: function(event) {
 
-      // this.second_title.x = this.stage.canvas.width / 3;
+      // this.second_title.x = this.$refs.deviceLayer.stage.canvas.width / 3;
 
       // 
       if (this.loader.primed && !this.loader.loaded) {
 
         // Create the first 'currentScene'
-        this.director.createScene(this.stage, this.device, this.user); // Create scene assets
+        this.$refs.deviceLayer.director.createScene(this.$refs.deviceLayer.stage, this.user); // Create scene assets
 
         // Rescale the view to size the scene to the device.
-        this.device.resize(this.stage, this.director); // Resize to set initial scale
+        this.$refs.deviceLayer.resize(); // Resize to set initial scale
 
         // Set the loaded flag.
         this.loader.loaded = true;
@@ -192,10 +176,10 @@ export default {
       }
 
       // Run the scene.
-      this.director.runScene(this.stage, this.device, this.user);
+      this.$refs.deviceLayer.director.runScene(this.$refs.deviceLayer.stage, this.$refs.deviceLayer, this.user);
 
       // Update the stage.
-      this.stage.update(event);
+      this.$refs.deviceLayer.stage.update(event);
 
     },
 
@@ -204,11 +188,12 @@ export default {
       this.loader.primed = true;
       console.log("Primed!");
 
-      this.second_title = new createjs.Bitmap(this.director.loadingQueue.getResult("image"));
+      this.second_title = new createjs.Bitmap(this.$refs.deviceLayer.director.loadingQueue.getResult("image"));
+
       // console.log(this.second_title);
       // OR samething
-      // this.director.background.shape = new createjs.Bitmap(images['image']);
-      
+      // this.$refs.deviceLayer.director.background.shape = new createjs.Bitmap(images['image']);
+
     }
 
   }
