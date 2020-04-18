@@ -33,6 +33,17 @@ class Director {
    * @constructor
    */
   constructor() {
+    
+    this.user = {
+      authenticated: false,
+      firstname: 'Place',
+      lastname: 'Holder',
+      username: 'CpnPlchlder',
+      hits: 0,
+      highs: 0,
+      lows: 0,
+      badges: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    };
 
 		this.sceneComponentSystem = []; // Scene component system for scaling and eventually object storage
     // ecs: [], // Entity component system for scaling and eventually object storage
@@ -68,6 +79,25 @@ class Director {
 
   }
 
+  // async created() {
+  //
+  //   try {
+  //
+  //     this.stats = await StatService.getStats();
+  //     console.log(this.stats);
+  //
+  //     this.users = await LoginService.getUsers();
+  //     console.log(this.users);
+  //
+  //   } catch (err) {
+  //
+  //     this.async.error = err.message;
+  //     console.log(this.async.error);
+  //
+  //   }
+  //
+  // },
+
   /**
    * Function to scale the entire stage.
    * @param {object} entityComponentSystem - The array of entities.
@@ -76,11 +106,11 @@ class Director {
    * @param {object} stage - The stage that displays the content.
    */
 
-  runScene(stage, device, user) {
+  runScene(stage, device) {
 
     if (this.currentScene == 0) {
 
-      // console.log(user.authenticated);
+      // console.log(this.user.authenticated);
 
       if (device.input.keys[13]) {  // Enter key
 
@@ -93,19 +123,19 @@ class Director {
           "pass": document.getElementById('passwordInput').value
         };
 
-        APIHandler.verifyUser(text, user, this.async);
+        APIHandler.verifyUser(text, this.user, this.async);
 
       }
 
-      if (user.authenticated) {
-        this.changeScene(2, stage, user);
+      if (this.user.authenticated) {
+        this.changeScene(2, stage);
       }
 
     }
 
     if (this.currentScene == 1) {
 
-      // console.log(user.authenticated);
+      // console.log(this.user.authenticated);
 
       if (device.input.keys[13]) {
         createjs.Sound.play("sword");
@@ -132,8 +162,8 @@ class Director {
                     "lname": document.getElementById('lastnameInput').value,
                     "confirm": document.getElementById('confirmInput').value
                   };
-                  APIHandler.createUser(text, user, this.async);
-                  this.changeScene(2, stage, user);
+                  APIHandler.createUser(text, this.user, this.async);
+                  this.changeScene(2, stage);
                 }
               }
             }
@@ -174,7 +204,7 @@ class Director {
     // Game scene && not paused
     if (this.currentScene == 3 && this.level.pause_menu.visible == false) {
 
-      this.gameRunning(stage, device, user);
+      this.gameRunning(stage, device);
 
     }
 
@@ -216,7 +246,7 @@ class Director {
 
   }
 
-  gameRunning(stage, device, user) {
+  gameRunning(stage, device) {
 
     // If the range is not generated
     if(!this.level.generated) {
@@ -253,12 +283,12 @@ class Director {
 
     }
 
-    this.runAnimations(stage, user);
+    this.runAnimations(stage);
 
     //If game over...
     if (this.level.hit_counter >= 3 && this.level.miss_upper_counter >= 1 && this.level.miss_lower_counter >= 1 && this.level.reload == false && this.level.current_level != 0) {
 
-      this.runGameOverSequemce(user, device);
+      this.runGameOverSequemce(device);
 
     }
 
@@ -266,7 +296,7 @@ class Director {
 
   }
 
-  runAnimations(stage, user) {
+  runAnimations(stage) {
 
     // Run through and finish animations that play once
     this.level.updateSinglePlayAnimations();
@@ -275,17 +305,17 @@ class Director {
     this.level.runHitAnimations();
     this.level.runMissAnimations( function() {
       createjs.Sound.play("menu");
-      this.changeScene(9, stage, user);
+      this.changeScene(9, stage);
     }.bind(this) );
 
   }
 
-  runGameOverSequence(user, device) {
+  runGameOverSequence(device) {
 
     // udpate global total
-    user.hits += this.level.hit_counter;
-    user.highs += this.level.miss_upper_counter;
-    user.lows += this.level.miss_lower_counter;
+    this.user.hits += this.level.hit_counter;
+    this.user.highs += this.level.miss_upper_counter;
+    this.user.lows += this.level.miss_lower_counter;
 
     this.level.hit_text.text += this.level.hit_counter.toString();
     this.level.low_text.text += this.level.miss_lower_counter.toString();
@@ -294,21 +324,21 @@ class Director {
     this.gui.menu_button.visible = false;
 
     // Show the endgame screen
-    this.level.createVictoryBanner(device.scale.x, device.scale.y, user.badges, user.authenticated);
+    this.level.createVictoryBanner(device.scale.x, device.scale.y, this.user.badges, this.user.authenticated);
 
     this.level.visitedLevels[this.level.current_level] = true;
-    user.badges[(this.level.current_level - 1)] = 1;
+    this.user.badges[(this.level.current_level - 1)] = 1;
 
     // update database
     APIHandler.updateStats(
       {
-        user: user.username,
-        hits: user.hits,
-        highs: user.highs,
-        lows: user.lows,
-        badges: user.badges
+        user: this.user.username,
+        hits: this.user.hits,
+        highs: this.user.highs,
+        lows: this.user.lows,
+        badges: this.user.badges
       },
-      user,
+      this.user,
       this.async
     );
 
@@ -342,7 +372,7 @@ class Director {
    * @param {object} entityComponent - The the current entity being scaled.
    * @returns {object} startValues : { x: xStart, y: yStart } - The starting location values.
    */
-  createScene(stage, user) {
+  createScene(stage) {
 
     // Set the background color to a neutral color
     this.setBackgroundColor(stage, "#333333");
@@ -353,18 +383,18 @@ class Director {
 
     this.setBackground(stage);
 
-    this.setForegroundText(user);
+    this.setForegroundText();
     this.setForeground(stage);
 
-    this.runCustomCode(stage, user);
+    this.runCustomCode(stage);
 
-    this.gui.createGUI(this.sceneComponentSystem, this, stage, user, this.async, this.gui.menu_button);
+    this.gui.createGUI(this.sceneComponentSystem, this, stage, this.user, this.async, this.gui.menu_button);
 
     // console.log(entity_component_system);
 
   }
 
-  setForegroundText(user) {
+  setForegroundText() {
 
     switch (this.currentScene) {
 
@@ -387,7 +417,7 @@ class Director {
         sceneData[this.currentScene].fg_text = "";
         break;
       case 7:
-        sceneData[this.currentScene].fg_text = "Username: " + user.username + "\n\nName: " + user.firstname + " " + user.lastname + "\n\n";
+        sceneData[this.currentScene].fg_text = "Username: " + this.user.username + "\n\nName: " + this.user.firstname + " " + this.user.lastname + "\n\n";
         break;
       case 9:
         sceneData[this.currentScene].fg_text = levelData[this.level.current_level].hint;
@@ -482,7 +512,7 @@ class Director {
 
   }
 
-  runCustomCode(stage, user) {
+  runCustomCode(stage) {
 
     // Custom scene functionalities
     switch (this.currentScene) {
@@ -498,11 +528,11 @@ class Director {
       case 3: // Game
         FormHandler.createGameForm(this.level);
         this.level.createLevel(stage,
-          function() { createjs.Sound.play("select"); this.changeScene(8, stage, user); this.level.visibleForm(true); this.level.destroyLevel(stage); }.bind(this),
-          function() { createjs.Sound.play("sword"); this.changeScene(9, stage, user); this.level.visibleForm(true); }.bind(this),
-          function() { createjs.Sound.play("menu"); this.changeScene(2, stage, user); this.level.visibleForm(true); this.level.destroyLevel(stage); }.bind(this),
-          function() { createjs.Sound.play("menu"); this.changeScene(6, stage, user); this.level.visibleForm(true); }.bind(this),
-          user.authenticated,
+          function() { createjs.Sound.play("select"); this.changeScene(8, stage); this.level.visibleForm(true); this.level.destroyLevel(stage); }.bind(this),
+          function() { createjs.Sound.play("sword"); this.changeScene(9, stage); this.level.visibleForm(true); }.bind(this),
+          function() { createjs.Sound.play("menu"); this.changeScene(2, stage); this.level.visibleForm(true); this.level.destroyLevel(stage); }.bind(this),
+          function() { createjs.Sound.play("menu"); this.changeScene(6, stage); this.level.visibleForm(true); }.bind(this),
+          this.user.authenticated,
           function() { this.gui.menu_button.visible = true; }.bind(this),
           this.sound
         );
@@ -522,7 +552,7 @@ class Director {
    * @param {object} entityComponent - The the current entity being scaled.
    * @returns {object} platformScale - The platform specific scale of that entity.
    */    // L
-  loadCurrentScene(stage, user) {
+  loadCurrentScene(stage) {
 
     // Clear HTML before creating a new scene
     this.clearHtml();
@@ -553,7 +583,7 @@ class Director {
     }
 
     // Create the new scene
-    this.createScene(stage, user);
+    this.createScene(stage);
 
     // device.resize(stage);
 
@@ -565,7 +595,7 @@ class Director {
    * A function to change the current scene to a new scene.
    * @param {object} newScene - The index of the scene to navigate to.
    */
-  changeScene(newScene, stage, user) {
+  changeScene(newScene, stage) {
 
     // Set the last scene to the current scene
     this.lastScene = this.currentScene;
@@ -574,11 +604,11 @@ class Director {
     this.currentScene = newScene;
 
     // Load the scene
-    this.loadCurrentScene(stage, user);
+    this.loadCurrentScene(stage);
 
   }
 
-  oneWayScene(stage, user) {
+  oneWayScene(stage) {
 
     // Switch the current and last screen
     var temp = this.currentScene;
@@ -586,7 +616,7 @@ class Director {
     this.lastScene = temp;
 
     // Load the scene
-    this.loadCurrentScene(stage, user);
+    this.loadCurrentScene(stage);
 
     // // Resize everything for scaling
     // device.resize(stage);
@@ -596,7 +626,7 @@ class Director {
 
       this.gui.menu_button.visible = false;
 
-      this.level.openPauseMenu(user.authenticated);
+      this.level.openPauseMenu(this.user.authenticated);
 
     } else if (this.currentScene == 3) {
 
@@ -643,13 +673,13 @@ class Director {
 
   }
 
-  indicatorFunction(newL, stage, user) {
+  indicatorFunction(newL, stage) {
 
     this.level.generated = false;
     createjs.Sound.play("select");
     this.level.current_level = newL;
     this.level.resetLevel();
-    this.changeScene(3, stage, user);
+    this.changeScene(3, stage);
 
   }
 

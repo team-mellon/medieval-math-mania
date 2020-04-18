@@ -31,7 +31,7 @@ export default {
   },
   data () {
     return {
-      
+
       // 
       loadingQueue: null,
 
@@ -42,24 +42,6 @@ export default {
 
       // 
       text: '',
-
-      // Current user data
-      user: {
-        authenticated: false,
-        firstname: 'Place',
-        lastname: 'Holder',
-        username: 'CpnPlchlder',
-        hits: 0,
-        highs: 0,
-        lows: 0,
-        badges: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-      },
-
-      // 
-      scale: {
-        x: 1.0,
-        y: 1.0
-      },
 
       // 
       loader: {
@@ -87,25 +69,6 @@ export default {
       }
     }
   },
-
-  // async created() {
-  //
-  //   try {
-  //
-  //     this.stats = await StatService.getStats();
-  //     console.log(this.stats);
-  //
-  //     this.users = await LoginService.getUsers();
-  //     console.log(this.users);
-  //
-  //   } catch (err) {
-  //
-  //     this.async.error = err.message;
-  //     console.log(this.async.error);
-  //
-  //   }
-  //
-  // },
 
   // Clear color of screen
     // color was r:0.78, b:1, g:0.98, a:1 (Babylon.Color4)
@@ -165,7 +128,7 @@ export default {
       if (this.loader.primed && !this.loader.loaded) {
 
         // Create the first 'currentScene'
-        this.$refs.deviceLayer.director.createScene(this.$refs.deviceLayer.stage, this.user); // Create scene assets
+        this.$refs.deviceLayer.director.createScene(this.$refs.deviceLayer.stage); // Create scene assets
 
         // Rescale the view to size the scene to the device.
         this.$refs.deviceLayer.resize(); // Resize to set initial scale
@@ -176,7 +139,7 @@ export default {
       }
 
       // Run the scene.
-      this.$refs.deviceLayer.director.runScene(this.$refs.deviceLayer.stage, this.$refs.deviceLayer, this.user);
+      this.$refs.deviceLayer.director.runScene(this.$refs.deviceLayer.stage, this.$refs.deviceLayer);
 
       // Update the stage.
       this.$refs.deviceLayer.stage.update(event);

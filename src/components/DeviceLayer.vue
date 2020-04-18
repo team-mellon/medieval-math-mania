@@ -47,19 +47,7 @@ export default {
       added: false,
       maxStored: false,
       tempScale: 1,
-      tempMax: 1440,
-
-      // Current user data
-      user: {
-        authenticated: false,
-        firstname: 'Place',
-        lastname: 'Holder',
-        username: 'CpnPlchlder',
-        hits: 0,
-        highs: 0,
-        lows: 0,
-        badges: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-      },
+      tempMax: 1440
     }
   },
 
@@ -77,7 +65,7 @@ export default {
     // ////////////
     
     // Initialize the scene manager.
-    this.director = new Director(this.stage, this, this.user);
+    this.director = new Director(this.stage, this);
 
     // Mobile manager
     this.device = new MobileHandler();
