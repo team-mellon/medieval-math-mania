@@ -58,8 +58,6 @@
 
       //Loadbar for loading screen
       handleProgress: function(evt) {
-
-        console.log('progress');
         
 
         // Get the background from the template.
