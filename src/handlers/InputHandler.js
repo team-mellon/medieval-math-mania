@@ -8,12 +8,20 @@
 class InputHandler {
 
   // Constructor to initialize input checking variables
-  constructor(stage, drawingCanvas) {
+  constructor(stage) {
 
-    drawingCanvas.addEventListener("touchstart", this.handleStart.bind(this), false);
-    drawingCanvas.addEventListener('touchend', this.handleEnd.bind(this), false);
-    drawingCanvas.addEventListener("touchcancel", this.handleCancel.bind(this), false);
-    drawingCanvas.addEventListener("touchmove", this.handleMove.bind(this), false);
+    // 
+    this.config = {
+      canvasId: 'drawingCanvas',
+    },
+
+    // Grab the canvas that the stage is attached to.
+    this.drawingCanvas = document.getElementById(this.config.canvasId);
+
+    this.drawingCanvas.addEventListener("touchstart", this.handleStart.bind(this), false);
+    this.drawingCanvas.addEventListener('touchend', this.handleEnd.bind(this), false);
+    this.drawingCanvas.addEventListener("touchcancel", this.handleCancel.bind(this), false);
+    this.drawingCanvas.addEventListener("touchmove", this.handleMove.bind(this), false);
 
     // Holds the states of all the keys
     this.keys = {};
