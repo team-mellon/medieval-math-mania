@@ -1,14 +1,13 @@
 <template>
   <div id="deviceLayer">
-
-    
-
+    <Loader v-bind:loading-queue="loadingQueue" @loaded="primed" ref="loader" />
   </div>
 </template>
 
 <script>
 
 // Modules
+import Loader from './Loader.vue';
 import Director from '../handlers/Director.js';
 
 // Static classes
@@ -21,10 +20,26 @@ import InputHandler from '../handlers/InputHandler.js';
 // Models
 import ObjectConfig from '../structures/ObjectConfig'
 
+// Game Data
+import { sceneManifest } from '../game_data/scenes.js';
+
 export default {
   name: 'DeviceLayer',
+  components: {
+    Loader
+  },
   data () {
     return {
+
+      // Loading queue for preloading
+      loadingQueue: new createjs.LoadQueue(),
+
+      //
+      loader: {
+        primed: false,
+        loaded: false
+      },
+
       config: {
         canvasId: 'drawingCanvas',
       },
@@ -34,11 +49,44 @@ export default {
         error: ''
       },
 
-      device: null,
-      landscape_warning: null,
+      // Initialize the scene manager.
+      director: new Director(),
+
+      // ////////////
+      // // MOBILE //
+      // ////////////
+
+      // Mobile manager
+      device: new MobileHandler(),
+
+      // Landscape warning backdrop
+      landscape_warning: new createjs.Shape(),
+
       phone_rotation: null,
-      phone_rotationS: null,
+
+      // Phone rotation image variable
+      phone_rotationS: {
+        images: ["res/phone-rotation.png"],
+        frames: {width:288, height:288, count:2, regX: 0, regY:0, spacing:0, margin:0},
+        framerate: 2
+      },
+
+      // ///////////
+      // // INPUT //
+      // ///////////
+
+      // Input handler
       input: null,
+
+      // Enable mouse events with scene objects
+      // ???
+      second_title: null,
+
+      // /////////////
+      // // SCALING //
+      // /////////////
+
+      // Scene scaling variables
       scale: {
         x: 1.0,
         y: 1.0,
@@ -55,7 +103,7 @@ export default {
       tempScale: 1,
       tempMax: 1440,
 
-      // 
+      //
       background: {
         entity: {},
         shape: null,
@@ -78,53 +126,67 @@ export default {
     // Stage for drawing pictures and shapes
     this.stage = new createjs.Stage(this.config.canvasId);
 
-    // ////////////
-    // // MOBILE //
-    // ////////////
-    
-    // Initialize the scene manager.
-    this.director = new Director(this.stage, this);
+    // Load the scene manifest
+    this.loadingQueue = new createjs.LoadQueue();
+    this.loadingQueue.loadManifest(sceneManifest);
 
-    // Mobile manager
-    this.device = new MobileHandler();
+    // Initialize the engine modules.
 
-    // Landscape warning backdrop
-    this.landscape_warning = new createjs.Shape();
-
-    // Phone rotation image variable
-    this.phone_rotationS = {
-      images: ["res/phone-rotation.png"],
-      frames: {width:288, height:288, count:2, regX: 0, regY:0, spacing:0, margin:0},
-      framerate: 2
-    };
-
-    // ///////////
-    // // INPUT //
-    // ///////////
-
-    // Input handler
+    // Create the Input handler
     this.input = new InputHandler(this.stage);
 
-    // /////////////
-    // // SCALING //
-    // /////////////
-
     // Scene scaling variables
-    this.maxScaleY = 1440;
-    this.maxScaleX = 1920;
     this.screenRatio = this.maxScaleY / this.maxScaleX;
-    this.sceneMarginX = 0.0;
-    this.added = false;
-    this.maxStored = false;
-    this.tempScale = 1;
-    this.tempMax = 1440
 
     // Set the window resize function to the one
     window.addEventListener('resize', function() { this.resize() }.bind(this), false);
 
+    // Ticker to run game loop
+    createjs.Ticker.setFPS(30);                                 // Set FPS (could be depricated?)
+    createjs.Ticker.addEventListener('tick', this.tick);        // Set tisk listener for use as game loop
+
   },
 
   methods: {
+
+    tick: function(event) {
+
+      // this.second_title.x = this.stage.canvas.width / 3;
+
+      //
+      if (this.loader.primed && !this.loader.loaded) {
+
+        // Create the first 'currentScene'
+        this.director.createScene(this.stage); // Create scene assets
+
+        // Rescale the view to size the scene to the device.
+        this.resize(); // Resize to set initial scale
+
+        // Set the loaded flag.
+        this.loader.loaded = true;
+
+      }
+
+      // Run the scene.
+      this.director.runScene(this.stage, this);
+
+      // Update the stage.
+      this.stage.update(event);
+
+    },
+
+    primed: function(event) {
+
+      this.loader.primed = true;
+      console.log("Primed!");
+
+      this.second_title = new createjs.Bitmap(this.loadingQueue.getResult("image"));
+
+      // console.log(this.second_title);
+      // OR samething
+      // this.director.background.shape = new createjs.Bitmap(images['image']);
+
+    },
 
     /**
      * Callback to run after assets are preloaded.
@@ -192,7 +254,7 @@ export default {
      * Function to check the orientation of the device.
      */
     checkOrientation: function() {
-      
+
       // If window height is greater than width
       if (this.device.isPortrait && this.device.isMobile) {
 
@@ -266,7 +328,7 @@ export default {
         this.scale.y = this.tempScale * ( this.stage.canvas.height / this.tempMax );
         let key = 'sceneScaleY';
         sessionStorage.setItem(key, this.scale.y);
-        
+
       }
 
     },
@@ -356,27 +418,27 @@ export default {
 
         // Set mobile scale.
         platformScale = 1.5;
-    
+
         switch (entityComponent.type) {
-    
+
           case "image":
             platformScale = 1.0;
             break;
-    
+
           case "gui":
             platformScale = 1.5;
             // entityComponent.object.scale = 1.0;
             break;
-    
+
           case "smallgui":
             platformScale = 0.5;
             // entityComponent.object.scale = 0.5;
             break;
 
         }
-    
+
       }
-    
+
       // image.x = x_start + x_location;
       // image.y = y_start + y_location;
 
@@ -402,7 +464,7 @@ export default {
       gameEntryForm.style.right = yPosition;
 
     }
-    
+
   }
 
 }

@@ -1,51 +1,41 @@
 <template>
+
   <div id="engineFrame">
     <DeviceLayer ref="deviceLayer" />
-
-    <canvas id="drawingCanvas" :width="w" :height="h" :style="style" >alternate content</canvas>
-
-    <Loader v-bind:loading-queue="loadingQueue" @loaded="primed" />
+    <canvas id="drawingCanvas" :width="w" :height="h" :style="style">alternate content</canvas>
     <div id="sceneHTML"></div>
-
   </div>
+
 </template>
 
 <script>
 
 // Modules
 import DeviceLayer from './DeviceLayer.vue';
-import Loader from './Loader.vue';
-
-// Game Data
-import { sceneManifest } from '../game_data/scenes.js';
 
 export default {
+
   name: 'Engine',
+
   components: {
-    DeviceLayer,
-    Loader
+    DeviceLayer, // Scales the scene
   },
+
   data () {
     return {
 
       // 
-      loadingQueue: null,
-
-      // 
-      loader: {
-        primed: false,
-        loaded: false
-      },
-
       style: {
         background: '#aaa'
       },
 
+      // 
       w: window.innerWidth,
       h: window.innerHeight,
 
       // 
       text: ''
+
     }
   },
 
@@ -81,62 +71,9 @@ export default {
 
   mounted: function() {
 
-    // Initialize the engine modules.
-    this.$refs.deviceLayer // Scales the scene
-
-    // ???
-    this.second_title = null;
-
-    // Loading queue for preloading
-    this.loadingQueue = new createjs.LoadQueue();
-    this.loadingQueue.loadManifest(sceneManifest);                       // Enable mouse events with scene objects
-
-    // Ticker to run game loop
-    createjs.Ticker.setFPS(30);                                 // Set FPS (could be depricated?)
-    createjs.Ticker.addEventListener('tick', this.tick);        // Set tisk listener for use as game loop
-
   },
 
   methods: {
-
-    tick: function(event) {
-
-      // this.second_title.x = this.$refs.deviceLayer.stage.canvas.width / 3;
-
-      // 
-      if (this.loader.primed && !this.loader.loaded) {
-
-        // Create the first 'currentScene'
-        this.$refs.deviceLayer.director.createScene(this.$refs.deviceLayer.stage); // Create scene assets
-
-        // Rescale the view to size the scene to the device.
-        this.$refs.deviceLayer.resize(); // Resize to set initial scale
-
-        // Set the loaded flag.
-        this.loader.loaded = true;
-
-      }
-
-      // Run the scene.
-      this.$refs.deviceLayer.director.runScene(this.$refs.deviceLayer.stage, this.$refs.deviceLayer);
-
-      // Update the stage.
-      this.$refs.deviceLayer.stage.update(event);
-
-    },
-
-    primed: function(event) {
-
-      this.loader.primed = true;
-      console.log("Primed!");
-
-      this.second_title = new createjs.Bitmap(this.$refs.deviceLayer.director.loadingQueue.getResult("image"));
-
-      // console.log(this.second_title);
-      // OR samething
-      // this.$refs.deviceLayer.director.background.shape = new createjs.Bitmap(images['image']);
-
-    }
 
   }
 
@@ -145,4 +82,7 @@ export default {
 </script>
 
 <style>
+
+
+
 </style>
