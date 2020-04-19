@@ -15,6 +15,7 @@
   import Bar from './Loader/Bar.vue'
 
   export default {
+
     name: 'Loader',
     components: {
       Bar
@@ -24,9 +25,18 @@
     },
     data () {
       return {
+
+        // Loading queue for preloading
+        loadingQueue: new createjs.LoadQueue(),
+
+        // Loader variables
         loader: {
-          percentage: 0
-        }
+          percentage: 0,
+        },
+
+        // Flag for the status of loading
+        loaded: false
+
       }
     },
     watch: { 
@@ -52,7 +62,11 @@
       handleComplete: function(event) {
 
         // Emit to the engine that the canvas assets are ready.
-        this.$emit('loaded', 'loaded')
+        // this.$emit('loaded', 'loaded')
+
+        this.loaded = true;
+
+        console.log("Assets Loaded!");
 
       },
 

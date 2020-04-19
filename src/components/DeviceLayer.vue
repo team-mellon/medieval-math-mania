@@ -38,11 +38,7 @@
         // Loading queue for preloading
         loadingQueue: new createjs.LoadQueue(),
 
-        //
-        loader: {
-          primed: false,
-          loaded: false
-        },
+        sceneCreated: false,
 
         config: {
           canvasId: 'drawingCanvas',
@@ -158,7 +154,13 @@
         // this.second_title.x = this.stage.canvas.width / 3;
 
         //
-        if (this.loader.primed && !this.loader.loaded) {
+        if (this.$refs.loader.loaded && !this.sceneCreated) {
+
+          this.second_title = new createjs.Bitmap(this.loadingQueue.getResult("image"));
+
+          // console.log(this.second_title);
+          // OR samething
+          // this.director.background.shape = new createjs.Bitmap(images['image']);
 
           // Create the first 'currentScene'
           this.director.createScene(this.stage); // Create scene assets
@@ -167,7 +169,7 @@
           this.resize(); // Resize to set initial scale
 
           // Set the loaded flag.
-          this.loader.loaded = true;
+          this.sceneCreated = true;
 
         }
 
@@ -180,15 +182,6 @@
       },
 
       primed: function(event) {
-
-        this.loader.primed = true;
-        console.log("Primed!");
-
-        this.second_title = new createjs.Bitmap(this.loadingQueue.getResult("image"));
-
-        // console.log(this.second_title);
-        // OR samething
-        // this.director.background.shape = new createjs.Bitmap(images['image']);
 
       },
 
