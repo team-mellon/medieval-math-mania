@@ -300,35 +300,7 @@
         // Game scene
         if (this.currentScene == 3) {
 
-          var y_position = (284 * this.$props.scale.y).toString() + "px";
-          var x_position = ((window.innerWidth / 2) + (0) * this.$props.scale.y).toString() + "px";
-
-          // console.log(x_position);
-
-          var game_entry_form = document.getElementById("equationBanner");
-          game_entry_form.style.bottom = y_position;
-          game_entry_form.style.right = x_position;
-          if (!this.$props.device.isMobile) {
-            document.getElementById("entryInput").focus();
-          }
-
-          y_position = (300 * this.$props.scale.y).toString() + "px";
-          x_position = ( (window.innerWidth / 2) - (234 + 288 / 2) * this.$props.scale.x).toString() + "px";
-
-          // console.log(x_position);
-
-          var game_history_form = document.getElementById("historyBanner");
-          game_history_form.style.bottom = y_position;
-          game_history_form.style.right = x_position;
-
-        }
-
-        //Calls external function to generate ranges for each level, this is reset when each level is selected on level select
-
-        // Game scene && not paused
-        if (this.currentScene == 3 && this.level.pause_menu.visible == false) {
-
-          this.gameRunning(device);
+          this.runGame();
 
         }
 
@@ -367,7 +339,41 @@
 
       },
 
-      gameRunning: function(device) {
+      runGame() {
+
+        var y_position = (284 * this.$props.scale.y).toString() + "px";
+        var x_position = ((window.innerWidth / 2) + (0) * this.$props.scale.y).toString() + "px";
+
+        // console.log(x_position);
+
+        var game_entry_form = document.getElementById("equationBanner");
+        game_entry_form.style.bottom = y_position;
+        game_entry_form.style.right = x_position;
+        if (!this.$props.device.isMobile) {
+          document.getElementById("entryInput").focus();
+        }
+
+        y_position = (300 * this.$props.scale.y).toString() + "px";
+        x_position = ( (window.innerWidth / 2) - (234 + 288 / 2) * this.$props.scale.x).toString() + "px";
+
+        // console.log(x_position);
+
+        var game_history_form = document.getElementById("historyBanner");
+        game_history_form.style.bottom = y_position;
+        game_history_form.style.right = x_position;
+
+        //Calls external function to generate ranges for each level, this is reset when each level is selected on level select
+
+        // Game not paused...
+        if (this.level.pause_menu.visible == false) {
+
+          this.gameNotPaused();
+
+        }
+
+      },
+
+      gameNotPaused: function() {
 
         // If the range is not generated
         if(!this.level.generated) {
