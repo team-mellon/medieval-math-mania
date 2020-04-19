@@ -122,13 +122,11 @@
 
 
         if (this.$refs.sceneLayer.currentScene == 3) {
-          this.scaleAssets(this.$refs.sceneLayer.level.lcs, this.$refs.sceneLayer.currentScene); // Scale scene appropriately
+          this.scaleAssets(this.$refs.sceneLayer.level.lcs); // Scale scene appropriately
         }
 
-
-
-        this.scaleAssets(this.$refs.sceneLayer.sceneComponentSystem, this.$refs.sceneLayer.currentScene); // Scale scene appropriately
-        // this.scaleAssets(this.gcs, currentScene, this.scale.y, this.scale.x); // Scale scene appropriately
+        this.scaleAssets(this.$refs.sceneLayer.sceneComponentSystem); // Scale scene appropriately
+        // this.scaleAssets(this.gcs, this.$refs.sceneLayer.currentScene, this.scale.y, this.scale.x); // Scale scene appropriately
 
 
 
@@ -173,11 +171,11 @@
        * Function to scale the image-like assets.
        * @param {object} entityComponentSystem - The array of entities.
        */
-      scaleAssets: function(entityComponentSystem, currentScene) {
+      scaleAssets: function(entityComponentSystem) {
 
         // console.log("ECS length: " + entityComponentSystem.length);
 
-        if (currentScene == 3) {
+        if (this.$refs.sceneLayer.currentScene == 3) {
           this.scaleEntryForm();
         }
 
