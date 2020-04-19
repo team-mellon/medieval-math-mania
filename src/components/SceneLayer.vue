@@ -3,7 +3,6 @@
   <div id="sceneLayer">
 
     <Loader v-bind:loading-manifest="manifest" @loaded="preloaded" ref="loader" />
-    <!-- <SceneLayer /> -->
 
   </div>
 
@@ -13,7 +12,6 @@
 
   // Modules
   import Loader from './Loader.vue';
-  import Director from '../handlers/Director.js';
 
   import AssetHandler from '../handlers/AssetHandler.js';
 
@@ -137,9 +135,9 @@
       this.currentScene = 10;
       this.lastScene = 0;
 
-      // // Ticker to run game loop
-      // createjs.Ticker.setFPS(30);                                 // Set FPS (could be depricated?)
-      // createjs.Ticker.addEventListener('tick', this.tick);        // Set tisk listener for use as game loop
+      // Ticker to run game loop
+      createjs.Ticker.setFPS(30);                                 // Set FPS (could be depricated?)
+      createjs.Ticker.addEventListener('tick', this.tick);        // Set tisk listener for use as game loop
 
     },
 

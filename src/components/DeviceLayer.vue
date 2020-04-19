@@ -1,8 +1,7 @@
 <template>
 
   <div id="deviceLayer">
-
-    <Loader v-bind:loading-manifest="manifest" @loaded="preloaded" ref="loader" />
+    
     <SceneLayer v-bind:input="input" v-bind:scale="scale" v-bind:mobile="device" @resize="resize" ref="sceneLayer" />
 
   </div>
@@ -13,50 +12,33 @@
 
   // Modules
   import SceneLayer from './SceneLayer.vue';
-  import Loader from './Loader.vue';
-
-  // Static classes
-  import AssetHandler from '../handlers/AssetHandler.js';
 
   // Submodules
   import MobileHandler from '../handlers/MobileHandler.js';
   import InputHandler from '../handlers/InputHandler.js';
-
-  // Models
-  import ObjectConfig from '../structures/ObjectConfig'
-
-  // Game Data
-  import { sceneManifest } from '../game_data/scenes.js';
 
   export default {
 
     name: 'DeviceLayer',
     components: {
 
-      SceneLayer,
-      Loader
-      
+      // Initialize the scene manager.
+      SceneLayer
+
     },
     data () {
       return {
-
-        sceneCreated: false,
-        manifest: [],
 
         // Authentication handling
         async: {
           error: ''
         },
 
-        // Scene manager.
-        director: null,
-
         // ////////////
         // // MOBILE //
         // ////////////
 
-        // Mobile manager
-        device: new MobileHandler(),
+        device: null,
 
         // ///////////
         // // INPUT //
@@ -99,12 +81,10 @@
      */
     mounted: function() {
 
-      this.manifest = sceneManifest;
-
-      // Initialize the scene manager.
-      // this.director = new Director(),
-
       // Initialize the engine modules.
+
+      // Mobile manager
+      this.device = new MobileHandler();
 
       // Create the Input handler
       this.input = new InputHandler(this.$refs.sceneLayer.stage);
@@ -115,44 +95,9 @@
       // Set the window resize function
       window.addEventListener('resize', this.resize, false);
 
-      // Ticker to run game loop
-      createjs.Ticker.setFPS(30);                                 // Set FPS (could be depricated?)
-      createjs.Ticker.addEventListener('tick', this.tick);        // Set tisk listener for use as game loop
-
     },
 
     methods: {
-
-      tick: function(event) {
-
-        //  If the assets are loaded and the scene is not created...
-        if (this.$refs.loader.loaded && !this.sceneCreated) {
-
-          // Create the first 'currentScene'
-          this.$refs.sceneLayer.createScene(); // Create scene assets
-
-          // Rescale the view to size the scene to the device.
-          this.resize(); // Resize to set initial scale
-
-          // Set the loaded flag.
-          this.sceneCreated = true;
-
-        }
-
-        // Run the scene.
-        this.$refs.sceneLayer.runScene(this);
-
-        // Update the stage.
-        this.$refs.sceneLayer.stage.update(event);
-
-      },
-
-      /**
-       * Callback to run after assets are preloaded.
-       */
-      preloaded: function(event) {
-
-      },
 
       /**
        * Function to scale the entire stage.
@@ -162,6 +107,8 @@
         this.$refs.sceneLayer.loadOrientationAnimation()
         // Redraw background before everthing else for Z-axis reasons
         this.$refs.sceneLayer.redrawBackground();
+
+
 
         this.device.mobileCheck(console, navigator);
         this.device.orientationCheck(console, window);
