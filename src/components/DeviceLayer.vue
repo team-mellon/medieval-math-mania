@@ -1,9 +1,7 @@
 <template>
 
   <div id="deviceLayer">
-    
     <SceneLayer v-bind:input="input" v-bind:scale="scale" v-bind:mobile="device" @resize="resize" ref="sceneLayer" />
-
   </div>
 
 </template>
@@ -104,42 +102,17 @@
        */
       resize: function() {
 
-        this.$refs.sceneLayer.loadOrientationAnimation()
-        // Redraw background before everthing else for Z-axis reasons
-        this.$refs.sceneLayer.redrawBackground();
+        this.device.mobileDeviceCheck();
 
-
-
-        this.device.mobileCheck(console, navigator);
-        this.device.orientationCheck(console, window);
-
-
-
-        // If window height is greater than width
-        this.$refs.sceneLayer.setOrientationAnimation(this.device.isMobile, this.device.isPortrait)
-        this.$refs.sceneLayer.resizeCanvas();
+        this.$refs.sceneLayer.refreshScene();
 
         this.screenRatio = this.$refs.sceneLayer.stage.canvas.width / this.$refs.sceneLayer.stage.canvas.height;
-
-        if (window.innerWidth < 600) {
-          // gui_scale = 3;
-        } else if (window.innerWidth < 900) {
-          // gui_scale = 2;
-        } else {
-          // gui_scale = 1;
-        }
-
-
 
         this.calculateScaling();
 
         // Calculate the scene margin in a given direction
         this.sceneMarginX = ( this.$refs.sceneLayer.stage.canvas.width - this.maxScaleX ) / 2;
 
-        // Log screen scaling for debugging purposes
-        // console.log(this.scale.x);
-        // console.log(this.scale.y);
-        // console.log(this.screenRatio);
 
 
         // Re-create the landscape warning background
@@ -162,10 +135,6 @@
         this.$refs.sceneLayer.stage.update()
 
       },
-
-      /**
-       * Function to check the orientation of the device.
-       */
 
       /**
        * Calculate the scene scaling.

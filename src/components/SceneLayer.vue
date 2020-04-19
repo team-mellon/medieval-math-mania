@@ -513,6 +513,20 @@
 
       },
 
+      refreshScene: function() {
+
+        this.loadOrientationAnimation()
+
+        // Redraw background before everthing else for Z-axis reasons
+        this.redrawBackground();
+
+        // If window height is greater than width
+        this.setOrientationAnimation()
+        
+        this.resizeCanvas();
+
+      },
+
       /**
        * Function to load animation to indicate rong orientation of the device.
        */
@@ -541,33 +555,37 @@
 
       },
 
-      setOrientationAnimation: function(mobile, portrait) {
+      setOrientationAnimation: function() {
 
-        // If window height is greater than width
-        if (mobile && portrait) {
+        if (this.$props.device) {
 
-          if(!this.added) {
+          // If window height is greater than width
+          if (this.$props.device.isMobile && this.$props.device.isPortrait) {
 
-            this.stage.addChild(this.landscape_warning);
-            this.stage.addChild(this.phone_rotation);
-            this.landscape_warning.graphics.clear()
-            this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
-            this.phone_rotation.gotoAndPlay(0);
-            this.sceneHtml = document.getElementById("sceneHTML");
-            this.sceneHtml.hidden = true;
-            this.added = true;
+            if(!this.added) {
 
-          }
+              this.stage.addChild(this.landscape_warning);
+              this.stage.addChild(this.phone_rotation);
+              this.landscape_warning.graphics.clear()
+              this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
+              this.phone_rotation.gotoAndPlay(0);
+              this.sceneHtml = document.getElementById("sceneHTML");
+              this.sceneHtml.hidden = true;
+              this.added = true;
 
-        } else {
+            }
 
-          if(this.added){
+          } else {
 
-            this.stage.removeChild(this.landscape_warning);
-            this.stage.removeChild(this.phone_rotation);
-            this.sceneHtml = document.getElementById("sceneHTML");
-            this.sceneHtml.hidden = false;
-            this.added = false;
+            if(this.added){
+
+              this.stage.removeChild(this.landscape_warning);
+              this.stage.removeChild(this.phone_rotation);
+              this.sceneHtml = document.getElementById("sceneHTML");
+              this.sceneHtml.hidden = false;
+              this.added = false;
+
+            }
 
           }
 

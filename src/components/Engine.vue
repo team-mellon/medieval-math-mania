@@ -1,11 +1,9 @@
 <template>
 
   <div id="engineFrame">
-
     <DeviceLayer ref="deviceLayer" />
     <canvas id="drawingCanvas" :width="w" :height="h" :style="style">The canvas is broken</canvas>
     <div id="sceneHTML"></div>
-
   </div>
 
 </template>

@@ -23,8 +23,23 @@ class MobileHandler {
 
   }
 
+  mobileDeviceCheck() {
+
+    this.mobileCheck();
+    this.orientationCheck();
+
+    if (window.innerWidth < 600) {
+      // gui_scale = 3;
+    } else if (window.innerWidth < 900) {
+      // gui_scale = 2;
+    } else {
+      // gui_scale = 1;
+    }
+
+  }
+
   // Function that checks to see what the orientation is
-  orientationCheck (console, window) {
+  orientationCheck () {
 
     // console.log(window.innerHeight + ":" + window.innerWidth);
     console.log(":");
@@ -49,7 +64,7 @@ class MobileHandler {
   }
 
   // Function to check to see if the current device is mobile
-  mobileCheck (console, navigator) {
+  mobileCheck () {
 
     // Print out the device if known, if not known maybe store it for analytics but at least print it out
     switch (true) {
