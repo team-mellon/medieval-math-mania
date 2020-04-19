@@ -32,7 +32,14 @@ class Director {
    * Constructor for the scaling component of the engine.
    * @constructor
    */
-  constructor() {
+  constructor() {   
+
+    this.config = {
+      canvasId: 'drawingCanvas',
+    },
+
+    // Stage for drawing pictures and shapes
+    this.stage = new createjs.Stage(this.config.canvasId);
     
     this.user = {
       authenticated: false,
@@ -100,13 +107,10 @@ class Director {
 
   /**
    * Function to scale the entire stage.
-   * @param {object} entityComponentSystem - The array of entities.
-   * @param {object} currentScene - The index of the current scene.
    * @param {object} isMobile - The flag that determines if on a mobile device.
-   * @param {object} stage - The stage that displays the content.
    */
 
-  runScene(stage, device) {
+  runScene(device) {
 
       // // ???
       // text: ''
@@ -160,7 +164,7 @@ class Director {
       }
 
       if (this.user.authenticated) {
-        this.changeScene(2, stage);
+        this.changeScene(2);
       }
 
     }
@@ -195,7 +199,7 @@ class Director {
                     "confirm": document.getElementById('confirmInput').value
                   };
                   APIHandler.createUser(text, this.user, this.async);
-                  this.changeScene(2, stage);
+                  this.changeScene(2);
                 }
               }
             }
@@ -236,7 +240,7 @@ class Director {
     // Game scene && not paused
     if (this.currentScene == 3 && this.level.pause_menu.visible == false) {
 
-      this.gameRunning(stage, device);
+      this.gameRunning(device);
 
     }
 
@@ -278,7 +282,7 @@ class Director {
 
   }
 
-  gameRunning(stage, device) {
+  gameRunning(device) {
 
     // If the range is not generated
     if(!this.level.generated) {
@@ -315,7 +319,7 @@ class Director {
 
     }
 
-    this.runAnimations(stage);
+    this.runAnimations();
 
     //If game over...
     if (this.level.hit_counter >= 3 && this.level.miss_upper_counter >= 1 && this.level.miss_lower_counter >= 1 && this.level.reload == false && this.level.current_level != 0) {
@@ -324,11 +328,11 @@ class Director {
 
     }
 
-    this.runLevelTriggers(stage, device);
+    this.runLevelTriggers(device);
 
   }
 
-  runAnimations(stage) {
+  runAnimations() {
 
     // Run through and finish animations that play once
     this.level.updateSinglePlayAnimations();
@@ -337,7 +341,7 @@ class Director {
     this.level.runHitAnimations();
     this.level.runMissAnimations( function() {
       createjs.Sound.play("menu");
-      this.changeScene(9, stage);
+      this.changeScene(9);
     }.bind(this) );
 
   }
@@ -379,7 +383,7 @@ class Director {
 
   }
 
-  runLevelTriggers(stage, device) {
+  runLevelTriggers(device) {
 
     // Check to see if the tutorial should be displayed
     this.level.checkTutorial();
@@ -394,33 +398,30 @@ class Director {
     this.level.runCatapultAnimation(device.scale.y);
 
     // Reload the catapult
-    this.level.reloadCatapult(stage, device.scale.y)
+    this.level.reloadCatapult(this.stage, device.scale.y)
 
   }
 
   /**
    * Function to snap items to the edges of screen.
-   * @param {object} stage - The stage that displays the content.
-   * @param {object} entityComponent - The the current entity being scaled.
-   * @returns {object} startValues : { x: xStart, y: yStart } - The starting location values.
    */
-  createScene(stage) {
+  createScene() {
 
     // Set the background color to a neutral color
-    this.setBackgroundColor(stage, "#333333");
+    this.setBackgroundColor("#333333");
 
-    stage.addChild(this.background.shape);
+    this.stage.addChild(this.background.shape);
     this.background.shape.graphics.clear()
-    this.background.shape.graphics.beginFill(this.background.color).drawRect(0, 0, stage.canvas.width, stage.canvas.height);
+    this.background.shape.graphics.beginFill(this.background.color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
 
-    this.setBackground(stage);
+    this.setBackground();
 
     this.setForegroundText();
-    this.setForeground(stage);
+    this.setForeground();
 
-    this.runCustomCode(stage);
+    this.runCustomCode();
 
-    this.gui.createGUI(this.sceneComponentSystem, this, stage, this.user, this.async, this.gui.menu_button);
+    this.gui.createGUI(this.sceneComponentSystem, this, this.stage, this.user, this.async, this.gui.menu_button);
 
     // console.log(entity_component_system);
 
@@ -461,7 +462,7 @@ class Director {
   }
 
   // Load the scene in the variable currentScene
-  setBackgroundColor(stage, color) {
+  setBackgroundColor(color) {
     
     // Create a rectangle for clearing the screen
     this.background.shape = new createjs.Shape();
@@ -471,35 +472,35 @@ class Director {
 
     // 
     this.background.shape.graphics.clear()
-    this.background.shape.graphics.beginFill(this.background.color).drawRect(0, 0, stage.canvas.width, stage.canvas.height);
+    this.background.shape.graphics.beginFill(this.background.color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
 
     // Add rectangle to the stage
-    stage.addChild(this.background.shape);
+    this.stage.addChild(this.background.shape);
 
   }
 
-  setBackground(stage) {
+  setBackground() {
 
     let config;
 
     config = new ObjectConfig('default', 'image', constants.backgroundX, 1440, "center", 0, "center", 0);
-    this.background.center = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.currentScene].bg_img), config, this.sceneComponentSystem, stage);
+    this.background.center = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.currentScene].bg_img), config, this.sceneComponentSystem, this.stage);
 
     config = new ObjectConfig('default', 'image', constants.backgroundX, 1440, "center", 0, "center", -1440);
-    this.background.up = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.currentScene].bg_img), config, this.sceneComponentSystem, stage);
+    this.background.up = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.currentScene].bg_img), config, this.sceneComponentSystem, this.stage);
     
     config = new ObjectConfig('default', 'image', constants.backgroundX, 1440, "center", 0, "center", 1440);
-    this.background.down = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.currentScene].bg_img), config, this.sceneComponentSystem, stage);
+    this.background.down = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.currentScene].bg_img), config, this.sceneComponentSystem, this.stage);
     
     config = new ObjectConfig('default', 'image', constants.backgroundX, 1440, "center", -constants.backgroundX, "center", 0);
-    this.background.left = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.currentScene].bg_img), config, this.sceneComponentSystem, stage);
+    this.background.left = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.currentScene].bg_img), config, this.sceneComponentSystem, this.stage);
     
     config = new ObjectConfig(constants.backgroundX, 1440, "center", constants.backgroundX, "center", 0);
-    this.background.right = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.currentScene].bg_img), config, this.sceneComponentSystem, stage);
+    this.background.right = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.currentScene].bg_img), config, this.sceneComponentSystem, this.stage);
 
   }
 
-  setForeground(stage) {
+  setForeground() {
 
     let config;
 
@@ -512,39 +513,39 @@ class Director {
       };
 
       config = new ObjectConfig('default', 'image', sceneData[this.currentScene].fg_img.frames.width, sceneData[this.currentScene].fg_img.frames.height, "center", 0, "center", 0);
-      this.foreground = AssetHandler.createTextContainer(temp_fg_img, sceneData[this.currentScene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", config, 0, this.sceneComponentSystem, stage);
+      this.foreground = AssetHandler.createTextContainer(temp_fg_img, sceneData[this.currentScene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", config, 0, this.sceneComponentSystem, this.stage);
 
     } else if (this.currentScene == 10) {
 
       config = new ObjectConfig('default', 'image', 1635, 480, "center", 0, "top", 48 + 480 / 2);
-      this.foreground = AssetHandler.createImage(this.loadingQueue.getResult("title-text"), config, this.sceneComponentSystem, stage);
+      this.foreground = AssetHandler.createImage(this.loadingQueue.getResult("title-text"), config, this.sceneComponentSystem, this.stage);
 
     } else if (this.currentScene == 8) {
 
       config = new ObjectConfig('default', 'image', constants.backgroundX, constants.backgroundY, "center", 0, "center", 0);
-      this.midground = AssetHandler.createImage(this.loadingQueue.getResult("map"), config, this.sceneComponentSystem, stage);
+      this.midground = AssetHandler.createImage(this.loadingQueue.getResult("map"), config, this.sceneComponentSystem, this.stage);
 
       config = new ObjectConfig('default', 'gui', constants.backgroundX, 108, "center", 0, "top", 0 + (108/2));
-      this.foreground = AssetHandler.createButton(this.loadingQueue.getResult("map-banner"), "Select a level", config, function() {}.bind(this), this.sceneComponentSystem, stage);
+      this.foreground = AssetHandler.createButton(this.loadingQueue.getResult("map-banner"), "Select a level", config, function() {}.bind(this), this.sceneComponentSystem, this.stage);
 
     }
 
     if (this.currentScene == 2) {
 
       config = new ObjectConfig('default', 'image', constants.backgroundX, constants.backgroundY, "center", 0, "bottom", -constants.backgroundY / 2);
-      this.background.center = AssetHandler.createImage(this.loadingQueue.getResult("menu"), config, this.sceneComponentSystem, stage);
+      this.background.center = AssetHandler.createImage(this.loadingQueue.getResult("menu"), config, this.sceneComponentSystem, this.stage);
       
       config = new ObjectConfig('default', 'image', constants.backgroundX, constants.backgroundY, "center", 0 - (constants.backgroundX), "bottom", -constants.backgroundY / 2);
-      this.background.left = AssetHandler.createImage(this.loadingQueue.getResult("menu-left"), config, this.sceneComponentSystem, stage);
+      this.background.left = AssetHandler.createImage(this.loadingQueue.getResult("menu-left"), config, this.sceneComponentSystem, this.stage);
       
       config = new ObjectConfig('default', 'image', constants.backgroundX, constants.backgroundY, "center", 0 + (constants.backgroundX), "bottom", -constants.backgroundY / 2);
-      this.background.right = AssetHandler.createImage(this.loadingQueue.getResult("menu-right"), config, this.sceneComponentSystem, stage);
+      this.background.right = AssetHandler.createImage(this.loadingQueue.getResult("menu-right"), config, this.sceneComponentSystem, this.stage);
 
     }
 
   }
 
-  runCustomCode(stage) {
+  runCustomCode() {
 
     // Custom scene functionalities
     switch (this.currentScene) {
@@ -559,11 +560,11 @@ class Director {
 
       case 3: // Game
         FormHandler.createGameForm(this.level);
-        this.level.createLevel(stage,
-          function() { createjs.Sound.play("select"); this.changeScene(8, stage); this.level.visibleForm(true); this.level.destroyLevel(stage); }.bind(this),
-          function() { createjs.Sound.play("sword"); this.changeScene(9, stage); this.level.visibleForm(true); }.bind(this),
-          function() { createjs.Sound.play("menu"); this.changeScene(2, stage); this.level.visibleForm(true); this.level.destroyLevel(stage); }.bind(this),
-          function() { createjs.Sound.play("menu"); this.changeScene(6, stage); this.level.visibleForm(true); }.bind(this),
+        this.level.createLevel(this.stage,
+          function() { createjs.Sound.play("select"); this.changeScene(8); this.level.visibleForm(true); this.level.destroyLevel(this.stage); }.bind(this),
+          function() { createjs.Sound.play("sword"); this.changeScene(9); this.level.visibleForm(true); }.bind(this),
+          function() { createjs.Sound.play("menu"); this.changeScene(2); this.level.visibleForm(true); this.level.destroyLevel(this.stage); }.bind(this),
+          function() { createjs.Sound.play("menu"); this.changeScene(6); this.level.visibleForm(true); }.bind(this),
           this.user.authenticated,
           function() { this.gui.menu_button.visible = true; }.bind(this),
           this.sound
@@ -584,13 +585,13 @@ class Director {
    * @param {object} entityComponent - The the current entity being scaled.
    * @returns {object} platformScale - The platform specific scale of that entity.
    */    // L
-  loadCurrentScene(stage) {
+  loadCurrentScene() {
 
     // Clear HTML before creating a new scene
     this.clearHtml();
 
     // Destroy the last scene
-    this.destroyScene(stage);
+    this.destroyScene();
 
     // Load background color for the scene
     this.background.color = sceneData[this.currentScene].color;
@@ -615,9 +616,9 @@ class Director {
     }
 
     // Create the new scene
-    this.createScene(stage);
+    this.createScene();
 
-    // device.resize(stage);
+    // device.resize();
 
     // this.level.visibleForm(true);
 
@@ -627,7 +628,7 @@ class Director {
    * A function to change the current scene to a new scene.
    * @param {object} newScene - The index of the scene to navigate to.
    */
-  changeScene(newScene, stage) {
+  changeScene(newScene) {
 
     // Set the last scene to the current scene
     this.lastScene = this.currentScene;
@@ -636,11 +637,11 @@ class Director {
     this.currentScene = newScene;
 
     // Load the scene
-    this.loadCurrentScene(stage);
+    this.loadCurrentScene();
 
   }
 
-  oneWayScene(stage) {
+  oneWayScene() {
 
     // Switch the current and last screen
     var temp = this.currentScene;
@@ -648,10 +649,10 @@ class Director {
     this.lastScene = temp;
 
     // Load the scene
-    this.loadCurrentScene(stage);
+    this.loadCurrentScene();
 
     // // Resize everything for scaling
-    // device.resize(stage);
+    // device.resize();
 
     // If the last scene was the game open with the pause screen
     if (this.lastScene == 3) {
@@ -675,12 +676,11 @@ class Director {
   /**
    * A function to clear the stage and entity components.
    * @param {object} entityComponentSystem - The array of entities.
-   * @param {object} stage - The stage that displays the content.
    */
-  destroyScene(stage) {
+  destroyScene() {
 
     // Clear the stage.
-    stage.removeAllChildren();
+    this.stage.removeAllChildren();
 
     // Clear the entity component system.
     this.sceneComponentSystem = [];
@@ -705,13 +705,13 @@ class Director {
 
   }
 
-  indicatorFunction(newL, stage) {
+  indicatorFunction(newL) {
 
     this.level.generated = false;
     createjs.Sound.play("select");
     this.level.current_level = newL;
     this.level.resetLevel();
-    this.changeScene(3, stage);
+    this.changeScene(3);
 
   }
 

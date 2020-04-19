@@ -18,16 +18,22 @@
 
     name: 'Loader',
     components: {
+
       Bar
+
     },
     props: {
-      loadingQueue: Object
+
+      loadingManifest: Array
+
     },
     data () {
       return {
 
         // Loading queue for preloading
-        loadingQueue: new createjs.LoadQueue(),
+        loadingQueue: {
+          progress: 0
+        },
 
         // Loader variables
         loader: {
@@ -40,9 +46,13 @@
       }
     },
     watch: { 
-      loadingQueue: function(next, previous) {
+      loadingManifest: function(next, previous) {
 
         if (next !== null) {
+
+          // Load the scene manifest
+          this.loadingQueue = new createjs.LoadQueue();
+          this.loadingQueue.loadManifest(next);
 
           // Handler that runs when file loading progresses.
           this.loadingQueue.on("progress", this.handleProgress.bind(this));
@@ -67,6 +77,14 @@
         this.loaded = true;
 
         console.log("Assets Loaded!");
+
+        // this.second_title.x = this.stage.canvas.width / 3;
+
+        // this.second_title = new createjs.Bitmap(this.loadingQueue.getResult("image"));
+
+        // console.log(this.second_title);
+        // OR samething
+        // this.director.background.shape = new createjs.Bitmap(images['image']);
 
       },
 
