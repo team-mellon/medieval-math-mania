@@ -2,7 +2,7 @@
 
   <div id="deviceLayer">
 
-    <Loader v-bind:loading-manifest="manifest" @loaded="primed" ref="loader" />
+    <Loader v-bind:loading-manifest="manifest" @loaded="preloaded" ref="loader" />
     <!-- <SceneLayer /> -->
 
   </div>
@@ -40,10 +40,6 @@
         sceneCreated: false,
         manifest: [],
 
-        // config: {
-        //   canvasId: 'drawingCanvas',
-        // },
-
         // Authentication handling
         async: {
           error: ''
@@ -58,18 +54,6 @@
 
         // Mobile manager
         device: new MobileHandler(),
-
-        // Landscape warning backdrop
-        landscape_warning: new createjs.Shape(),
-
-        phone_rotation: null,
-
-        // Phone rotation image variable
-        phone_rotationS: {
-          images: ["res/phone-rotation.png"],
-          frames: {width:288, height:288, count:2, regX: 0, regY:0, spacing:0, margin:0},
-          framerate: 2
-        },
 
         // ///////////
         // // INPUT //
@@ -99,7 +83,6 @@
         maxScaleX: 1920,
         screenRatio: 1440 / 1920,
         sceneMarginX: 0.0,
-        added: false,
         maxStored: false,
         tempScale: 1,
         tempMax: 1440,
@@ -172,10 +155,6 @@
 
       },
 
-      primed: function(event) {
-
-      },
-
       /**
        * Callback to run after assets are preloaded.
        */
@@ -188,21 +167,27 @@
        */
       resize: function() {
 
-        this.loadOrientationAnimation(this.director.sceneComponentSystem)
+        this.director.loadOrientationAnimation()
 
         // Redraw background before everthing else for Z-axis reasons
         this.director.background.shape.graphics.clear()
         this.director.background.shape.graphics.beginFill(this.director.background.color).drawRect(0, 0, this.director.stage.canvas.width, this.director.stage.canvas.height);
 
+
+
         this.device.mobileCheck(console, navigator);
         this.device.orientationCheck(console, window);
 
+
+
         // If window height is greater than width
-        this.checkOrientation();
+        this.director.setOrientationAnimation(this.device.isMobile, this.device.isPortrait)
 
         // Resize the canvas element with new window size
         this.director.stage.canvas.width = window.innerWidth;
         this.director.stage.canvas.height = window.innerHeight;
+
+
 
         this.screenRatio = this.director.stage.canvas.width / this.director.stage.canvas.height;
 
@@ -214,6 +199,8 @@
           // gui_scale = 1;
         }
 
+
+
         this.calculateScaling();
 
         // Calculate the scene margin in a given direction
@@ -224,15 +211,23 @@
         // console.log(this.scale.y);
         // console.log(this.screenRatio);
 
-        this.landscape_warning.graphics.clear()
-        this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.director.stage.canvas.width, this.director.stage.canvas.height);
+
+
+        this.director.landscape_warning.graphics.clear()
+        this.director.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.director.stage.canvas.width, this.director.stage.canvas.height);
+
+
 
         if (this.director.currentScene == 3) {
           this.scaleAssets(this.director.level.lcs, this.director.currentScene); // Scale scene appropriately
         }
 
+
+
         this.scaleAssets(this.director.sceneComponentSystem, this.director.currentScene); // Scale scene appropriately
         // this.scaleAssets(this.gcs, currentScene, this.scale.y, this.scale.x); // Scale scene appropriately
+
+
 
         this.director.stage.update()
 
@@ -241,52 +236,6 @@
       /**
        * Function to check the orientation of the device.
        */
-      checkOrientation: function() {
-
-        // If window height is greater than width
-        if (this.device.isPortrait && this.device.isMobile) {
-
-          if(!this.added) {
-
-            this.director.stage.addChild(this.landscape_warning);
-            this.director.stage.addChild(this.phone_rotation);
-            this.landscape_warning.graphics.clear()
-            this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.director.stage.canvas.width, this.director.stage.canvas.height);
-            this.phone_rotation.gotoAndPlay(0);
-            this.director.sceneHtml = document.getElementById("sceneHTML");
-            this.director.sceneHtml.hidden = true;
-            this.added = true;
-
-          }
-
-        } else {
-
-          if(this.added){
-
-            this.director.stage.removeChild(this.landscape_warning);
-            this.director.stage.removeChild(this.phone_rotation);
-            this.director.sceneHtml = document.getElementById("sceneHTML");
-            this.director.sceneHtml.hidden = false;
-            this.added = false;
-
-          }
-
-        }
-
-
-      },
-
-      /**
-       * Function to load animation to indicate rong orientation of the device.
-       */
-      loadOrientationAnimation: function(ecs) {
-
-        // Load the phone rotation picture but remove it from the stage.
-        let config = new ObjectConfig('default', 'image', 288, 288, "center", 0, "center", 0);
-        this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, config, ecs, this.director.stage);
-        this.director.stage.removeChild(this.phone_rotation);
-
-      },
 
       /**
        * Calculate the scene scaling.
@@ -460,5 +409,4 @@
 </script>
 
 <style>
-
 </style>

@@ -58,6 +58,20 @@ class Director {
     this.loadingQueue = new createjs.LoadQueue();
     this.loadingQueue.loadManifest(sceneManifest);
 
+    this.added = false;
+
+    // Landscape warning backdrop
+    this.landscape_warning = new createjs.Shape();
+
+    this.phone_rotation = null;
+
+    // Phone rotation sprite variable
+    this.phone_rotationS = {
+      images: ["res/phone-rotation.png"],
+      frames: {width:288, height:288, count:2, regX: 0, regY:0, spacing:0, margin:0},
+      framerate: 2
+    };
+
     this.gui = new GUIHandler();
     this.level = new LevelHandler();
     // Initialize the sound handler, maybe put in director 
@@ -427,6 +441,52 @@ class Director {
 
   }
 
+  /**
+   * Function to load animation to indicate rong orientation of the device.
+   */
+  loadOrientationAnimation() {
+
+    // Load the phone rotation picture but remove it from the stage.
+    let config = new ObjectConfig('default', 'image', 288, 288, "center", 0, "center", 0);
+    this.phone_rotation = AssetHandler.createSprite(this.phone_rotationS, config, this.sceneComponentSystem, this.stage);
+    this.stage.removeChild(this.phone_rotation);
+
+  }
+
+  setOrientationAnimation(mobile, portrait) {
+
+    // If window height is greater than width
+    if (mobile && portrait) {
+
+      if(!this.added) {
+
+        this.stage.addChild(this.landscape_warning);
+        this.stage.addChild(this.phone_rotation);
+        this.landscape_warning.graphics.clear()
+        this.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
+        this.phone_rotation.gotoAndPlay(0);
+        this.sceneHtml = document.getElementById("sceneHTML");
+        this.sceneHtml.hidden = true;
+        this.added = true;
+
+      }
+
+    } else {
+
+      if(this.added){
+
+        this.stage.removeChild(this.landscape_warning);
+        this.stage.removeChild(this.phone_rotation);
+        this.sceneHtml = document.getElementById("sceneHTML");
+        this.sceneHtml.hidden = false;
+        this.added = false;
+
+      }
+
+    }
+
+  }
+
   setForegroundText() {
 
     switch (this.currentScene) {
@@ -693,7 +753,7 @@ class Director {
   clearHtml() {
 
     // Get the element that contains the custom HTML for the scene.
-    this.sceneHtml = document.getElementById("sceneHTML");
+    this.sceneHtml = document.getElementById('sceneHTML');
 
     // Until there are no more children elements...
     while (this.sceneHtml.firstChild) {
