@@ -3,6 +3,7 @@
   <div id="deviceLayer">
 
     <SceneLayer :input="input" :scale="scale" :mobile="mobile" @resize="resize" ref="sceneLayer" />
+    <Scaling ref="scaling" :width="width" :height="height" />
 
   </div>
 
@@ -12,6 +13,7 @@
 
   // Modules
   import SceneLayer from './SceneLayer.vue';
+  import Scaling from './Scaling.vue'
   // import Mobile from './Mobile.vue'
   // import Input from './Input.vue'
 
@@ -25,7 +27,8 @@
     components: {
 
       // Initialize the scene manager.
-      SceneLayer
+      SceneLayer,
+      Scaling
 
     },
     data () {
@@ -36,11 +39,15 @@
           error: ''
         },
 
+        height: window.innerHeight,
+        width: window.innerWidth,
+
         // ////////////
         // // MOBILE //
         // ////////////
 
-        device: null,
+        // Mobile handler
+        mobile: null,
 
         // ///////////
         // // INPUT //
@@ -53,10 +60,6 @@
         // ???
         second_title: null,
 
-        // /////////////
-        // // SCALING //
-        // /////////////
-
         // Scene scaling variables
         scale: {
           x: 1.0,
@@ -64,15 +67,9 @@
           maxY: 1440,
           maxX: 1920,
           ratio: 1440 / 1920,
+          xMargin: 0.0,
+          maxStored: false,
         },
-
-        maxScaleY: 1440,
-        maxScaleX: 1920,
-        screenRatio: 1440 / 1920,
-        sceneMarginX: 0.0,
-        maxStored: false,
-        tempScale: 1,
-        tempMax: 1440,
 
       }
     },
@@ -83,19 +80,21 @@
      */
     mounted: function() {
 
-      // Initialize the engine modules.
-
-      // Mobile manager
-      this.device = new MobileHandler();
+      // Create the Mobile handler
+      this.mobile = new MobileHandler();
 
       // Create the Input handler
       this.input = new InputHandler(this.$refs.sceneLayer.stage);
 
-      // Scene scaling variables
-      this.screenRatio = this.maxScaleY / this.maxScaleX;
+
+
+      // Create the Scaling handler
+      // this.scaling = new ScalingHandler();
 
       // Set the window resize function
       window.addEventListener('resize', this.resize, false);
+
+
 
     },
 
@@ -106,16 +105,14 @@
        */
       resize: function() {
 
-        this.device.mobileDeviceCheck();
+        this.mobile.mobileDeviceCheck();
 
         this.$refs.sceneLayer.refreshScene();
 
-        this.screenRatio = this.$refs.sceneLayer.stage.canvas.width / this.$refs.sceneLayer.stage.canvas.height;
+        this.width = this.$refs.sceneLayer.stage.canvas.width;
+        this.height = this.$refs.sceneLayer.stage.canvas.height;
 
-        this.calculateScaling();
-
-        // Calculate the scene margin in a given direction
-        this.sceneMarginX = ( this.$refs.sceneLayer.stage.canvas.width - this.maxScaleX ) / 2;
+        this.$refs.scaling.calculateScaling();
 
 
 
@@ -130,44 +127,11 @@
         }
 
         this.scaleAssets(this.$refs.sceneLayer.sceneComponentSystem); // Scale scene appropriately
-        // this.scaleAssets(this.gcs, this.$refs.sceneLayer.currentScene, this.scale.y, this.scale.x); // Scale scene appropriately
+        // this.scaleAssets(this.gcs, this.$refs.sceneLayer.currentScene, this.$refs.scaling.scale.y, this.$refs.scaling.scale.x); // Scale scene appropriately
 
 
 
         this.$refs.sceneLayer.stage.update()
-
-      },
-
-      /**
-       * Calculate the scene scaling.
-       */
-      calculateScaling: function() {
-
-        // Calculate the scene scaling
-        if (this.screenRatio < 2.5) { // tall screen
-
-          // Calculate the scale with the max x scaling
-          this.maxStored = false;
-          this.scale.x = this.$refs.sceneLayer.stage.canvas.width / this.maxScaleX;
-          this.scale.y = this.$refs.sceneLayer.stage.canvas.width / this.maxScaleX;
-          let key = 'sceneScaleY';
-          sessionStorage.setItem(key, this.scale.y);
-
-        } else if (this.screenRatio > 2.5) { // wide screen
-
-
-          if(!this.maxStored) {
-            this.maxStored = true;
-            this.tempMax = this.$refs.sceneLayer.stage.canvas.height;
-          }
-
-          this.tempScale = this.$refs.sceneLayer.stage.canvas.width / this.maxScaleX;
-          this.scale.x = this.tempScale * ( this.$refs.sceneLayer.stage.canvas.height / this.tempMax );
-          this.scale.y = this.tempScale * ( this.$refs.sceneLayer.stage.canvas.height / this.tempMax );
-          let key = 'sceneScaleY';
-          sessionStorage.setItem(key, this.scale.y);
-
-        }
 
       },
 
@@ -188,8 +152,8 @@
           let platformScale = this.setScale(entityComponentSystem[i]);
           let startValues = this.snapEdges(entityComponentSystem[i]);
 
-          entityComponentSystem[i].object.x = startValues.x + entityComponentSystem[i].x_location * this.scale.y * platformScale;
-          entityComponentSystem[i].object.y = startValues.y + entityComponentSystem[i].y_location * this.scale.y * platformScale;
+          entityComponentSystem[i].object.x = startValues.x + entityComponentSystem[i].x_location * this.$refs.scaling.scale.y * platformScale;
+          entityComponentSystem[i].object.y = startValues.y + entityComponentSystem[i].y_location * this.$refs.scaling.scale.y * platformScale;
 
         }
 
@@ -252,7 +216,7 @@
         let platformScale = 1.0;
 
         // If the device is a mobile device...
-        if (this.device.isMobile) {
+        if (this.mobile.isMobile) {
 
           // Set mobile scale.
           platformScale = 1.5;
@@ -280,8 +244,8 @@
         // image.x = x_start + x_location;
         // image.y = y_start + y_location;
 
-        entityComponent.object.scaleX = this.scale.x;
-        entityComponent.object.scaleY = this.scale.y;
+        entityComponent.object.scaleX = this.$refs.scaling.scale.x;
+        entityComponent.object.scaleY = this.$refs.scaling.scale.y;
 
         return platformScale;
 
@@ -293,8 +257,8 @@
       scaleEntryForm: function() {
 
         // Set the position values of the form
-        var xPosition = (284 * this.scale.y).toString() + "px";
-        var yPosition = (960 * this.scale.y).toString() + "px";
+        var xPosition = (284 * this.$refs.scaling.scale.y).toString() + "px";
+        var yPosition = (960 * this.$refs.scaling.scale.y).toString() + "px";
 
         // Set the actual html element values
         var gameEntryForm = document.getElementById("equationBanner");
