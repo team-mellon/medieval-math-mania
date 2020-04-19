@@ -1,7 +1,9 @@
 <template>
 
   <div id="deviceLayer">
-    <SceneLayer v-bind:input="input" v-bind:scale="scale" v-bind:mobile="device" @resize="resize" ref="sceneLayer" />
+
+    <SceneLayer :input="input" :scale="scale" :mobile="mobile" @resize="resize" ref="sceneLayer" />
+
   </div>
 
 </template>
@@ -10,6 +12,8 @@
 
   // Modules
   import SceneLayer from './SceneLayer.vue';
+  // import Mobile from './Mobile.vue'
+  // import Input from './Input.vue'
 
   // Submodules
   import MobileHandler from '../handlers/MobileHandler.js';

@@ -1,15 +1,18 @@
 <template>
 
   <div id="engineFrame">
+
     <DeviceLayer ref="deviceLayer" />
-    <canvas id="drawingCanvas" :width="w" :height="h" :style="style">The canvas is broken</canvas>
+    <canvas id="drawingCanvas" :width="w" :height="h" :style="style">The canvas seems to be broken</canvas>
     <div id="sceneHTML"></div>
+
   </div>
 
 </template>
 
 <script>
 
+  // Import the 'Device Layer' to handle device specifications
   import DeviceLayer from './DeviceLayer.vue';
 
   export default {
@@ -37,6 +40,9 @@
     },
     mounted: function() {
 
+      // Initialize the engine modules.
+
+      // Log for debug purposes
       console.log('Engine mounted!');
 
     },

@@ -3,7 +3,7 @@
   <div id="loaderBackground" class="loader-background" hidden>
 
     <span id="loadingText" hidden>Loading</span>
-    <Bar v-bind:progress="loadingQueue.progress" />
+    <Bar :progress="loadingQueue.progress" />
     <span id="percentText" hidden>Loading</span>
 
   </div>

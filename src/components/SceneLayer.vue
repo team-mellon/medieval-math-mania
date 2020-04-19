@@ -2,7 +2,7 @@
 
   <div id="sceneLayer">
 
-    <Loader v-bind:loading-manifest="manifest" @loaded="preloaded" ref="loader" />
+    <Loader :loading-manifest="manifest" @loaded="preloaded" ref="loader" />
 
   </div>
 
@@ -13,6 +13,7 @@
   // Modules
   import Loader from './Loader.vue';
 
+  // 
   import AssetHandler from '../handlers/AssetHandler.js';
 
   // Scene Modules
@@ -180,7 +181,7 @@
         }
 
         // Run the scene.
-        this.runScene(this);
+        this.runScene();
 
         // Update the stage.
         this.stage.update(event);
@@ -195,11 +196,9 @@
       },
 
       /**
-       * Function to scale the entire stage.
-       * @param {object} isMobile - The flag that determines if on a mobile device.
+       * Function to run the current scene.
        */
-
-      runScene: function(device) {
+      runScene: function() {
 
           // // ???
           // text: ''
