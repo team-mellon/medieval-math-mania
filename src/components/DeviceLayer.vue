@@ -3,7 +3,7 @@
   <div id="deviceLayer">
 
     <Loader v-bind:loading-manifest="manifest" @loaded="preloaded" ref="loader" />
-    <!-- <SceneLayer /> -->
+    <SceneLayer v-bind:input="input" v-bind:scale="scale" v-bind:mobile="device" @resize="resize" ref="sceneLayer" />
 
   </div>
 
@@ -12,8 +12,8 @@
 <script>
 
   // Modules
+  import SceneLayer from './SceneLayer.vue';
   import Loader from './Loader.vue';
-  import Director from '../handlers/Director.js';
 
   // Static classes
   import AssetHandler from '../handlers/AssetHandler.js';
@@ -32,7 +32,10 @@
 
     name: 'DeviceLayer',
     components: {
+
+      SceneLayer,
       Loader
+      
     },
     data () {
       return {
@@ -87,17 +90,6 @@
         tempScale: 1,
         tempMax: 1440,
 
-        //
-        background: {
-          entity: {},
-          shape: null,
-          color: '#808080',
-          center: null,
-          left: null,
-          right: null,
-          up: null,
-          down: null
-        },
       }
     },
 
@@ -110,12 +102,12 @@
       this.manifest = sceneManifest;
 
       // Initialize the scene manager.
-      this.director = new Director(),
+      // this.director = new Director(),
 
       // Initialize the engine modules.
 
       // Create the Input handler
-      this.input = new InputHandler(this.director.stage);
+      this.input = new InputHandler(this.$refs.sceneLayer.stage);
 
       // Scene scaling variables
       this.screenRatio = this.maxScaleY / this.maxScaleX;
@@ -137,7 +129,7 @@
         if (this.$refs.loader.loaded && !this.sceneCreated) {
 
           // Create the first 'currentScene'
-          this.director.createScene(); // Create scene assets
+          this.$refs.sceneLayer.createScene(); // Create scene assets
 
           // Rescale the view to size the scene to the device.
           this.resize(); // Resize to set initial scale
@@ -148,10 +140,10 @@
         }
 
         // Run the scene.
-        this.director.runScene(this);
+        this.$refs.sceneLayer.runScene(this);
 
         // Update the stage.
-        this.director.stage.update(event);
+        this.$refs.sceneLayer.stage.update(event);
 
       },
 
@@ -167,9 +159,9 @@
        */
       resize: function() {
 
-        this.director.loadOrientationAnimation()
+        this.$refs.sceneLayer.loadOrientationAnimation()
         // Redraw background before everthing else for Z-axis reasons
-        this.director.redrawBackground();
+        this.$refs.sceneLayer.redrawBackground();
 
         this.device.mobileCheck(console, navigator);
         this.device.orientationCheck(console, window);
@@ -177,10 +169,10 @@
 
 
         // If window height is greater than width
-        this.director.setOrientationAnimation(this.device.isMobile, this.device.isPortrait)
-        this.director.resizeCanvas();
+        this.$refs.sceneLayer.setOrientationAnimation(this.device.isMobile, this.device.isPortrait)
+        this.$refs.sceneLayer.resizeCanvas();
 
-        this.screenRatio = this.director.stage.canvas.width / this.director.stage.canvas.height;
+        this.screenRatio = this.$refs.sceneLayer.stage.canvas.width / this.$refs.sceneLayer.stage.canvas.height;
 
         if (window.innerWidth < 600) {
           // gui_scale = 3;
@@ -195,7 +187,7 @@
         this.calculateScaling();
 
         // Calculate the scene margin in a given direction
-        this.sceneMarginX = ( this.director.stage.canvas.width - this.maxScaleX ) / 2;
+        this.sceneMarginX = ( this.$refs.sceneLayer.stage.canvas.width - this.maxScaleX ) / 2;
 
         // Log screen scaling for debugging purposes
         // console.log(this.scale.x);
@@ -204,23 +196,23 @@
 
 
         // Re-create the landscape warning background
-        this.director.landscape_warning.graphics.clear()
-        this.director.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.director.stage.canvas.width, this.director.stage.canvas.height);
+        this.$refs.sceneLayer.landscape_warning.graphics.clear()
+        this.$refs.sceneLayer.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.$refs.sceneLayer.stage.canvas.width, this.$refs.sceneLayer.stage.canvas.height);
 
 
 
-        if (this.director.currentScene == 3) {
-          this.scaleAssets(this.director.level.lcs, this.director.currentScene); // Scale scene appropriately
+        if (this.$refs.sceneLayer.currentScene == 3) {
+          this.scaleAssets(this.$refs.sceneLayer.level.lcs, this.$refs.sceneLayer.currentScene); // Scale scene appropriately
         }
 
 
 
-        this.scaleAssets(this.director.sceneComponentSystem, this.director.currentScene); // Scale scene appropriately
+        this.scaleAssets(this.$refs.sceneLayer.sceneComponentSystem, this.$refs.sceneLayer.currentScene); // Scale scene appropriately
         // this.scaleAssets(this.gcs, currentScene, this.scale.y, this.scale.x); // Scale scene appropriately
 
 
 
-        this.director.stage.update()
+        this.$refs.sceneLayer.stage.update()
 
       },
 
@@ -238,8 +230,8 @@
 
           // Calculate the scale with the max x scaling
           this.maxStored = false;
-          this.scale.x = this.director.stage.canvas.width / this.maxScaleX;
-          this.scale.y = this.director.stage.canvas.width / this.maxScaleX;
+          this.scale.x = this.$refs.sceneLayer.stage.canvas.width / this.maxScaleX;
+          this.scale.y = this.$refs.sceneLayer.stage.canvas.width / this.maxScaleX;
           let key = 'sceneScaleY';
           sessionStorage.setItem(key, this.scale.y);
 
@@ -248,12 +240,12 @@
 
           if(!this.maxStored) {
             this.maxStored = true;
-            this.tempMax = this.director.stage.canvas.height;
+            this.tempMax = this.$refs.sceneLayer.stage.canvas.height;
           }
 
-          this.tempScale = this.director.stage.canvas.width / this.maxScaleX;
-          this.scale.x = this.tempScale * ( this.director.stage.canvas.height / this.tempMax );
-          this.scale.y = this.tempScale * ( this.director.stage.canvas.height / this.tempMax );
+          this.tempScale = this.$refs.sceneLayer.stage.canvas.width / this.maxScaleX;
+          this.scale.x = this.tempScale * ( this.$refs.sceneLayer.stage.canvas.height / this.tempMax );
+          this.scale.y = this.tempScale * ( this.$refs.sceneLayer.stage.canvas.height / this.tempMax );
           let key = 'sceneScaleY';
           sessionStorage.setItem(key, this.scale.y);
 
@@ -292,8 +284,8 @@
        */
       snapEdges: function(entityComponent) {
 
-        let xStart = this.director.stage.canvas.width / 2;
-        let yStart = this.director.stage.canvas.height / 2;
+        let xStart = this.$refs.sceneLayer.stage.canvas.width / 2;
+        let yStart = this.$refs.sceneLayer.stage.canvas.height / 2;
 
         switch (entityComponent.x_lock) {
 
@@ -302,11 +294,11 @@
             break;
 
           case "center":
-            xStart = this.director.stage.canvas.width / 2;
+            xStart = this.$refs.sceneLayer.stage.canvas.width / 2;
             break;
 
           case "right":
-            xStart = this.director.stage.canvas.width;
+            xStart = this.$refs.sceneLayer.stage.canvas.width;
             break;
 
         }
@@ -318,11 +310,11 @@
             break;
 
           case "center":
-            yStart = this.director.stage.canvas.height / 2;
+            yStart = this.$refs.sceneLayer.stage.canvas.height / 2;
             break;
 
           case "bottom":
-            yStart = this.director.stage.canvas.height;
+            yStart = this.$refs.sceneLayer.stage.canvas.height;
             break;
 
         }

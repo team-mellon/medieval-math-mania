@@ -36,7 +36,7 @@ class Director {
 
     this.config = {
       canvasId: 'drawingCanvas',
-    },
+    }
 
     // Stage for drawing pictures and shapes
     this.stage = new createjs.Stage(this.config.canvasId);
