@@ -453,6 +453,22 @@ class Director {
 
   }
 
+  redrawBackground() {
+
+    // Redraw background before everthing else for Z-axis reasons
+    this.background.shape.graphics.clear()
+    this.background.shape.graphics.beginFill(this.background.color).drawRect(0, 0, this.stage.canvas.width, this.stage.canvas.height);
+
+  }
+
+  resizeCanvas() {
+
+    // Resize the canvas element with new window size
+    this.stage.canvas.width = window.innerWidth;
+    this.stage.canvas.height = window.innerHeight;
+
+  }
+
   setOrientationAnimation(mobile, portrait) {
 
     // If window height is greater than width

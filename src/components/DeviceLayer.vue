@@ -168,12 +168,8 @@
       resize: function() {
 
         this.director.loadOrientationAnimation()
-
         // Redraw background before everthing else for Z-axis reasons
-        this.director.background.shape.graphics.clear()
-        this.director.background.shape.graphics.beginFill(this.director.background.color).drawRect(0, 0, this.director.stage.canvas.width, this.director.stage.canvas.height);
-
-
+        this.director.redrawBackground();
 
         this.device.mobileCheck(console, navigator);
         this.device.orientationCheck(console, window);
@@ -182,12 +178,7 @@
 
         // If window height is greater than width
         this.director.setOrientationAnimation(this.device.isMobile, this.device.isPortrait)
-
-        // Resize the canvas element with new window size
-        this.director.stage.canvas.width = window.innerWidth;
-        this.director.stage.canvas.height = window.innerHeight;
-
-
+        this.director.resizeCanvas();
 
         this.screenRatio = this.director.stage.canvas.width / this.director.stage.canvas.height;
 
@@ -212,7 +203,7 @@
         // console.log(this.screenRatio);
 
 
-
+        // Re-create the landscape warning background
         this.director.landscape_warning.graphics.clear()
         this.director.landscape_warning.graphics.beginFill("#000000").drawRect(0, 0, this.director.stage.canvas.width, this.director.stage.canvas.height);
 
