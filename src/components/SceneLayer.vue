@@ -316,29 +316,6 @@
 
       },
 
-      /**
-       * Calculate the scene scaling.
-       * @param {object} stage - The stage that displays the content.
-       */
-
-      /**
-       * Function to scale the image-like assets.
-       * @param {object} entityComponentSystem - The array of entities.
-       */
-      generateLevel: function() {
-
-        // Generate the range
-        this.level.level_math[this.level.current_level].math();
-
-        this.level.clearMultiplicandBanner();
-
-        this.level.remakeMultiplierBanner();
-        this.level.remakeRangeBanner();
-
-        this.level.generated = true;
-
-      },
-
       runGame() {
 
         var y_position = (284 * this.$props.scale.y).toString() + "px";
@@ -377,7 +354,10 @@
 
         // If the range is not generated
         if(!this.level.generated) {
-          this.generateLevel();
+
+          // Generate the range
+          this.level.generateLevel();
+
         }
 
         // Key checks

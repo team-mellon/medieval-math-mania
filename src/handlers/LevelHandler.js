@@ -389,6 +389,29 @@ class LevelHandler {
   // LEVELS //
   ////////////
 
+  /**
+   * Function to scale the image-like assets.
+   * @param {object} entityComponentSystem - The array of entities.
+   */
+  generateLevel() {
+
+    // Generate the range
+    this.level_math[this.current_level].math();
+
+    // Clear the multiplicand banner
+    this.clearMultiplicandBanner();
+
+    // Remake the multiplicand banner
+    this.remakeMultiplierBanner();
+
+    // Remake the range banner
+    this.remakeRangeBanner();
+
+    // Set the generated flag
+    this.generated = true;
+
+  }
+
   loadLevel () {
 
     // this.bg_color = levelData[this.current_level - 1].color;
