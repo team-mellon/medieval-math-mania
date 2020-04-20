@@ -258,7 +258,7 @@ class GUIHandler {
 
 				config = new ObjectConfig('default', 'image', 240, 240, "center", 0, "center", 0);
 				console.log(config);
-				this.statsContainer = AssetHandler.createStatsContainer(user.badges, "res/badges/empty-badge.png", text, "Oldstyle", "32px", "normal", "black", config, entity_component_system, stage);
+				this.statsContainer = AssetHandler.createStatsContainer(user.badges, "res/badges/empty-badge.png", text, getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "32px", "normal", "black", config, entity_component_system, stage);
 
 				break;
 

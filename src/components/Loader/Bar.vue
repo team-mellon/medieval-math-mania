@@ -1,8 +1,8 @@
 <template>
 
-  <div id="backgroundBar" class="background-bar" hidden>
+  <div id="backgroundBar" class="background-bar centered element-centered" hidden>
 
-    <div id="progressBar" class="progress-bar" hidden></div>
+    <div id="progressBar" class="progress-bar centered element-centered" hidden></div>
 
   </div>
 
@@ -56,14 +56,8 @@
 
   .background-bar {
 
-    /* Position */
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-
     /* Properties */
-    background-color: LightGray;
+    background-color: var(--medium-black);
     height: 50px;
     width: 90%;
     z-index: 2;
@@ -72,14 +66,8 @@
 
   .progress-bar {
 
-    /* Position */
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-
     /* Properties */
-    background-color: Gold;
+    background-color: var(--dark-gold);
     height: 100%;
     width: 100%;
     z-index: 2;

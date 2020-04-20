@@ -150,13 +150,13 @@ class AssetHandler {
     squareFrame.name = "squareFrame";
     squareFrame.alpha = 0.8;
 
-    var titleFrame = new createjs.Text("TITLE", "bold 19px Oldstyle", "white");
+    var titleFrame = new createjs.Text("TITLE", "bold 19px var(--primary-font)", "white");
     titleFrame.lineWidth = 215;
     titleFrame.name = "titleFrame";
     titleFrame.x = 7;
     titleFrame.y = 7;
 
-    var descripterFrame = new createjs.Text("DESCRIPTER", "17px Oldstyle", "white");
+    var descripterFrame = new createjs.Text("DESCRIPTER", "17px var(--primary-font)", "white");
     descripterFrame.lineWidth = 215;
     descripterFrame.name = "descripterFrame";
     descripterFrame.x = 7;
@@ -180,10 +180,10 @@ class AssetHandler {
     image.regX = config.width/2;
     image.regY = config.height/2;
 
-    var color = "#DAA520";
+    var color = getComputedStyle(document.documentElement).getPropertyValue('--dark-gold');
     var size = "24";
     // var font = "Blackadder";
-    var font = "Oldstyle";
+    var font = getComputedStyle(document.documentElement).getPropertyValue('--primary-font');
 
     if (
       text == "Login" || text == "Signup" ||
@@ -194,7 +194,7 @@ class AssetHandler {
 
     if (text == "Select a level") {
       size = "60";
-      font = "Oldstyle";
+      font = getComputedStyle(document.documentElement).getPropertyValue('--primary-font');
     }
 
     if (
@@ -204,7 +204,7 @@ class AssetHandler {
       text == "16" || text == "17" || text == "18" || text == "19" || text == "20"
     ) {
       size = "24";
-      font = "Oldstyle";
+      font = getComputedStyle(document.documentElement).getPropertyValue('--primary-font');
       color = "#FFFFFF"
     }
 

@@ -27,30 +27,33 @@
 
 <style>
 
-:root {
-  --light-gold: Khaki;
-  --medium-gold: Gold;
-  --dark-gold: GoldenRod;
+  @font-face {
+    font-family: Blackadder;
+    src: url('./assets/fonts/Blackadder.TTF') format('truetype');
+  }
 
-  --light-black: DimGray;
-  --medium-black: DarkSlateGray;
-  --dark-black: #1c2f2f;
-}
+  @font-face {
+    font-family: Oldstyle;
+    src: url('./assets/fonts/Oldstyle.TTF') format('truetype');
+  }
 
-@font-face {
-  font-family: Blackadder;
-  src: url('./assets/fonts/Blackadder.TTF') format('truetype');
-}
+  @font-face {
+    font-family: Alkhemikal;
+    src: url('./assets/fonts/Alkhemikal.TTF') format('truetype');
+  }
 
-@font-face {
-  font-family: Alkhemikal;
-  src: url('./assets/fonts/Alkhemikal.TTF') format('truetype');
-}
+  :root {
+    --light-gold: Khaki;
+    --medium-gold: Gold;
+    --dark-gold: GoldenRod;
 
-@font-face {
-  font-family: Alkhemikal;
-  src: url('./assets/fonts/Alkhemikal.TTF') format('truetype');
-}
+    --light-black: DimGray;
+    --medium-black: DarkSlateGray;
+    --dark-black: #1c2f2f;
+
+    --primary-font: Alkhemikal;
+    --secondary-font: Blackadder;
+  }
 
   html, body {
     overflow: hidden;
@@ -98,7 +101,7 @@
   z-index: 1;
   text-align: center;
   /* font-family: "Blackadder"; */
-  font-family: "Alkhemikal";
+  font-family: var(--primary-font);
   /* font-size: 3vh; */
   font-size: 1.75vw;
   color: saddlebrown;
@@ -106,7 +109,7 @@
 }
 
 #equationBanner {
-  font-family: "Alkhemikal";
+  font-family: var(--primary-font);
   color: transparent;
   position: absolute;
   transform: translate(50%, 50%);
@@ -123,7 +126,7 @@
 }
 
 #historyBanner {
-  font-family: "Alkhemikal";
+  font-family: var(--primary-font);
   position: absolute;
   transform: translate(50%, 50%);
 }
@@ -152,7 +155,7 @@
 }
 
 .tutorial {
-  font-family: "Alkhemikal";
+  font-family: var(--primary-font);
   color: saddlebrown;
   position: absolute;
   width: 20vw;
@@ -167,7 +170,7 @@ input {
   box-sizing: border-box;
   border: none;
   /* font-family: "Blackadder"; */
-  font-family: "Alkhemikal";
+  font-family: var(--primary-font);
   font-size: 1.75vw;
   color: saddlebrown;
   border-bottom: 2px solid saddlebrown;
@@ -175,7 +178,7 @@ input {
 }
 
 #entryInput {
-  font-family: "Alkhemikal";
+  font-family: var(--primary-font);
   width: 2.5em;
   font-size: 1.75vw;
   -moz-appearance:textfield !important;

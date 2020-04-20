@@ -29,7 +29,7 @@
 
         // Default canvas styles
         style: {
-          background: '#aaa'
+          background: 'var(--dark-black)'
         },
 
         // Default canvas dimensions

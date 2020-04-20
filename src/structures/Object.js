@@ -53,13 +53,13 @@ class Object {
       shape.name = "Background";
       shape.alpha = 0.8;
   
-      text = new createjs.Text("TITLE", "bold 19px Oldstyle", "white");
+      text = new createjs.Text("TITLE", "bold 19px var(--primary-font)", "white");
       text.lineWidth = 215;
       text.name = "Title";
       text.x = 7;
       text.y = 7;
   
-      subText = new createjs.Text("DESCRIPTION", "17px Oldstyle", "white");
+      subText = new createjs.Text("DESCRIPTION", "17px var(--primary-font)", "white");
       subText.lineWidth = 215;
       subText.name = "Description";
       subText.x = 7;
@@ -120,10 +120,10 @@ class Object {
       image.regX = config.width/2;
       image.regY = config.height/2;
   
-      var color = "#DAA520";
+      var color = getComputedStyle(document.documentElement).getPropertyValue('--dark-gold');
       var size = "24";
       // var font = "Blackadder";
-      var font = "Oldstyle";
+      var font = getComputedStyle(document.documentElement).getPropertyValue('--primary-font');
   
       if (
         text == "Login" || text == "Signup" ||
@@ -134,7 +134,7 @@ class Object {
   
       if (text == "Select a level") {
         size = "60";
-        font = "Oldstyle";
+        font = getComputedStyle(document.documentElement).getPropertyValue('--primary-font');
       }
   
       if (
@@ -144,7 +144,7 @@ class Object {
         text == "16" || text == "17" || text == "18" || text == "19" || text == "20"
       ) {
         size = "24";
-        font = "Oldstyle";
+        font = getComputedStyle(document.documentElement).getPropertyValue('--primary-font');
         color = "#FFFFFF"
       }
   

@@ -684,7 +684,7 @@
           };
 
           config = new ObjectConfig('default', 'image', sceneData[this.currentScene].fg_img.frames.width, sceneData[this.currentScene].fg_img.frames.height, "center", 0, "center", 0);
-          this.foreground = AssetHandler.createTextContainer(temp_fg_img, sceneData[this.currentScene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", config, 0, this.sceneComponentSystem, this.stage);
+          this.foreground = AssetHandler.createTextContainer(temp_fg_img, sceneData[this.currentScene].fg_text, getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "32px", "normal", "Saddlebrown", config, 0, this.sceneComponentSystem, this.stage);
 
         } else if (this.currentScene == 10) {
 
@@ -754,7 +754,7 @@
        * Function to load the current scene.
        * @param {object} entityComponent - The the current entity being scaled.
        * @returns {object} platformScale - The platform specific scale of that entity.
-       */    // L
+       */
       loadCurrentScene: function() {
 
         // Clear HTML before creating a new scene
@@ -788,8 +788,8 @@
         // Create the new scene
         this.createScene();
 
+        // Resize the scene
         this.$emit('resize', 'resize')
-        // device.resize();
 
         // this.level.visibleForm(true);
 

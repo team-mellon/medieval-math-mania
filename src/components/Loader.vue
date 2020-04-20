@@ -1,10 +1,10 @@
 <template>
 
-  <div id="loaderBackground" class="loader-background" hidden>
+  <div id="loaderBackground" class="loader-background full-window centered element-centered" hidden>
 
-    <span id="loadingText" hidden>Loading</span>
+    <span id="loadingText" class="element-centered" hidden>Loading</span>
     <Bar :progress="loadingQueue.progress" />
-    <span id="percentText" hidden>Loading</span>
+    <span id="percentText" class="element-centered" hidden>Loading</span>
 
   </div>
 
@@ -138,16 +138,9 @@
 
   .loader-background {
 
-    /* Position */
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-
     /* Properties */
-    height: 100%;
-    width: 100%;
-    background-color: #919191;
+    background-color: var(--dark-black);
+    /* background-color: #919191; */
     z-index: 2;
 
   }
@@ -156,7 +149,6 @@
 
     /* Position */
     position: absolute;
-    transform: translate(-50%, -50%);
     top: 30%;
     left: 50%;
 
@@ -164,7 +156,7 @@
     font-family: "Blackadder";
     font-size: 15vh;
     z-index: 2;
-    color: Gold;
+    color: var(--medium-gold);
 
   }
 
@@ -172,15 +164,14 @@
 
     /* Position */
     position: absolute;
-    transform: translate(-50%, -50%);
     top: 70%;
     left: 50%;
 
     /* Properties */
-    font-family: "Oldstyle";
+    font-family: var(--primary-font);
     font-size: 10vh;
     z-index: 2;
-    color: Gold;
+    color: var(--medium-gold);
 
   }
 

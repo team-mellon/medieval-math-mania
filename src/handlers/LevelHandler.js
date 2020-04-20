@@ -624,16 +624,16 @@ class LevelHandler {
     // structure_banner = AssetHandler.createSprite(bannerS, constants.structureX, constants.structureY, "center", 0, "bottom", -constants.structureY / 2, "image", this.lcs, stage);
 
     config = new ObjectConfig('default', 'image', 288, 126, "center", -234 - 288 / 2, "bottom", -336 + 126 / 2);
-    this.structure_range = AssetHandler.createTextContainer(this.range_bannerS, "[ #, # ]", "Oldstyle", "32px", "normal", "Gold", config, 0, this.lcs, stage);
+    this.structure_range = AssetHandler.createTextContainer(this.range_bannerS, "[ #, # ]", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "32px", "normal", "Gold", config, 0, this.lcs, stage);
 
     // config = new ObjectConfig('default', 'image', 300, 78, "center", -150 + 300 / 2, "bottom", -321 + 78 / 2);
-    // this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x                  = #", "Oldstyle", "26px", "normal", "Gold", config, 0, this.lcs, stage);
+    // this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x                  = #", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "26px", "normal", "Gold", config, 0, this.lcs, stage);
 
     config = new ObjectConfig('default', 'image', 444, 78, 'center', -222 + 444 / 2, 'bottom', -321 + 78 / 2);
-    this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x                  = #", "Oldstyle", "26px", "normal", "Gold", config, 0, this.lcs, stage);
+    this.structure_equation_banner = AssetHandler.createTextContainer(this.equation_bannerS, "# x                  = #", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "26px", "normal", "Gold", config, 0, this.lcs, stage);
 
     config = new ObjectConfig('default', 'image', 288, 126, "center", 234 + 288 / 2, "bottom", -336 + 126 / 2);
-    this.structure_history = AssetHandler.createTextContainer(this.history_bannerS, "History", "Oldstyle", "18px", "normal", "Gold", config, 126 / 2, this.lcs, stage);
+    this.structure_history = AssetHandler.createTextContainer(this.history_bannerS, "History", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "18px", "normal", "Gold", config, 126 / 2, this.lcs, stage);
 
     config = new ObjectConfig('default', 'image', this.facadeS.frames.width, this.facadeS.frames.height, "center", 0, "bottom", -this.facadeS.frames.height / 2);
     this.structure_facade = AssetHandler.createSprite(this.facadeS, config, this.lcs, stage);  // Level structure in foreground
@@ -671,7 +671,7 @@ class LevelHandler {
     }
 
     config = new ObjectConfig('default', 'image', 192, 126, "left", (10 + 192 / 2), "bottom", -(10 + 126 / 2));
-    this.structure_score = AssetHandler.createTextContainer(this.score_bannerS, "Total Lows: 0\nTotal High: 0\nTotal Hits: 0", "Oldstyle", "24px", "normal", "Gold", config, 126 / 2, this.lcs, stage);
+    this.structure_score = AssetHandler.createTextContainer(this.score_bannerS, "Total Lows: 0\nTotal High: 0\nTotal Hits: 0", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "24px", "normal", "Gold", config, 126 / 2, this.lcs, stage);
 
     config = new ObjectConfig('default', 'image', constants.structureX, constants.structureY, "center", 0, "center", 0);
     this.end_level_flag = AssetHandler.createSprite(this.end_level_flagS, config, this.lcs, stage);
@@ -689,39 +689,39 @@ class LevelHandler {
     var sting = this.victoryGenerator();  // temp fix for sending victory string to function
 
     config = new ObjectConfig('default', 'image', 10, 10, "center", 0, "center", 0 - 180);
-    this.end_text = AssetHandler.createText(sting, "Oldstyle", "65px", "bold", "gold", config, this.lcs, stage);
+    this.end_text = AssetHandler.createText(sting, getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "65px", "bold", "gold", config, this.lcs, stage);
     this.end_text.visible = false;
     //end_text.skewX = -5;
     this.end_text.skewY = -15;
     this.end_text.textAlign = "center";
 
     config = new ObjectConfig('default', 'image', 10, 10, "center", 0 - 120, "center", 0 - 40);
-    this.level_text = AssetHandler.createText("You Beat Level " + this.current_level + "!", "Oldstyle", "25px", "", "gold", config, this.lcs, stage);
+    this.level_text = AssetHandler.createText("You Beat Level " + this.current_level + "!", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "25px", "", "gold", config, this.lcs, stage);
     this.level_text.visible = false;
     this.level_text.alpha = 0;
 
     config = new ObjectConfig('default', 'image', 10, 10, "center", 0 - 120, "center", 0);
-    this.hit_text = AssetHandler.createText("Total Hits:      ", "Oldstyle", "25px", "", "gold", config, this.lcs, stage);
+    this.hit_text = AssetHandler.createText("Total Hits:      ", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "25px", "", "gold", config, this.lcs, stage);
     this.hit_text.visible = false;
     this.hit_text.alpha = 0;
 
     config = new ObjectConfig('default', 'image', 10, 10, "center", 0 - 120, "center", 0 + 40);
-    this.low_text = AssetHandler.createText("Total Lows:     ", "Oldstyle", "25px", "", "gold", config, this.lcs, stage);
+    this.low_text = AssetHandler.createText("Total Lows:     ", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "25px", "", "gold", config, this.lcs, stage);
     this.low_text.visible = false;
     this.low_text.alpha = 0;
 
     config = new ObjectConfig('default', 'image', 10, 10, "center", 0 - 120, "center", 0 + 80);
-    this.high_text = AssetHandler.createText("Total Highs:    ", "Oldstyle", "25px", "", "gold", config, this.lcs, stage);
+    this.high_text = AssetHandler.createText("Total Highs:    ", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "25px", "", "gold", config, this.lcs, stage);
     this.high_text.visible = false;
     this.high_text.alpha = 0;
 
     config = new ObjectConfig('default', 'image', 10, 10, "center", 0 - 260, "center", 0 + 140);
-    this.badge_text = AssetHandler.createText("Congratulations! You earned a badge!", "Oldstyle", "32px", "", "gold", config, this.lcs, stage);
+    this.badge_text = AssetHandler.createText("Congratulations! You earned a badge!", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "32px", "", "gold", config, this.lcs, stage);
     this.badge_text.visible = false;
     this.badge_text.alpha = 0;
 
     config = new ObjectConfig('default', 'image', 900, 300, "center", 0, "top", (300 / 2) + constants.buttonY);
-    this.tutorial_menu = AssetHandler.createTextContainer(this.tutorial_menuS, "The tutorial is broken", "Oldstyle", "32px", "normal", "Saddlebrown", config, 100, this.lcs, stage);
+    this.tutorial_menu = AssetHandler.createTextContainer(this.tutorial_menuS, "The tutorial is broken", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "32px", "normal", "Saddlebrown", config, 100, this.lcs, stage);
     this.tutorial_menu.visible = false;
 
     config = new ObjectConfig('default', 'image', 288, 384, "left", (288 / 2) + 100, "top", (384 / 2) + 100);
