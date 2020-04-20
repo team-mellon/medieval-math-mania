@@ -1232,7 +1232,7 @@ export default {
       }
 
       if (this.current_scene != 8 && this.current_scene != 2 && this.current_scene != 3) {
-        this.foreground = this.assets.createTextContainer(sceneData[this.current_scene].fg_img, sceneData[this.current_scene].fg_text, "Oldstyle", "32px", "normal", "Saddlebrown", sceneData[this.current_scene].fg_img.frames.width, sceneData[this.current_scene].fg_img.frames.height, "center", 0, "center", 0, "image", 0, this.ecs, this.stage);
+        this.foreground = this.assets.createTextContainer(sceneData[this.current_scene].fg_img, sceneData[this.current_scene].fg_text, getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "32px", "normal", "Saddlebrown", sceneData[this.current_scene].fg_img.frames.width, sceneData[this.current_scene].fg_img.frames.height, "center", 0, "center", 0, "image", 0, this.ecs, this.stage);
       }
 
       if (this.current_scene == 2) {
@@ -1450,21 +1450,21 @@ export default {
 
 	    var sting = this.victoryGenerator();  // temp fix for sending victory string to function
 
-    	    this.end_text = this.assets.createText(sting, "Oldstyle", "65px", "bold", "gold", 10, 10, "center", 0, "center", 0 - 140, "image", this.ecs, this.stage);
+    	    this.end_text = this.assets.createText(sting, getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "65px", "bold", "gold", 10, 10, "center", 0, "center", 0 - 140, "image", this.ecs, this.stage);
     	    this.end_text.visible = false;
     	    //end_text.skewX = -5;
     	    this.end_text.skewY = -15;
     	    this.end_text.textAlign = "center";
 
-    	    this.hit_text = this.assets.createText("Total Hits:      ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0, "image", this.ecs, this.stage);
+    	    this.hit_text = this.assets.createText("Total Hits:      ", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0, "image", this.ecs, this.stage);
     	    this.hit_text.visible = false;
     	    this.hit_text.alpha = 0;
 
-    	    this.low_text = this.assets.createText("Total Lows:     ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0 + 40, "image", this.ecs, this.stage);
+    	    this.low_text = this.assets.createText("Total Lows:     ", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0 + 40, "image", this.ecs, this.stage);
     	    this.low_text.visible = false;
     	    this.low_text.alpha = 0;
 
-    	    this.high_text = this.assets.createText("Total Highs:    ", "Oldstyle", "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0 + 80, "image", this.ecs, this.stage);
+    	    this.high_text = this.assets.createText("Total Highs:    ", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "25px", "", "gold", 10, 10, "center", 0 - 120, "center", 0 + 80, "image", this.ecs, this.stage);
     	    this.high_text.visible = false;
     	    this.high_text.alpha = 0;
 
@@ -1842,9 +1842,9 @@ export default {
 
       this.structure_body = this.assets.createSprite(this.bodyS, this.structureX, this.structureY, "center", 0, "bottom", -this.structureY / 2, "image", this.lcs, this.stage);
       // structure_banner = this.assets.createSprite(bannerS, this.structureX, this.structureY, "center", 0, "bottom", -this.structureY / 2, "image", this.lcs, this.stage);
-      this.structure_range = this.assets.createTextContainer(this.range_bannerS, "[ #, # ]", "Oldstyle", "32px", "normal", "Gold", 192, 126, "center", -378 + 192 / 2, "bottom", -336 + 126 / 2, "image", 0, this.lcs, this.stage);
-      this.structure_equation_banner = this.assets.createTextContainer(this.equation_bannerS, "# x              = #", "Oldstyle", "26px", "normal", "Gold", 300, 78, "center", -150 + 300 / 2, "bottom", -321 + 78 / 2, "image", 0, this.lcs, this.stage);
-      this.structure_history = this.assets.createTextContainer(this.history_bannerS, "History", "Oldstyle", "18px", "normal", "Gold", 192, 126, "center", 186 + 192 / 2, "bottom", -336 + 126 / 2, "image", 126 / 2, this.lcs, this.stage);
+      this.structure_range = this.assets.createTextContainer(this.range_bannerS, "[ #, # ]", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "32px", "normal", "Gold", 192, 126, "center", -378 + 192 / 2, "bottom", -336 + 126 / 2, "image", 0, this.lcs, this.stage);
+      this.structure_equation_banner = this.assets.createTextContainer(this.equation_bannerS, "# x              = #", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "26px", "normal", "Gold", 300, 78, "center", -150 + 300 / 2, "bottom", -321 + 78 / 2, "image", 0, this.lcs, this.stage);
+      this.structure_history = this.assets.createTextContainer(this.history_bannerS, "History", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "18px", "normal", "Gold", 192, 126, "center", 186 + 192 / 2, "bottom", -336 + 126 / 2, "image", 126 / 2, this.lcs, this.stage);
       this.structure_facade = this.assets.createSprite(this.facadeS, this.structureX, this.structureY, "center", 0, "bottom", -this.structureY / 2, "image", this.lcs, this.stage);  // Level structure in foreground
 
       this.firework_low = this.assets.createSprite(this.firework_lowS, this.structureX, this.structureY, "center", 0, "top", this.structureY / 2, "image", this.lcs, this.stage);
@@ -1868,7 +1868,7 @@ export default {
 
       }
 
-      this.structure_score = this.assets.createTextContainer(this.score_bannerS, "Total Lows: 0\nTotal High: 0\nTotal Hits: 0", "Oldstyle", "24px", "normal", "Gold", 192, 126, "left", (10 + 192 / 2), "bottom", -(10 + 126 / 2), "image", 126 / 2, this.lcs, this.stage);
+      this.structure_score = this.assets.createTextContainer(this.score_bannerS, "Total Lows: 0\nTotal High: 0\nTotal Hits: 0", getComputedStyle(document.documentElement).getPropertyValue('--primary-font'), "24px", "normal", "Gold", 192, 126, "left", (10 + 192 / 2), "bottom", -(10 + 126 / 2), "image", 126 / 2, this.lcs, this.stage);
 
       this.end_level_flag = this.assets.createSprite(this.end_level_flagS, this.structureX, this.structureY, "center", 0, "center", 0, "image", this.lcs, this.stage);
       this.end_level_flag.visible = false;

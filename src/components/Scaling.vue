@@ -33,7 +33,10 @@
     },
     props: {
 
+      // Canvas height
       width: Number,
+
+      // Canvas width
       height: Number,
 
     },

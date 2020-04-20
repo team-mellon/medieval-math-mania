@@ -144,7 +144,9 @@
         // console.log("ECS length: " + entityComponentSystem.length);
 
         if (this.$refs.sceneLayer.currentScene == 3) {
+
           this.scaleEntryForm();
+
         }
 
         for (var i = 0; i < entityComponentSystem.length; i++) {

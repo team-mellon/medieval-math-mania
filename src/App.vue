@@ -1,19 +1,27 @@
 <template>
+
   <div id="app">
+
     <Engine />
+
   </div>
+
 </template>
 
 <script>
 
-import Engine from './components/Engine.vue'
+  import Engine from './components/Engine.vue'
 
-export default {
-  name: 'app',
-  components: {
-    Engine
+  export default {
+
+    name: 'app',
+    components: {
+
+      Engine
+      
+    }
+
   }
-}
 
 </script>
 
@@ -44,42 +52,42 @@ export default {
   src: url('./assets/fonts/Alkhemikal.TTF') format('truetype');
 }
 
-html, body {
-  overflow: hidden;
-  width   : 100%;
-  height  : 100%;
-  margin  : 0px;
-  padding : 0px;
-}
+  html, body {
+    overflow: hidden;
+    width   : 100%;
+    height  : 100%;
+    margin  : 0px;
+    padding : 0px;
+  }
 
-#app {
-  margin  : 0px;
-  padding : 0px;
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
-  /* color: #2c3e50; */
-}
+  #app {
+    margin  : 0px;
+    padding : 0px;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* text-align: center; */
+    /* color: #2c3e50; */
+  }
 
-#entryDisplay {
-  display: inline;
-}
+  #entryDisplay {
+    display: inline;
+  }
 
-.centered {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-}
+  .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
 
-.element-centered {
-  transform: translate(-50%, -50%);
-}
+  .element-centered {
+    transform: translate(-50%, -50%);
+  }
 
-.full-window {
-  height: 100%;
-  width: 100%;
-}
+  .full-window {
+    height: 100%;
+    width: 100%;
+  }
 
 .scrollMenu {
   position: absolute;
