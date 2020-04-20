@@ -630,6 +630,11 @@
 
       },
 
+
+
+      /**
+       * Set the scenes background.
+       */
       setBackground: function() {
 
         let config;
@@ -646,7 +651,7 @@
         config = new ObjectConfig('default', 'image', constants.backgroundX, 1440, "center", -constants.backgroundX, "center", 0);
         this.background.left = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.currentScene].bg_img), config, this.sceneComponentSystem, this.stage);
         
-        config = new ObjectConfig(constants.backgroundX, 1440, "center", constants.backgroundX, "center", 0);
+        config = new ObjectConfig('default', 'image', constants.backgroundX, 1440, "center", constants.backgroundX, "center", 0);
         this.background.right = AssetHandler.createImage(this.loadingQueue.getResult(sceneData[this.currentScene].bg_img), config, this.sceneComponentSystem, this.stage);
 
       },
