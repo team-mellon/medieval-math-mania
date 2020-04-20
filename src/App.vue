@@ -19,14 +19,37 @@ export default {
 
 <style>
 
+:root {
+  --light-gold: Khaki;
+  --medium-gold: Gold;
+  --dark-gold: GoldenRod;
+
+  --light-black: DimGray;
+  --medium-black: DarkSlateGray;
+  --dark-black: #1c2f2f;
+}
+
 @font-face {
   font-family: Blackadder;
   src: url('./assets/fonts/Blackadder.TTF') format('truetype');
 }
 
 @font-face {
-  font-family: Oldstyle;
-  src: url('./assets/fonts/Oldstyle.TTF') format('truetype');
+  font-family: Alkhemikal;
+  src: url('./assets/fonts/Alkhemikal.TTF') format('truetype');
+}
+
+@font-face {
+  font-family: Alkhemikal;
+  src: url('./assets/fonts/Alkhemikal.TTF') format('truetype');
+}
+
+html, body {
+  overflow: hidden;
+  width   : 100%;
+  height  : 100%;
+  margin  : 0px;
+  padding : 0px;
 }
 
 #app {
@@ -39,17 +62,23 @@ export default {
   /* color: #2c3e50; */
 }
 
-html, body {
-  overflow: hidden;
-  width   : 100%;
-  height  : 100%;
-  margin  : 0px;
-  padding : 0px;
-}
-
-
 #entryDisplay {
   display: inline;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.element-centered {
+  transform: translate(-50%, -50%);
+}
+
+.full-window {
+  height: 100%;
+  width: 100%;
 }
 
 .scrollMenu {
@@ -61,7 +90,7 @@ html, body {
   z-index: 1;
   text-align: center;
   /* font-family: "Blackadder"; */
-  font-family: "Oldstyle";
+  font-family: "Alkhemikal";
   /* font-size: 3vh; */
   font-size: 1.75vw;
   color: saddlebrown;
@@ -69,7 +98,7 @@ html, body {
 }
 
 #equationBanner {
-  font-family: "Oldstyle";
+  font-family: "Alkhemikal";
   color: transparent;
   position: absolute;
   transform: translate(50%, 50%);
@@ -86,7 +115,7 @@ html, body {
 }
 
 #historyBanner {
-  font-family: "Oldstyle";
+  font-family: "Alkhemikal";
   position: absolute;
   transform: translate(50%, 50%);
 }
@@ -115,7 +144,7 @@ html, body {
 }
 
 .tutorial {
-  font-family: "Oldstyle";
+  font-family: "Alkhemikal";
   color: saddlebrown;
   position: absolute;
   width: 20vw;
@@ -130,7 +159,7 @@ input {
   box-sizing: border-box;
   border: none;
   /* font-family: "Blackadder"; */
-  font-family: "Oldstyle";
+  font-family: "Alkhemikal";
   font-size: 1.75vw;
   color: saddlebrown;
   border-bottom: 2px solid saddlebrown;
@@ -138,7 +167,7 @@ input {
 }
 
 #entryInput {
-  font-family: "Oldstyle";
+  font-family: "Alkhemikal";
   width: 2.5em;
   font-size: 1.75vw;
   -moz-appearance:textfield !important;
