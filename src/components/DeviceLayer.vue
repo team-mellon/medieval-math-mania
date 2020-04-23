@@ -230,7 +230,7 @@
               break;
 
             case "gui":
-              platformScale = 1.5;
+              platformScale = 2.5;
               // entityComponent.object.scale = 1.0;
               break;
 
@@ -246,8 +246,18 @@
         // image.x = x_start + x_location;
         // image.y = y_start + y_location;
 
-        entityComponent.object.scaleX = this.$refs.scaling.scale.x;
-        entityComponent.object.scaleY = this.$refs.scaling.scale.y;
+        let additionalScaling = 1.0;
+
+        // If the entity is a gui...
+        if (entityComponent.type == 'largegui') {
+
+          additionalScaling = 2.0;
+          // platformScale = 2.0;
+
+        }
+
+        entityComponent.object.scaleX = this.$refs.scaling.scale.x * additionalScaling;
+        entityComponent.object.scaleY = this.$refs.scaling.scale.y * additionalScaling;
 
         return platformScale;
 

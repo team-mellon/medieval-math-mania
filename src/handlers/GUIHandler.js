@@ -377,7 +377,7 @@ class GUIHandler {
 				config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "right", -(constants.buttonX/2 + 10), "top", (constants.buttonY/2 + 10));
 				this.logout_button = AssetHandler.createButton("res/login-button.png", "Login!", config, function() { createjs.Sound.play("menu"); director.changeScene(0); }.bind(this), entity_component_system, stage);
 
-				config = new ObjectConfig('default', 'gui', constants.buttonX, constants.buttonY, "center", 0, "bottom", - 2.5 * (constants.buttonY/2 + 10));
+				config = new ObjectConfig('default', 'largegui', constants.buttonX, constants.buttonY, "center", 0, "bottom", - 2.5 * (constants.buttonY/2 + 10));
 				this.play_button = AssetHandler.createButton("res/login-button.png", "Start!!", config, function() { createjs.Sound.play("menu"); director.changeScene(8); }.bind(this), entity_component_system, stage);
 
 				break;
