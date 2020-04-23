@@ -99,8 +99,10 @@
         var loadingText = document.getElementById("loadingText");
         var percentText = document.getElementById("percentText");
 
+        console.log(this.loadingQueue.progress);
+
         // Loading is complete...
-        if(this.loadingQueue.progress * 100  >= 100) {
+        if(this.loadingQueue.progress * 100  >= 112.5) {
 
           // Hide the background.
           loaderBackground.hidden = true;
